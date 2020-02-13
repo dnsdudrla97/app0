@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>서버에 데이터 요청 하고 응답받기#5</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2401a641-27ab-443d-aa65-ee359f9c0e7d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">서버에 데이터 요청 하고 응답받기#5</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 09, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="7f612660-b421-4676-a728-72192ef98c20" class="">영화 정보 가져와 보여주기</h3><ul id="98f8f53d-5f14-47b6-9d9e-617a911f7273" class="bulleted-list"><li>지금까지 웹서버에 요청하고 응답받은 JSON 문자열을 처리하는 방법까지 알아보았다.</li></ul><ul id="1fc981d0-f453-4b2f-aa58-9e03647a2305" class="bulleted-list"><li>이 과정에서 Volley, Gson 라이브러리를 사용했는데 이 코드와 앞에서 만들었던 리싸이클러뷰를 랍치면 영화 정보를 가져와 리스트 모양으로 보여주는 것이 가능하다.</li></ul><p id="dcacbc7b-4cfa-42b7-af2f-47c96c3afabb" class="">
+</p><h3 id="3d77420f-9de6-4d6d-9618-9e6c114c90ce" class="">RecyclerView 어댑터 설정</h3><pre id="f28d49b8-c0d9-4314-a5db-f0245e4e8cd6" class="code"><code>public class MovieAdapter {
+	static class ViewHodler extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHodler(View itemView) {
+            super(itemView);
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+        }
+
+        public void setItem(Movie item) {
+            textView.setText(item.movieNm);
+            textView2.setText(item.audiCnt + &quot;명&quot;);
+        }
+    }
+}
+
+
+</code></pre><ul id="702510a5-c38f-40bd-b587-9e79406aad28" class="bulleted-list"><li>리스트 형태로 보일 때 각각의 아이템은 뷰로 만들어지며 이 각각의 아이템을 위한 뷰는 뷰홀더에 담아 두게 된다.</li></ul><ul id="01bcaf89-d8c3-49f8-8326-e78c12c2bd35" class="bulleted-list"><li>이 뷰홀더 안에는 Moive 객체가 담기게 되므로 setItem() 메서드의 파라미터로 Movie 객체를 전달한다.</li></ul><ul id="9d23141e-7784-465c-8a35-a2c7571e9b1e" class="bulleted-list"><li>그리고 그 메서드 안에서 첫 번째 텍스트뷰에는 영화 이름, 두 번째 텍스트뷰에는 관객 수를 표시한다.</li></ul><ul id="b9505d4d-3810-47ea-9f09-0c9c13846e46" class="bulleted-list"><li>영화 이름은 movieNm이라는 변수 이름으로 되어 있고, 관객 수는 audiCnt 변수이름으로 되어 있다.</li></ul><ul id="c57da293-197e-4652-bbaf-675f6c6de537" class="bulleted-list"><li>관객 수를 표시할 때는 맨 뒤에 &#x27;명&#x27; 이라는 글자를 붙여준다.</li></ul><ul id="774a8534-a26c-4adc-be7e-6230c77d587f" class="bulleted-list"><li>이 뷰홀더에 넣어줄 뷰 객체의 XML 레이이앗은 리싸이클러뷰를 만들 때 만들었던 person_item.xml의 파일과 유사하게 만든다.</li></ul><p id="44f660e3-cdc9-4f55-b12b-ae1abf9072c6" class="">
+</p><p id="51e56ad6-d91f-4e38-9e16-c6045cef2a3d" class="">
+</p><h3 id="7e979968-ed11-4ed5-862c-e6972a354d36" class="">movie_item.xml</h3><pre id="a1600ac9-3336-44fa-bfda-1f22703edef9" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:orientation=&quot;vertical&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;&gt;
+
+
+    &lt;androidx.cardview.widget.CardView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;8dp&quot;
+        android:layout_marginRight=&quot;8dp&quot;
+        android:layout_marginTop=&quot;4dp&quot;
+        android:layout_marginBottom=&quot;4dp&quot;
+        app:cardBackgroundColor=&quot;#FFFFFF&quot;
+        app:cardCornerRadius=&quot;10dp&quot;
+        app:cardElevation=&quot;5dp&quot;&gt;
+
+        &lt;LinearLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:orientation=&quot;horizontal&quot;&gt;
+
+            &lt;ImageView
+                android:id=&quot;@+id/imageView&quot;
+                android:layout_width=&quot;80dp&quot;
+                android:layout_height=&quot;80dp&quot;
+                android:padding=&quot;5dp&quot;
+                app:srcCompat=&quot;@drawable/movie&quot;/&gt;
+
+            &lt;LinearLayout
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;match_parent&quot;
+                android:layout_margin=&quot;5dp&quot;
+                android:layout_weight=&quot;1&quot;
+                android:orientation=&quot;vertical&quot;&gt;
+
+                &lt;TextView
+                    android:id=&quot;@+id/textView&quot;
+                    android:layout_width=&quot;match_parent&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:text=&quot;제목&quot;
+                    android:textSize=&quot;22sp&quot;
+                    android:maxLines=&quot;1&quot;/&gt;
+
+                &lt;TextView
+                    android:id=&quot;@+id/textView2&quot;
+                    android:layout_width=&quot;match_parent&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:layout_marginTop=&quot;10dp&quot;
+                    android:gravity=&quot;right&quot;
+                    android:text=&quot;관객 수&quot;
+                    android:textColor=&quot;#FF0000FF&quot;
+                    android:textSize=&quot;16sp&quot;/&gt;
+            &lt;/LinearLayout&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/androidx.cardview.widget.CardView&gt;
+&lt;/LinearLayout&gt;</code></pre><p id="672c2055-2551-4b42-84fb-fbe2b3bc55ab" class="">
+</p><p id="d978d94e-5f23-467e-b76d-4ba27f16ca6a" class="">MovieAdapter 클래스가 RecyclerView.Adapter 클래스 상속하도록 수정</p><pre id="12b30f08-e432-4148-8854-7b34a36cdb83" class="code"><code>public class MovieAdapter extends RecyclerView.Adapter&lt;MovieAdapter.ViewHodler&gt; {
+    ArrayList&lt;Movie&gt; items = new ArrayList&lt;Movie&gt;();
+
+    @NonNull
+    @Override
+    public ViewHodler onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = inflater.inflate(R.layout.movie_item, viewGroup, false);
+
+        return new ViewHodler(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHodler viewHodler, int position) {
+        Movie item = items.get(position);
+        viewHodler.setItem(item);
+    }
+
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public void addItem(Movie item) {
+        items.add(item);
+    }
+
+    public void setItems(ArrayList&lt;Movie&gt; items) {
+        this.items = items;
+    }
+
+    public Movie getItem(int position) {
+        return items.get(position);
+    }
+ 
+    static class ViewHodler extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHodler(View itemView) {
+            super(itemView);
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+        }
+
+        public void setItem(Movie item) {
+            textView.setText(item.movieNm);
+            textView2.setText(item.audiCnt + &quot;명&quot;);
+        }
+    }
+}</code></pre><ul id="564d35ef-82d5-4037-8f64-6ef147a5f346" class="bulleted-list"><li>뷰 홀더가 만들어지는 시점에 onCreateViewHolder() 메서드 안에서는 movie_item.xml 파일을 인플레이션한 뒤 뷰홀더 객체를 만들고 그 안에 넣은 후 반환하였다.</li></ul><ul id="e4ccc27e-062d-4b9f-aca4-b8d0e34f406a" class="bulleted-list"><li>onBindViewHolder() 메서드 안에서는 현재 인덱스에 맞는 Movie 객체를 찾아 뷰홀더에 객체를 설정하였다.</li></ul><ul id="7c93dc01-93ba-4080-b46b-40e2f00c143d" class="bulleted-list"><li>이제 리싸이클러뷰를 위한 어댑터 코드가 만들어졌으니 이 어댑터는 리싸이클러뷰 객체에 설정되어야 한다.</li></ul><ul id="99e9a6f2-2a40-4d12-ba25-3b32f84438d8" class="bulleted-list"><li>어댑터 안에 Movie 객체들을 넣는 시점은 웹 응답을 받았을 때가 되어야 하므로 리싸이클러뷰 객체에 어댑터만 설정한다.
+ </li></ul><p id="8feb0d72-71df-4601-8bb4-80493c15b34e" class="">
+</p><h3 id="e8294a6e-9ebb-4c24-b1da-522fd4496e9d" class=""><a href="http://mainactivity.java">MainActivity.java</a> onCreate() 코드 추가</h3><p id="4b643cb1-4e43-4ffc-a9f5-5f599037ddbd" class="">
+</p><pre id="1d6214c1-1ce7-45d9-937c-d4083a9295a7" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    TextView textView;
+
+    RecyclerView recyclerView;
+    MovieAdapter adapter;
+
+    static RequestQueue requestQueue;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRequest();
+            }
+        });
+
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new MovieAdapter();
+        recyclerView.setAdapter(adapter);
+    }</code></pre><p id="937b9aeb-292e-4f72-872f-467911de3f85" class="">
+</p><ul id="f5d69410-910e-4f60-b5f6-572613d37c86" class="bulleted-list"><li>리싸이클러뷰에는 세로 방향으로 리스트를 볼 수 있도록 레이아웃 매니저를 설정하였다.</li></ul><ul id="61eb8d3c-c093-4047-a414-8d3f846b2c7c" class="bulleted-list"><li>그 아래에서는 MovieAdapter 객체를 만들고 setAdapter() 메서드를 호출하여 설정하였다.</li></ul><ul id="7ddbca28-0fc7-46be-8cb4-2cf3e5203a2e" class="bulleted-list"><li>이렇게 하면 리싸이클러뷰가 어댑터와 상호작용하면서 리스트 모양으로 보여주게 된다.</li></ul><p id="b5fa6358-6a6b-468b-a997-22d7fc763b19" class="">
+</p><ul id="b6d2fe47-c003-442a-ab15-33fc2abe7a88" class="bulleted-list"><li>버튼을 눌렀을 때 입력상자에 입력한 사이트 주소로 웹 요청을 하도록 MainActivity.java 파일을 수정</li></ul><ul id="e8ecac8f-8e55-4649-9224-c1f09624b6cb" class="bulleted-list"><li>먼저 onCreate() 메서드 안에 버튼과 리스너를 추가하고 Volley의 RequestQueue 객체를 생성하는 코드를 추가한다.</li></ul><ul id="bd35418b-7345-4c91-856c-f22457e55e6f" class="bulleted-list"><li>다음 makeRequest(), println(), processResponse() 메서드를 순서대로 정의한다.</li></ul><p id="6f0d81e3-0d3b-4ae9-862e-1af7e2ff8827" class="">
+</p><h3 id="cb80d5a3-9765-48b6-bee0-65ae565489a9" class="">RequestQueue 객체 생성</h3><pre id="1cb57f46-e57f-4cf3-b3ab-92d55d011b6d" class="code"><code>if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }</code></pre><p id="dc781589-2424-45a5-ad7a-56a0e1033c2e" class="">
+</p><pre id="9af53358-a6f6-4a31-ae46-9a9dc6fac632" class="code"><code>public void makeRequest() {
+        String url = editText.getText().toString();
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener&lt;String&gt;() {
+                    @Override
+                    public void onResponse(String response) {
+                        println(&quot;응답 -&gt;&quot; + response);
+
+                        processResponse(response);  // 응답을 받았을 때 processRespnse() 메서드 호출하기
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        println(&quot;에러-&gt; &quot; + error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map&lt;String, String&gt; getParams() throws AuthFailureError {
+                Map&lt;String,String&gt; params = new HashMap&lt;String, String&gt;();
+                return params;
+            }
+        };
+        request.setShouldCache(false);
+        requestQueue.add(request);
+        println(&quot;요청보냄&quot;);
+    }
+
+    public void println(String data) {
+        Log.d(&quot;MainActivity&quot;, data);
+    }
+
+    public void processResponse(String response) {
+        Gson gson = new Gson();
+        MovieList movieList = gson.fromJson(response, MovieList.class); // 응답받은 JSON 문자열을 MovieList 변환하기
+
+        println(&quot;영화 정보 수 :&quot; + movieList.boxOfficeResult.dailyBoxOfficeList.size());
+
+        for (int i = 0; i &lt; movieList.boxOfficeResult.dailyBoxOfficeList.size(); i++) {
+            Movie movie = movieList.boxOfficeResult.dailyBoxOfficeList.get(i);
+
+            adapter.addItem(movie);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+}</code></pre><p id="31791412-9dfc-4c07-93fd-5badfc1a73cb" class="">
+</p><ul id="d9a0bf9e-9924-4038-9afb-842b0ce5b120" class="bulleted-list"><li>사용자가 버튼을 클릭했을 때 요청 객체를 만들고 요청 큐에 넣어준다.</li></ul><ul id="ba2badbb-d740-44bd-9ed9-de13493293c8" class="bulleted-list"><li>요청 큐는 한 번만 만들어 계속 사용할 수 있기 때문에 static 키워드를 이용해 클래스 변수를 선언한 후 할당하였다.</li></ul><ul id="27adb7c9-e1e4-43ab-a1f1-a20f05dd96d6" class="bulleted-list"><li>요청 객체는 StringRequest 클래스를 이용해 만들었으며 네 개의 파라미터가 전달되었다.</li></ul><ul id="ecb94cae-02c9-414c-85fb-b41c3aa80243" class="bulleted-list"><li>요청 객체를 만든 후 요청 큐에 넣어 요청을 진행한다.</li></ul><ul id="039050dc-bb00-444f-84c6-a0922ae428c2" class="bulleted-list"><li>응답을 받았을 때 호출되는 onResponse() 메서드 안에서는 processResponse() 메서드를 호출한다.</li></ul><ul id="3531bce2-9632-4972-8f47-8786388966f5" class="bulleted-list"><li>processResponse() 메서드 안에서 Gson을 이용해 JSON 문자열을 MovieList 객체로 변환하며 그 안에 들어 있는 Mobie 객체들을 하나씩 꺼내어 어댑터에 추가한다.</li></ul><ul id="bc7fec5b-8628-421c-b5b5-81b9a7f6131e" class="bulleted-list"><li>어댑터에 모두 추가했다면 notifyDataSetChanged() 메서드를 호출해야 변경 사항이 반영된다.*</li></ul><p id="d9abc8e6-5fb4-447d-afb8-670d6e438689" class="">
+</p><p id="6789d902-8f8a-44da-aaef-1c3d93323961" class="">
+</p><p id="052f5aec-8850-45f0-bcd2-c72c4949811a" class="">만약 각 아이템의 왼쪽에 보이는 이미지를 영화 이미지로 바꾸고 싶다면 웹 서버에서 이미지를 받아와 표시해야 한다.</p><p id="9fad5d4c-27a2-4b80-a391-a51235c1c749" class="">이미지를 다운로드하여 표시할 때는 직접 이미지 파일을 다운로드받는 방법도 있지만 라이브러리를 활용하는 것이 더 나은 경우가 많다.</p><p id="5999dbc4-0405-48d6-8548-0f4520c21d0d" class="">왜냐하면 한 번 받아온 이미지를 임시 저장했다가 보여주는 기능 등 장점이 많기 떄문</p><p id="8e2f58de-b05f-4579-bdc4-13692b97227f" class="">자주 사용하는 이미지 다운로드 라이브러리로는 Glide, Picasso를 사용하면된다.</p><p id="e7203008-2f2b-4b3a-bf54-ed83d197ce1d" class="">이 라이브러리를 사용하면 이미지뷰에 이미지를 다운로드 받아 설정하는 과정이 한 두줄만으로도 가능해진다. </p><p id="5f4f7947-6fa1-457d-915e-70a4c752278b" class="">
+</p></div></article></body></html>

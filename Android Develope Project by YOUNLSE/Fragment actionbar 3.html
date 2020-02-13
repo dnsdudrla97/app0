@@ -1,0 +1,616 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragment actionbar #3</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c7f6bbcd-1d24-414c-b867-f74d3c354e7d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Fragment actionbar #3</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 15, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="7aa611da-2c02-4bac-b312-6189958577bd" class="">화면에 메뉴 기능 넣기</h3><ul id="a1a26cc3-1204-4571-bdbd-de4625eb8daf" class="bulleted-list"><li>옵션 메뉴<ul id="45694bf2-deb1-45fc-ad0c-73a5a9b45a08" class="bulleted-list"><li>시스템 [메뉴] 버튼을 눌렀을 때 나타나는 메뉴로 각 화면마다 설정할 수 있는 주요 메뉴이다.</li></ul></li></ul><ul id="047bcfaa-d185-435e-91c1-1549a77c661d" class="bulleted-list"><li>컨텍스트 메뉴<ul id="b15f86a8-9c9c-484a-a247-2c0e8670ce36" class="bulleted-list"><li>화면을 길게 누르면 나타나는 메뉴로 뷰에 설정하여 나타나게 할 수 있다.</li></ul><ul id="e2fc2de8-c041-4d4d-a30e-647a7a194a08" class="bulleted-list"><li>텍스트뷰의 편집 상태를 바꾸거나 할 때 사용한다.</li></ul><p id="a8e61c5d-9496-4cc7-9ede-fc5e3f3bd92b" class="">
+</p></li></ul><ul id="c4e517f6-f37c-402b-b9bd-3e059e13c036" class="bulleted-list"><li>옵션 메뉴는 액션바에 포함되어 보이도록 만들어져 있다. <ul id="e36c8ee1-6376-43d1-8558-1d1d12c200ca" class="bulleted-list"><li>액션바 → 앱의 제목(title)이 보이는 위쪽 부분을 말한다.</li></ul></li></ul><ul id="83eb6e51-6c0a-48c0-87e7-1987d0e9255d" class="bulleted-list"><li>옵션 메뉴와 컨텍스트 메뉴는 각각의 액티비티마다 설정할 수 있으므로 액티비티에 추가하고 싶은 경우에는 다음의 두 메서드를 다시 정의하여 메뉴 아이템을 추가한다.</li></ul><pre id="514bd5d6-4060-4e8e-a723-53813c06b377" class="code"><code>//[Reference]
+
+public boolean onCreateOptionsMenu (Menu menu)
+public void onCreateContextMenu (ContextMenu menu, View v, 
+												ContextMenu.ContextMenuInfo menuInfo)</code></pre><ul id="8e7f774e-c70e-4dcf-8959-24351ff3d317" class="bulleted-list"><li>즉 두 메서드를 다시 정의하기만 하면 매우 쉽게 메뉴를 추가할 수 있다.</li></ul><ul id="76259e5e-390c-441c-bb27-fddbd9a1395b" class="bulleted-list"><li>이 두 개의 메서드를 보면 Menu나  ContextMenu 객체가 전달되는 것을 알 수 있는데 이 객체의 add() 메서드를 사용해서 메뉴 아이템을 추가하게 된다.</li></ul><ul id="d15d7399-bd88-4096-8054-bfaee9c9ee99" class="bulleted-list"><li>메뉴 아이템을 추가할 수 있는 대표적인 메서드들은 다음과 같다.</li></ul><pre id="85e07b49-dead-42b7-8358-812dbf459b0c" class="code"><code>//[Reference]
+MenuItem add (int groupId, int itemId, int order, CharSequence title)
+MenuItem add (int groupId, int itemId, int order, int titleRes)
+SubMenu addSubMenu (int titleRes)</code></pre><ul id="cac40082-094b-4e2e-b94f-3b885a48ba91" class="bulleted-list"><li>groupId 값은 아이템을 하나의 그룹으로 묶을 때 사용</li></ul><ul id="300c79de-9644-4444-9f0c-b6893b4daf99" class="bulleted-list"><li>itemId는 아이템이 갖는 고유 ID 값으로, 아이템이 선택되었을 때 각각의 아이템을 구분할 때 사용할 수 있다.</li></ul><ul id="33e65f01-8e3a-4a2c-8b9e-8eefa6df7f03" class="block-color-red bulleted-list"><li>아이템이 많아서 서브 메뉴로 추가하고 싶을 때는 addSubMenu() 메서드를 사용한다. 그런데 이렇게 코드에서 메뉴를 추가하는 것보다는 XML에서 메뉴의 속성을 정의한 후 객체로 로딩하여 참조하는 것이 더 간단하다. </li></ul><p id="582bd6b6-038f-4497-a0f5-652bfe1745c1" class="">
+</p><p id="54afd5f1-fb8c-4992-86e3-21468df85553" class="">
+</p><p id="2bd82938-cb5c-4027-b080-10569b9157b6" class="">
+</p><h3 id="9197666a-935d-4ba6-99aa-b9d454a6af3d" class="">menu_main.XML</h3><pre id="1b46f5f1-472e-4b8c-b9f2-05e8b277c552" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;
+
+    &lt;item android:id=&quot;@+id/menu_refresh&quot;
+        android:title=&quot;새로고침&quot;
+        android:icon=&quot;@drawable/menu_refresh&quot;
+        app:showAsAction=&quot;always&quot; /&gt;
+
+&lt;/menu&gt;</code></pre><p id="1ee52a5b-7369-4a69-8f68-5cf0b824535b" class="">
+</p><h3 id="e2b41368-0a43-41af-87f9-513283239d56" class="">&lt;item&gt;</h3><ul id="a6d4794a-e6f3-4b94-bd55-8d553016920c" class="bulleted-list"><li>하나의 메뉴에 대한 정보를 담고 있다.</li></ul><ul id="45f2fac9-f5f5-4bb4-909a-15e14a3d8817" class="bulleted-list"><li>id 속성은 각각의 메뉴를 구분하기 위해 사용되며 title 속성에 넣은 값은 메뉴에 표시되는 글자이다.</li></ul><ul id="3091bfe3-ff30-422b-ba9a-01a34dbc7ea4" class="bulleted-list"><li>아이콘으로 표시하고 싶을 때는 icon 속성에 이미지를 넣을 수 있다.</li></ul><ul id="beb104ea-1e04-4f65-925e-4e5f10a335a2" class="bulleted-list"><li>showAsAction 속성은 이 메뉴를 항상 보이게 할 것인지 아니면 숨겨둘 것인지를 지정할 수 있다.</li></ul><ul id="8b885f02-ff41-4d6d-bf4e-8f13d3f2fc92" class="bulleted-list"><li>여기서 always 값을 설정했으므로 메뉴 아이콘이 할상 보이게 된다.</li></ul><ul id="809b183a-4f49-4cc1-8511-bb2f2b395a6a" class="bulleted-list"><li>android: 로 시작하는 속성은 기본 API에 포함된 속성</li></ul><ul id="3494f548-8965-40ce-b9e7-0cc0b4b2dbcc" class="bulleted-list"><li>app: 로 시작하는 속성은 여러분의 프로젝트에 들어 있는 속성</li></ul><ul id="9274504c-9252-4776-99e7-04683c388473" class="bulleted-list"><li>그리고 외부 라이브러리가 추가되어 있다면 그 외부 라이브러리에서 제공되는 속성도 app:로 참조하면 추가할 수 있다.</li></ul><p id="d3dcf8e4-9b33-4985-a2ed-78535b104043" class="">
+</p><h3 id="d4a772a0-4cd8-4c6c-a991-c00654cbf76e" class="">showAsAction 속성 값</h3><p id="390c0a85-a061-4da9-bfbf-c5edde112ea0" class="">
+</p><ul id="58d336dc-b074-4069-9180-32996e6b7a3d" class="bulleted-list"><li>always<ul id="e202cc49-fafb-4cf8-8060-6b5dc8f0098f" class="bulleted-list"><li> 항상 액티비티에 아이템을 추가하여 표시한다.</li></ul></li></ul><ul id="15b683a5-6189-487d-a5cb-a9162d40d915" class="bulleted-list"><li>never<ul id="cc45d5a2-b975-4726-bc39-4c394084c2c1" class="bulleted-list"><li>액션바에 아이템을 추가하여 표시하지 않는다.(디폴트 값)</li></ul></li></ul><ul id="a6d9ebf3-8fde-4a4d-84a2-82c554c0472d" class="bulleted-list"><li>withText<ul id="30dcee25-fef5-45e5-9a91-d3ed9bb42bff" class="bulleted-list"><li>title 속성으로 설정된 제목을 같이 표시한다.</li></ul></li></ul><ul id="7348fe4e-16fa-4498-bf89-4da62de85d26" class="bulleted-list"><li>collapseActionView<ul id="1f51521e-59fb-4244-8fe0-833f1b9de448" class="bulleted-list"><li>아이템에 설정한 뷰(actionViewLayout으로 설정한 뷰)의 아이콘만 표시한다.</li></ul><p id="4bd4fc8d-675f-4a02-82b3-9f7b70839318" class="">
+</p></li></ul><h3 id="26c18e4c-2913-4489-97c1-9bbf868973bc" class="">이렇게 만든 메뉴 XML은 액티비티 화면의 onCreateOptionsMenu 메소드 안에서 인플레이션 된다.</h3><pre id="9ccc29f8-9363-4b8a-87e8-24f288b035b3" class="code"><code>@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+}</code></pre><ul id="5a90881c-cec4-4f5c-95d5-50074c26724c" class="bulleted-list"><li>이 메소드는 자동으로 호출되며 그 안에서 R.menu.menu_main 을 인플레이션하여 객체로 만든 후 Menu 객체에 설정한다.</li></ul><ul id="fd19f285-2d62-42ff-89b2-36c03ec69a17" class="bulleted-list"><li>이렇게 화면에 설정한 메뉴를 사용자가 선택하면 onOptionsitemSelected 메소드가 호출된다.</li></ul><ul id="921ac55e-0680-4f56-94b7-1407fbec0e78" class="bulleted-list"><li>이 메소드가 호출되면 MenuItem 객체를 파라미터로 전달받게 되며 어떤 메뉴를 선택했는지 id를 구분하여 처리할 수 있다.</li></ul><pre id="ac5df719-99a6-4cdd-945d-a6192a53ed2b" class="code"><code>@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int curId = item.getItemId();
+    switch(curId) {
+      case R.id.menu_refresh:
+         Toast.makeText(this, &quot;새로고침 메뉴가 선택되었습니다.&quot;, Toast.LENGTH_SHORT).show();
+         break;
+
+         중략…</code></pre><p id="0aaf2459-fc64-45d7-abc8-6a62393f0750" class="">
+</p><h3 id="9e0fb1af-f52e-4978-914e-aeff0cfa2488" class="">이렇게 정의한 메뉴들은 언제 화면에 추가되는 걸까?
+</h3><ul id="f75dc6a2-9eca-439b-b8cf-f696c6ca6692" class="bulleted-list"><li><a href="http://mainactivity.java">MainActivity.java</a>에 재정의된 onCreateOptionsMenu() 메서드는 액티비티가 만들어질 때 미리 자동 호출되어 화면에 메뉴 기능을 추가할 수 있도록 한다.</li></ul><ul id="abf0150c-1a10-4cf2-a6f6-6a6f18b7b7c8" class="bulleted-list"><li>메뉴 xml 파일은 xml 레이아웃 파일처럼 소스 코드에서 인플레이션한 후 메뉴에 설정할 수 있다.</li></ul><ul id="0cce6b1f-85b0-4f7a-9165-0d891eb6985c" class="bulleted-list"><li>이때 메뉴를 위한 xml 정보를 메모리에 로딩하기 위해 메뉴 인플레이터 객체를 사용한다.</li></ul><p id="626ea4ad-5ac4-4592-9b94-962d579cd605" class="">
+</p><ul id="107013c9-d806-4788-a512-ae83adf68bbd" class="bulleted-list"><li>화면이 처음 만들어질 때 메뉴를 정해놓은 것이 아니라 화면이 띄어진 후에 메뉴를 바꾸고 싶다면 onPrepareOptionsMenu() 메서드를 재정의하여 사용하면된다.</li></ul><ul id="4f136a0a-d13d-4811-82c4-545806e18544" class="bulleted-list"><li>이 메서드는 메뉴가 새로 보일 때마다 호출되므로 메뉴 항목을 추가하거나 뺄 수 있어 메뉴 아이템들을 변경할 수 있다.</li></ul><ul id="5daaff26-9f1d-42cf-a01e-aaa9ee6cb9d0" class="bulleted-list"><li>특히 메뉴의 속성을 바꿀 수 있으므로 메뉴를 활성화하거나 비활성화하여 사용자에게 앱의 상태에 따라 메뉴를 사용하거나 사용하지 못하도록 만들 수도 있다.</li></ul><p id="7172c3c4-395a-4c05-ab57-b16082f0750d" class="">
+</p><h3 id="ade7b193-5581-482f-86e1-a2d75da9fecb" class="">메뉴를 선택했을 때 처리하는 방법</h3><ul id="1f83dd6f-edd5-4747-b6ba-04ec1874179a" class="bulleted-list"><li>사용자가 하나의 메뉴 아이템을 선택했을 때 자동 호출되는 onOptionsItemSelected() 메서드를 대사 정의한 후 그 안에서 현재 메뉴 아이템의 id 값이 무엇인지 확인하여 그에 맞는 기능을 하게 만들면 된다.</li></ul><pre id="1153f54a-c5a4-4bbb-9ef4-21a38cd1f6f6" class="code"><code>//[Referece]
+boolean onOptionsItemSelected (MenuItem item)</code></pre><p id="b51c99cf-8f4f-4b1e-866b-b162f5baa99a" class="">
+</p><h3 id="b60cf693-9efe-4b82-980a-2182ba0270b2" class="">Context Menu, Options Menu</h3><ul id="b25bd8ca-b391-4482-8c79-f550afd77edc" class="bulleted-list"><li>메뉴를 사용하는 화면은 다양하게 있을 수 있지만 앱의 설정이나 도움말 등의 항목을 메뉴로 만들어 추가하는 경우가 많다.</li></ul><ul id="1a563d65-46d0-4443-afd2-a3b57bfcb29b" class="bulleted-list"><li>컨텍스트 메뉴는 어떤 뷰에 필요한 기능만을 모아 정의해 놓은 것으로 손가락으로 길게 눌렸을 때 보이게 된다.</li></ul><ul id="1e4d422f-233a-45ec-b5d8-509a364fbaf2" class="bulleted-list"><li>옵션 메뉴를 액티비티에 등록하고 사용자가 옵션 메뉴를 선택했을때 처리하기 위해 두 개의 메서드를 다시 정의한 것처럼 컨텍스트 메뉴도 두 개의 메서드를 다시 정의하면 사용할 수 있다.</li></ul><ul id="6f5db5ab-8d4b-4485-a9e3-0a6285f84b1e" class="bulleted-list"><li>컨텍스트 메뉴를 특정 뷰에 등록하고 싶을 때는 registerForContextMenu() 메서드를 사용한다.</li></ul><pre id="50b11151-b720-4bb8-8684-f8630dac5c76" class="code"><code>//[Reference]
+void Activity.registerForContextMenu (View view)</code></pre><ul id="e4d85eb6-a8ea-41a7-89ba-a919999227fd" class="bulleted-list"><li>이 메서드로 컨텍스트 메뉴를 등록하면 각각의 메뉴 아이템을 선택 했을 때 onContextItemSelected() 메서드가 호출되므로 이 메서드의 파라미터로 전달되는 MenuItem 객체를 사용하여 선택된 메뉴 아이템의 정보를 확인한 후 처리할 수 있다.</li></ul><ul id="3df2b6ba-78b3-4d40-abea-fd0cd4b16895" class="bulleted-list"><li>사용 방법이 옵션 메뉴와 거의 유사하므로 필요할 때 뷰 기능을 붙여 사용하면 된다.</li></ul><p id="7e26165c-cb8c-4f84-9ac3-39c8bd60e494" class="">
+</p><p id="37e44453-aaf7-49a6-a981-ed7558e0e5ba" class="">
+</p><h3 id="495a949d-fc15-441f-8d4e-581aea5cc7d7" class="">액션바 +</h3><ul id="d1c69eb2-6b1d-45e1-af81-91447f47e3c3" class="bulleted-list"><li>액션바는 기본적으로 제목을 보여주는 타이틀의 기능을 하므로 앱의 제목을 보여줄 수 있으며</li></ul><ul id="8b1a7570-31ce-4a8f-9373-7ad45ca0ce78" class="bulleted-list"><li>화면에 보이거나 보이지 않도록 만들 수도 있다.</li></ul><ul id="e2a6968a-ccaa-4c0d-a05a-a96fab566892" class="bulleted-list"><li>소스 코드에서 액션바를 보이게 만들고 싶다면 다음 코드 처럼 show() 메서드를 호출하고 감추고 싶다면 hide() 메서드를 호출한다.</li></ul><pre id="a5ee1370-cf3f-4e9d-a19c-894111657008" class="code"><code>//[Reference]
+ActionBar abar = getActionBar();
+abar.show();
+abar.hide();</code></pre><p id="64655ddd-945a-499c-951e-89b134942be1" class="">
+</p><ul id="e6d4118f-69c0-4ad2-92d4-4e4e8dd0d8ab" class="bulleted-list"><li>setSubtitle() 메서드를 사용하면 타이틀의 부제목을 달아줄 수도 있다.</li></ul><ul id="753926e2-847b-4519-a60b-7ca48170ee42" class="bulleted-list"><li>부제목은 화면에 대한 구체적인 설명을 같이 보여주고 싶을 때 유용하게 사용할 수 있다.</li></ul><ul id="d2385eb4-9705-452f-9993-fc13d248101a" class="bulleted-list"><li>앱을 디폴터 설정 그대로 실행하면 액션바의 왼쪽에는 아무것도 보이지 않지만 설정을 바꾸면 아이콘이 보이게 만들 수도 있다.</li></ul><ul id="69fa402e-13b1-4bcc-8cdd-890a1cf87096" class="bulleted-list"><li>액션바는 소스 코드에서 접근할 수 있으며 getActionBar() 메소드를 호출하면 참조할 수 있다.</li></ul><ul id="88e9d985-76d2-4e60-a466-e631b6b795a9" class="bulleted-list"><li>show 메소드를 호출하면 액션바가 보이고 hids 메소들 호출하면 액션바가 보이지 않게 된다.</li></ul><p id="a4c947bd-6650-4a58-8e1e-f44d507c5f4c" class="">
+</p><p id="3ccd21ca-bceb-4a0b-8956-5e3bc47c0387" class="">
+</p><h3 id="b78d6824-0158-441e-a13e-61ed02759446" class="">setDisplayOptions() 디스플레이 옵션 상수</h3><ul id="df8bd626-d770-40a6-8d07-f31e029785b7" class="bulleted-list"><li>DISPLAY_USE_LOGO<ul id="0552e4e5-56dd-4c44-b6e9-d0921cad38bd" class="bulleted-list"><li>홈 아이콘 부분에 로고 아이콘을 사용한다.</li></ul></li></ul><ul id="2f4621f2-cbcd-4f89-9b9e-415564c47b81" class="bulleted-list"><li>DISPLAY_SHOW_HOME<ul id="cc89d04b-09d6-47bf-a716-6ebfb0fc3f0c" class="bulleted-list"><li>홈 아이콘을 표시하도록 한다.</li></ul></li></ul><ul id="6d02b35c-50ff-473c-bc6f-a21bdcf91099" class="bulleted-list"><li>DISPLAY_HOME_AS_UP<ul id="a835179c-7594-4c74-b4ac-7a50a22266c6" class="bulleted-list"><li>홈 아이콘에 뒤로 가기 모양의 &lt; 아이콘을 같이 표시한다.</li></ul></li></ul><ul id="c3a97cb7-08ce-4763-958e-9d3b0aed5ca4" class="bulleted-list"><li>DISPLAY_SHOW_TITLE<ul id="385b8fb0-0ef5-42ce-9fdf-e38fa7cbc3ed" class="bulleted-list"><li>타이틀을 표시하도록 한다.</li></ul></li></ul></div></article></body></html>

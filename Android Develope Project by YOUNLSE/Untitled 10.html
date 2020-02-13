@@ -1,0 +1,694 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>애니메이션 - 앱 화면에 웹브라우저 넣기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5cab4948-d5a9-4e8f-a580-9140f012b02b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">애니메이션 - 앱 화면에 웹브라우저 넣기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 30, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="e63c73b4-a729-42da-bec3-e33ee96c4705" class="">앱 ← 웹브라우저 넣어버리기 😙</h3><ul id="c17145af-847b-4987-89c6-9563e7b58ef8" class="bulleted-list"><li>앱에서 웹사이트를 띄우는 방법은 아주 간단하다.</li></ul><ul id="59a87ce6-eeca-4faa-b0fc-6eaa68bc4d23" class="bulleted-list"><li>인텐트 객체를 만들어서 웹사이트 주소를 넣은 후 시스템으로 요청하기만 하면 된다.</li></ul><p id="cdeefe83-e7c7-4553-af3e-4d29392413e3" class="">
+</p><h3 id="cb2a55e4-fc9b-4cdf-b1f8-4b18f74ce361" class="">앱 화면에 웹브라우저를 넣어서 볼 수도 있을까?</h3><ul id="22dac3cf-7337-4d91-968d-4732187974d3" class="bulleted-list"><li>웹브라우저를 띄우면 다른 앱 화면이 뜨는 것이지만 내가 만든 앱 화면에 웹브라우저를 넣으면 내 앱 안에서 웹사이트가 보이게 된다.</li></ul><ul id="616377d9-220b-47c5-be00-e00518bb449c" class="block-color-red bulleted-list"><li>사용자는 단말에서 보고 있는 컨텐츠가 웹페이지가 들어 있을 때 훨씬 더 일관성 있는 화면으로 인식한다. </li></ul><ul id="c14988c6-6c7e-4b03-b491-89653a68edfe" class="bulleted-list"><li>예를 들어, 서버에 있는 웹페이지로 앱 가이드를 보여주는 경우에 가이드의 1장, 2장, 3장 과 같이 목차를 앱으로 구성하고 그 각각의 항목을 선택하면 웹페이지가 앱 가이드라는 제목 하단에 보이는 경우를 들 수 있다.</li></ul><ul id="46f323e9-381c-45b4-80cb-330e3ab4db74" class="bulleted-list"><li>이렇게 만들면 사용자가 앱으로 느끼게 되고 별도의 화면으로 갑자기 나타나는 웹브라우저 화면보다 더 자연스러운 화면을 보여줄 수 있다.</li></ul><ul id="78db97b7-3385-40c2-894e-9ec3a825432c" class="bulleted-list"><li>웹브라우저를 앱 안에 넣을 때는 웹뷰(WebView)를 사용하면 되는데 XML 레이아웃에서는 &lt;Web-View&gt; 태그로 정의한다.</li></ul><ul id="6caaedde-7ad4-4f32-8114-5a86ac3465d2" class="bulleted-list"><li>웹뷰를 정의하여 사용할 떄는 인터넷에 접속하게 된다.</li></ul><ul id="49747cc2-56c3-423b-ba6b-bae8ae449f2c" class="bulleted-list"><li>따라서 항상 매니페스트에 인터넷 접속 권한이 등록되어 있어야한다.</li></ul><pre id="f2a99dee-9cbb-438d-b513-d14346f38dd3" class="code"><code>//[Refernece] Internet Permission
+&lt;uses-permission android:name=&quot;android:permission.INTENR&quot;/&gt;</code></pre><p id="69fd39f1-5429-41c0-99ff-072a54d5d670" class="">
+</p><ul id="a0e26515-a63c-4262-ba44-2f076cce6c47" class="bulleted-list"><li>XML 레이아웃에 웹뷰를 추가하면 소스 코드에서 웹뷰 객첼를 찾아 참조할 수 있다.</li></ul><p id="0ec5e033-6dc2-4aba-ba37-c54b26319ed7" class="">
+</p><h3 id="ff8387c1-1c05-4bc8-b594-38c84d1f77af" class="">웹뷰 레이아웃</h3><pre id="ad59f8df-344e-4af9-95c4-61468f51f724" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+
+    &lt;LinearLayout
+        android:orientation=&quot;horizontal&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;&gt;
+
+        &lt;Button
+            android:id=&quot;@+id/button&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;열기&quot;
+            android:padding=&quot;4dp&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+
+        &lt;EditText
+            android:id=&quot;@+id/editText&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:textSize=&quot;20sp&quot;/&gt;
+    &lt;/LinearLayout&gt;
+
+    &lt;WebView
+        android:id=&quot;@+id/webView&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;/&gt;
+
+&lt;/LinearLayout&gt;</code></pre><p id="dc73438e-a646-4790-ba8e-f55f88a78866" class="">
+</p><h3 id="264c88f8-241d-4bf7-9940-70581969278d" class="">ActivityMain.java</h3><pre id="0976c647-8582-407e-865c-cd67ea5ce018" class="code"><code>package com.younsle.sampleweb;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.util.WeakHashMap;
+
+public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    WebView webView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        webView = findViewById(R.id.webView);
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        // 웹뷰의 설정 수정하기
+
+        webView.setWebViewClient(new WebViewClient());
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.loadUrl(editText.getText().toString());
+                // 버튼 클릭 시 사이트 로딩하기
+            }
+        });
+    }
+    private class ViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
+}</code></pre><p id="74aedb0c-2f42-4034-810e-36cdd9e73e82" class="">
+</p><ul id="18b963e3-ee5c-42b9-9fda-0c07ab550de2" class="bulleted-list"><li>findViewById() 메서드를 사용해서 참조한 WebView 객체의 getSettings() 메서드를 사용해 WebSettings 객체를 참조한다.</li></ul><ul id="a0c57608-6647-42cc-b5be-8100c91a8b85" class="bulleted-list"><li>이 객체에 설정한 설정 정보 중에서 setJavaScriptEnabled() 코드가 있으므로 그 값이 true로 설정되면 자바스크립트가 동작할 수 있는 환경이 된다.</li></ul><ul id="8ba2fbc6-3673-41cb-bc8c-0b8f3ff669ad" class="bulleted-list"><li>대부분의 웹사이트가 자바스크립트를 사용하므로 이 값은 항상 true로 설정하는 것이 좋다.</li></ul><ul id="d2b9e3ca-eb21-4391-9698-4202867d1c4f" class="bulleted-list"><li>웹페이지를 로딩하여 화면에 보여주기 위해서는 loadUrl() 메서들 사용한다.</li></ul><ul id="f1859bf8-d5fc-41ac-8ac7-6a3e4fa1e590" class="bulleted-list"><li>이 메서드를 사용하면 원격지의 웹페이지를 열거나 로컬에 저장된 HTML 파일을 열 수 있다.</li></ul><ul id="163ab69d-7855-40a7-9b00-80e36d0fa497" class="block-color-red bulleted-list"><li>이렇게 나타난 웹페이지는 확대/축소 기능이 설정되어 있으면 화면 상에서 확대/축소가 가능하며 웹뷰 객체의 goForward(), goBack() 메서드를 이용하면 앞 페이지 또는 뒤 페이지로도 이동할 수 있다. </li></ul><ul id="66403d42-4d9b-4b80-b32e-20d3251a04a8" class="bulleted-list"><li>화면에 추가된 WebView 객체에 웹페이지를 보여주기 위해서는 WebViewClient를 상속해 만들어 WebView에 설정해야 한다.</li></ul><p id="b13295f0-97eb-482b-9cec-408915af8a42" class="">
+</p><p id="e789b98f-e0f1-4c52-ace6-2b3212f492bd" class="">
+</p><h3 id="4d9a28dc-aa32-4371-8ce8-6646339271ae" class="">WevViewClient, WebChromClient</h3><ul id="8b9e159b-62b5-47ea-83ee-aab20f1d8459" class="bulleted-list"><li>WebView를 만든뒤에 확인해 보면 WebView에서 새로운 URL 접속이 일어 나면 새로운 창이 뜨는것 볼 수 있다.</li></ul><ul id="693aa571-86c2-46e5-88a7-f6c5f5a160a1" class="bulleted-list"><li>이는 기본적으로 WebView에서 새로운  URL 접속시 시스템에서 새로운 창에다가 로딩하도록 시키는 것인데, 이것이 한두번씩 많아지면 메모리 관리상에도 별로 도움이 안된다. </li></ul><p id="29b0094e-032d-41ee-ab72-a9c2423261cd" class="">
+</p><h3 id="2647c110-891b-4543-8f01-3d44478838ea" class="">WebViewClient class</h3><ul id="61765a97-5266-4375-8687-450c2f4d129a" class="bulleted-list"><li>WebViewClient는 새로운 Class에 WebClient를 상속 받아서 만들어도 된다.</li></ul><pre id="231933ef-4d7a-44d0-9c5d-e6c18960614c" class="code"><code>private class WebClientClass extends webViewClient { }</code></pre><ul id="5aa524e4-ba13-4cbc-a8a3-97f802128937" class="bulleted-list"><li>내부에서 new로 생성해도 된다.</li></ul><pre id="e33284e4-52d4-4e09-bc72-93816b2fe0f6" class="code"><code>WebView.setWebViewClient(new WebViewClient(){ }</code></pre><p id="e4cd4197-ad0b-456c-9747-62a4574010a1" class="">
+</p><h3 id="464b0770-457f-410a-b204-55b54359491b" class="">WebViewClient Class 함수</h3><ul id="34d74268-d8dd-4151-a420-14f325216852" class="bulleted-list"><li>onPageStarted()<ul id="f45ea3f7-4908-4fe9-8b6e-3131d07dc220" class="bulleted-list"><li>로딩이 시작될때, WebView에서 처음 한 번만 호출되는 메쏘드 페이지 로딩이 시작된 것을 알린다.</li></ul><pre id="7b89433a-b803-4e86-a007-a0ddd5eef4e2" class="code"><code>//[Reference]
+public void onPageStarted(WevView view, String url, Bitmap favicon) {
+super.onPageStarter(view, url, favicon);
+}</code></pre></li></ul><ul id="da5c4a11-f0ee-4c57-90ef-6577679ae79e" class="bulleted-list"><li>onPageFinished()<ul id="0fea9c1b-c5b1-4100-bc3a-10b327301117" class="bulleted-list"><li>WebView에서 처음 한번만 호출되는 메쏘드. 페이지 로딩이 완료된 것을 알린다.</li></ul><pre id="f2a8e082-0114-4b7d-b0df-35498e95dd2c" class="code"><code>//[Reference]
+public void onPageFinished(WebView view, String url) {
+super.onPageFinished(view, url);
+}</code></pre></li></ul><p id="c24680b9-08ca-4d3c-aa8d-e70d1da5e9bc" class="">밑에 함수 나열 된 자료 참고</p><figure id="ef76b690-f115-48a3-9580-bbb3801c65d3"><div class="source"><a href="Untitled%2010/webViewClient_class_function.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8f700882-2d23-4594-a102-b28e05491c77/webViewClient_class_function.pdf</a></div></figure><p id="3dab7aa6-55de-4b8a-9212-da7dd6352a4e" class="">
+</p><h3 id="d811f361-9289-45e0-9043-6ed1f738e502" class="">WebView Setting 메소드 정리</h3><ul id="fa4a6f0c-992f-4361-84c2-23f9d0e42424" class="bulleted-list"><li>// 자바 스크립트 사용<ul id="6a80b139-d1e2-4442-b821-e99d22360a53" class="bulleted-list"><li>webSettings.setJavaScriptEnabled(true);</li></ul><p id="fd90d77f-d948-4455-b62b-9b8e55b94b00" class="">
+</p></li></ul><ul id="ca691c49-a6f6-4b9b-824d-57483451aa39" class="bulleted-list"><li>// 웹 뷰에 맞게 출력하기<ul id="929831c1-c632-44e9-9a50-ee4d8dbaa9ac" class="bulleted-list"><li>webSettings.setLoadWithOverviewMode(true);</li></ul><ul id="fac16ab0-5334-4d35-a3d4-8db81526d014" class="bulleted-list"><li>webSettings.setUseWideViewPort(true);</li></ul><p id="4b1e80f1-af45-4583-a177-e3d1a65c655f" class="">
+</p></li></ul><ul id="2c1f94ee-4e96-489a-872a-b3ad19842e78" class="bulleted-list"><li>// 플러그인 사용<ul id="6cbfb743-05c1-4414-a178-a531fe54ce15" class="bulleted-list"><li>webSettings.setPluginState(PluginState.ON);</li></ul><p id="84870615-fcaf-45ef-842e-91ab1bd60734" class="">
+</p></li></ul><ul id="e852e6f3-7ee4-4222-8ef7-3fa92e6b0f6b" class="bulleted-list"><li>// 화면의 줌 컨트롤과 제스처를 사용하여 확대 여부를 설정<ul id="c1af2dcd-fd8f-4223-81bf-428b3cc99f8c" class="bulleted-list"><li>webSettings.setSupportZoom(true);</li></ul><p id="d64969b2-0ddc-4f1a-b6e9-d9d8433b46ae" class="">
+</p></li></ul><ul id="11d5374c-f1f4-450a-8ba6-affb9d889073" class="bulleted-list"><li>// 내장 줌 컨트롤 사용 여부<ul id="ad59ecee-198e-4069-81f5-f5783e954c03" class="bulleted-list"><li>webSettings.setBuiltInZoomControls(true);</li></ul><p id="b8f9c540-9dde-4e6f-ae54-3c158a3d394d" class="">
+</p></li></ul><ul id="94697071-e41e-4ed0-aca1-11c0287f0e9d" class="bulleted-list"><li>// 내장 줌 메커니즘을 사용할 때 웹 뷰가 화면에 줌 컨트롤을 표시할지 여부를 설정<ul id="df2fb6e7-21d8-4e38-8b87-1ef36488760f" class="bulleted-list"><li>webSettings.setDisplayZoomControls(false);</li></ul><p id="51c9cbf4-bc2a-4427-8c14-58803a97a9fd" class="">
+</p></li></ul><ul id="ade870a1-f19b-49d0-b233-677fb095428c" class="bulleted-list"><li>// 어플리케이션 캐시 최대 사이즈 설정<ul id="92b94e76-4039-42a9-bb9c-f943d8824161" class="bulleted-list"><li>webSettings.setAppCacheMaxSize(1024 * 1024 * 8);</li></ul><p id="6ee058f2-7044-4eb1-8ed6-ce32c371a5b9" class="">
+</p></li></ul><ul id="01e549e3-9584-4f73-9b0a-2c10056fd3ca" class="bulleted-list"><li>// 캐시 파일의 경로를 설정<ul id="d0fb4f2d-d460-46d1-b049-6504264df3d5" class="bulleted-list"><li>webSettings.setAppCachePath(appCachePath);</li></ul><p id="ee2be9fe-6541-4836-a123-6e3f2f26f010" class="">
+</p></li></ul><ul id="6f2f9239-1b87-4b18-82cc-c2373dc1e3e5" class="bulleted-list"><li>// 암호를 저장할지 여부를 설정<ul id="3394008e-3122-4f5a-8354-644654a7b954" class="bulleted-list"><li>webSettings.setSavePassword(false);</li></ul><p id="23bc7172-bf31-4627-b938-140f3d268513" class="">
+</p></li></ul><ul id="df3de36f-ebf8-4793-b8d9-a7e48bd52a37" class="bulleted-list"><li>// 양식 데이터를 저장할지 여부를 설정<ul id="74d8acbb-5d0b-40bc-899d-135f8ee338ea" class="bulleted-list"><li>webSettings.setSaveFormData(true);</li></ul><p id="91d0b0e9-b8d9-419b-965d-d6ce71fa6c86" class="">
+</p></li></ul><ul id="8457df14-8ba6-4019-8c3d-e3a97605bcb9" class="bulleted-list"><li>// 웹 뷰 내에서 파일 액세스 활성화 여부<ul id="6bd5aafc-cb2c-4865-8670-8d3f535dc5ad" class="bulleted-list"><li>webSettings.setAllowFileAccess(true);</li></ul><p id="cd28e08c-9cf3-4e99-b478-f62593e812bd" class="">
+</p></li></ul><ul id="518be4ee-1be4-4315-8189-b663e0c68a21" class="bulleted-list"><li>// 캐시 사용 여부 설정<ul id="45988ef6-afd9-48cf-8005-398b1e00789f" class="bulleted-list"><li>webSettings.setAppCacheEnabled(true);</li></ul><p id="92bee7bf-bba0-4768-a303-ba00b1e8749f" class="">
+</p></li></ul><ul id="130c6d13-f62b-4f73-bd33-874b8a4f2961" class="bulleted-list"><li>// 캐시가 사용되는 방식을 재 정의<ul id="9473d9c8-f16d-4dcf-b88d-8da5dee70985" class="bulleted-list"><li>webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);</li></ul></li></ul><p id="e50f0973-a506-444b-a9ee-6202231c7849" class="">
+</p><ul id="b99bfe4f-8366-4acc-97b3-6214dc1749a7" class="bulleted-list"><li>// 마우스 오버를 활성화하기 위해 Light Touch를 사용 여부를 설정<ul id="55f78b3f-c0c0-4834-b26b-8d5ab189b774" class="bulleted-list"><li>webSettings.setLightTouchEnabled(false);</li></ul></li></ul><p id="58037620-b038-42ef-b8e9-15b1ccde7935" class="">
+</p><p id="d3aa12f5-ffa9-4bd4-9e59-81f724c07044" class="">
+</p><p id="35946fe3-9685-47e7-90dc-32f8673365d2" class="">
+</p><p id="fb59c53c-5c60-44e5-b3fd-ea4a76747b51" class="">
+</p><p id="090cf956-4688-42ff-8066-bd371c130212" class="">
+</p><p id="c7baaa80-81f7-4aab-a17d-5e35cb03be42" class="">
+</p><ul id="842a10fd-b411-42c9-834b-6ef648c33520" class="bulleted-list"><li>앱을 실행하려면 권한을 설정해야 하므로 /app/mainfest → AndoridMainfest.xml 권한 추가</li></ul><pre id="ac078b73-aa26-42a4-a085-c4a3dbd6bd99" class="code"><code>&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+
+
+&lt;application
+        android:usesCleartextTraffic=&quot;true&quot;/&gt;</code></pre><p id="781c9b04-e527-453c-948e-5490c4326665" class="">
+</p><h3 id="2fcaed26-27ea-4269-9b74-fd663e6c00d4" class="">Java String 관련 함수</h3><h3 id="23608df3-741b-4c4d-a52c-4ab26bfcfa70" class="">boolean startsWith(String prefix)</h3><ul id="7f6d1c78-64f7-43a1-b4b6-543df80e6189" class="bulleted-list"><li>비교 대상 문자열이 입력된 문자열(Prefix) 값으로 시작되는지 여부를 확인하고 boolean (true / false) 값으로 리턴 한다.</li></ul><pre id="3da3cb16-1a7c-4bc7-b6b6-5c2f2066d0e6" class="code"><code>Stirng str1 = &quot;JAVA true&quot;
+System.out.println(str1.startsWith(&quot;JAVA&quot;);
+// JAVA check -&gt; true
+// JAVAtrue check -&gt; false</code></pre><figure id="117528db-fcb7-4eb6-b39e-94b579f20b87" class="image"><a href="Untitled%2010/Untitled.png"><img style="width:306px" src="Untitled%2010/Untitled.png"/></a></figure><ul id="c9886395-006a-4f98-84a9-07d12c1adb46" class="bulleted-list"><li>str1 이라는 문자열이 &quot;자바&quot; 라는 문자열로 시작하여 결과는 true이다.</li></ul><p id="8729a8d7-30b7-46a3-99fc-fcd4dc25a766" class="">
+</p><h3 id="a79e1e93-7e74-4ab2-87a5-92031dca75b2" class="">boolean endsWith(String suffix);</h3><pre id="d1d6446b-f1f8-49e0-8820-29d7aa1c8a8c" class="code"><code>String str3 = &quot;자바 코딩&quot;
+System.out.println(str3.endsWith(&quot;코딩&quot;));</code></pre><ul id="34383adb-0939-4f94-8726-cebd950edec2" class="bulleted-list"><li>&quot;자바 코딩&quot; 이라는 문자열이 &quot;코딩&quot; 이라는 문자열로 끝나는지를 확인 한다.</li></ul><ul id="f80a55db-18b5-45d0-a63d-9e0469a5e2b8" class="bulleted-list"><li>위코드를 다시 쓰면 아래와 같다.</li></ul><ul id="1dcb779b-6448-4cc3-85f2-3c79ecce6305" class="bulleted-list"><li>&quot;자바코딩&quot;.endsWith(&quot;코딩&quot;) → true</li></ul><ul id="25efc436-a65e-4615-87d6-b5dbea323487" class="bulleted-list"><li>마찬가지로 공백으로 걸러서 ㅇㅇ</li></ul></div></article></body></html>

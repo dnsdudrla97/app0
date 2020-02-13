@@ -1,0 +1,688 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쓰레드핸들러#2</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8d2cbe76-1f5d-4e0a-8c2f-4f0b84b820af" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">쓰레드핸들러#2</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 03, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="881f404c-4c3e-476c-bbfc-9db4aece192d" class="">웹서버와 같은 원격 서버에 접속한 후 웹페이지를 요청할 때 응답이 늦어지거나 응답이 없으면 앱이 대기하고 있는 상황이 지속되는 문제가 생긴다.</h3><ul id="b2261e9b-92d9-451f-898c-99ba394c2941" class="bulleted-list"><li>이런 경우에는 기본적으로 별도의 스레드를 만들어 처리하게 된다.</li></ul><ul id="95b0f61c-6e95-4528-b441-1bcc26d8b9fc" class="bulleted-list"><li>하지만 버튼을 클릭해서 간단하게 접속 처리하는 경우에는 메인 스레드 내에서 지연 시간을 주는 것만으로도 UI의 멈춤 현상을 방지할 수 있다.</li></ul><ul id="b8730536-23dd-45d1-95c3-b8b94fb9596e" class="bulleted-list"><li>단순히 Thread.sleep() 메서드를 사용해서 잠깐 대기 상태로 있다가 다시 실행할 수도 있다.</li></ul><ul id="05d3963f-f780-46c7-8fd9-f6822744d0ba" class="block-color-red bulleted-list"><li>하지만 핸들러로 지연 시간을 주었을 때 핸들러로 실행되는 코드는 메시지 큐를 통과하면서 순차적으로 실행되기 떄문에 UI 객테들에 영향을 주지 않으면서 지연 시간을 두고 실행된다. </li></ul><p id="3fe9b4f1-4591-4042-961d-62422f3ca41f" class="">
+</p><pre id="b2756257-c7d4-4969-a9d5-bf8dd594b757" class="code"><code>public class MainActivity extends AppCompatActivity {
+    TextView textView;
+
+    Handler handler = new Handler();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.textView);
+
+        Button button  = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request();
+
+            }
+        });
+    }
+
+    private void request() {
+        String title = &quot;원격 요청&quot;;
+        String message = &quot;데이터를 요청하시곘습니까?&quot;;
+        String titleButtonYes = &quot;예&quot;;
+        String titleButtonNo = &quot;아니오&quot;;
+        AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes, titleButtonNo);
+        dialog.show();
+    }
+
+    private AlertDialog makeRequestDialog(CharSequence title, CharSequence message, CharSequence titleButtonYes, CharSequence titleButtonNo) {
+        AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
+        requestDialog.setTitle(title);
+        requestDialog.setMessage(message);
+        requestDialog.setPositiveButton(titleButtonYes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialoginterface, int i) {
+                textView.setText(&quot;5초 후에 결과 표시됨&quot;);
+
+                // 핸들러의 postDelayed() 메서드 호출하기
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText(&quot;요청 완료됨&quot;);
+                    }
+                }, 5000);
+            }
+        });
+
+        requestDialog.setNegativeButton(titleButtonNo, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        return requestDialog.create();
+    }
+}</code></pre><ul id="1e535e38-4c67-4bb1-babe-9e3d20f84d12" class="bulleted-list"><li>화면에 추가한 [요청하기] 버튼을 눌르면 새로 정의한 requset() 메서드가 호출되는데 이 메서드는 AlertDialog를 이용하여 대화살자를 보여준다.</li></ul><ul id="a91c28f4-0ca7-4744-b7fd-76e03468bcd8" class="bulleted-list"><li>대화상자의 [예] 버튼을 누르면 핸들러 객체의 postDelayed() 메서드를 사용해서 약간의 시간이 지난 후 코드가 실행되게 만든다.</li></ul><ul id="ed6815f1-af0b-4ef9-842f-cd6d48a1b0a1" class="bulleted-list"><li>핸들러는 메시지 큐를 사용하므로 메시지들을 순서대로 처리하지만 메시지를 넣을 때 시간을 지정하면 원하는 시간에 메시지를 처리하게 만들 수 있다.</li></ul><ul id="b4e835d3-c5de-4d08-a47d-e213a2d30c1c" class="bulleted-list"><li>따라서 일정 시간 후에 실행시킬 때 유용하게 사용된다.</li></ul><ul id="055275fb-f681-43cf-a36f-f3ab773db81d" class="bulleted-list"><li>시간을 지정할 때는 핸들러의 sendMessage() 메서드와 유사한 이름을 가진 다음과 같은 두 가지 메서드를 사용할 수 있다.</li></ul><pre id="aab29d9d-2b33-413f-ad2f-9b37378a0eaa" class="code"><code>//[Reference]
+public boolean sendMessageAtTime(Message msg, long uptimeMillis)
+public boolean sendMessageDelayed(Message msg, long delayMillis)</code></pre><ul id="89e0162c-0662-4774-a096-6d02b0f9e719" class="bulleted-list"><li>첫 번째 메서드는 메세지를 보낼 때 시간을 지정할 수 있으며</li></ul><ul id="5c787580-2127-42a5-99a1-db5ed9a1f6b3" class="bulleted-list"><li>두 번째 메서드는 메시지가 일정 시간이 지난 후 실행되도록 설정할 수 있다.</li></ul><ul id="f92c4557-c5d9-404b-bc49-79f60192e161" class="bulleted-list"><li>Runnable 객체를 실행하는 post() 메서드고 postAtTime() 과 postDelayed() 메서드가 있어 같은 기능을 수행한다.</li></ul><ul id="d67b52ca-afd6-45a5-b71d-61d3b57fb877" class="bulleted-list"><li>앱을 실행하고 [요청하기] 버튼을 누르면 대화상자가 표시된다.</li></ul><ul id="864419bd-24bc-435b-8cd3-284a05a46b27" class="bulleted-list"><li>대화상자의 [예] 버튼을 누르며 5초뒤 텍스트뷰에 다른 글자를 표시한다.</li></ul><ul id="6dd8bd91-ec25-4f0d-885f-9c773601871d" class="bulleted-list"><li>이렇게 일정 시간이 지난 후에 특정 코드를 실행시킬 때 핸들러의 객체의 postDelayed() 메서드르 호출할 수 있다.</li></ul><p id="62c8753e-b859-44d0-a47c-fa136b5a6246" class="">
+</p><p id="495bf228-363b-43cd-9143-8ffc3c9f6055" class="">
+</p><p id="984da90f-e0f4-4997-b3f4-85dbec802561" class="">
+</p><h2 id="b5c46cab-985b-4e3f-9756-b6d7c92b96ba" class="">스레드로 메시지 전송하기</h2><ul id="5c4d2875-39e8-44f7-822a-86b552d7d255" class="bulleted-list"><li>앞의 부분 설명의 핸들러 기능은 새로 만든 스레드에서 메인 스레드로 메시지를 전달하는 것이다.<ul id="fc8173f1-6b98-4c06-8bec-bed457353a3f" class="bulleted-list"><li>이 때 스레드의 작업 결과물을 메시지로 만들어 전달하는 이유는 별도의 스레드에서 메인 스레드가 관리하는 UI 객체에 직접 접근할 수 없기 때문이라고 했다. ㅇㅇ</li></ul></li></ul><p id="3dba7dc5-8d9d-4fba-a70c-5d3a9c7f1f54" class="">
+</p><h3 id="e3cd9c2e-e60c-4e19-aab4-187d52971743" class="">그런데 이와는 반대로 메인 스레드에서 별도의 스레드로 메시지를 전달하는 방법이 필요할 때가 있다.</h3><ul id="bf745f12-482e-4215-be27-e0ff65f15f81" class="bulleted-list"><li>이를 위해 메인 스레드에서 변수를 선언하고 별도의 스레드가 그 값을 읽어가는 방법을 사용할 수도 있다.</li></ul><ul id="afd1361c-af18-4c17-a5c4-9dec36c81e17" class="bulleted-list"><li>하지만 별도의 스레드가 관리하는 동일한 객체를 여러 스레드가 접근할 때는 별도의 스레드 안에 들어 있는 메시지 큐를 이용해 순서대로 접근하도록 만들어야 한다.</li></ul><ul id="69127a9c-1ee5-47f8-ad71-404e5a911d43" class="bulleted-list"><li>핸들러가 처리하는 메시지 큐는 루퍼(Looper)로 처리되는데, 그 과정은 일반적인 이벤트 처리 과정과 유사하다.</li></ul><p id="ee16a585-0f09-42dd-98b8-5d854e2d9762" class="">
+</p><figure id="7b2751f6-18ed-4f7a-9b62-c6363cc1c524" class="image"><a href="2/Untitled.png"><img style="width:384px" src="2/Untitled.png"/></a></figure><ul id="a71f6581-17cd-4105-9b6b-fc10e5ce0f1b" class="bulleted-list"><li>루퍼(Looper) 는 메시지 큐에 들어오는 메시지를 지속적으로 보면서 하나씩 처리하게 된다.</li></ul><ul id="26f101a1-161c-4240-a19e-97d1243d69c4" class="bulleted-list"><li>메인 스레드는 UI 객체들을 처리하기 위해 메시지 큐와 루퍼를 사용한다.</li></ul><ul id="1d0573f8-0f29-4956-b8ac-fec6024ac3e1" class="bulleted-list"><li>그러나 별도의 스레드를 새로 만들었을 때는 루퍼가 없다.</li></ul><ul id="10743936-9a39-4bf5-97de-db922482641e" class="bulleted-list"><li>따라서 메인 스레드나 다른 스레드에서 메시지 전송 방식으로 스레드에 데이터를 전달한 후 순차적으로 작업을 수행하고 싶다면 루퍼를 만든 후 실행해야 한다.</li></ul><p id="031fc3be-bed6-4a9b-91d6-1c65444c2feb" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e73bf9c7-630b-4a73-89c5-7ed66858c5e4"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">루퍼(Looper)을 이용하는 소스를 본 적이 있나요?</div></figure><ul id="0f51d695-afd4-4d03-ba41-9ea8075f6d19" class="bulleted-list"><li>다른 사람이 만든 소스를 분석하다 보면 루퍼를 사용한 코드를 종종 볼 수 있다.</li></ul><ul id="bb37722e-b2c6-496c-8279-fa5ce967dd33" class="bulleted-list"><li>물론 적용 분야에 따라 다르긴 하지만 어쨌든 우리가 직접 앱을 만들 때도 필요하다.</li></ul><ul id="d2761444-6f76-4096-bfe3-e4d29366608e" class="bulleted-list"><li>그리고 다른 사람이 만든 소스를 분석하기 위해서도 루퍼 사용 방법을 이해하고 있어야 한다.</li></ul><p id="9c1af6ae-7e10-44a9-95f6-dc3969e33e9a" class="">
+</p><p id="6ef21e17-1e47-488c-a417-7c38eff2a47c" class="">
+</p><h3 id="b6ab0d20-ac2d-4771-af39-678c82504c7d" class="">루퍼 적용 코드</h3><pre id="c51b0cd2-631b-4bf8-be37-ed976c214681" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    TextView textView;
+
+    Handler handler = new Handler();
+    ProcessThread thread;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String input = editText.getText().toString();
+                Message message = Message.obtain();
+                message.obj = input;
+				
+								// 새로 만든 스레드 안에 있는 핸들러로 메시지 전송하기
+                thread.processHandler.sendMessage(message); 
+            }
+        });
+
+        thread = new ProcessThread();
+    }
+
+    class ProcessThread extends Thread {
+        ProcessHandler processHandler = new ProcessHandler();
+
+        public void run() {
+            Looper.prepare();
+            Looper.loop();
+        }
+
+        class ProcessHandler extends Handler {
+						// 새로 만든 스레드 안에서 전달받은 메시지 처리하기
+            public void handleMessage(Message msg) {
+                final String output = msg.obj + &quot; from thread.&quot;;    
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(&quot;test&quot;, &quot;error : &quot; + output);
+                        textView.setText(output);
+                    }
+                });
+            }
+        }
+    }
+}</code></pre><ul id="defd5cc2-e189-44d8-a274-c5152b35d79b" class="bulleted-list"><li>코드를 입력할 때 Handler, Message는 android.os 패키지의 것을 선택한다.</li></ul><ul id="9963cf47-cf11-437b-974a-c50397501edc" class="bulleted-list"><li>입력상자에 글자를 넣고 버튼을 누르면 입력된 메시지에 &quot;from thrwead&quot;라는 문자열을 덧붙여 텍스트뷰에 보여주게 된다.</li></ul><ul id="31cc48ea-9535-4aeb-8571-433bb7a9271a" class="block-color-red bulleted-list"><li>실행 결과만 보면 아주 간단한 기능 같겠지만 내부적으로는 메인 스레드에서 새로 만든 별도의 스레드로 Message 객체를 전송하고, 별도의 스레드에서는 전달받은 문자열에 다른 문자열을 덧붙여 메인 스레드 쪽으로 다시 전송하는 과정을 거친다.</li></ul><ul id="aacaa330-977b-4ae0-bcbf-7f746741b5c5" class="bulleted-list"><li>onCreate() 메서드의 onClick() 메서드를 보면 Message 객체에 문자열을 포함시켜 전송하기 위해서 obj 변수에 문자열을 할당한다.</li></ul><ul id="1cbf7240-b8cd-4710-a735-ac7e66ea87a9" class="bulleted-list"><li>새로 정의하는 ProcessThread는 Thread를 상속하여 만들고 그 안에서 ProcessHandler 객체를 만든다.</li></ul><ul id="0f02bc0c-f301-4a3a-a754-9ef27e2900ad" class="bulleted-list"><li>ProcessHandler 클래스는 새로 만든 스레드에서 만들어지고 사용된다.</li></ul><h3 id="349dafed-b7db-4fac-8d89-a97dd142971e" class="">버튼을 클릭하면 입력상자에 들어 있는 문자열 Message 객체의 obj 변수에 할당한다고 했었지?</h3><ul id="07706a46-ff74-45d5-9232-5a539b8a6f62" class="bulleted-list"><li>Message 객체는 Message.obtain() 메서드를 이용해서 참조할 수 있으며, 새로 만든 스레드(thread1)의 handler 변수를 이용해서 sendMessage() 메서드를 호출하면 메시지 객체가 스레드로 전송된다.</li></ul><ul id="5b0a1333-1c0d-4e78-b5e0-17d3b38ed810" class="bulleted-list"><li>ProcessThread 클래스를 정의할 때 ProcessHandler 객체를 만들고 Looper.prepare()와 Looper.loop() 메서드를 호출하였으므로 이 스레드에서는 Message 객체를 전달받을 수 있다.</li></ul><ul id="73a5ef75-19f2-4c80-a54a-e4967906ac18" class="bulleted-list"><li>ProcessHandler 클래스에 정의된 handlerMessage() 메서드에서는 전달받은 Message 객체의 obj 변수에 들어 있는 문자열을 이용해 새로운 문자열을 만든 후 메인 스레드의 핸들러 객체를 통해 텍스트를 표시한다.</li></ul><p id="d9b67009-3e5e-4f83-acdf-85fab084c8e0" class="">
+</p><h3 id="85818ba2-114a-4216-a1b4-ed1ae5210dd2" class="block-color-red">!내부적으로 스레드 간에 데이터가 전송되었다는 점을 이해해야 한다. </h3><p id="89e04b87-b7ab-4b84-b070-660a3eda9d09" class="">
+</p></div></article></body></html>

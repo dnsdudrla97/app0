@@ -1,0 +1,660 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>애니메이션 기본(Tweened Animation)</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="30124940-7dbf-4b30-af0b-6bb6efabba50" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">애니메이션 기본(Tweened Animation)</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 30, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="333b9ee4-66f0-4f4d-81b2-c965b671a37d" class="">애니메이션</h3><ul id="87de1de5-b968-4b08-967f-8611b1a368d0" class="bulleted-list"><li>트윈 애니메이션(Tweened Animation)<ul id="f4c3d32c-24ca-400a-bc47-46043096bb63" class="bulleted-list"><li>가장 간단하면 일반적인 방법으로 사용</li></ul><ul id="899a457e-33a7-41af-8c72-2b8987e86d67" class="bulleted-list"><li>이동, 확대/축소, 회전과 같이 일정한 패턴으로 움직이는 애니메이션을 구현할 때 사용된다.</li></ul></li></ul><ul id="a4a5d024-55a2-4452-b207-fd05aac7154a" class="bulleted-list"><li>애니메이션이 어떻게 동작할지 정의한 정보는 XML로 만든다.</li></ul><ul id="9a1d967e-590a-4a31-963b-abbafc539b36" class="bulleted-list"><li>이렇게 만든 XML 정보는 자바 소스에서 애니메이션(Animation) 객체로 로딩한 후 뷰 객체의 startAnimation() 메서드를 사용해서 애니메이션을 동작하게 만들 수 있다.</li></ul><ol id="12295186-6689-4b78-b564-38e8917ccd73" class="numbered-list" start="1"><li>애니메이션이 어떻게 동작하는지를 XML로 정의하고,</li></ol><ol id="bcf7b62c-3462-43c1-8633-8fff5e9fbfe5" class="numbered-list" start="2"><li>XML을 로딩하여 애니메이션 객체로 만든다.</li></ol><ol id="37e84290-0091-4b75-8bc4-45551ab1e623" class="numbered-list" start="3"><li>뷰에 애니메이션을 적용하여 동작시킨다.</li></ol><p id="e0df3505-5b69-430a-8aba-dc2ff95d5c8e" class="">
+</p><h3 id="d6182daa-c06c-42df-8c9c-0e10e81c1060" class="">트윈 애니메이션(Tweened Animation)</h3><ul id="5d36cb05-eeed-4959-82aa-41c1e97b672b" class="bulleted-list"><li>대상<ul id="048c62fe-e4e3-48f6-8a56-68c6bd061049" class="bulleted-list"><li>뷰<ul id="d13a7c2c-db44-4ff5-bcd4-5cc672da9dfb" class="bulleted-list"><li>View는 위젝이나 레이아웃을 모두 포함한다.</li></ul><ul id="a3a58dc2-ab14-4886-9409-8614c5d5975f" class="bulleted-list"><li>예를 들어, 텍스트뷰나 리니어 레이아웃에 애니메이션을 적용할 수 있다.</li></ul></li></ul><ul id="ff98c279-e433-4926-ba70-b8b2351bea9b" class="bulleted-list"><li>그리기 객체<ul id="8014684d-bbf7-44fd-ab9e-0846e271b36c" class="bulleted-list"><li>다양한 드로어블에 애니메이션을 적용할 수 있다.</li></ul><ul id="4f8217ea-f670-4a29-98b0-ba63adb18815" class="bulleted-list"><li>ShapeDrawable은 캔버스에 그릴 도형을 지정할 수 있으며, BitmapDrawable은 비트맵 이미지를 지정할 수 있따.</li></ul></li></ul></li></ul><ul id="bb26fa9e-8538-49a5-8ff9-6c7a40ab0c8e" class="bulleted-list"><li>효과<ul id="be99010c-5e8c-483c-891b-e53d978167f3" class="bulleted-list"><li>위치 이동<ul id="2c40159b-432b-4bce-90df-7f4155ee638e" class="bulleted-list"><li>Translater로 정의한 액션은 대상의 위치를 이동시키는 데 사용되는 효과이다.</li></ul></li></ul><ul id="6410ece1-28fb-42b2-a533-1b2855aae56f" class="bulleted-list"><li>확대/축소<ul id="c5236fca-8bc6-40b5-9c4c-2d52e0b8e071" class="bulleted-list"><li>Scale로 정의한 액션은 대상의 크기를 키우거나 줄이는 데 사용하는 효과</li></ul></li></ul><ul id="a0f65da8-9077-4ff2-bf4b-bf2591e769c1" class="bulleted-list"><li>회전<ul id="222464d1-0024-4d02-ae15-e25e40f20d63" class="bulleted-list"><li>Rotate로 정의한 액션은 대상을 회전시키는 데 사용되는 효과이다.</li></ul></li></ul><ul id="0fbe90ba-fc90-4e4d-9fa5-a3c58205224c" class="bulleted-list"><li>투명도<ul id="5d61f456-b4ca-460f-a4bd-8cbde4a7666d" class="bulleted-list"><li>Alpha로 정의한 액션은 대상의 투명도를 조절하는 데 사용되는 효과이다.</li></ul></li></ul></li></ul><p id="2226e694-31de-4142-810c-f96ac16e882b" class="">
+</p><ul id="528750d2-e05b-4787-bb9d-5b61eb98fcac" class="bulleted-list"><li>트윈 애니메이션의 액션(Action) 정보는 XML 리소스의 정의하거나 소스 코드에서 직접 객체로 만들 수 있다.</li></ul><ul id="dae39da7-3096-47d9-bd55-28b34e9e1a33" class="bulleted-list"><li>애니메이션을 위한 XML 파일은 /app/res/anim 폴더의 밑에 두고 확장자를 xml로 해야 한다.</li></ul><ul id="80d43338-c996-4ccb-993d-2aeb7cf9071a" class="bulleted-list"><li>이렇게 리소스로 포함된 애니메이션 액션 정의는 다른 리소스와 마찬가지로 빌드할 때 컴파일 되어 설치 파일에 포함된다.</li></ul><p id="4b38b465-6f99-48be-99a8-01037f4d122c" class="">
+</p><p id="7885f150-1380-44e7-9653-3ef273718c7b" class="">
+</p><h3 id="ce1d98bf-cdb1-46c1-aff0-bcb6c934ce29" class="">/app/res/anim + scale.xml</h3><pre id="aa45c1a0-a92c-494a-b635-26d3916e004b" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;scale
+        android:duration=&quot;2500&quot;
+        android:pivotX=&quot;50%&quot;
+        android:pivotY=&quot;50%&quot;
+        android:fromXScale=&quot;1.0&quot;
+        android:fromYScale=&quot;1.0&quot;
+        android:toXScale=&quot;2.0&quot;
+        android:toYScale=&quot;2.0&quot;/&gt;
+&lt;/set&gt;</code></pre><ul id="e2faf8a3-7d41-4353-80e3-ae712fef25aa" class="bulleted-list"><li>자동으로 만들어진 &lt;set&gt; 태그 안에 &lt;scale&gt; 태그를 추가했다.</li></ul><ul id="b4d5f69a-5d23-4520-a450-457cec2739d0" class="bulleted-list"><li>각각의 애니메이션 액션이 갖는 공통적인 속성으로는 여러 가지가 있지만 시작 시간과 지속 시간이 대표적이다.</li></ul><ul id="7dd78716-dcfb-4def-a4aa-2e051562c7e0" class="bulleted-list"><li>시작 시간은 startOffset<ul id="9ebce92a-6bc2-4537-8c6f-04a880baa547" class="bulleted-list"><li>애니메이션이 시작한지 얼마 후에 이 액션이 수행될 것인지를 알 수 있도록 한다.</li></ul><ul id="c90a0b53-f503-4547-9fb1-e9c70f99a57e" class="bulleted-list"><li>startOffset을 지정하지 않으면 애니메이션은 바로 시작된다.</li></ul></li></ul><ul id="ea890407-ec2c-4177-9309-52bd8b383751" class="bulleted-list"><li>지속 시간은 duration<ul id="2fa9924c-d6e3-4225-b55d-22a0c1abba94" class="bulleted-list"><li>duration은 애니메이션이 지속되는 시간으로 여기에서는 2.5초 동안 지속되도록 되어 있다.</li></ul></li></ul><ul id="d1a78781-2fde-485c-af81-d2056577162d" class="bulleted-list"><li>&lt;scale&gt; 태그<ul id="17c00b53-c520-494f-8712-8a5c4836c2f4" class="bulleted-list"><li>대상을 확대하거나 축소할 때 사용되는데, 크기를 변경하려는 축의 정보는 X축, Y축에 대한 각각 pivotX, pivotY로 지정한다.</li></ul><ul id="f3a492b0-1cd5-4f84-9df8-d51be3176cfd" class="bulleted-list"><li>fromXscale, fromYscale<ul id="f096ffce-e2d5-4ffd-81a1-3cb106a385d8" class="bulleted-list"><li>시작할 때의 확대 / 축소 비율</li></ul></li></ul><ul id="34a3ace8-4a9f-4eb7-9047-785d31f65672" class="bulleted-list"><li>toXscale, toYscale<ul id="49d5946c-22cf-451e-9fbd-25f3cc5b1886" class="bulleted-list"><li>끝 날때의 확대 / 축소 비율이다.</li></ul></li></ul></li></ul><ul id="dd4cfe33-7f42-4dcb-ae7a-65205898c08e" class="bulleted-list"><li>여기서는 1.0 으로 시작해서 2.0으로 끝나므로 원래의 크기에서 시작해서 두 배의 크기로 확대되는 애니메이션이 수행된다.</li></ul><p id="cb05120b-2394-40f3-bcf3-1b5280793187" class="">
+</p><h3 id="eab55629-eeea-4f98-b479-214388eaccf8" class=""><a href="http://mainactivity.java">MainActivity.java</a> → Animation 정의</h3><pre id="b0360161-cd2c-4718-89e9-f3a306edc074" class="code"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), 
+																	R.anim.scale);   // 리소스에 정의한 애니메이션 액션 로딩
+                v.startAnimation(anim); // 뷰의 애니메이션 시작
+            }
+        });
+    }
+}</code></pre><ul id="a4cb222c-d70c-42f8-8d0e-163b7f342a42" class="bulleted-list"><li>버튼의 id 속성 값이 button이므로 findViewById() 메서드로 버튼을 찾아 참조한 후 리스너 객체를 설정한다.</li></ul><ul id="8ea53924-c325-44ca-9b36-64dcef493029" class="bulleted-list"><li>onClick() 메서드 안을 보면 애니메이션을 로딩하여 적용하는 것을 볼수 있다.</li></ul><ul id="95f8e185-8305-49a1-88de-607a2e080e71" class="bulleted-list"><li>소스에 정의된 애니메이션 액션 정보를 로딩하기 위해 AnimationUtils 클래스 → loadAnimation() 메서드를 사용</li></ul><pre id="ef4a784e-efd5-48fc-a609-33113a12c36b" class="code"><code>//[Reference]
+pubic static Animation loadAnimation (Context context, int id);</code></pre><ul id="957d00f2-61cb-46a1-82c2-360f88e55032" class="bulleted-list"><li>첫 번째 파라미터는 컨텍스트 객체이므로 여기서는 getApplicationContext()를 사용하였다.</li></ul><ul id="f0059a88-c93c-4c15-a24b-ccfc854c2dfe" class="bulleted-list"><li>두 번째 파라미터는 Xml 리소스에 정의된 애니메이션 액션의 id 값이므로 애니메이션 리소스 이름인 R.anim.scale이 사용된다.</li></ul><ul id="2aeaf411-6b87-4108-8641-5daaadfea90a" class="bulleted-list"><li> onClick() 메서드로 전달되는 뷰 객체는 사용자가 클릭한 버튼 객체이므로 버튼을 눌렀을 때 뷰 객체의 statAnimation() 메서드를 호출하면 버튼에 애니메이션 효과를 주게 된다.</li></ul><p id="db22df08-b007-4a87-8c82-e34ab52ee141" class="">
+</p><ul id="454b635e-e569-491f-8dda-d013c0e40948" class="bulleted-list"><li>애니메이션이 끝난 후 버튼이 원상태로 갑자기 바뀌는 것이 조금 부자연스럽게 보일 수 있다.</li></ul><ul id="f1e111ea-a6c7-4473-8af9-c1e33caf7744" class="bulleted-list"><li>이 버튼이 원래의 상태로 자연스럽게 되돌아가게 하려면 어떻게 해야 할까?<ul id="374e17ca-88ee-4a81-b7ff-58ffa28f4779" class="bulleted-list"><li>애니메이션이 끝난 후 똑같은 애니메이션을 거꾸로 적용하는 것이다.</li></ul><ul id="6b126a44-1a94-41ba-8ca7-e4349d8fc38c" class="bulleted-list"><li>즉, 두 개의 애니메이션이 연속으로 수행되도록 하나로 묶어두는 방법이다.</li></ul></li></ul><ul id="1615c8ef-9b7f-45af-be2e-1dc72f403eb2" class="bulleted-list"><li>XML로 저장하는 애니메이션 액션은 여러 개의 효과를 하나로 묶어 동시에 수행되도록 만들 수 있다.</li></ul><ul id="fed743ca-c183-4c81-82e3-ae525674518f" class="bulleted-list"><li>이때 &lt;set&gt; 태그를 사용하여 여러 애니메이션 액션을 포함시킨다.</li></ul><ul id="dd475b8c-1b53-4282-b46e-cb04df476d4e" class="block-color-red bulleted-list"><li>애니메이션 집합 (Animation Set)으로 표현된다.<ul id="28dedd85-275e-4500-bccd-35c3c9a264e1" class="bulleted-list"><li>여러 애니메이션의 묶음은 동시에 수해오딜 수도 있고 시작 시간의 설정에 따라 연속적으로 수행될 수 있다.</li></ul></li></ul><h3 id="485a8d71-37ce-4c6f-8d20-2b4e8e51cbbd" class="">Animation Set &lt;set&gt; 태그로 묶는다.</h3><pre id="c0147013-d95a-4e2d-8b96-4001553aad08" class="code"><code>&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;scale
+        android:duration=&quot;2500&quot;
+        android:pivotX=&quot;50%&quot;
+        android:pivotY=&quot;50%&quot;
+        android:fromXScale=&quot;1.0&quot;
+        android:fromYScale=&quot;1.0&quot;
+        android:toXScale=&quot;2.0&quot;
+        android:toYScale=&quot;2.0&quot;/&gt;
+&lt;!-- 확대/축소 애니메이션 액션 정의 --&gt;
+
+    &lt;scale
+        android:startOffset=&quot;2500&quot;
+        android:duration=&quot;2500&quot;
+        android:pivotX=&quot;50%&quot;
+        android:pivotY=&quot;50%&quot;
+        android:fromXScale=&quot;1.0&quot;
+        android:fromYScale=&quot;1.0&quot;
+        android:toXScale=&quot;0.5&quot;
+        android:toYScale=&quot;0.5&quot;/&gt;
+&lt;!-- 2.5초 후에 시작할 확대/축소 애니메이션 액션 정의 --&gt;
+&lt;/set&gt;</code></pre><ul id="553f0b8c-29de-4a4a-99f4-90a4e5cbab81" class="bulleted-list"><li>&lt;set&gt;  태그로 묶여진 두 개의 스케일 애니메이션은 첫 번째 것이 2.5초 동안 버튼을 두 배로 확대하고 그 후에 2.5초 동안 반으로 축소하는 효과를 보여준다.</li></ul><p id="f015f231-ba7a-4632-bbba-c44832bd8949" class="">
+</p><p id="e5b78048-7afd-4f62-84d8-4d2cf21fa7a1" class="">
+</p><h3 id="e246b39a-357e-48b5-b3f0-a0438b874a82" class="">트윈 애니메이션으로 위치 이동 액션 효과 주기</h3><ul id="2fd93eec-e622-433a-a2f2-223b05201f28" class="bulleted-list"><li>위치 이동은 대상의 위치를 변경하는 것으로 한 곳에서 다른 곳으로 부드럽게 움직이는 효과를 낼 수 있습니다.</li></ul><ul id="07cc457e-6950-4e22-9a8a-99b972ea5858" class="bulleted-list"><li>위치 이동 액션은 &lt;translate&gt; 태그를 사용하여 정의하는데 </li></ul><ul id="325f8d1e-b911-46ff-9c43-ec74e1908731" class="bulleted-list"><li>시작 위치는 fromXDelta, fromYDelta, </li></ul><ul id="583c8f5e-e015-4cfa-9ba6-d36a3f5ed3cc" class="bulleted-list"><li>종료 위치는 toXDelta, toYDelta</li></ul><p id="36906d47-ec4b-4625-a2ea-8bd97f7cd829" class="">
+</p><h3 id="d8b2ee6d-f12c-4c8c-8311-ebb614a694a7" class="">대상의 크기만큼 왼쪽으로 이동시키는 액션 XML</h3><pre id="838fc4dd-a2bb-44f9-9f01-e3311eadd56d" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;translate xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:fromXDelta=&quot;0%p&quot;
+    android:toXDelta=&quot;-100%p&quot;
+    android:duration=&quot;20000&quot;
+    android:repeatCount=&quot;-1&quot;
+    android:fillAfter=&quot;true&quot;/&gt;</code></pre><ul id="c56e56e3-c6a1-4060-bd39-fc243ec8f8e6" class="bulleted-list"><li>fromXDelta 속성이 0%이므로 시작 위치는 X 좌표는 원래 위치의 X좌표가 된다.</li></ul><ul id="d1a06ebc-f72f-411e-aa85-ee9a978ec8b9" class="bulleted-list"><li>toXDelta 속성이 -100% 이므로 대상의 크기만큼 왼쪽으로 이동하게 된다.</li></ul><ul id="765e513c-6828-4df4-8acc-ffbaa04da98b" class="bulleted-list"><li>duration의 값이 20000이므로 20초 지연된다.</li></ul><ul id="6647bde0-e6f3-4ba1-b5ee-63f51faae37d" class="bulleted-list"><li>repeatCount = -1 → 무한 반복된다.</li></ul><ul id="c2226204-3639-4e4c-8a9a-f73ab98cd1d7" class="bulleted-list"><li>fillAfter = true → 애니메이션이 끝난 후에 대상이 원래의 위치로 돌아오는 것을 막기 위한것</li></ul><p id="bdc19a6b-07fd-4a83-951b-c55a22db7fbe" class="">
+</p><p id="d163cfed-38ae-430f-83ea-796b35cad65e" class="">
+</p><h3 id="6af78ced-7a96-4f8b-b8ae-71060c7731ca" class="">트윈 애니메이션으로 위치 회전 액션 효과 주기</h3><ul id="bd7e5aa3-578c-445f-b005-a8f945238480" class="bulleted-list"><li>회전은 한 점을 중심으로 대상을 회전시키는 효과를 만드는 액션으로 시작 각도와 종료 각도 를 지정 할 수 있다.</li></ul><ul id="819475ce-7c19-4241-a205-0ba2415ac3e3" class="bulleted-list"><li>예를 들어, 한 바퀴를 회전시키려고 한다면 fromDegress 속성 값을 0으로 하고 toDegress 속성 값을 -360으로 설정한다.</li></ul><ul id="f34b173c-e9cd-4ed4-8d35-8f1cee4a8796" class="bulleted-list"><li>회전의 중심이 되는 점은 디폴트 값이 (0, 0)이므로 대상의 왼쪽 상단끝 지점이 된다.</li></ul><ul id="7e46fa07-9261-47c9-b75e-a108854d200d" class="bulleted-list"><li>만약 대상의 중앙 부분을 회전의 중심으로 만들고 싶다면 pivotX, pivotY 속성으 값을 지정하면된다.</li></ul><ul id="bb141e09-4684-45bd-9f08-3e26ec7268ab" class="bulleted-list"><li>값의 단위는 좌표 값 또는 백분율(%)을 사용할 수 있다.</li></ul><p id="5bb89041-99f4-4c7c-9de5-fa4f788793e9" class="">
+</p><h3 id="bf89dd1c-5b7d-47be-89e8-26f7c037f66a" class="">다음은 대상의 중심을 회전축으로 하여 10초 동안 시계 방향으로 한 바퀴 회전시키는 액션을 XML로 정의</h3><pre id="4b77ae74-7eb5-40a7-b58e-6d88f220fd91" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;rotate xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:fromDegrees=&quot;0&quot;
+    android:toDegrees=&quot;360&quot;
+    android:pivotX=&quot;50%&quot;
+    android:pivotY=&quot;50%&quot;
+    android:duration=&quot;10000&quot;/&gt;</code></pre><ul id="2a774d19-c285-4364-a99e-5126a42ffef3" class="bulleted-list"><li>duration 속성 값이 10000으로 설정되어 있으므로 10초 동안 애니메이션이 진행된 후 원래대로 돌아온다.</li></ul><p id="52e8479e-b395-4354-8c92-e12a1624091b" class="">
+</p><h3 id="011a4300-b3a7-4029-8ed0-be758c80ea8e" class="">트윈 애니메이션으로 스케일 액션 효과 주기</h3><ul id="1acea844-a2eb-4809-982d-c47c2a7a1fd5" class="bulleted-list"><li>스케일은 대상을 크게 하거나 작게 할 수 있는 액션으로 확대 / 축소의 정도는 대상이 갖는 원래 크기에 대한 비율로 결정된다.</li></ul><ul id="b01e27cf-652d-4f4a-bdf2-bcba3832f084" class="bulleted-list"><li>예를 들어, 1.0 이라는 값은 원래 크기와 같다는 의미이며, 2.0은 원래 크기의 두 배로 크게 만든다는 의미</li></ul><ul id="b6d7d754-c021-47d7-a82a-0cc1c2b1e4b6" class="bulleted-list"><li>X축으로 늘리거나 줄이고 싶으면 fromXScale과 toXScale 속성 값을 설정하고 Y축으로 늘리거나 줄이고 싶으면 fromYScale, toYScale 속성 값을 설정한다.</li></ul><ul id="a9d98345-9697-413b-92a3-1fcbfb3f735a" class="bulleted-list"><li>확대 / 축소의 경우에도 중심이 되는 점을 지정할 수 있는데 앞에서 마찬가지로 pivotX. pivotY 속성 값을 이용하면 된다.</li></ul><p id="c170b8e4-c9e8-4370-98e9-7788b21abba9" class="">
+</p><h3 id="f12e326c-5a8b-4f9c-b9d2-e6612844b959" class="">트윈 애니메이션으로 투명도 액션 효과 주기</h3><ul id="418f78b1-5d93-4c8d-8b8c-5154246c874b" class="bulleted-list"><li>투명도를 결정하는 알파 값도 뷰나 그리기 객체의 투명도를 점차적으로 바꿀 수 있는 애니메이션 액션으로 정의할 수 있다.</li></ul><ul id="95c9ff83-0345-479f-95d5-f51b404c368f" class="bulleted-list"><li>알파 값을 이용한 투명도 변환은 대상을 천천히 보이게 하거나 보이지 않게 하고 싶을 때 또는 하나의 뷰 위에 다른 뷰를 겹쳐 보이게 할 때 사용한다.</li></ul><ul id="f8b9ce24-d85d-4720-9331-a4bbf29f6678" class="bulleted-list"><li>알파 값의 범위는 0.0 부터 1.0 까지이며 0.0은 알파 값이 0일 때와 마찬가지이므로 완전히 투명한 상태(뷰 그리기 객체가 보이지 않음)이며 1.0은 알파 값이 1 일 때와 마찬가지이므로 완전히 보이는 상태(투명 효과가 적용되지 않음)</li></ul><p id="2c07324b-b856-4692-a331-b06e9c8f01a1" class="">
+</p><h3 id="eaf23675-980b-44a8-9c2e-37c1714ee6a1" class="">10초 동안 대상을 천천히 보이게 만드는 액션을 XML로 정의한 것이다. </h3><pre id="7c52ae36-f195-49f0-9f2c-cf17c96afa29" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;alpha xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:fromAlpha=&quot;0.0&quot;
+    android:toAlpha=&quot;1.0&quot;
+    android:duration=&quot;10000&quot;/&gt;</code></pre><p id="a685fbd7-6f10-4c4b-81ab-e5ebafe8ce95" class="">
+</p><h3 id="af14d8bc-3dde-439d-a73b-4a8748595ce3" class="">트윈 애니메이션으로 속도 조절하기</h3><ul id="1063cda4-1525-4db6-ab6a-30b79ef54e9d" class="bulleted-list"><li>애니메이션 효과가 지속되는 동안 빠르거나 느리게 효과가 진행되도록 만드는 방법은 인터폴레이터(InerPolator)를 사용하면 된다.</li></ul><ul id="372ed864-0d59-4d39-9725-f147f754da6c" class="bulleted-list"><li>인터폴레이터는 R.anim에 미리 정의된 정보를 사용해서 설정할 수 있는데 다음과 같은 대표적인 인터폴레이터를 사용할 수 있다.</li></ul><h3 id="a10ee2dd-0170-47db-a0ad-d4e06e0d672d" class="">Interpolator</h3><ul id="4cddd521-5caa-44a2-8414-f7f4b44c0790" class="bulleted-list"><li>accelerate_interpolator<ul id="70d73a2c-799c-4872-bc9e-c9e52133ea0f" class="bulleted-list"><li>애니메이션 효과를 점점 빠르게 나타나도록 만든다.</li></ul></li></ul><ul id="528c474c-b2f4-43ec-aab5-3cc197c01975" class="bulleted-list"><li>decelerate_interpolator<ul id="c37a2cf2-8e04-49fd-b303-5af5d27c7887" class="bulleted-list"><li>애니메이션 효과를 점점 느리게 나타나도록 만든다.</li></ul></li></ul><ul id="d587abc2-b27e-4e44-876b-90722bcd129e" class="bulleted-list"><li>accelerate_decelerate_interpolator<ul id="133ceb91-062d-440b-b8e8-faa917cd4080" class="bulleted-list"><li>애니메이션 효과를 점점 빠르다가 느리게 나타나도록 만든다.</li></ul></li></ul><ul id="9cbffa5e-2f8f-43f8-9b14-6636875c01f6" class="bulleted-list"><li>anticipate_interpolator<ul id="3ac158e3-20b7-4d64-95c2-36566130da41" class="bulleted-list"><li>애니메이션 효과를 시작 위치에서 조금 뒤로 당겼다가 시작하도록 만든다.</li></ul></li></ul><ul id="1926172e-df95-43f0-9ae2-3ab733533eb4" class="bulleted-list"><li>overshoot_interpolator<ul id="1a0c1621-f12d-44fd-bb49-e4b5dfdebf6f" class="bulleted-list"><li>애니메이션 효과를 종료 위치에서 조금 지나쳤다가 종료되도록 만든다.</li></ul></li></ul><ul id="0788d362-ee13-4c4d-b90e-20fcfb650c58" class="bulleted-list"><li>anticipate_overshoot_interpolator<ul id="8faa82d6-1c57-4430-84dc-fc8470b0e289" class="bulleted-list"><li>애니메이션 효과를 시작 위치에서 조금 뒤로 당겼다가 시작한 후 종료 위치에서 조금 지나쳤다가 종료되도록 만든다.</li></ul></li></ul><ul id="2c0cae32-c4ac-4e6d-838a-ba6e1a70142f" class="bulleted-list"><li>bounce_interpolator<ul id="b9fa8de4-5a68-4158-8cfd-99672a961694" class="bulleted-list"><li>애니메이션 효과를 종료 위치에서 튀도록 만든다.</li></ul></li></ul><p id="68be6a07-b889-4614-9b57-3b9b5894211e" class="">
+</p><ul id="4a197a8a-6d02-4295-8cd2-42c1206ce1c0" class="bulleted-list"><li>이런 정보들은 각각의 액션에 설정할 수도 있고 애니메이션 집합에 설정할 수도 있다.</li></ul><ul id="7a044f52-8562-46d6-acee-629e5ba6e370" class="block-color-red bulleted-list"><li>만약 각각의 액션에 다른 인터폴레이터를 설정하는 경우에는 shareInterpolator 속성을 false로 할 수 있다.</li></ul><ul id="0503a76c-d07b-4ae5-9204-093dbdac63a4" class="bulleted-list"><li>이렇게 리소스로 정의된 애니메이션 정보들을 자바 코드에서 new 연산자로 직접 만드는 것도 가능하다.</li></ul><p id="bf756ab7-76ea-4895-8287-2956abeb5b5e" class="">
+</p><h3 id="c5f63655-abd1-46be-be43-6d1d0696e302" class="">각각의 액션별로 만들 수 있는 객체</h3><ul id="43b822a5-d113-4726-b99d-655899fbc49b" class="bulleted-list"><li>위치 이동<ul id="5b1334d4-0ab8-4a64-a2c2-62153f852c11" class="bulleted-list"><li>&lt;tranlate&gt; → TranslateAnimation</li></ul></li></ul><ul id="5d3b608e-a65f-4b09-a4f8-1fcafebcedcd" class="bulleted-list"><li>회전<ul id="f38ce2e6-d5c4-4282-96b2-1336afaf74a4" class="bulleted-list"><li>&lt;rotate&gt; → RoateAnimation</li></ul></li></ul><ul id="743a499a-5d22-4edb-899e-1fdfe5337305" class="bulleted-list"><li>확대 / 축소 <ul id="e635e6ac-7391-4edf-b540-d3714bc7b116" class="bulleted-list"><li>&lt;scale&gt; → ScaleAnimation</li></ul></li></ul><ul id="81cefced-a83b-4088-a9a6-67401ca10b9b" class="bulleted-list"><li>투명도<ul id="e346be4d-6f20-474d-a36d-9820233613cc" class="bulleted-list"><li>&lt;alpha&gt; → AlphaAnimation</li></ul></li></ul><ul id="cbadded1-0872-4dce-9ac4-3c946f3a30d2" class="bulleted-list"><li>애니메이션 집합<ul id="67ec255f-8712-4a97-8ef8-f30d0325f61e" class="bulleted-list"><li>&lt;set&gt; → AnimationSet</li></ul></li></ul><p id="2926c916-b001-4ebe-b275-3b73d78bef2c" class="">
+</p><h3 id="a89eda73-e983-4743-9c6b-f81dc0fc069f" class="">화면이 사용자에게 보이는 시점에 시작해야 하는 경우 </h3><ul id="8d0bc25b-24a0-4a8c-8b3e-35430f8f026b" class="bulleted-list"><li>사용자에게 화면이 표시되는 시점에 애니메이션이 시작하도록 만들고 싶다면 애니메이션의 시작점은 onWindowFocusChanged() 메서드가 호출되는 시점</li></ul><ul id="4cfd17c8-1114-4eb2-8a07-acca26b1e030" class="bulleted-list"><li>즉, 윈도우가 포커스를 받는 시점이 되어야 한다.</li></ul><ul id="63918e92-126f-4da8-8fc1-958fa09042b1" class="block-color-red bulleted-list"><li>따라서 onWindowFocusChanged() 메서드 내에서 파라미터로 전달되는 hasFocus 변수의 값이 true일 경우에 각각의 애니메이션 객체에 대해  start() 메서드를 호출함으로써 애니메이션이 시작되도록 만들면된다. </li></ul><ul id="112ceb97-e678-4b12-a881-ff768aa9e5d2" class="bulleted-list"><li>윈도우가 다른 윈도우에 의해 가려지거나 할 때는 hasFocus 변수의 값이 false가 되므로 이때는 애니메이션 객체의 reset() 메서드를 호출하여 초기 상태로 되돌릴 수 있다.</li></ul><ul id="607ae0d1-2f66-465f-992c-87e7e0ffdc07" class="bulleted-list"><li>애니메이션이 언제 시작했는지 또는 끝났는지에 대한 정보는 AnimationListener 객체를 설정하면 알수 있다.</li></ul><ul id="75693b97-5ab4-412d-b5e2-eace216f0c9d" class="bulleted-list"><li>애니메이션 객체에 리스너를 설정하면 애니메이션이 진행되는 상태에 따라 다음과 같은 메서드가 자동으로 호출된다.</li></ul><h3 id="e59fa821-a30c-43c3-8ebe-00520ec60a6a" class="">AnimationListener → 메서드 호출 종류</h3><ul id="65ec4c0e-c228-46e3-a1c0-46e30a52bfa1" class="bulleted-list"><li>public void onAnimationStart(Animation animation)<ul id="ffbddd3a-88cc-431a-a070-a40c9ebb5e93" class="bulleted-list"><li>애니메이션이 시작되기 전에 호출된다.</li></ul></li></ul><ul id="2a999c09-d65d-45e6-a4c9-3b43ccf09baf" class="bulleted-list"><li>public void onAnimationEnd(Animation animation)<ul id="e5885374-683a-4147-8133-e0a193f5749e" class="bulleted-list"><li>애니메이션이 끝났을 때 호출된다.</li></ul></li></ul><ul id="fcb6a5a7-06c2-4d72-b1e0-0923ac8b9244" class="bulleted-list"><li>public void onAnimationRepeat(Animation animation)<ul id="4f677387-1428-420a-a174-c1466f707e41" class="bulleted-list"><li>애니메이션이 반복될 때 호출된다.</li></ul></li></ul><p id="837c1fd0-9207-4331-afd4-1b9e3c554b28" class="">
+</p><p id="075c023f-0400-4b06-a3a3-db26efcd663d" class="">
+</p><h3 id="09b12f1a-4aed-4232-b962-e2ecb874a04d" class="">타 액티비티 전환, 종료 애니메이션 효과 주기</h3><ul id="f112eef7-d669-4705-b047-62a96a98474e" class="bulleted-list"><li>안드로이드에서 startActivity(Intent type)를 통해 액티비티를 전환하게 되면, 깜빡임과 함께 다른 액티비티로 전환된다.</li></ul><ul id="1d30bf32-f4f1-4d00-bddb-e00e899aab31" class="bulleted-list"><li>하지만 액티비티를 전환할 떄 애니메이션 효과를 주면 깜빡임 효과없이 액티비티가 개발자가 원하는 방향에서 나타날 수 있게 있다.</li></ul><p id="d21e0be7-d231-429f-b0da-0a9cf2f35398" class="">
+</p><h3 id="b572a9be-8c2a-4902-aecb-e20032de63d2" class="">overridePendingTranslition(int ShowAnim, int HideAnim)</h3><pre id="ec10e543-0784-4e33-a0aa-9b0aa854e408" class="code"><code>// overridePendingTransition(int showAnim, int hideAnim);
+
+// 다른 액티비티 호출 시
+startActivity(intent);
+overridePendingTransition(R.anim.right, R.anim.not_move);
+
+// 현재 액티비티 종료시 
+finish();
+overridePendingTransition(R.anim.not_move, R.anim.right);</code></pre><ul id="d93558ed-9451-473a-808d-7954c56057c2" class="bulleted-list"><li>각각 startActivity(), finish() 다음에 overridePendingTransition(int showAnim, int hideAnim) 메서들를 위치하면된다.</li></ul><ul id="9b414acf-d470-427f-b4d9-5b5737ab8b43" class="bulleted-list"><li>overridePendingTransition의 메서드 파라미터 매개 변수의 첫 번째에는 나타날 액티비티가 취해야할 애니메이션 리소스를 지정하면 되고,</li></ul><ul id="156801f8-1739-428a-9979-6f7197ab9ef2" class="bulleted-list"><li>두 번째 파라미터에는 현재 액티비티가 취해야할 애니메이션 리소스를 지정하면 된다.</li></ul></div></article></body></html>

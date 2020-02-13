@@ -1,0 +1,701 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>서버에 데이터 요청하고 응답받기#1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="763b445b-5f90-466d-832e-36a10e79c855" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">서버에 데이터 요청하고 응답받기#1</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 08, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="49e48299-f999-4d5f-bf3d-0eafb463e64e" class="">네트워킹</h3><ul id="516432bf-1cce-4226-b1ec-57c29dfcf676" class="bulleted-list"><li>인터넷에 연결되어 있는 원격지의 서버 또는 원격지의 단말과 통신해서 데이터를 주고받는 동작을 포함한다.</li></ul><ul id="edb9fd6c-7805-47d7-afd3-ead3a886aec2" class="bulleted-list"><li>이런 네트워킹은 여러분이 가지고 있는 단말의; 데이터만 사용하는 것이 아니라 멀리 떨어져 있는 서버나, 다른 사람의 단말의 데이터를 조회할 수 있다.</li></ul><ul id="e2ce7f37-6be1-4b1f-a784-c2782b6bb9c0" class="bulleted-list"><li>그리고 서버에 데이터를 저장할 때는 먼저 인터넷을 통해 데이터 통신이 가능한지를 알아본 후 데이터를 주고 받는 과정도 진행한다.</li></ul><ul id="57c986ae-ac04-4aae-93e6-e1528ea1e3df" class="bulleted-list"><li>데이터를 주고 받는 과정은 상단히 복잡하다.</li></ul><ul id="30521c3b-b78a-425c-9e0b-64f50a095eb5" class="bulleted-list"><li>그래도 네트워킹을 사용하는 이유는 인터넷에 연결되어 있는 여러 단말을 동시에 사용할 수 있어서 다양한 데이터 자원을 효율적으로 사용할 수 있기 때문이다.</li></ul><p id="6297c94d-9aca-4359-af5c-d3e605d2c795" class="">
+</p><h3 id="7d761760-eb80-4a91-a280-7974d2100d41" class="">네트워크 연결 방식 이해</h3><ul id="ccfd95eb-b1dc-4c32-a01d-b525ad3211d5" class="bulleted-list"><li>원격지의 서버를 연결하는 가장 단순한 방식은 클라이언트와 서버가 일대일로 연결하는 2-tier C/S(Client/Server) 방식이다.</li></ul><p id="f382c15d-d393-44c9-bfa3-b4e2c5d10cbe" class="">
+</p><figure id="2bfc2948-29a3-4879-85c7-8ade472d8e08" class="image"><a href="1%201/Untitled.png"><img style="width:576px" src="1%201/Untitled.png"/></a></figure><ul id="474b5dc7-c3da-41e5-a1c6-53e2a886e6a4" class="bulleted-list"><li>&#x27;2-tier C/S 연결 방식은 가장 많이 사용하는 네트워킹 방식이며 대부분 클라이언트가 서버에 연결되어 데이터를 요청하도 응답받는 단순한 개념으로 이해할 수 이싿.</li></ul><ul id="a3ef496b-90cb-4d11-83f4-6ff7c2aceacd" class="bulleted-list"><li>웹 페이지를 볼 때 사용하는 HTTP 프로토콜, 파일 전송을 위한 FTP 프로토콜 그리고 메일을 주고받는 POP3 프로토콜 등의 연결 방식은 모두 위와 같은 방법으로 서버로 간편하게 접속하여 처리하는 것이다.</li></ul><p id="65d42ee8-8015-4d60-8677-188d099d9825" class="">
+</p><h3 id="c3304010-eca0-488a-a714-bc50b830ed0a" class="">3-tier C/S 연결 방식</h3><figure id="32eb6371-adb0-40e1-9b77-9f225e904c53" class="image"><a href="1%201/Untitled%201.png"><img style="width:842px" src="1%201/Untitled%201.png"/></a></figure><ul id="146a2371-d039-45f2-ba64-4b5831cbddcf" class="bulleted-list"><li>3-tier C/S 연결 방시을 사용하면 서버를 좀 더 유연하게 구성할 수 있다.</li></ul><ul id="e9c2ef17-732f-409b-b312-df03eb0af65e" class="bulleted-list"><li>또 응용 서버와 데이터 서버로 서버를 구성하면 데이터베이스를 분리할 수 있어 중간에 비즈니스 로직(Business Logic)을 처리하는 응용 서버가 좀 더 다양한 역활을 할 수 있다는 장점이 생긴다.</li></ul><ul id="c6e9f323-cee9-47df-96bb-f8d2ad77f437" class="bulleted-list"><li>이것보다 좀 더 많은 단계들을 추가한 N-tier 연결 방식이 있지만 일반적으로 3-tier 까지만 이해해도 앱을 만드는데 큰 무리가 없다. </li></ul><p id="339a3e47-67b2-4d2e-a684-e8726fd49ba1" class="">
+</p><ul id="ff2b6728-b472-40dc-9447-b8f7c5525697" class="bulleted-list"><li>단말 간의 통신이 일반화되며 클라이언트와 서버의 관계는 피어-투-피어(Peer-to-Peer) 통신으로 불리는 P2P 모델로도 변형되어 사용되기도 한다.</li></ul><ul id="a4c2258a-666e-4c05-aa6b-6dce39395089" class="bulleted-list"><li>P2P 모델은 서버를 두지 않고 단말끼리 서버와 클라이언트 역활을 한다.</li></ul><ul id="280e1fa3-9825-470c-a437-afccea66eaee" class="bulleted-list"><li>이런 특징을 가지고 있는 P2P 모델은 정보 검색이나 파일 송수신으로 정보를 공유하는 데 많이 사용된다.</li></ul><ul id="9d5bc2e5-bfbd-4f75-9eb7-f1a683ca355a" class="bulleted-list"><li>우리가 흔히 사용하는 메신저 서비스나 인터넷 전화에 사용되는 SIP 프로토콜 기반의 서비스들은 서버가 있긴 하지만 P2P 모델의 특성을 가지고 있다.</li></ul><ul id="2957985a-ef07-46fc-b9c0-bf14547c00da" class="bulleted-list"><li>그러므로 단말끼리의 통신 방식에 대한 기본적인 이해도 필요하다.</li></ul><p id="92eba6d2-578e-46b7-ab2f-d378e27a4d10" class="">
+</p><p id="04c14b85-fee5-436b-8909-9548c4c3005b" class="">
+</p><p id="c128cfdb-5cdc-4b34-b29e-268eb5beb60b" class="">
+</p><h3 id="7f4ec288-9a83-4663-ad00-1b8cff971f5a" class="">소켓(Socket)</h3><ul id="8ca01132-d9d9-4b2f-bab2-df19957f0478" class="bulleted-list"><li>네트워킹을 이해하려면 먼저 TCP/IP 수준의 통신 방식을 제공하는 소켓이 무엇인지 알아야한다.</li></ul><ul id="ed9ce5fa-87e9-4e5a-867b-d8fd8f597b5e" class="bulleted-list"><li>IP 주소로 목적지 호스트를 찾아내고 포트로 통신 접속점을 찾아내는 소켓 연결은 TCP와 UDP 방식으로 나눌 수 있다.</li></ul><ul id="384791a7-a1ff-4897-80f6-8e4f79c79fb8" class="bulleted-list"><li>하지만 일반적인 프로그래밍에서는 대부분 TCP 연결을 사용한다.</li></ul><ul id="b3926f8f-8bf1-41b2-bb56-d21e80b2e40e" class="bulleted-list"><li>따라서 앞으로 실습하는 내용은 모두 TCP 연결을 사용할 것이다.</li></ul><p id="95691c03-9993-4924-88f1-e6937c588982" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e1fa7e0b-1450-4f28-874a-fee3a3855729"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">UDP 기반 소켓은 어디에 많이 사용될까?</div></figure><ul id="4a470930-db14-4006-86d4-519c02ba9d36" class="bulleted-list"><li>인터넷 전화에 많이 사용되는 SIP 프로토콜이나 멀티디어 데이터 스트림을 처리하는 RTP  프로토콜을 기본적으로 UDP를 많이 사용한다.</li></ul><ul id="66e0ba37-df81-4258-9d67-49e0a966a8a8" class="bulleted-list"><li>여기에서 SIP 세션 개시 프로토콜이라고 하는데 IETF에서 정의한 시그널링 프로토콜이다.</li></ul><ul id="b482e3cc-5276-4283-9af8-a73c9cd7d1aa" class="bulleted-list"><li>음성과 화상통화 같은 멀티미디어 세션을 제어하기 위해 널리 사용되고 있다.</li></ul><p id="4fbaf2c6-1ada-425e-bd5f-b3928f0cbe96" class="">
+</p><p id="8c31de83-f838-41b7-828c-7943eed08ce0" class="">
+</p><h3 id="fae59aba-e16a-486e-ab9c-fd0abc34f28a" class="">HTTP 프로토콜, 소켓</h3><ul id="53160147-8757-4d81-9859-1b8cd760e075" class="bulleted-list"><li>HTTP 프로토콜은 소켓으로 웹서버에 연결한 후에 요청을 전송하고 응답을 받은 다음 연결을 끊는다.</li></ul><ul id="b8338d53-1df2-4ca6-8ffe-c7b464f8f74a" class="bulleted-list"><li>이런 특성을 &#x27;비연결성(stateless)&#x27;이라고 하는데 이런 특성 때문에 실시간으로 데이터를 처리하는 앱은 응답 속도를 높이기 위해 연결성이 있는 소켓 연결을 선호하였다.</li></ul><ul id="3c43ac88-3dcf-4f1f-a4fb-13871c65bae0" class="bulleted-list"><li>하지만 지금은 인터넷 속도가 빨라져 HTTP 프로토콜을 사용하는 웹이 일반적이 되었고 결국 속도가 그렇게 느리지 않으면서도 국제 표준을 따를 수 있다는 장점을 가진 웹서버로 많은 서버가 만들어지게 되었다.</li></ul><ul id="a0cf8172-2908-4773-b54c-a7b0b815235e" class="bulleted-list"><li>안드로이드는 표준 자바에서 사용하던 <a href="http://java.net">java.net</a> 패키지의 클래스들을 그대로 사용할 수 있다.</li></ul><ul id="17f77fad-e063-499c-97c9-bc0c26660d19" class="bulleted-list"><li>이때문에 네트워킹의 기본이 되는 소켓 연결은 아주 쉽게 구현할 수 있다.</li></ul><ul id="45f900f9-cc7e-4864-a85f-2fe8b220bef2" class="block-color-red bulleted-list"><li>즉, 화면 구성을 위한 액티비티를 구성하고 나면 소켓 연결에 필요한 코드는 기존에 사용하던 자바 코드를 그대로 사용할 수 있다. </li></ul><p id="070339ad-f219-4554-adf1-7ea5e749f821" class="">
+</p><p id="3518e1bf-b39f-457f-b89b-4cbb96839871" class="">
+</p><h3 id="a75cb099-5dcd-4a63-8c5f-b889c204185f" class="block-color-red">안드로이드 소켓 연결 등을 시도하거나 응답을 받아 처리할 때 스레드를 사용해야 한다는 것!!!</h3><p id="68e7c637-d6ae-4f4f-b0a1-fc84c32da95b" class="">
+</p><h3 id="d823ad6d-2a18-4dcb-a292-bd23fd79d11a" class="">스레드르 사용하면서 UI를 업데이트하려면 핸들러 사용해야되</h3><ul id="624ac6f9-dc72-4fe5-8431-e56ac470e8fe" class="bulleted-list"><li>원격지에 데이터를 요청하고 응답을 기다리는 네트워킹 기능은 네트워크의 상태에 따라 응답 시간이 길어질 수 있을뿐더러 최근 플랫폼에서는 스레드 사용을 강제하고 있기 때문에 이런 경우에는 UI 업데이트를 위한 핸들러를 사용한다.</li></ul><p id="1f39d14d-1998-422b-9045-f018d1b0b898" class="">
+</p><p id="07b4db24-8526-4e64-a65a-11b120782f35" class="">
+</p><h3 id="89eba6f9-ba9d-41ec-ac03-ad0567629561" class="">SampleSocket</h3><p id="6b67c3b0-6ed5-49c3-b7a6-8b123842dfad" class="">
+</p><h3 id="ec8f65d2-501b-49f1-9ce0-83f3865027ca" class="">layout 구성</h3><figure id="927d41e2-4d65-47d4-996a-ecd0d8dc2897" class="image"><a href="1%201/Untitled%202.png"><img style="width:384px" src="1%201/Untitled%202.png"/></a></figure><pre id="97198846-e59f-44bf-8381-715b9f44a484" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+
+    TextView textView;
+    TextView textView2;
+
+    Handler handler = new Handler();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+        textView2 = findViewById(R.id.textView2);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String data = editText.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        send(data);
+                    }
+                }).start();
+            }
+        }); // 스레드 안에서 send() 메서지 호출하기
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startServer();
+                    }
+                }).start(); // 스레드 안에서 서비스 실행하기
+            }
+        });
+    }</code></pre><ul id="3aff9abb-1521-40b2-bcc1-6db2c994aed0" class="bulleted-list"><li>첫 번째 버튼을 눌렀을 때는 새로 만들 send() 메서들 호출하도록 하고</li></ul><ul id="b82be9d6-4668-4f11-861f-ee195572eead" class="bulleted-list"><li>두 번째 버튼을 눌렀을 때는 startServer() 메서드를 호출하도록 한다.</li></ul><ul id="af6f2eab-7cdb-46dd-a564-a2cfa9571710" class="bulleted-list"><li>그런데 이 두 개의 메서드는 모두 네트워킹 기능을 사용할 것이므로 스레드로 만들어야 한다.</li></ul><ul id="42d837bc-4606-4c79-9451-484067790c14" class="block-color-red bulleted-list"><li>따라서 버튼을 눌렀을 때 스레드 안에서 동작하게 만드는게 중요하다.</li></ul><pre id="337d4af2-54f7-4a6f-82cc-f84b9b1495d1" class="code"><code>// 클라이언트 쪽 로그를 화면에 있는 텍스트뷰에 출력하기 위해 핸들러 사용
+public void printClientLog(final String data) {
+        Log.d(&quot;MainActivity&quot;, data);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.append(data + &quot;\n&quot;);
+            }
+        }); 
+    }
+
+// 서버 쪽 로그를 화면에 있는 텍스트뷰에 출력하기 위해 핸들러 사용
+    public void printServerLog(final String data) {
+        Log.d(&quot;MainActivity&quot;, data);
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                textView2.append(data + &quot;\n&quot;);
+            }
+        }); 
+    }
+</code></pre><ul id="c5abef95-6a67-4ff6-b9b9-3e0b12b8ff33" class="bulleted-list"><li>두 개의 텍스트뷰는 결과를 화면에 출력하기 위한 것이다.</li></ul><ul id="99e7aee1-97dc-4312-a4af-ce7697e8f7fa" class="bulleted-list"><li>printClientLog() 메서드는 화면 상단에 있는 텍스트뷰에 글자를 출력하도록 하고 printServerLog() 메서드는 화면 하단에 있는 텍스트뷰에 글자를 출력하도록 한다.</li></ul><ul id="60fb3545-a60c-403b-9c16-7e189887085b" class="bulleted-list"><li>새로 만들어진 스레드에서 이 메서드들을 호출할 것이므로 핸들러 객체를 이용한다.</li></ul><ul id="54ea6b78-6343-477a-8a57-8ec74502c4f0" class="bulleted-list"><li>printClientLog(), printServerLog() 메서드 안에서는 핸들러 객체를 사용하고 있으며 Runnable 객체의 run() 메서드 안에서 텍스트뷰를 접근하고 있다.</li></ul><ul id="8ed971c4-b629-4bcf-9a00-b32fb3be10ae" class="bulleted-list"><li>텍스트뷰의 append() 메서드로 전달될 파라미터는 printClientLog(), printServerLog() 메서드로 전달되는 파라미터가 그대로 전달되어야 하므로 final로 정의하였다.</li></ul><p id="1e7b0864-fd98-4424-be0f-55bb770cd19e" class="">
+</p><p id="bd9f952f-4309-46fc-bb69-cf2cd16d236b" class="">
+</p><h3 id="2f7ae2f6-4301-4dd9-ad75-f4f7611e4547" class="">Send(Client → Server)_Data</h3><pre id="8be1c136-da6e-441d-8893-8c57df22945b" class="code"><code>public void send(String data) {
+        try {
+            int portNumber = 5001;
+            Socket sock = new Socket(&quot;localhost&quot;, portNumber);
+            printClientLog(&quot;소켓 연결함&quot;);   // 소켓 객체 생성
+
+            ObjectOutputStream outstream = new ObjectOutputStream(sock.getOutputStream());
+            outstream.writeObject(data);
+            outstream.flush();
+            printClientLog(&quot;데이터 전송함.&quot;); // 소켓 객체로 데이터 보내기
+
+            ObjectInputStream instream = new ObjectInputStream(sock.getInputStream());
+            printClientLog(&quot;서버로부터 받음: &quot; + instream.readObject());
+            sock.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }</code></pre><ul id="d168c296-5804-4bbc-96e8-96c383ecf540" class="bulleted-list"><li>클라이언트에서 데이터를 전송하는 send() 메서드를 정의한다.</li></ul><ul id="f1a1581f-9563-4e3d-af08-caf1d8705d8a" class="bulleted-list"><li>여기에서는 서버와 클라이언트가 5001번 포트를 사용하도록 한다.</li></ul><ul id="3001609a-77fe-4048-9ae6-56f7e054b0d9" class="bulleted-list"><li>코드는 표준 자바의 소켓 클라이언트 코드와 같다.</li></ul><ul id="44ad61e8-ac99-4418-94fb-5d9bba5d415f" class="bulleted-list"><li>로그를 화면에 출력하기 위해 사용한 printClientLog() 메서드만 다르다.</li></ul><ul id="9311e2bf-be72-4f0a-a8bb-b81d978c88e0" class="bulleted-list"><li>접속할 IP 주소는 &quot;localhost&quot;, 포트는 5001번을 사용하고 있다.</li></ul><ul id="9ea80784-4786-4ca7-bc71-bb1f3c979364" class="bulleted-list"><li> new 연산자로 만드는 소켓은 이 IP 주소와 포트 번호를 파라미터로 전달받으며, </li></ul><ul id="34832b2b-7c5b-4376-a489-080932de3da2" class="bulleted-list"><li>새로 만들어진 소켓을 통해 데이터를 보내거나 받고 싶을 때는 getOutpurStream(), getInputStream() 메서드로 입출력 스트림을 객체로 참조한다.</li></ul><ul id="0539d5f7-4f38-4f3b-843a-2044b8c904dc" class="bulleted-list"><li>여기서는 문자열을 객체 그대로 보내기 위해 ObjectOutputStream, ObjectInputStream 클래스를 사용한다.</li></ul><p id="29f47183-54a4-4da2-9bb1-d04ce5ff2977" class="">
+</p><p id="16bc5213-0fb5-472c-a9de-aff856284cc8" class="">
+</p><h3 id="17e4cce7-4941-4e4b-ab00-00018e2c03b6" class="">StartServer()</h3><pre id="96fa1d47-49fc-4a60-b387-b130086e691a" class="code"><code>public void startServer() {
+        try {
+            int portNumber = 5001;
+
+            ServerSocket server = new ServerSocket(portNumber);
+            printServerLog(&quot;서버 시작함 : &quot; +portNumber);    // 소켓 서버 객체 만들기
+
+            while (true) {
+                Socket sock = server.accept();
+                InetAddress clientHost = sock.getLocalAddress();
+                int clientPort = sock.getPort();
+                printServerLog(&quot;클라이언트 연결됨&quot; + clientHost + &quot; : &quot; + clientPort);
+
+                ObjectInputStream instream = new ObjectInputStream(sock.getInputStream());
+                Object obj = instream.readObject();
+                printServerLog(&quot;데이터 받음&quot; + obj);
+
+                ObjectOutputStream outstream = new ObjectOutputStream(sock.getOutputStream());
+                outstream.writeObject(obj + &quot; from server.&quot;);
+                outstream.flush();
+                printServerLog(&quot;데이터 보냄&quot;);
+
+                sock.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}</code></pre><ul id="3203106e-81da-4d53-83d8-214d9946d100" class="bulleted-list"><li>소켓서버는 ServerSocket 클래스를 만든후, 클라이언트로부터의 요청을 처리할 수 있는데 포트 번호는 클라이언트에서 접속할 5001번을 그대로 사용한다.</li></ul><ul id="3ee50296-165c-448d-a665-0e71bf94a224" class="bulleted-list"><li>while 구문을 사용해서 클라이언트의 접속을 기다리다가 클라이언트의 접속 요청이 왔을 때 accept() 메서드를 통해 소켓 객체가 반환되므로 클라이언트 소켓의 연결 정보를 확인할 수 있다.</li></ul><ul id="4c082efa-5767-41fd-89b1-29f7128d7dbb" class="bulleted-list"><li>여기서는 클라이언트에서 접속한 포트 번호를 확인한후 보내온 문자열에 &quot;from Server&quot; 라는 문자열을 붙여서 클라이언트로 다시 보내게 된다.</li></ul><p id="6abc8765-8a66-426f-9e53-ca9c139473b2" class="">
+</p><p id="cc63b669-6fce-458e-93d7-1e70a3aef1dd" class="">
+</p><h3 id="7da0d78f-03b1-4af3-9f03-eb732e123677" class="">권한 설정</h3><pre id="58915d49-9be7-4b4c-a078-90fd7e45d443" class="code"><code>&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;</code></pre><p id="37fbb624-fcba-4b64-b646-7d7b7674a754" class="">
+</p><p id="66542d26-231b-4e3d-88ec-16feeb889dd3" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e22f4b98-0997-438e-82cf-95d3c16aa07f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">실제 앱을 만들 때도 ObjectInputStream, ObejectOutputStream을 사용하나요?</div></figure><ul id="e7772ee3-91c7-4f6a-bf20-39f835239fe3" class="bulleted-list"><li>실제 앱에서 네트워킹 관련 코드를 만들 때는 ObjectInputStream, ObejectOutputStream을 잘 사용하지 않는다.</li></ul><ul id="6f79b630-9ba8-440e-a1dd-5c7886d9e2f4" class="bulleted-list"><li>이 두 클래스는 자바의 객체(Object) 정보를 편리하게 주고받을 수 있도록 만들어진 것이지만 자바가 아닌 다른 언어로 만들어진 서버와 통신할 경우에는 데이터 송수신이 정상적으로 이루어지지 않을 수 있다.</li></ul><ul id="cc0bac0d-1702-49ef-867d-c2234e9209f5" class="block-color-red bulleted-list"><li>따라서 일반적으로는 DataInputStream, DataOutputStream을 많이 사용한다.</li></ul><p id="26d1d8aa-7e41-43e0-a3c2-2db0d9435333" class="">
+</p><p id="a99a41a0-2b5e-440d-83a7-c11ebbf49f2b" class="">
+</p></div></article></body></html>

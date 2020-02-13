@@ -1,0 +1,626 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>리소스와 매니페스트 이해하기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4e2672a7-8461-4780-8101-f70a627ab5c4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">리소스와 매니페스트 이해하기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 22, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h2 id="26528441-0715-4b11-bb8b-ddf4a8f5cce6" class="">자바 코드 , 리소스</h2><h3 id="e821d3ff-224e-41f6-9a4b-48f0395a73f1" class="">자바코드</h3><ul id="a5278fe1-e9bd-4ad5-ae01-5610f611e00a" class="bulleted-list"><li>자바코드에서는 앱의 흐름과 기능을 정의</li></ul><p id="858111e6-cbd9-4ac9-898c-91b496934d36" class="">
+</p><h3 id="7be2cd82-f863-4f61-a13d-f43610facf5d" class="">리소스</h3><ul id="c1b06d7f-5e86-49ae-85bb-df0b9fd11b47" class="bulleted-list"><li>리소스에서는 레이아웃이나 이미지처럼 사용자에게 보여주기 위해 사용하는 파일이나 데이터를 관리한다.</li></ul><p id="64e906b1-1610-4d5e-a233-f940aa44b7b9" class="">
+</p><h3 id="d669f8c4-4a45-4e25-b0d8-1bfbaee50e1b" class="">매니페스트</h3><ul id="4d63858b-a6d5-4837-b3b2-27c28b68332e" class="bulleted-list"><li>설치된 앱의 구성 요소가 어떤 것이지, 그리고 어떤 권한이 부여되었는지 시스템에 알려주기 때문에 매우 중요</li></ul><ul id="692d4f61-80a8-4012-a8a6-d4a37e03ceef" class="bulleted-list"><li>모든 안드로이드 앱은 가장 상위 폴더에 매니페스트파일이 있어야 하며, 이 정보는 앱이 실행되기 저에 시스템이 알아야 할 내용들을 정의하고 있다.</li></ul><pre id="c44a35a5-a2bf-4876-94fd-87ededfbe182" class="code"><code>&lt;action&gt;
+&lt;activity&gt;
+&lt;activity-alias&gt;
+&lt;application&gt;
+&lt;category&gt;
+&lt;data&gt;
+&lt;grant-uri-permission&gt;
+&lt;instrumentation&gt;
+&lt;intent-filter&gt;
+&lt;manifest&gt;
+&lt;meta-data&gt;
+&lt;permission&gt;
+&lt;permission-group&gt;
+&lt;permission-tree&gt;
+&lt;provider&gt;
+&lt;receiver&gt;
+&lt;service&gt;
+&lt;uses-configuration&gt;
+&lt;uses-libray&gt;
+&lt;uses-permission&gt;
+&lt;uses-sdk&gt;</code></pre><h3 id="b3653321-1bac-4c1e-9a35-1acbf267808d" class="block-color-red">&lt;activity&gt;, &lt;service&gt;, &lt;receiver&gt;, &lt;provider&gt; → 앱 구성 요소를 등록하기 위해 사용된다.</h3><p id="c67d9364-f61f-45bb-a4be-40c613768797" class="">
+</p><h3 id="05d97ced-7ec3-4489-8e90-0931b34fedae" class="">매니페스트의 주요 역활들</h3><ul id="2aec696f-c0b4-4066-beb9-1d8f6354b8d4" class="bulleted-list"><li>앱의 패키지 이름 지정</li></ul><ul id="b59aeb25-f49e-462d-b630-221026c5bb21" class="bulleted-list"><li>앱 구성 요소에 대한 정보 등록<ul id="75b35017-595a-46b1-8e98-7db7a662f60f" class="bulleted-list"><li>액티비티, 서비스, 브로드캐스트 수신자, 내용 제공자</li></ul></li></ul><ul id="f9fcd50b-315a-45cf-b18a-3528bef85b73" class="bulleted-list"><li>각 구성 요소를 구현하는 클래스 이름지정</li></ul><ul id="2e8df43c-bf60-4458-ae44-c9df97875dab" class="bulleted-list"><li>앱이 가져야 하는 권한에 대한 정보 등록</li></ul><ul id="1163386c-d471-4e8f-868b-11cb8d3dbd88" class="bulleted-list"><li>다른 앱이 접근하기 위해 필요한 권한에 대한 정보 등록</li></ul><ul id="1de0ffe3-617d-447a-a131-cab293923805" class="bulleted-list"><li>앱 개발 과정에서 프로파일링을 위해 필요한 instrumentation 클래스 등록</li></ul><ul id="5c2c0b96-3791-460d-a935-ac2d95755f23" class="bulleted-list"><li>앱에 필요한 안드로이드 API의 레벨 정보 등록</li></ul><ul id="526cef63-1afd-46a5-a9c8-255458d829bd" class="bulleted-list"><li>앱에서 사용하는 라이브러리 리스트</li></ul><p id="16ebf358-4411-4e00-a6cc-90e032619c8f" class="">
+</p><pre id="6c9ab4a2-15f4-4b59-9fe9-cb543add7935" class="code"><code>&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    package=&quot;com.younsle.samplepermission2&quot;&gt;
+    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;
+    &lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;
+
+    &lt;application
+        android:allowBackup=&quot;true&quot;
+        android:icon=&quot;@mipmap/ic_launcher&quot;
+        android:label=&quot;@string/app_name&quot;
+        android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;
+        android:supportsRtl=&quot;true&quot;
+        android:theme=&quot;@style/AppTheme&quot;&gt;
+        &lt;activity android:name=&quot;.MainActivity&quot;&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+
+&lt;/manifest&gt;</code></pre><p id="e8c8cf1c-ccc4-44af-9ff8-47e5f2e9ce68" class="">
+</p><ul id="ec18c152-2389-4070-9d02-fc003987e34f" class="bulleted-list"><li>매니페스트 파일에는 타이틀이나 아이콘과 같은 앱 자체의 정보를 속성으로 지정할 수 있으며, 이미지 리소스로 포함된 정보들은 &quot;@drawable/...&quot; 과 같이 참조하여 지정할 수 있다.</li></ul><ul id="795fc74b-b70b-4499-9e9f-b95bc781e5e4" class="bulleted-list"><li>이때 애플리케이션을 의미하는 &lt;application&gt; 태그는 매니페스트 안에 반드시 하나만 있어야 한다.</li></ul><ul id="dc2daf55-f9cf-4e42-b04d-985476293309" class="bulleted-list"><li>나머지 &lt;application&gt; 태그 안의 구성 요소들 같은 태그가 여러 번 추가되어도 괜찮다.</li></ul><ul id="2da7e18c-7a59-4f73-af90-46e94bbc3dfa" class="bulleted-list"><li>그중에서 메인액티비티는 항상 다음과 같은 형태로 추가되어야 한다.</li></ul><ul id="e63f91b4-ad9d-474d-a2c1-0f0e402cf8fc" class="bulleted-list"><li>즉, 인텐트 필터에 들어가는 정보는 &lt;action&gt; 태그의 경우 MAIN이 되어야 하고 &lt;category&gt; 태그의 경우 LAUNCHER가 되어야 한다.</li></ul><p id="068d6931-f048-473f-bd87-b4d7dce7fe1f" class="">
+</p><pre id="2489e8da-7606-4418-a891-94fa63ddb1d0" class="code"><code>&lt;activity android:name = &quot;org.younsle....&quot;
+	android:label=&quot;@string/app_name&quot;&gt;
+&lt;intent-filter&gt;
+	&lt;action android:name = &quot;android.intent.action.MAIN&quot; /&gt;
+	&lt;category android:name = &quot;android.intent.category.LAUNCHER&quot; /&gt;
+&lt;/intent-filter&gt;
+&lt;/activity&gt;</code></pre><p id="5440adff-3cdb-4da2-b709-4595c3702613" class="">
+</p><p id="1f6afa20-46e4-4bde-bbde-59a26bf7fef3" class="">
+</p><h3 id="b06ff6d9-1b6e-45b5-a247-0f20cc0c7802" class="">리소스</h3><ul id="aee60a26-6b12-41e7-8431-7aa673e6297f" class="bulleted-list"><li>app/assets → 애셋 : 동영상이나 웹페이지와 같이 용량이 큰 데이터를 의미</li></ul><ul id="6b48e9e6-d40f-47d5-bcb3-cbbc14d8fa8d" class="bulleted-list"><li>app/res → 리소스 : 리소스는 빌드되어 설치 파일에 추가되지만 애셋은 빌드되지 않는다.</li></ul><ul id="6db165e8-5b49-4d77-86c9-d86d0ed24b03" class="bulleted-list"><li>많을 경우 필요한 경우에 만들어 사용해야 한다.</li></ul><ul id="fccf94b7-7080-4961-a999-946980c84876" class="bulleted-list"><li>리소스가 갱신되면 그 때마다. 리소스의 정보가 <a href="http://r.java">R.java</a> 파일에 자동으로 기록되며 그 정보는 리소스에 대한 내부적인 포인터 정보가 된다.</li></ul><p id="42a9f30d-a6c2-4be9-9b2e-1f830d48581e" class="">
+</p><h3 id="4a7cf162-4d01-4a6c-bf36-4ce47212dc62" class="block-color-gray_background">리소스의 유형마다 다른 폴더에 넣어줘야 한다.</h3><ul id="c043b7f5-7f21-4f41-ab8a-099e1b277c66" class="bulleted-list"><li>리소스는 그 유형에 따라 정해진 폴더 안에 넣어야 한다.</li></ul><ul id="44086c5d-c579-4c2a-9e71-268a13564ddb" class="bulleted-list"><li>이렇게 리소스가 유형 별로 서로 다른 폴더에서 관리되면 리소스 별로 구분하기 쉽고 유지관리가  편리하다는 장점이 생긴다.</li></ul><p id="483d59ef-3b1c-42ec-b19a-f5cc804c37c4" class="">
+</p><ul id="11c20a72-438a-433e-9883-2c2cd1db4eb8" class="bulleted-list"><li>/app/res/values 폴더에는 문자열이나 기타 기본 데이터 타입에 해당하는 정보들이 저장된다.</li></ul><ul id="aa422026-7839-40d6-8b0c-9bcdafb32f1d" class="bulleted-list"><li>예를 들어 string.xml 파일에는 문자열을 저장한다. 만약 다른 이름의 파일을 만들어 저장하는 경우 그안에 xml포맷에 맞는 데이터가 들어가 있어야 한다.</li></ul><ul id="cd895500-b1c1-4a38-898b-592f7b0ca9dd" class="bulleted-list"><li>app/res/drawable 폴더에는 이미지를 저장한다. 이 폴더는 단말의 해상도에 따라 다른 이미지를 보여줄 수 있도록 /app/res/drawable-xhdpi, -hdpi, -mdpi등으로 나누어 저장한다.</li></ul><ul id="2074323d-1728-4b5c-a3dc-d9bf9ca07518" class="bulleted-list"><li>그러면 각 해상도에 맞는 폴더를 찾아 그 안에 들어있는 이미지를 참조하게 된다.</li></ul><ul id="e45533e1-008d-411d-9677-988ccba248e4" class="bulleted-list"><li>이렇게 저장되어 있는 리소스 정보를 코드에서 사용할 때에는 Resources 객체를 참조하여 리소스를 읽어 들여야 한다.</li></ul><ul id="adcb557d-5e29-473b-a4e7-ae3d964c5167" class="bulleted-list"><li>Resource 객체는 Context.getResource() 메서드를 이용해 액티비티 안에서 언제든지 참조할 수 있다.</li></ul><ul id="16837fc7-3390-4ea9-a8e7-1e59f40e7f47" class="bulleted-list"><li>이 객체에는 리소스의 유형에 따라 읽어 들일 수 있는 메서드가 정의되어 있어 필요에 따라 사용할 수 있다</li></ul><ul id="23764ef4-d33f-49b9-9ab2-04f20ad06c01" class="bulleted-list"><li>각 리소스 유형별 사용 방식은 ㅇㅇ</li></ul><p id="808bb2db-0fa1-4ded-ae6b-8c42d3389629" class="">
+</p><h3 id="19d3884d-5897-40ec-9ef6-fa9b46cd8187" class="">스타일과 테마</h3><ul id="95f9e88f-3613-4b16-98f5-d65fef88a799" class="bulleted-list"><li>여러 가지 속성들을 한꺼번에 모아서 정의한 것으로 가장 대표적인 예로 대화상자를 들 수 있다.</li></ul><ul id="05503618-7303-4f1c-bf6e-74c2ea595a86" class="bulleted-list"><li>대화상자의 경우에는 액티비티와 달리 타이틀 부분이나 보서리 부분의 형태가 약간 다르게 보이는데 이런 속성들을 다이얼로그 테마로 정의하여 액티비티에 적용하면 대화상자 모양으로 보이게 된다.</li></ul><ul id="396868e7-c025-4227-94ee-e34c071e5ad5" class="bulleted-list"><li>필요에 따라 직접 정의해서 사용해야 한다.<ul id="881edec8-4a41-4d10-b500-a213c1068105" class="bulleted-list"><li>/app/res/values/styles.xml  파일을 만들어야 한다.</li></ul><p id="4af5391f-c1c8-49b8-a0d3-7a9bf1743a6d" class="">
+</p><p id="934027ef-34f3-4ebe-a037-741c9b2ab5e7" class="">
+</p></li></ul><p id="851f1eee-c976-4d3c-ad49-3ce346b88cdc" class="">
+</p></div></article></body></html>

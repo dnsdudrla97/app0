@@ -1,0 +1,870 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>리싸이클러뷰</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="bce7a86f-8011-46b2-9679-b91aba363cef" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">리싸이클러뷰</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 27, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="1caed22f-4cdc-4680-bd49-4fa5405b2c8b" class="">리싸이클러뷰</h1><h3 id="bcd25828-dc64-4673-ba19-1bf38037ba07" class="">모바일 핵심 UI  리스트</h3><ul id="9366ae23-ca86-4f31-94e4-ccd8581020c5" class="bulleted-list"><li>리스트는 일반적으로 여러 개의 아이템 중 하나를 선택할 수 있는 세로 모양으로 된 화면 컨트을 말하는데 이런 UI 모양은 다른 언어에서도 많이 사용된다.</li></ul><ul id="26764f82-a8a1-4187-81e6-fbf3aacd37e4" class="bulleted-list"><li>특히 아이폰이나 안드로이드처럼 손가락으로 터치하는 방식을 사용하는 단말에서는 리스트가 쉽고 직관적이기 때문에 여러 개의 아이템 중에 선택하는 기능을 넣을 때 더 자주 사용된다.</li></ul><p id="101a89d0-73db-45d7-b1f0-fd794ab5ddb4" class="">
+</p><h3 id="38770153-6bd8-4178-bd12-4094aab0cdfe" class="">스마트폰의 사용성을 높이기 위해 리스트가 자주 사용된다.</h3><ul id="b0449696-5d1b-4c1f-a843-21853cfd3056" class="bulleted-list"><li>손가락을 사용하는 아이폰, 안드로이드폰은 작은 크기의 테이블 셀을 터치하기 힘들기 때문에 리스트 모양으로 큼직하게 만드는 것이 사용성을 높이는 대표적인 방법</li></ul><p id="46654750-c958-4bc5-8240-fb002e6fab31" class="">
+</p><h3 id="80877f91-27d6-45a5-8181-223f0bb0c014" class="">선택 위젯</h3><ul id="136cc4e6-45a2-494e-a9ae-0878712f9b90" class="bulleted-list"><li>안드로이드에서는 여러 개의 아이템 중에 하나를 선택할 수 있는 리스트 모양의 위젯을 특별히 &#x27;선택 위젯&#x27;이라고 부른다.</li></ul><ul id="039530b8-d912-47d1-a38f-0f0e20532534" class="bulleted-list"><li>선택 기능을 가진 위젯을 특별히 구별하는 이유는 사용되는 방식이 다른 위젯과 약간 다르기 떄문</li></ul><p id="d9f9f332-2844-45ae-ac18-464fb0cbeece" class="">
+</p><h3 id="febad7ec-0017-4cae-8d37-4ce6dc110ea1" class="">선택 위젯 , 일반 위젯</h3><ul id="3641a465-921f-4393-a05f-d9ea7e34689a" class="bulleted-list"><li>선택, 일반 구분하는 이유는 선택 위젯이 어댑터 패턴을 사용하기 때문이다.</li></ul><ul id="86863992-4e16-45e9-82ac-f748b8c154c4" class="bulleted-list"><li>선택 위젯 데이터를 넣을 때 위젯이 아닌 어댑터에 설정해야 하며 화면에 보이는 뷰도 어댑터에서 만든다.</li></ul><ul id="ea7eecf0-5448-410d-b6e3-e98ff16d0929" class="bulleted-list"><li>즉, 리스트 모양의 뷰에 보이는 각각의 아이템은 뷰가 아닌 어댑터에서 관리한다.</li></ul><p id="979b89b9-7e74-4301-b554-2ddd81e77e4e" class="">
+</p><figure id="ca2f42c5-74cc-40b0-8849-ffcc9ec9660b" class="image"><a href="Untitled%207/Untitled.png"><img style="width:2776px" src="Untitled%207/Untitled.png"/></a></figure><ul id="6b31cfed-4258-4f0e-9c69-60968b24b981" class="bulleted-list"><li>선택할 수 있는 여러 개의 아이템이 표시되는 선택 위젯은 어댑터를 통해 각각의 아이템을 화면에 디스플레이한다.</li></ul><ul id="acd10b1f-585d-4bd1-b307-d543bcde9f3b" class="bulleted-list"><li>따라서 원본 데이터는 어댑터에 설정해야 하며 어댑터가 데이터 관리 기능을 담당한다.</li></ul><ul id="4b22f4f5-daf5-4e53-918b-cd3799a1d69c" class="bulleted-list"><li>선택 위젯에 보이는 각각의 아이템이 화면에 디스플레이되기 전에 어댑터의 getView() 메서드가 호출된다.</li></ul><ul id="2fbc5c6c-cec7-4f22-8a51-e2c90dd8bdb6" class="bulleted-list"><li>getView() 메서드는 어댑터에서 가장 중요한 메서드로 이 메서드에서 반환하는 뷰가 하나의 아이템으로 디스플레이된다.</li></ul><ul id="65cf149b-b00e-460f-8052-1057ec02337c" class="bulleted-list"><li>예를 들어, getView() 에서 반환하는 객체가 텍스트뷰 객체라면 선택 위젯의 각 아이템은 텍스트뷰로 표시된다.</li></ul><ul id="3c1b21bd-c06a-4d1e-a540-2012d181eee9" class="bulleted-list"><li>이 메서드의 이름은 어댑터에 따라 다를 수 있으며 좀 더 편하게 다룰 수 있는 다른 메서드가 들어 있는 경우도 있다.</li></ul><ul id="0992f6dd-93b1-462e-bfc5-6da6be6a80a2" class="bulleted-list"><li>만약 어댑터에서 만들어 변환하는 객체가 텍스트뷰나 버튼과 같은 하나의 뷰가 아니라 리니어 레이아웃처럼 여러 개의 뷰들을 담고 있는 컨테이너 객체라면 하나의 아이템에 여러 정보를 보여줄수 있을 것이다.</li></ul><ul id="33e08a2e-4870-4b57-9bdc-0ec65c9d71ee" class="bulleted-list"><li>실제로 스마트폰 단말에서 다운로드 받을 수 있는 여러 앱을 구경하다 보면 리스트 모양으로 만들어진 UI에 들어가는 각각의 아이템이 글자 하나만으로 구성된 경우는 거의 볼 수 없다.<ul id="7683c570-c452-4108-b1ff-fae4fb0eeebb" class="bulleted-list"><li>그 이유는 대부분이 어댑터에서 변환하는 객체가 리니어 레이아웃과 같은 컨테이너 객체이기 때문이다.</li></ul></li></ul><p id="63e410c8-0344-4436-a2c0-009a5ad491e2" class="">
+</p><h3 id="cc963a60-1502-4361-a87a-cc20065fbd0a" class="">리사이클러뷰</h3><ul id="983567fd-f160-4fd0-96b3-c9a7a9cfcc87" class="bulleted-list"><li>기본적으로 상하 스크롤이 가능하지만 좌우 스크롤도 만들 수 있다.</li></ul><ul id="8a4c6f23-b4cf-47bb-a30b-18368d165c19" class="bulleted-list"><li>왜냐하면 처음 만들어질 때부터 레이아웃을 유연하게 구성할 수 있도록 설계되었기 때문이다.</li></ul><ul id="964255c9-eff3-490f-9e4d-e2d1ede18478" class="bulleted-list"><li>그리고 각각의 아이템이 화면에 보일 때 메모리를 효율적으로 사용하도록 캐시 매커니즘이 구현되어 있다.</li></ul><ul id="47abf13d-4b2a-46ea-b1d2-e3e6d51e281f" class="block-color-red bulleted-list"><li>리싸이클러뷰는 선택 위젯이기 때문에 어댑터가 데이터 관리와 뷰 객체 관리를 담당한다. </li></ul><ul id="1a76b14b-1200-48fd-aee1-345840483ca2" class="block-color-red bulleted-list"><li>따라서 리싸이클러뷰는 껍데기 역활을 한다고 생각하면 쉽다.</li></ul><ul id="6cbc9b21-75a2-42e3-9c7f-fc67ade51237" class="bulleted-list"><li>어댑터를 만들기 전에 어댑터 안에 들어갈 각 아이템의 데이터를 담아둘 클래스 하나를 정의한다.</li></ul><ul id="137bc6fb-2c1e-4c4b-a108-7fbd794dd596" class="bulleted-list"><li>여기에서는 전화번호부처럼 사람 목록을 보여줄 예정, Person 이라는 이름의 클래스를 하나 만든다.</li></ul><p id="227c9ae8-6d0a-4905-8258-e6216ddd3866" class="">
+</p><h3 id="221ce3db-a762-49b1-a340-45809f86eb9b" class="">ViewHolder?</h3><ul id="06d22bfd-4210-45ed-a0c6-9a5722944410" class="bulleted-list"><li>각 뷰를 보관하는 Holder 객체로 이야기 할 수 있다.</li></ul><ul id="7edd0a41-c9f9-4926-b78b-74940fc24a81" class="bulleted-list"><li>&quot;ListView, RecyclerView는 inflate를 최소화 하기 위해서 뷰를 재활용 하는데, 이 때 각 뷰의 내용을 업데이트 하기 위해 findViewById를 매번 호출해야 한다.</li></ul><ul id="ce6aa2c1-c5d3-42f6-b24f-57a018bf0095" class="bulleted-list"><li>이로 인해 성능저하가 일어남에 따라 itemView의 각 요소를 바로 엑세스 할 수 있도록 저장해두고 사용하기 위한 객체이다.</li></ul><ul id="40fd6a99-cd83-4268-a39a-2fadcccf54e7" class="bulleted-list"><li>inflate → xml 로 쓰여있는 View의 정의를 실제 View 객체로 만든는 것을 말한다.</li></ul><p id="2fe6eef5-dfbe-40f5-90ec-84853f4ef04e" class="">
+</p><h3 id="9d0d1f9b-c40c-470e-a2a7-dd8a93d7e280" class="">RecyclerViewHolder </h3><ul id="50d3338c-3ae5-4562-810e-491704553eaf" class="bulleted-list"><li>Recycler.Adapter를 상속 받을 때 ViewHolder Type을 지정해야 한다.</li></ul><ul id="d64f25d8-bc93-4cfb-99ed-ab1c84aff91d" class="bulleted-list"><li>ListView에서는 ViewHolder를 구현하지 않아도 되지만, RecyclerView는 구현을 강제로 하고 있다.</li></ul><ul id="87ff88e9-9204-4ca7-9857-e61f4969d6a3" class="bulleted-list"><li>Recycler.Adapter를 상속하면, 몇 개의 메소드를 오버라이딩 해야한다.</li></ul><ul id="ad86c168-ba3f-42f4-af80-28435d4b1dbd" class="bulleted-list"><li>그 중 VIewHolder와 관련성이 높은 메소드는 onCreateViewHolder(), onBindViewHolder() 이다.</li></ul><h3 id="5de252f3-32b7-4fa6-87e4-54f42b57b64f" class="">Person.java</h3><pre id="26f8e905-d359-475e-b2c4-0566302d5620" class="code"><code>public class Person {
+    String name;    //사람이름 저장 변수
+    String mobile;  //번호 저장 변수
+
+    public Person(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
+    }
+    // 생성자 생성
+
+
+    public String getName() {
+        return name;
+    }
+    //get() 메서드 추가
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //set() 메서드 추가
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+}</code></pre><p id="36187648-54a8-41c4-86a2-54c495e1b1f7" class="">
+</p><h3 id="ebd99802-09be-4658-9d4c-89c71df53a37" class="">PersonAdapter.java</h3><pre id="3209115b-6c94-44b8-8541-e874943e29cc" class="code"><code>public class PersonAdapter {
+    // ViewHolder 클래스 static으로 정의
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            // 뷰홀더 생성자로 전달되는 뷰 객체 참조
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+            // 뷰 객체에 들어 있는 텍스트뷰 참조
+        }
+
+        public void setItem(Person item) {
+            textView.setText(item.getName());
+            textView2.setText(item.getMobile());
+        }
+    }
+}</code></pre><ul id="6bfcb3a5-a71f-484b-b4b0-b196a7aa7b0a" class="bulleted-list"><li>리스트 형태로 보일 때 각각의 아이템은 뷰로 만들어지며 각각의 아이템을 위한 뷰는 뷰홀더에 담아 두게 된다.</li></ul><ul id="b8fdb3ea-3dad-4fb3-8c79-035a076ee697" class="block-color-red bulleted-list"><li>이 뷰홀더 역활을 하는 클래스를 PersonAdapter 클래스 안에 넣어둔다고 생각하면 된다.</li></ul><ul id="5c038c43-f5d4-4736-840f-418569a4dee6" class="bulleted-list"><li>RecyclerView.ViewHolder 클래스를 상속하여 정의된 ViewHolder 클래스의 생성자에는 뷰 객체가 전달된다.</li></ul><ul id="41e2719f-6ce4-456e-8818-1253ad84885c" class="bulleted-list"><li>그리고 전달 받은 이 객체를 부모 클래스의 변수에 담아두게 되는데 생성자 안에서 super() 메서드를 호출하면 된다.</li></ul><ul id="79eb16ec-f97b-483f-aada-c37b8f953f32" class="bulleted-list"><li>그리고 전달받은 뷰 객체의 이미지나 텍스트뷰를 findViewById() 메서드로 찾아 변수에 할당하면 setItem() 메서드에서 참조할 수 있다.</li></ul><ul id="2c580661-c280-42cc-a45c-1cc5f4af7a46" class="bulleted-list"><li>setItem() 메서드는 이 뷰홀더에 들어있는 뷰 객체의 데이터를 다른 것으로 보이도록 하는 역활을 한다.</li></ul><p id="f54b46ed-54a9-4e73-a34d-3998be8dbd58" class="">
+</p><h3 id="34c56f65-ffc9-4240-98a4-582ba29acfae" class="">PersonAdapter 클래스 → RecyclerView.Adapter 클래스를 상속하도록 수정</h3><ul id="23f863bc-c9d5-433f-857f-b0fecd7fa2f6" class="bulleted-list"><li>RecyclerView.Adapter 뒤에 &lt;personAdapter.ViewHolder&gt; 지정</li></ul><ul id="16229e27-805b-4863-92df-2c32abe102a4" class="bulleted-list"><li>어댑터에 구현되어야 하는 중요 메서드는 3가지<ul id="9bb09403-b075-4686-b896-c91f3e24fa75" class="bulleted-list"><li>getItemCount()<ul id="e817a337-30ad-43d1-8557-015905e2ff41" class="bulleted-list"><li>어댑터에서 관리하는 아이템의 개수를 반환한다.</li></ul><ul id="5b375571-3792-4f38-8e20-e8e5cf66887b" class="bulleted-list"><li>리싸이클러뷰에서 어댑터가 관리하는 아이템의 개수를 알아야 할 때 사용</li></ul></li></ul><ul id="1dd163e7-b57f-44a8-96f6-bf3b9ba2d79d" class="bulleted-list"><li>onCreateViewHolder()</li></ul><ul id="97a37307-e279-4181-86ae-281574b1d1b3" class="bulleted-list"><li>onBindViewHolder() <ul id="49a8d659-0df6-4c86-8a64-cb1765c169da" class="bulleted-list"><li>뷰홀더 객체가 만들어질 때와 재사용될 때 자동으로 호출된다.</li></ul></li></ul></li></ul><ul id="d58d74c4-a6ea-47e7-8a17-466f8379d9dd" class="bulleted-list"><li>리싸이클러뷰에 보이는 여러 개의 아이템은 내부에서 캐시되기 때문에 아이템 개수만큼 객체로 만들어지지 않는다.</li></ul><ul id="3469b1a3-7909-4a1a-8d92-4f394cfc57aa" class="bulleted-list"><li>예를 들어, 아이템이 천 개라고 하더라도 이 아이템을 위해 천 개의 뷰 객체가 만들어짖 않는다.</li></ul><ul id="c4f6f763-4a5d-4948-a816-7758149162a2" class="block-color-red bulleted-list"><li>메모리를 효율적으로 사용하려면 뷰홀더에 뷰 객체를 넣어두고 사용자가 스크롤하여 보이지 않게 된 뷰 객체를 새로 보일 쪽에 재사용하는 것이 효율적이기 때문이다. 이 과정에서 뷰홀더가 재사용된다. </li></ul><h3 id="3fcdb613-4f0d-4af4-8851-850821c51140" class="">OnCreateViewHolder()</h3><ul id="373ce9c6-c674-402b-83af-83c24697ea22" class="bulleted-list"><li>뷰홀더가 새로 만들어지는 시점에는 onCreateViewHolder() 메서드가 호출된므로 그 안에서는 각 아이템을 위해 정의한 XML 레이아웃을 이용해 뷰 객체를 만들어 준다.</li></ul><ul id="46b6e393-6507-4624-b3d6-833d6ca96bae" class="bulleted-list"><li>그리고 뷰 객체를 새로 만든 뷰홀더 객체에 담아 반환한다.</li></ul><ul id="8d244711-a822-4393-a32e-ad77cc97ccfa" class="bulleted-list"><li>onCreateViewHolder() 메서드에는 뷰 타입을 위한 정수값이 파라미터로 전달된다.</li></ul><ul id="c37deca4-fe0f-481d-85c4-ef242f83a2f2" class="bulleted-list"><li>이것은 각 아이템을 위한 뷰를 여러 가지로 나누어 보여주고 싶을 때 사용된다.❗<ul id="e850e146-9f03-44cb-9ca2-09b8a861e46f" class="bulleted-list"><li>예를 들어, 어떤 때는 이미지를 보여 주고 어떤 때는 이미지와 텍스트를 같이 보여주고 싶다면 뷰 타입을 정하고 각각의 뷰 타입에 따라 다른 XML 레이아웃을 인플레이션하여 보여줄 수 있다.</li></ul><ul id="0453ae73-679e-4a4d-92f8-5c65df3e872d" class="bulleted-list"><li>일반적인 경우에는 뷰 타입을 한 가지로 하는 경우가 많기 때문에 여기서는 뷰 타입 파라미터를 사용하지 않는다.</li></ul></li></ul><ul id="70abb290-dcb4-4a01-8851-a89c2298f66b" class="block-color-red bulleted-list"><li>onCreateViewHolder() 메서드 안에서 인플레이션을 진행하기 위해서는 Context 객체가 필요한데 파라미터로 전달되는 뷰그룹 객체의 getContext() 메서드를 이용하면 Context 객체를 참조할 수 있다</li></ul><ul id="2a363c6e-8c80-49b3-a49d-262fc5a49d18" class="bulleted-list"><li>파라미터로 전달되는 뷰 그룹 객체는 각 아이템을 위한 뷰 그룹 객체이므로 XML 레이아웃을 인플레이션하여 이 뷰그룹 객체에 설정한다.</li></ul><p id="fb92d1c5-04ce-4153-bb9a-beb1fe7d5ea1" class="">
+</p><h3 id="eb27a5a3-f480-4468-bba9-ac4c470fee36" class="">OnBindViewHolder()</h3><ul id="44e9448d-23c9-4825-aff9-27892b77dd61" class="bulleted-list"><li>onBindViewHolder() 메서드는 뷰홀더가 재사용될 때 호출되므로 뷰객체는 기존 것을 그대로 사용하고 데이터만 바꿔준다.</li></ul><ul id="f3247c20-e8f5-41a2-abbc-73b66a6737bd" class="bulleted-list"><li>onBindViewHolder() 메서드는 재활용할 수 있는 뷰홀더 객체를 파라미터로 전달하기 때문에 그 뷰홀더에 현재 아이템에 맞는 데이터만 설정한다.</li></ul><ul id="50a75a21-ee44-4a4a-bd1a-095e878dcb3a" class="bulleted-list"><li>데이터는 Person 객체로 만드는데 여러 아이템을 이 어댑터에서 관리해야 하기 때문에 클래스 안에 ArrayList 자료형으로 된 items라는 변수를 하나 만들어준다.</li></ul><ul id="662a7908-d153-46e5-9876-ca08b24c9e6f" class="bulleted-list"><li>그러면 onBindViewHolder() 메서드로 전달된 position 파라미터를 이용해 ArrayList에서 person 객체를 꺼내어 설정할 수 있다.</li></ul><ul id="703e46b3-efae-4450-8c24-0de86382ce88" class="bulleted-list"><li>어댑터가 ArrayList 안에 들어 있는 전체 아이템 개수를 알아야 하므로 getItemCount() 메서드는 ArrayList의 Size() 메서드를 호출하여 전체 아이템이 몇 개인지를 확인한 후 그 값을 반환</li></ul><p id="3b58eb0c-98ae-4780-a916-2924f8903ba0" class="">
+</p><p id="5242d3ea-db75-4c15-a069-a19a16ae3f8b" class="">
+</p><p id="a6850794-95ce-48f5-96f1-2f2f628b5077" class="">
+</p><ul id="66708376-1934-4d81-a0ea-fcbbf83abcf1" class="bulleted-list"><li>레이아웃을 상속하여 새로운 뷰를 만들 때는 XML 레이아웃과 뷰 소스 코드가 한 쌍으로 필요했지만 여기에서는 XML 레이아웃만 있으면 된다.</li></ul><ul id="939b5b05-6f7c-495a-898d-189ab9a109ce" class="bulleted-list"><li>이 XML 레이아웃을 ViewGroup객체에 인플레이션한 후 ViewHolder 객체에 넣어두기  때문</li></ul><ul id="b2dcaa3a-cbd7-4932-a955-74b4a8ca01f7" class="bulleted-list"><li>이 어댑터가 각각의 아이템을 위한 Person 객체를 ArrayList 안에 넣어 관리하기 때문에 이 어댑터를 사용하는 소스 코드에서 어댑터에 Person 객체를 넣거나 가져갈 수 있도록 addItem(), setItems(), getItem(), setItem() 메서드를 personAdapter에 추가한다.</li></ul><p id="c31983ff-6a8d-478d-8e72-539d0aeb2953" class="">
+</p><h3 id="70e00543-8a1a-4d72-8b93-bb31b8731532" class=""><a href="http://personadapter.java">PersonAdapter.java</a> additem, setItems, getItem, setItem 추가</h3><pre id="6b1963e0-044e-492f-a594-b75de8339d22" class="code"><code>	public class PersonAdapter extends RecyclerView.Adapter&lt;PersonAdapter.ViewHolder&gt; {
+    ArrayList&lt;Person&gt; items = new ArrayList&lt;Person&gt;();
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = inflater.inflate(R.layout.person_item, viewGroup, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        Person item = items.get(position);
+        viewHolder.setItem(item);
+    }
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public void addItem(Person item) {
+        items.add(item);
+    }
+
+    public void setItems(ArrayList&lt;Person&gt; items) {
+        this.items = items;
+    }
+
+    public Person getItem(int position) {
+        return items.get(position);
+    }
+
+    public Person setItem(int position, Person item) {
+        return items.set(position, item);
+    }
+
+    // ViewHolder 클래스 static으로 정의
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            // 뷰홀더 생성자로 전달되는 뷰 객체 참조
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+            // 뷰 객체에 들어 있는 텍스트뷰 참조
+        }
+
+        public void setItem(Person item) {
+            textView.setText(item.getName());
+            textView2.setText(item.getMobile());
+        }
+    }
+}</code></pre><ul id="fb100160-b7e7-4ad4-8731-63549b44b315" class="bulleted-list"><li>이 어댑터는 리싸이클러뷰 객체에 설정되어야 하고 어댑터 안에 Person 객체들을 만들어 넣어야 하므로 <a href="http://mainactvity.java">MainActvity.java</a> → onCreate() 메서드 안에 코드 추가</li></ul><p id="7862c35e-b3fd-4470-a88e-f0fb3f39ed9c" class="">
+</p><h3 id="c75866fd-fb4e-44b6-88c9-f9644207d749" class="">MainActivity.java</h3><pre id="a044ad75-e1d1-43d8-b3a1-8f886e971007" class="code"><code>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        // 리싸이클러뷰에 레이아웃 매니저 설정
+        PersonAdapter adapter = new PersonAdapter();
+
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+
+        recyclerView.setAdapter(adapter);
+        // 리싸이클러뷰에 어댑터 설정
+    }
+}</code></pre><ul id="c3fbdc22-7639-4f0c-aff8-cf43bca16376" class="bulleted-list"><li>리싸이클러뷰에는 레이아웃 매니저를 설정할 수 있다.</li></ul><ul id="e421c648-2442-4242-b146-525dedc65b0b" class="bulleted-list"><li>레이아웃 매니저는 리싸이클러뷰가 보일 기본적인 형태를 설정할 때 사용하는데 자주 사용하는 형태는 세로방향, 가로 방향, 격자 모양</li></ul><ul id="80953d79-9b76-41d2-b24f-acd00078084f" class="bulleted-list"><li>다시 말해 보통 리스트 모양으로 표시할 때는 세로 방향 스크롤을 사용하는데 다양한 모양으로 보일 수 있도록 가로 방향으로도 설정할 수 있고 격자 모양으로 보여줄 수 있는 것이다.</li></ul><ul id="9cf0b2eb-365b-4c2d-b0d7-7314c80b1463" class="bulleted-list"><li>여기에서는 LinearLayoutManager 객체를 사용하면서 방향을 VERTICAL로 설정했기 때문에 세로 방향 스크롤로 보이게 된다.</li></ul><ul id="686f039f-0bcb-4a2f-a2e3-90f8f4af481a" class="bulleted-list"><li>만약 가로 방향 스크롤로 보여주고 싶다면 HORIZONTAL로 설정하면 되고 격자 모양으로 보여주고 싶다면 GridLayoutManager 객체를 사용하여 칼럼의 수를 지정하면 된다.</li></ul><ul id="25c281d3-526b-4cab-8e77-071d84ed4526" class="bulleted-list"><li>리싸이클러뷰에 레이아웃 매니저 객체를 설정하기 위해 setLayoutManager() 메서드를 호출하였고 그 아래에서는 PersonAdapter 객체를 만들고 setAdapter() 메서드르 호출하여 설정하였다.</li></ul><ul id="2279bf3e-b311-46cf-b034-e4820f372ed3" class="bulleted-list"><li>이렇게 하면 리싸이클러뷰가 어댑터와 상호작용하면서 리스트 모양으로 보여주게 된다.</li></ul><ul id="c1996c15-457f-409b-927e-9d59ac3065aa" class="bulleted-list"><li>어댑터에는 addItem() 메서드를 이용하여 Person 객체를 추가한다.</li></ul><ul id="fa565e18-54d7-46ea-a21f-777ce222355b" class="bulleted-list"><li>여기에서는 세 개의 Person 객체를 만들어 추가했으니 화면에는 세 개의 아이템이 보이게 될것이다.</li></ul><p id="cbe3ca50-6b6a-4b59-922d-f7505f192b92" class="">
+</p><h3 id="88700cc1-d963-4e4e-84a4-9c2d60afde30" class="">클릭했을 때 토스트 메시지가 표시되도록 수정</h3><ul id="53ed06b5-d398-4154-abfe-e088a62997f4" class="bulleted-list"><li>클릭 이벤트는 리싸이클러뷰가 아니라 각 아이템에 발생하게 되므로 뷰홀더 안에서 클릭 이벤트를 처리할 수 있도록 만드는 것이 좋다.</li></ul><ul id="b30627b7-8162-4b5f-b011-ba47fddd9f53" class="bulleted-list"><li>뷰홀더의 생성자로 뷰 객체가 전달되므로 이 뷰 객체에 onClickListener를 설정한다. </li></ul><ul id="921fadce-c93f-490a-99de-71406958d2fc" class="bulleted-list"><li>그러면 이 뷰를 클릭했을 때 그 리스너의 onClick() 메서드가 호출된다.</li></ul><ul id="fdc5d0c0-6850-43b2-8737-a23d06d81330" class="bulleted-list"><li>그런데 이 리스너 안에서 토스트 메시지를 띄우게 되면 클릭했을 때의 기능이 변경될 때마다 어댑터를 수정해야 하는 문제가 생긴다.</li></ul><ul id="757b5f5e-7876-4761-8c4e-c0cfc651a053" class="bulleted-list"><li>따라서 어댑터 객체 밖에서 리스너를 설정하고 리스너 쪽으로 이벤트를 전달 받도록 하는 것이 좋다.</li></ul><p id="ca92b1dd-bd55-4fa8-8db0-39afd0a4db9e" class="">
+</p><ol id="92ad952b-8743-43a6-a158-2f7684895f38" class="numbered-list" start="1"><li>OnPersonItemClickListener 인터페이스를 먼저 정의 </li></ol><pre id="80764a40-d2c8-4369-8605-e72a1d44f7ac" class="code"><code>public interface OnPersonItemClickListener {
+    public void onItemClick(PersonAdapter.ViewHolder holder, View view, int position);
+
+}</code></pre><ul id="0c2776f2-3b6c-41e1-9ab7-98041d6ea7a1" class="bulleted-list"><li>onItemClick() 메서드가 호출될 때 파라미터로 뷰홀더 객체, 뷰 객체, 뷰 position 정보가 전달되도록 한다.</li></ul><ul id="3d7a8357-a5ec-4935-b88f-bd8248e82404" class="bulleted-list"><li>position 정보는 몇 번째 아이템인지르 구분할 수 있는 인덱스 값이다.이 인터페이스를 사용하도록 ViewHolder 클래스 수정</li></ul><p id="25078f27-8d7a-40cd-b069-566221d9747b" class="">
+</p><pre id="f36efc19-6e05-4163-a223-b744d37192f4" class="code"><code>// ViewHolder 클래스 static으로 정의
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHolder(View itemView, final OnPersonItemClickListener listener) {
+            super(itemView);
+            // 뷰홀더 생성자로 전달되는 뷰 객체 참조
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+            // 뷰 객체에 들어 있는 텍스트뷰 참조
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null)
+                        listener.onItemClick(ViewHolder.this, v, position);
+                    //아이템 뷰 클릭시 미리 정의한 다른 리스너의 메서드 호출하기
+                }
+            });
+        }
+
+        public void setItem(Person item) {
+            textView.setText(item.getName());
+            textView2.setText(item.getMobile());
+        }
+    }
+}</code></pre><ul id="fea214df-cc18-4300-9cee-1ecf5bd41372" class="bulleted-list"><li>뷰홀더 객체의 생성자가 호출될 때 리스너 객체가 파라미터로 전달되록 수정되었다.</li></ul><ul id="fd96ec9d-fbd0-438b-9b62-ed8e4bacfcce" class="bulleted-list"><li>이 리스너 객체는 어댑터 밖에서 설정할 것이며 뷰홀더까지 전달된다.</li></ul><ul id="a92a5b80-b865-4272-a9b5-5e66eb04d370" class="bulleted-list"><li>이렇게 전달된 리스너 객체의 onItemClick 이벤트는 뷰가 클릭되었을 때 호출된다.</li></ul><ul id="2c3b1c04-8024-48b5-8567-7a17419f1d1b" class="bulleted-list"><li>이 코드에서 getAdapterPosition() 메서드를 볼 수 있는데 이 메서드는 이 뷰홀더에 표시할 아이템이 어댑터에서 몇 번째인지 정보를 반환한다.</li></ul><ul id="3541901a-10e7-4211-b558-2fd905867e7d" class="bulleted-list"><li>다시 말해 아이템의 인덱스 정보를 반환한다.</li></ul><ul id="14e9774d-3967-432e-a8b8-fb31fda18627" class="bulleted-list"><li>따라서 이 메서드를 호출하여 반환된 정수 값을 리스너에 전달할 수 있다.</li></ul><ul id="53217ea7-de68-4e61-8cfd-a670f60473e2" class="bulleted-list"><li>뷰홀더(static class ViewHolder.. ) 코드를 수정했으니 이제 어댑터(public class PersopnAdapter...) 코드를 수정한다.</li></ul><p id="72dfb7aa-5842-4600-b6d3-f54b41876ba1" class="">
+</p><p id="60551685-ee96-4582-aeb5-2a6bfa272e88" class=""><a href="http://persopnadapter.java">PersopnAdapter.java</a> ← implements onPersopnItemClickListener()</p><pre id="c8d5804e-f59b-4f44-858b-063cdc5b0be8" class="code"><code>public class PersonAdapter extends RecyclerView.Adapter&lt;PersonAdapter.ViewHolder&gt; implements OnPersonItemClickListener {
+    ArrayList&lt;Person&gt; items = new ArrayList&lt;Person&gt;();
+    OnPersonItemClickListener listener;
+    //어댑터 클래스가 새로 정의한 리스너 인터페이스 구현하도록 하기 implements OnpersonItemClickListener -&gt; listener 로 매개 변수 설정
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = inflater.inflate(R.layout.person_item, viewGroup, false);
+
+        return new ViewHolder(itemView, this);
+    }
+    public void setOnItemClickListener(OnPersonItemClickListener listener) {
+        this.listener = listener;
+    }
+// 외부에서 리스너를 설정할 수 있도록 메서드 추가 setOnitemClickListener()
+
+
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if (listener != null) {
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        Person item = items.get(position);
+        viewHolder.setItem(item);
+    }
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public void addItem(Person item) {
+        items.add(item);
+    }
+
+    public void setItems(ArrayList&lt;Person&gt; items) {
+        this.items = items;
+    }
+
+    public Person getItem(int position) {
+        return items.get(position);
+    }
+
+    public Person setItem(int position, Person item) {
+        return items.set(position, item);
+    }
+
+    // ViewHolder 클래스 static으로 정의
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        TextView textView2;
+
+        public ViewHolder(View itemView, final OnPersonItemClickListener listener) {
+            super(itemView);
+            // 뷰홀더 생성자로 전달되는 뷰 객체 참조
+
+            textView = itemView.findViewById(R.id.textView);
+            textView2 = itemView.findViewById(R.id.textView2);
+            // 뷰 객체에 들어 있는 텍스트뷰 참조
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null)
+                        listener.onItemClick(ViewHolder.this, v, position);
+                    //아이템 뷰 클릭시 미리 정의한 다른 리스너의 메서드 호출하기
+                }
+            });
+        }
+
+        public void setItem(Person item) {
+            textView.setText(item.getName());
+            textView2.setText(item.getMobile());
+        }
+    }
+}</code></pre><ul id="f30fee57-084a-4404-9ab1-0f1738b2e5f5" class="bulleted-list"><li>어댑터 클래스는 새로 정의한 OnPersopnItemClickListener 인터페이스를 구현하도록 한다.</li></ul><ul id="6767aabc-b652-4bc9-98ec-4b8037e3d0a6" class="bulleted-list"><li>그리고 이 인터페이스에 정의한 onItemClick() 메서드를 추가한다.</li></ul><ul id="09651f94-f1c3-4dc8-b1b2-e5d388dbf638" class="bulleted-list"><li>이 메서드는 뷰홀더 클래스 안에서 뷰가 클릭되었을 때 호출되는 메서드이다.</li></ul><ul id="39cce889-b2e2-45bd-a2ed-e1adf23b4db0" class="bulleted-list"><li>그런데 이 어댑터 클래스 안에서가 아니라 밖에서 이벤트 처리를 하는 것이 일반적이므로 listener라는 이름의 변수를 하나 선언하고 setOnItemClickListener() 메서드를 추가하여</li></ul><ul id="7fc7bd37-6fee-430c-8e1c-5120c03c40a2" class="bulleted-list"><li>이 메서드가 호출되었을 때 리스너 객체를 변수에 할당하도록 한다.</li></ul><ul id="8a1f888b-e679-4c37-93d3-0dd0be3992e7" class="bulleted-list"><li>이렇게 하면 onItemClick() 메서드가 호출되었을 때 다시 외부에서 설정된 메서드가 호출되도록 만들 수 있다.</li></ul><ul id="da65f633-282c-4037-a288-517fe984b501" class="bulleted-list"><li>마지막으로 onCreateViewHolder() 메서드 안에서 new 연산자를 이용하여 ViewHolder 객체를 생성하는 코드를 수정한다.</li></ul><ul id="5c14f52a-d0a3-4fb5-96fb-e493f7551b8c" class="bulleted-list"><li>이전에는 뷰 객체만 파라미터로 전달했지만 여기에 리스너인 this를 추가적으로 전달</li></ul><ul id="57f3c1c9-044a-4f69-8914-84127b9ff06e" class="bulleted-list"><li>어댑터 코드가 수정되었으니 이제 <a href="http://mainactivity.java">MainActivity.java</a> 파일을 열고 어댑터에 리스너 객체를 설정하는 코드를 추가한다.</li></ul><h3 id="80532acf-3381-4b5e-968a-22f9b5dd4dd4" class=""><a href="http://mainactivity.java">MainActivity.java</a> + 어댑터 리스너 객체 설정</h3><pre id="aab77e2e-d7dc-4671-8de2-b1ded1345b6e" class="code"><code>public class MainActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    PersonAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(layoutManager);
+        // 리싸이클러뷰에 레이아웃 매니저 설정
+        adapter = new PersonAdapter();
+
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+        adapter.addItem(new Person(&quot;나민&quot;, &quot;010-1111-1111&quot;));
+
+        recyclerView.setAdapter(adapter);
+        // 리싸이클러뷰에 어댑터 설정
+
+        adapter.setOnItemClickListener(new OnPersonItemClickListener() {
+            //어댑터 리스너 설정
+            @Override
+            public void onItemClick(PersonAdapter.ViewHolder holder, View view, int position) {
+                Person item = adapter.getItem(position);
+                //아이템 클릭시 어댑터에서 해당 아이템의 Person 객체 가져오기
+                Toast.makeText(getApplicationContext(), &quot;아이템선택됨 : &quot; + item.getName(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+}</code></pre><ul id="2fcfd57f-0106-4e31-a25e-336eebd35b1b" class="bulleted-list"><li>리싸이클러뷰 객체와 어댑터 객체는 이 클래스 안의 어디서든 접근할 수 있도록 클래스 안에 선언된 변수에 할당되었다.</li></ul><ul id="15da1380-a2f8-4ce2-8e2e-9e4ab9424501" class="bulleted-list"><li>그리고 어댑터 객체에는 setOnItemClickListener() 메서드를 호출하면서 리스너 객체를 설정했다.</li></ul><ul id="d14c13f2-bebe-4d72-a59d-5c68b77ad2e0" class="bulleted-list"><li>이렇게 하면 각 아이템이 클릭되었을 때 이 리스너의 onItemClick() 메서드가 호출된다.</li></ul><ul id="e0b9528c-57e5-4c63-80ec-9ed6a875aa4e" class="bulleted-list"><li>onItemClick() 메서드 안에서는 어댑터 객체의 getItem() 메서드를 이용해 클릭된 아이템 객체를 확인한다.</li></ul><ul id="0f08b02c-0679-4e79-be8d-fdd7f0b9603c" class="bulleted-list"><li></li></ul><p id="c8b745c6-a88a-4308-8180-38b5bc7b6334" class="">
+</p></div></article></body></html>

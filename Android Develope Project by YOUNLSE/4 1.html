@@ -1,0 +1,617 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>서버에 데이터 요청 하고 응답받기#4</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4ac1bfd8-1b5f-4a2d-9196-2db03c23987f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">서버에 데이터 요청 하고 응답받기#4</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 08, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="5002bbb6-fe93-484c-928d-fde47f9c3b6a" class="">JSON 데이터 다루기(JavaScript Object Notation)</h1><ul id="9fc43182-279a-4ef3-83ba-bcb918d025e1" class="bulleted-list"><li>JSON → 자바스크립트 객체 포맷을 데이터를 주고받을때 사용할 수 있도록 문자열로 표현한 것을 말한다.</li></ul><ul id="802c2147-93b3-48ef-9f28-8b5947ce4fed" class="bulleted-list"><li>따라서 자바스크립트 객체 포맷과 거의 동일하다.</li></ul><ul id="52c30028-50b9-47f7-a19b-c84cc9357518" class="bulleted-list"><li>약간의 차이가 있는데 속성의 이름과 문자열에 큰따음표를 사용한다는 정도의 차이가 있다.</li></ul><ul id="b511325f-a225-429d-a48c-bc809cc37e6d" class="bulleted-list"><li>JSON은 자바스크립트 객체 포맷이므로 중괄호를 사용해서 객체를 만들 수 있다.</li></ul><figure id="e7ab118e-0b4f-4daa-9ade-4956a4e278e8" class="link-to-page"><a href="4%201/MOVIEAPI%20JSON.html">MOVIEAPI.JSON</a></figure><p id="2a7eb45c-d9f2-46ed-bd1d-8d691495e5da" class="">
+</p><p id="c66d1442-4b93-4d24-863b-d80ecabd48f9" class="">
+</p><h3 id="08b77d50-d57e-4669-a129-0d2c3304948f" class="">JSON</h3><ul id="33428fa1-74de-47d7-a087-2af923b0b7bc" class="bulleted-list"><li>중괄호 안에 들어 있는 여러 개의 속성을 확인할 수 있을 것입니다.</li></ul><ul id="47b02625-ea7a-4554-846a-d365a66e59a6" class="bulleted-list"><li>각각의 속성은 콤마(,)로 구분되며 각각의 속성 자체는 속성 이름과 속성 값이 콜론(:) 기호로 구분되면서 한 쌍을 이룬다.</li></ul><ul id="071653d5-b4ee-47bc-9e3f-8a6af6899866" class="bulleted-list"><li>즉, 콜론 뒤에 값이 들어갈 수 있는데 문자열이나 숫자와 같은 기본 자료형이 올 수도 있고 다시 중괄호로 싸인 객체가 올 수도 있다.</li></ul><ul id="3878706d-e648-4977-b02b-45bfc601715a" class="bulleted-list"><li>문자열 값에는 큰 따음표를 붙이고 숫자에는 붙이지 않는다.</li></ul><ul id="e81fcd9e-bb04-4d45-bebc-52a6b395cc5e" class="bulleted-list"><li>만약 배열을 사용하고 싶다면 대괄호를 사용하고 그 안에 쉼표로 구분된 배열 원소들이 들어간다.</li></ul><p id="ceb36fd3-90d8-485c-8c64-088cb6436131" class="">
+</p><h3 id="61def0b5-287e-40ad-b73d-5ce0216f37d8" class=""> JSON 결과물 처리 방법</h3><p id="ba8837b1-d915-4b27-9ea4-ba70991c5093" class="">
+</p><figure id="1f682952-234e-4353-aa1b-4088bf472ee8" class="image"><a href="4%201/Untitled.png"><img style="width:394px" src="4%201/Untitled.png"/></a></figure><ul id="7907b351-f05e-44a4-a5e5-9faadac8d3f8" class="bulleted-list"><li>Gson은 자바스크립트에서처럼 JSON 문자열을 객체로 변환할 수 있도록 해준다.</li></ul><ul id="63f4e697-4709-4d21-8435-fe31c56218b1" class="bulleted-list"><li>즉, JSON 문자열이 자바 객체로 만들어질 수 있다.</li></ul><ul id="51432e5d-6c03-4b58-9ed5-7903adb12279" class="bulleted-list"><li>Volley를 사용해서 웹서버로부터 JSON 응답을 받았다면 Gson을 이용해서 자바 객체로 바꾸고 그 객체 안에 들어있는 데이터를 접근하여 사용할 수 있다.</li></ul><ul id="f863013c-16ac-491c-865e-a5bc1f17d94f" class="bulleted-list"><li>Gson도 Volley처럼 외부라이브러리이기 때문에 라이브러리 추가</li></ul><pre id="dca6ced7-605d-4990-9fdc-3bb7ee1274f7" class="code"><code>implementation &#x27;com.android.volley:volley:1.1.0&#x27;
+implementation &#x27;com.google.code.gson:gson:2.8.2&#x27;</code></pre><p id="7fde636f-3d21-41cb-b6ba-1cebb5b8eef0" class="">
+</p><p id="77dd1d16-20ba-48b0-a0de-a907bb1725ec" class="">
+</p><h3 id="8927f45c-2345-4e9c-9000-8145f1add4c7" class="">SampleRequest2</h3><ul id="b3bd13cf-8b7c-4242-bfd1-8e5a1709bb40" class="bulleted-list"><li>Gson은 JSON 문자열을 자바 객체로 바꿔주는데 자바는 객체를 만들때 클래스 먼저 정의하는 과정을 거치므로 JSON 문자열을 자바 객체로 바꿀 때도 클래스를 먼저 정의해야 한다.</li></ul><ul id="5c27e926-d2cc-43e2-b277-bd91ebf5f8b8" class="bulleted-list"><li>영화 정보 JSON 응답의 포맷에 맞추어 새로운 자바 클래스를 정의한다.</li></ul><h3 id="fb18143c-ba3d-4650-b528-b2753193c0e9" class="">MovieList.java</h3><pre id="1e050d5e-34a7-4c39-b603-077470f90c30" class="code"><code>public class MovieList {
+	MovieListResult boxOfficeResult;
+}</code></pre><ul id="056734bb-90b1-4c53-9a19-3f0bd96d9b89" class="bulleted-list"><li>응답 데이터 가장 바깥이 중괄호이므로 이 객체를 반환할 클래스로 MovieList라는 이름의 클래스를 정의했다.</li></ul><ul id="7eb451e5-210d-4160-afa7-407186ea4297" class="bulleted-list"><li>이 클래스 안에는 boxOfficeResult라는 이름의 변수를 추가한다.</li></ul><ul id="4b1cace8-dae2-48f2-88ed-13fb7f3eb264" class="bulleted-list"><li>여기에서는 변수의 이름은 JSON문자열에서 속성의 이름과 같아야한다.</li></ul><ul id="71ad59e7-e028-485e-8f6c-f79868334ee9" class="bulleted-list"><li>그리고 변수의 자료형은 JSON 문자열에서 속성 값의 자료형과 같아야 한다.</li></ul><ul id="46b64917-479f-49f3-93f4-635efddd1fc4" class="bulleted-list"><li>JSON 문자열에서 boxOfficeResult 속성의 값이 객체이므로 이 객체를 변화하여 담아둘 클래스를 MovieListResult라는 이름으로 추가한다.</li></ul><p id="7ed25225-8450-4ab1-b72b-c1a39c550354" class="">
+</p><h3 id="adc0d6ac-5914-41dd-8432-c96d46bc6251" class="block-color-red">주의!</h3><p id="ed37dd67-c202-4400-925c-f5c873b07afe" class="">import <a href="http://android.graphics.Movie">android.graphics.Movie</a> → Movie 로 임포트 하지 말것 따로 클래스 생성 할꺼</p><h3 id="96163926-b437-44ec-a5d4-6bb3e9879591" class="">MovieListResult.java</h3><pre id="fb8e617c-70ec-49a5-8e23-82c17410dfe1" class="code"><code>public class MovieListResult {
+
+    String boxOfficeType;
+    String showRange;
+
+    ArrayList&lt;Movie&gt; dailyBoxOfficeList = new ArrayList&lt;Movie&gt;();
+}</code></pre><ul id="c800caa3-ed66-4978-a050-4b3df12363c3" class="bulleted-list"><li>JSON 문자열의 속성 중에서 값이 배열인 경우, 즉, 대괄호로 표시된 경우에는 클래스를 정의할 때 ArrayList 자료형을 사용할 수 있다.</li></ul><ul id="6168670d-8367-4822-be93-adce1f702fe9" class="bulleted-list"><li>그리고 그 배열 안에 다시 객체들이 들어가는 경우 해당 객체들을 위한 클래스를 추가로 만들어야 한다.</li></ul><ul id="944c075f-d00e-48b3-bc02-ff967ea4b0cd" class="bulleted-list"><li>이 클래스는 ArrayList의 제네릭 타입으로 지정되므로 꺽쇠(&lt;, &gt;) 표시를 사용한다.</li></ul><ul id="47208dfa-4a0b-48d2-8e99-66ff84d12cd7" class="bulleted-list"><li>여기에서 배열 안에 들어가는 Movie 객체는 또 다른 클래스로 정의한다.</li></ul><p id="b518a43c-6939-4ba6-89b7-f05fb96b5075" class="">
+</p><h3 id="74922875-abf2-4aa7-9572-958760108bee" class="">Movie.java</h3><pre id="801d606b-f027-4703-86c5-29d564edda97" class="code"><code>public class Movie {
+    String rnum;
+    String rank;
+    String rankInten;
+    String rankOldAndNew;
+    String movieCd;
+    String movieNm;
+    String openDt;
+    String salesAmt;
+    String salesShare;
+    String salesInten;
+    String salesChange;
+    String salesAcc;
+    String audiCnt;
+    String audiInten;
+    String audiChange;
+    String audiAcc;
+    String scrnCnt;
+    String showCnt;
+}</code></pre><p id="5bd21331-8bdf-422d-babc-47436790ada7" class="block-color-red">! 응답JSON 문자열의 포맷에 맞게 만들어야 한다는것 꼭 기억해야 한다.</p><p id="0d303b88-f140-4a59-98d8-bbf17d284157" class="">
+</p><h3 id="81dcc446-04c3-4be0-9e20-5a55d9abd2b2" class="">MainActivity.java</h3><pre id="1cda0893-9e01-47b7-bee9-c306976b7388" class="code"><code>@Override
+public void onResponse(String response) {
+	println(&quot;응답-&gt; &quot; + response);
+	processResponse(response);
+}
+
+
+public void processResponse(String response) {
+	Gson gson = new Gson();
+	MovieList movieList = gson.fromJson(response, MovieList.class); // JSON 문자열을 MovieList 객체로 변환하기
+	println(&quot;영화 정보의 수 : &quot; + movieList.boxOfficeResult.dailyBoxOfficeList.size());
+	}
+},</code></pre><ul id="938d64a0-1fc3-4ad1-813f-2e0948213f36" class="bulleted-list"><li>processResponse() 메서드의 정의 부분을 끼워 넣어야 한다.</li></ul><ul id="bd67a4d7-b1c9-4476-9517-bea00fd9a8a4" class="bulleted-list"><li>응답을 확인했던 onResponse() 메서드 바로 아래에 processResponse() 메서드를 정의하자</li></ul><ul id="423a5409-16f6-451c-b32a-678cdde7957c" class="bulleted-list"><li>또 응답을 받는 onResponse 메서드() 안에 processResponse() 메서드를 호출하는 (processResponse(response);) 코드를 추가한다.</li></ul><ul id="55a5bfe2-10cf-4ed9-a841-0026f7664e64" class="bulleted-list"><li>그리고 파라미터로 응답 문자 나열을 전달한다.</li></ul><ul id="9a04d3bf-316c-4f80-a1e7-f6a21bdb006f" class="bulleted-list"><li>새로 정의한 processResponse() 메서드에서는 Gson 객체를 이용해 응답 문자열을 MovieList 객체로 변환한다.</li></ul><ul id="3ed6be4f-31fa-4791-a308-52a20f53caf3" class="bulleted-list"><li>Gson 객체에는 fromJson() 메서드가 있어서 문자열을 자바 객체로 바꿀 수 있도록 한다.</li></ul><h3 id="d1340fe7-b298-4b1a-bec0-6d4b26f76534" class="">gson.fromJson</h3><pre id="b945a86f-fe45-4097-a98e-c315112f89a0" class="code"><code>public &lt;T&gt; T fromJson(String json, Class&lt;T&gt; classOfT) throws JsonSyntaxException {
+    Object object = fromJson(json, (Type) classOfT);
+    return Primitives.wrap(classOfT).cast(object);
+  }</code></pre><h3 id="dcbf48f1-09e7-4b2d-927d-8499d3db676d" class="">파라미터</h3><ol id="d787e876-9921-443f-a707-b2f294db979c" class="numbered-list" start="1"><li>String json<ol id="58bc8a8c-4603-4d1c-ad3a-fec7da92c4cc" class="numbered-list" start="1"><li>문자열</li></ol></li></ol><ol id="96607bab-12bf-4580-af2b-c87b4b9d29b4" class="numbered-list" start="2"><li>어떤 클래스인지를 지정하기 위한 클래스 객체</li></ol><ul id="50927443-efa4-40f8-9fbc-0085b6a93b6c" class="bulleted-list"><li>이렇게 변환하면 응답 JSON에 들어 있는 영화 정보의 개수를 바로 확인할 수 있다.</li></ul></div></article></body></html>

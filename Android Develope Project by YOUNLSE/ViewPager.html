@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ViewPager 만들기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5af700d2-376d-4f21-b753-3a46b2f8ca8f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">ViewPager 만들기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 17, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="2665f99e-5ad8-48df-8970-f1e1df421a32" class="">뷰페이저</h3><ul id="d8da65a7-fb32-4275-b68a-28416e07059f" class="bulleted-list"><li>손가락으로 좌우 스크롤하여 넘겨볼 수 있는 기능을 제공한다.</li></ul><ul id="94214190-2d80-4806-a65f-9a1720de36cc" class="bulleted-list"><li>화면 전체를 뷰 페이지로 채운다면 좌우 스크롤을 통해 화면을 넘겨볼 수 있게 된다.</li></ul><ul id="5dceee32-acc5-4314-8e27-da6e170f6130" class="bulleted-list"><li>화면 일부분만 차지하고 있어도 그부분에서만 좌우 스크롤이 동작한다.</li></ul><ul id="75e858b7-fa7c-4534-8393-1fe6101e816e" class="bulleted-list"><li>뷰페이저는 그 안에 프래그먼트를 넣을 수 있고 좌우 스크롤도 프래그먼트를 전환하게 된다.</li></ul><ul id="1e281f6b-abfd-4ccc-8278-1283034d4e21" class="bulleted-list"><li>뷰페이저는 내부에서 어댑터라는 것과 상호박용하게 되어 있는데 이것은 뷰페이저가 여러 개의 아이템 중에 하나를 보여주는 방식으로 동작하기 때문이다.</li></ul><p id="26c5ae4e-1fb3-43ae-8c33-6860b3d3b685" class="">
+</p><figure id="7c97cf56-029c-474b-9397-3df9b45dc336" class="image"><a href="ViewPager/Untitled.png"><img style="width:705px" src="ViewPager/Untitled.png"/></a></figure><h3 id="4d992388-1972-4d65-8b16-fd7ab1f4ed60" class="">타이틀스트립(TitleStrip)</h3><ul id="88b878a1-a414-4dc5-aeea-f7d56cd9cb6e" class="bulleted-list"><li>지금 보고 있는 화면이 전체 프래그먼트들 중에서 몇 번째 것인지 알기는 어렵다.</li></ul><ul id="8dde4660-d6b7-4f25-8a00-0426d743e79e" class="bulleted-list"><li>그래서 위나 아래쪽에 전체 아이템의 개수와 현재 보고 있는 아이템이 어떤 것인지를 보여줄 필요가 있다.</li></ul><ul id="7f6107a9-bff0-4a6a-8e25-212cccb0df05" class="bulleted-list"><li>이런 역활을 하는 것인 타이틀스트립, 탭스트립을 사용할 수 있다.</li></ul><p id="7369e59b-e953-4c92-b340-5e76a082519c" class="">
+</p><h3 id="03841642-baca-4274-8983-3361d020b4e7" class="">activity_main.xml</h3><pre id="72026bfb-e041-4387-abed-ed97b7ac54c0" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+    
+    &lt;Button
+        android:id=&quot;@+id/button&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;두 번째 화면 바꿔주기&quot; /&gt;
+
+    &lt;androidx.viewpager.widget.ViewPager
+        android:id=&quot;@+id/pager&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot; &gt;
+        &lt;androidx.viewpager.widget.PagerTitleStrip
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_gravity=&quot;top&quot;
+            android:background=&quot;#55CEDF&quot;
+            android:textColor=&quot;#FFFFFFFF&quot;
+            android:paddingTop=&quot;5dp&quot;
+            android:paddingBottom=&quot;5dp&quot;&gt;
+
+        &lt;/androidx.viewpager.widget.PagerTitleStrip&gt;
+    &lt;/androidx.viewpager.widget.ViewPager&gt;
+&lt;/LinearLayout&gt;</code></pre><p id="90309997-03d5-4e45-a85b-09d96f8fa9b3" class="">
+</p><p id="b47a2638-bd27-4188-9851-398b03a05793" class="">MainActivity.java</p><pre id="a95cfc53-cfda-45d8-bb93-d2d5944c5845" class="code"><code>package com.younsle.samplepager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    ViewPager pager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(1);
+            }
+        });
+
+        pager = findViewById(R.id.pager);
+        //ViewPager 객체를 findViewById() 메서드로 찾아 참조한 후 클래스 안에 선언한 변수에 할당했다.
+        pager.setOffscreenPageLimit(3);
+        //setOffscreenPageLimit() 메서드로 미리 로딩해 놓을 아이템의 개수를 세 개로 늘렸다.
+        //뷰페이저는 어댑터가 가지고 있는 아이템 중에서 몇 개를 미리 로딩해 두었다가 좌우 스크롤할 때 빠르게 보여줄수 있다.
+
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+
+        Fragment1 fragment1 = new Fragment1();
+        adapter.addItem(fragment1);
+
+        Fragment2 fragment2 = new Fragment2();
+        adapter.addItem(fragment2);
+
+        Fragment3 fragment3 = new Fragment3();
+        adapter.addItem(fragment3);
+
+        pager.setAdapter(adapter);
+        //VeiwPager 객체에 어댑처 객체를 설정하고 있다. -&gt; setAdapter() 메서드를 호출하면 어댑터 객체가 설정되고 이때부터 뷰페이지 어댑터에 있는 프래그먼트들을 화면에 보여줄 수 있게 된다.
+        //!만약 사용자가 손가락으로 화면을 전환하지 않고 코드에서 전환시키고 싶다면 뷰페이저 객체의 setCurrentItem() 메서드를 사용하면된다.
+    }
+    //MyPagerAdapter 클래스는 내부 클래스로 만들어 졌으며 FragmentStatePagerAdapter를 상속한다.
+    //어댑터는 뷰페이지에 보여줄 각 프래그먼트를 관리하는 역활을 하며, 뷰페이저에 설정하면 서로 상호작용하면서 화면에 표시해준다.
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+        ArrayList&lt;Fragment&gt; items = new ArrayList&lt;Fragment&gt;();
+        //MyPagerAdapter 안에는 프래그먼트들을 담아둘 ArrayList 객체를 만들었으며 그 안에는 프래그먼트 객체를 넣어둘 것이다.
+        public MyPagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        public CharSequence getPageTitle(int position) {
+            return &quot;페이지&quot; + position;
+        }
+        //PaperTitleStrip
+
+        public void addItem(Fragment item) {
+            items.add(item);
+            //addItem() -&gt; ArrayList 객체 안에 프래그먼트를 추가할 수 있는 메서드
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return items.get(position);
+            //getCount() -&gt; 프래그먼트의 개수를 확인할 수 있다.
+            //뷰페이저는 어댑터와 상호작용하면서 getCount() 메서드로 몇 개의 프래그먼트가 들어 있는지 확인한다.
+            //그런 다음 화면의 상태에 따라 해당하는 프래그먼트를 꺼내와 보여주게 된다. -&gt; 이 어댑터를 사용할 수 있도록 다음 코드를 onCreate() 메서드에 추가
+        }
+
+        @Override
+        public int getCount() {
+            return items.size();
+        }
+    }
+}</code></pre></div></article></body></html>

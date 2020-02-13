@@ -1,0 +1,812 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쓰레드핸들러 코드 분석#6</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="16da92a5-8f94-41f5-b1a2-eddbb33977f1" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">쓰레드핸들러 코드 분석#6</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 07, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="fd5df0f1-47d1-495b-9317-71c369e296b6" class="">DuDu 개발기</h1><p id="df3d4cea-3bc8-4198-91a2-087434d4a9f8" class="">
+</p><figure id="26dd864f-d22a-41f6-9dcb-dee501bb429f"><div class="source"><a href="6/KakaoTalk_Video_20200207_2334_51_301.mp4">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d29ba880-b01e-4090-8dde-3690ca518399/KakaoTalk_Video_20200207_2334_51_301.mp4</a></div></figure><p id="da8a1972-0dfd-45c3-94bb-0dd7b9541968" class="">
+</p><h3 id="3daa3d5f-a443-429c-8b7a-9ff0a74ba5ae" class="">변수 선언</h3><pre id="394638fb-99d2-4715-8c90-607b95323018" class="code"><code>TextView time;
+    TextView count;
+    Button start;
+
+		// img_array 요솟수 9
+    ImageView[] img_array = new ImageView[9];
+		
+		// imageID 생성후 구성 
+    int[] imageID = {R.id.imageView1, R.id.imageView2, R.id.imageView3,
+									R.id.imageView4, R.id.imageView5, R.id.imageView6, 
+									R.id.imageView7, R.id.imageView8, R.id.imageView9};
+
+    final String TAG_ON = &quot;on&quot;; //on Tag
+    final String TAG_OFF = &quot;OFF&quot;; //oFF Tag
+    int score = 0;
+
+    // Thread null 상태 유지
+    Thread thread = null;</code></pre><p id="a3322e14-9333-4144-b0fe-61ebebd0155a" class="">
+</p><h3 id="b7079eff-26d8-46ba-a352-8f39125719b2" class="">Activity Full Screen 적용</h3><pre id="acf3b07a-fbf1-429e-ae62-ba6beae17692" class="code"><code>protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main);
+/* -- 중략 -- */
+}</code></pre><p id="962a3b97-7f60-4b73-881c-e0ceaee3ce88" class="">
+</p><h3 id="46679028-28ac-45d7-af60-aed744f4abfd" class="">레이아웃 View 참조</h3><pre id="1a418f8c-191e-4328-b306-077542bfdb10" class="code"><code>// id Setting
+        time = findViewById(R.id.time);
+        count = findViewById(R.id.count);
+        start = findViewById(R.id.start);</code></pre><p id="b5f130fd-7a32-40d9-abc9-c86b4a8fd8e3" class="">
+</p><h3 id="3b575ba5-ebfd-4a88-98c2-34cb176ad3bf" class="">안드로이드 진동 권한 획득 및 객체 생성</h3><pre id="3cbd79b3-7662-4277-ade5-b38a79ebb828" class="code"><code>// 진동
+// 1. 진동 권한을 획득해야한다. AndroidManifest.xml
+// 2. Vibrator 객체를 얻어서 진동시킨다.
+final Vibrator vibrator = 
+								(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);</code></pre><ul id="7fe48c78-fdb8-4991-b8d5-7108c49c6dcb" class="bulleted-list"><li>권한 획득(일반권한)</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="22e5815b-bfd9-4c6d-a24f-a7e1bd859447"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">&lt;uses-permission android:name=&quot;android.permission.VIBRATE&quot;/&gt;</div></figure><p id="b0993096-ee52-40be-90f7-5c7b5f85b1a5" class="">
+</p><h3 id="0591334c-6278-4685-8db1-21c2672bd91e" class="">이미지뷰 배열 for 문으로 참조후 태그 설정</h3><pre id="5f62b2f5-180f-4dfb-80b2-8e0dafc21822" class="code"><code>for (int i = 0; i &lt; img_array.length; i++) {
+            img_array[i] = (ImageView)findViewById(imageID[i]);
+						// imageID[i] &lt;- img_array[i] 객체 참조 (0~9)
+            img_array[i].setImageResource(R.drawable.inside);
+						// img_array[i] &lt;- 이미지 inside 설정
+            img_array[i].setTag(TAG_OFF);
+						// img_array[i] &lt;- 태그 설정 &quot;OFF&quot;
+
+/* -- 중략 -- */</code></pre><p id="4692856f-f7cf-4fb1-89be-199d8bac797b" class="">
+</p><pre id="aadb8c2c-4194-4ce6-9fa1-0f13d4915636" class="code"><code>//inside 이미지에 클릭 리스너 설정
+img_array[i].setOnClickListener(new View.OnClickListener() {
+@Override
+	public void onClick(View v) {
+		if(((ImageView)v).getTag().toString().equals(TAG_ON)) {
+			Toast.makeText(getApplicationContext(), &quot;good&quot;, Toast.LENGTH_LONG).show();
+			count.setText(String.valueOf(score++));
+			((ImageView) v).setImageResource(R.drawable.inside);
+
+			v.setTag(TAG_OFF);
+
+		} else {
+				Toast.makeText(getApplicationContext(), &quot;bad&quot;, Toast.LENGTH_LONG).show();
+
+
+				if (score &lt;= 0) {
+					score = 0;
+					count.setText(String.valueOf(score));
+
+				} else {
+					count.setText(String.valueOf(score--));
+					vibrator.vibrate(400);
+					((ImageView) v).setImageResource(R.drawable.inside);
+
+				}
+				((ImageView) v).setImageResource(R.drawable.outside);
+				v.setTag(TAG_ON);
+				}
+			}
+		});
+	}</code></pre><p id="9b67e407-64a6-4785-832d-600b82b41cd3" class="">
+</p><h3 id="4a6fdb0a-96d3-467c-9328-4cfc00e6d16c" class="">time, count 뷰 값 초기화</h3><pre id="5b21f2c4-6200-495d-b97e-72f868f05a24" class="code"><code>time.setText(&quot;30초&quot;);
+count.setText(&quot;0마리&quot;);</code></pre><p id="ea2fdc45-6d1c-4e63-97e6-83a2fcaa13df" class="">
+</p><h3 id="72f2bfae-aea5-49ac-bf71-1518aec62925" class="">start 버튼 클릭시 이벤트 처리</h3><pre id="9cb0b585-c5ef-4fc5-b4fc-566d9107c4f3" class="code"><code>//Start button
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start.setVisibility(View.GONE);
+                count.setVisibility(View.VISIBLE);
+
+                // timeCheck 객체 생성
+                new Thread(new timeCheck()).start();
+
+                for (int i = 0; i &lt; img_array.length; i++) {
+                    new Thread(new DThread(i)).start();
+                }
+            }
+        });
+    }</code></pre><p id="db35b647-637a-488f-bba1-e5e66b884a82" class="">
+</p><h3 id="eada22d2-d84f-4123-8285-3bdc272e83e1" class="">핸들러 객체 생성 , 핸들러 메시지 추가(onHandler)</h3><pre id="947569dc-bc71-4fef-908f-c814ff31d97f" class="code"><code>Handler onHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            img_array[msg.arg1].setImageResource(R.drawable.outside);
+            img_array[msg.arg1].setTag(TAG_ON); //올라오면 다시 태그 on
+        }
+    };</code></pre><p id="096ceaa5-ca01-40eb-b00a-774f6fdd77cd" class="">
+</p><h3 id="4c1ae8e0-d1b7-4e83-826b-6d123aea0351" class="">핸들러 객체 생성, 핸들러 메시지 추가 (offHandler)</h3><pre id="61394447-5ed7-420c-a6e7-8cd27f5a730a" class="code"><code>Handler offHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            img_array[msg.arg1].setImageResource(R.drawable.inside);
+            img_array[msg.arg1].setTag(TAG_OFF);    // 내려오면 다시 off
+        }
+    };</code></pre><p id="6851b812-260e-4440-989b-7dcc2d813f48" class="">
+</p><p id="049e56d8-8ff9-4406-a49a-f0ce4326297a" class="">
+</p><h3 id="2502b00e-65d8-43c5-ba22-29d63e93936f" class="">Thread  -  DThread implements Runnable</h3><pre id="5eb6bd57-66d1-42c9-a1e5-dcb9446605d8" class="code"><code>// item dudu 올라갔다가 내려갔다가
+public class DThread implements Runnable {
+        int index = 0;  // dudu 번호
+
+        DThread(int index) {
+            this.index = index;
+        }
+
+/* 중략  */</code></pre><p id="cd47d608-632e-4eb6-9c16-cc7bd18020cb" class="">
+</p><h3 id="6c93bf42-9f98-443b-b909-6ad19014a39f" class="">DThread run() 메서드</h3><pre id="e35d9510-0779-4302-8e54-b2e3fa614e10" class="code"><code>@Override
+        public void run() {
+            while(true) {
+                try {
+                    Message msg1 = new Message();
+                    int offtime = new Random().nextInt(5000) + 500;
+                    Thread.sleep(offtime);  // dudu 내려가 있는 시간
+
+                    msg1.arg1 = index;
+                    onHandler.sendMessage(msg1);
+
+                    int ontime = new Random().nextInt(1000) + 500;
+                    Thread.sleep(ontime);   // dudu 올라가 있는 시간
+
+                    Message msg2 = new Message();
+                    msg2.arg1 = index;
+                    offHandler.sendMessage(msg2);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }</code></pre><p id="2e0965eb-bd3e-4769-ab03-65738f94ff5f" class="">
+</p><p id="79e1754e-7d38-47f1-b848-f61c9d998421" class="">
+</p><h3 id="19760ac5-7c58-4a13-86da-05c77ba7c2d7" class="">handler 객체 생성 메시지 추가</h3><pre id="7db10b6a-4521-4138-9801-a3073ea7e2a7" class="code"><code>Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            time.setText(msg.arg1 + &quot;초&quot;);
+        }
+    };</code></pre><p id="3e22e74f-5838-40bd-9ad2-fe848a0fde76" class="">
+</p><p id="a4329f05-46af-4296-a176-60f362a315a1" class="">
+</p><h3 id="2e357c47-e3a1-4283-a64f-6ec7076c4144" class="">시간 체크 클래스 timeCheck implements Runnable </h3><pre id="8096db24-1aba-4cf5-87d1-55da9c44570d" class="code"><code>public class timeCheck implements Runnable {
+        final int MAXTIME = 30;
+
+        @Override
+        public void run() {
+            for (int i = MAXTIME; i &gt;= 0; i--) {
+                Message msg = new Message();
+                msg.arg1 = i;
+                handler.sendMessage(msg);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+            intent.putExtra(&quot;score&quot;, score);
+            startActivity(intent);
+            finish();
+// 시간 초과시 ResultActivity 로 이동
+// 인텐트 값으로 score 정보 이동
+        }
+    }
+}</code></pre><p id="793ea89e-80ee-484a-aa1b-a2dd57037813" class="">
+</p><p id="965fa7c9-0c5b-49cb-ab6e-41a1cbec0748" class="">
+</p><p id="fb11b884-5894-4bb0-9f8c-d55f7f3ce6ff" class="">
+</p><h1 id="a112689c-ae5f-464f-a5e8-fdb5f5512972" class="">ResultActivity.java</h1><ul id="847e887d-b47b-4be6-868b-93ea779be235" class="bulleted-list"><li>값을 저장하기 위해서 SharedPreferences 사용</li></ul><p id="dec40d3e-2f3f-4154-9821-5c539492366c" class="">
+</p><pre id="1d0444d4-f5f1-4383-9e35-9a1cfceb286e" class="code"><code>SharedPreferences spf = null;   // 기록 저장</code></pre><p id="4322afd5-0283-4886-8406-f4b46277bca7" class="">
+</p><pre id="38cbf0af-c64f-4566-bad8-3e99ade83edd" class="code"><code>public class ResultActivity extends AppCompatActivity {
+
+    TextView sub_result;
+    Button sub_retry;
+
+    SharedPreferences spf = null;   // 기록 저장
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_result2);
+
+
+        spf = getSharedPreferences(&quot;spfScore&quot;, MODE_PRIVATE);
+				// 키 값이 또 있으면 덮어쓰겠다.   
+
+        sub_result = findViewById(R.id.sub_result);
+        sub_retry = findViewById(R.id.sub_retry);
+
+        int score = getIntent().getIntExtra(&quot;score&quot;, -1);
+// 인텐트로 가져온 
+        sub_result.setText(String.valueOf(score)+&quot;마리&quot;);
+
+        if (spf.getInt(&quot;spfscore&quot;,0) &lt; score) { 
+				// 자신의 점수가 저번 점수보다 크면
+            spf.edit().putInt(&quot;spfscore&quot;, score).commit();
+						// 반영의 commit(); 현재상태 저장
+            sub_result.setText(&quot;신기록 달성\n&quot; + score + &quot;마리&quot;);
+        }
+
+        sub_retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+}</code></pre><p id="96cd2410-a254-4f63-92e9-62d48fd6be38" class="">
+</p><p id="b88bb28f-e901-446c-afa1-15decb58e826" class="">
+</p><h3 id="2bebe0e4-b01e-469c-9204-c60ba542b63b" class="">ButtonActivity.java</h3><pre id="3a23da0e-dc93-4d6d-a72e-4772f669359b" class="code"><code>public class ButtonActivity extends AppCompatActivity {
+
+    Button button;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_button);
+
+        button = findViewById(R.id.btn_start);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ButtonActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+}</code></pre><ul id="72067f9c-9b3e-41bb-a1d9-17711822fcdc" class="bulleted-list"><li>메인 버튼 이벤트 인텐트로 이동</li></ul><p id="048bf5d3-b3e5-4f5a-9879-891946a33178" class="">
+</p><p id="ab651ac6-04a3-47c7-a34e-6ec91e72dd9a" class="">
+</p><p id="250219fb-4e04-4553-ad5f-9d947c652ea8" class="">
+</p><h3 id="8fd4ccc4-249d-4e14-9d93-6a545f2c3a50" class="">기능추가?</h3><ul id="8137e7e9-2c41-493c-93ba-8e6cb9df8207" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">누를때 소리?</span></li></ul><ul id="977c6063-d4c1-47e9-a801-c9c4fcec8937" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">처음 브금</span></li></ul><ul id="0f2a749e-22ca-4d4d-8fda-248e912987f8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">처리 알고리즘 연구</span></li></ul><ul id="c3295330-fd6f-44cd-9760-ca8c0f0c85d9" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">다음 네트워크 파트랑 연결</span></li></ul></div></article></body></html>

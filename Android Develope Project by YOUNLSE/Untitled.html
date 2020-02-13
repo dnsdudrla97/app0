@@ -1,0 +1,687 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>바로가기 메뉴 만들기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ba6a60e4-e9eb-4640-9b81-94ca4144b232" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">바로가기 메뉴 만들기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 17, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="9e87cedd-7a56-4a7b-8b0a-2051aa157121" class="">NavgationDrawer</h3><ul id="6e391647-aecf-4274-af4d-5822f3c5f692" class="bulleted-list"><li>바로가기 메뉴는 몇 개의 화면에서 공통으로 보여줄 수 있기 때문에 빠르게 메뉴 기능에 접근하고자 할 때 사용된다.</li></ul><ul id="3f7d7127-340e-4987-8e1b-0272c651c424" class="bulleted-list"><li>또란 로그인한 사용자의 프로필 정보나 설정 메뉴를 보여줄 때도 사용할 수 있다.</li></ul><p id="211ca851-8503-4208-a650-0b3991d166ae" class="">
+</p><figure id="04bff31c-b87a-42e0-abe8-0139861e92a7" class="image"><a href="Untitled/Untitled.png"><img style="width:288px" src="Untitled/Untitled.png"/></a></figure><h3 id="92c12e8f-b3ce-4e2e-b85e-7154e5c999a6" class="">NoActionBar 스타일 설정</h3><ul id="354f80e4-cb32-40d4-97b5-8cccb7187941" class="bulleted-list"><li>바로가기 메뉴는 화면에 보이는 부분이므로 XML 레이아웃에서 넣어주는 것이 좋다.</li></ul><ul id="306a1db1-b6c6-4ce3-bbcc-4589004b66c1" class="bulleted-list"><li>다만 위쪽 타이틀 부분을 포함해서 화면의 전체적인 구성을 모두 넣어주어야 하므로 코드량이 늘어난다. 하지만 한 번 익숙해지면 그대로 복사해서 사요할 수 있다.</li></ul><ul id="58a1bd0f-34fe-4540-ba19-435ea550c3e2" class="bulleted-list"><li>액션바라 불리는 타이틀 부분이 XML 레이아웃에서 추가되므로 액티비티의 스타일은 액션바가 없는 NoActionBar로 설정해야한다.</li></ul><pre id="dea2d6dd-9f59-46ea-8043-27b87f898ffd" class="code"><code>&lt;activity
+    android:name=&quot;.MainActivity&quot;
+    android:label=&quot;@string/app_name&quot;
+    android:theme=&quot;@style/AppTheme.NoActionBar&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity&gt;</code></pre><pre id="3d98072d-6209-4f2d-add1-2d8beb82166d" class="code"><code>&lt;style name=&quot;AppTheme.NoActionBar&quot;&gt;
+    &lt;item name=&quot;windowActionBar&quot;&gt;false&lt;/item&gt;
+    &lt;item name=&quot;windowNoTitle&quot;&gt;true&lt;/item&gt;
+&lt;/style&gt;</code></pre><h3 id="70a5b2a7-8d02-4374-96bd-0ed9ac4b2c42" class="">NavgationDrawer - 바로가기 메뉴 분석</h3><p id="e2d68960-1071-4a42-829e-7727558ceaaf" class="">
+</p><h3 id="0714780a-f466-4e4a-b9dd-3ca748dbac24" class="">Manifest.xml → &lt;activity&gt; → theme 속성</h3><ul id="e2d4aab4-71c0-417d-939e-aa2d509d7ada" class="bulleted-list"><li>기본 테마가 아니라 직접 만든 테마를 설정하기 위한 것</li></ul><pre id="078670a2-d9e2-455a-bba4-b22f32cba86b" class="code"><code>&lt;activity
+	android:name=&quot;.MainActivity&quot;
+	android:label=&quot;@string/app_name&quot;
+	android:theme=&quot;@style/AppTheme.NoActionBar&quot;&gt;
+	&lt;intent-filter&gt;
+		&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+		&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+	&lt;/intent-filter&gt;
+&lt;/activity&gt;</code></pre><p id="a1ea45d2-609a-44da-a963-bd93cd065c52" class="">
+</p><ul id="d850ae7d-3535-40ec-b838-b43525f7c6ba" class="bulleted-list"><li>android:theme = &quot;@style/Apptheme.NoActionBar&quot;<ul id="385ac7e2-389d-470c-8f4a-7d08cca95927" class="bulleted-list"><li>/app/res/values → styles.xml 파일에 이 값이 설정되어 있으리라 짐작할 수 있다.</li></ul><p id="adeef391-0c3a-4f2f-b617-92a7de37ad92" class="">
+</p></li></ul><h3 id="152e266a-67d7-4a7b-acee-96f5805f4577" class="">styles.xml</h3><pre id="4d688f6a-600d-46d0-b71f-b56a522cb2ac" class="code"><code>&lt;resources&gt;
+
+    &lt;!-- Base application theme. --&gt;
+    &lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;
+        &lt;!-- Customize your theme here. --&gt;
+        &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;
+        &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;
+        &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;
+    &lt;/style&gt;
+
+    &lt;style name=&quot;AppTheme.NoActionBar&quot;&gt;
+        &lt;item name=&quot;windowActionBar&quot;&gt;false&lt;/item&gt;
+        &lt;item name=&quot;windowNoTitle&quot;&gt;true&lt;/item&gt;
+    &lt;/style&gt;
+
+    &lt;style name=&quot;AppTheme.AppBarOverlay&quot; parent=&quot;ThemeOverlay.AppCompat.Dark.ActionBar&quot; /&gt;
+
+    &lt;style name=&quot;AppTheme.PopupOverlay&quot; parent=&quot;ThemeOverlay.AppCompat.Light&quot; /&gt;
+
+&lt;/resources&gt;</code></pre><ul id="991dde20-8b0b-4812-9e5b-9bad7eacf173" class="bulleted-list"><li>&lt;style name=&quot;AppTheme.NoActionBar&quot;&gt;</li></ul><ul id="e74e82a7-804d-47c6-86cf-e33484e52581" class="bulleted-list"><li>이렇게 하면 기본 테마가 아니라 상단의 액션바가 없는 스타일로 테마가 설정된다.</li></ul><ul id="7d7a486e-8ad1-4559-af6d-05760b0b5c43" class="bulleted-list"><li>상단의 액션바가 없어졌으니 이제 activity_main.xml 파일에서 직접 액션바를 만들어준다.</li></ul><p id="dab12b24-d7ff-41da-835b-c9951631cc18" class="">
+</p><p id="08bdd1f2-1bcf-48fa-913e-d06e7548ea6a" class="">activity_main.xml → AppBarLayout 태그로 화면 상단에 액션바를 보여 줄수 있다.</p><ul id="e421a876-8169-4204-8ca5-786387c2de97" class="bulleted-list"><li>그런데 이 내용은 별도의 XML 레이아웃 파일로 분리되어 있다. → app_bar_main.xml</li></ul><h3 id="4232fedc-de28-40b7-a6ce-ac86658dcbd2" class="">app_bar_main.xml</h3><pre id="3209fd7d-a3ce-4d49-a621-8ebc42328102" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;androidx.coordinatorlayout.widget.CoordinatorLayout 
+	xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+	xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;
+	tools:context=&quot;.MainActivity&quot;&gt;
+
+	&lt;com.google.android.material.appbar.AppBarLayout
+		android:layout_width=&quot;match_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;
+		android:theme=&quot;@style/AppTheme.AppBarOverlay&quot;&gt;
+
+		&lt;androidx.appcompat.widget.Toolbar
+			android:id=&quot;@+id/toolbar&quot;
+			android:layout_width=&quot;match_parent&quot;
+			android:layout_height=&quot;?attr/actionBarSize&quot;
+			android:background=&quot;?attr/colorPrimary&quot;
+			app:popupTheme=&quot;@style/AppTheme.PopupOverlay&quot; /&gt;
+
+	&lt;/com.google.android.material.appbar.AppBarLayout&gt;
+
+	&lt;include layout=&quot;@layout/content_main&quot; /&gt;
+
+	&lt;com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id=&quot;@+id/fab&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_gravity=&quot;bottom|end&quot;
+        android:layout_margin=&quot;@dimen/fab_margin&quot;
+        app:srcCompat=&quot;@android:drawable/ic_dialog_email&quot; /&gt;
+
+&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;</code></pre><ul id="d3b634e2-e2f7-48b5-bd51-9a3b110d640c" class="bulleted-list"><li>액션바를 포함해 다른 레이아웃들이 들어 있다.</li></ul><p id="f43a172e-6a7b-4042-8f42-450a606199a5" class="">
+</p><h3 id="57cc346f-e8d2-44e8-b6cd-7ad8a75e45dc" class="">activity_main.xml</h3><pre id="4e251e8e-90b4-456f-b18a-4fcbaf3d226e" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;androidx.drawerlayout.widget.DrawerLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:id=&quot;@+id/drawer_layout&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:fitsSystemWindows=&quot;true&quot;
+    tools:openDrawer=&quot;start&quot;&gt;
+
+    &lt;include
+        layout=&quot;@layout/app_bar_main&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot; /&gt;
+
+    &lt;com.google.android.material.navigation.NavigationView
+        android:id=&quot;@+id/nav_view&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_gravity=&quot;start&quot;
+        android:fitsSystemWindows=&quot;true&quot;
+        app:headerLayout=&quot;@layout/nav_header_main&quot;
+        app:menu=&quot;@menu/activity_main_drawer&quot; /&gt;
+
+&lt;/androidx.drawerlayout.widget.DrawerLayout&gt;</code></pre><ul id="e977c153-53fe-4fe6-acdc-ea6fb6e56947" class="bulleted-list"><li>NavgationView가 바로가기 메뉴를 위한 뷰라는 것을 알 수 있다.</li></ul><ul id="a0ebfd52-947b-4118-bd41-d2023b617f0d" class="bulleted-list"><li>이 뷰는 평소에는 보이지 않다가 햄버거 모양 아이콘을 눌렀을 때만 보이게 된다.</li></ul><ul id="05be3255-b7e9-49ea-a292-0dd1fc8e61f6" class="bulleted-list"><li>이런 동작을 위해 최상위 레이아웃은 DrawerLayout으로 설정되어 있다.</li></ul><ul id="0b56e8de-f98f-4d37-8a40-c9f589a52c8f" class="bulleted-list"><li>app_bar_main.xml 파일이 분리되어 있는 것보다 activity_main.xml 파일에 포함되어 있는 것이 좀더 코드 확인이 편할 수 있으므로 하나로 통합한다.</li></ul><p id="f7000487-3b7e-4cda-b680-7b5fe44094c2" class="">
+</p><h3 id="05595885-22db-45e3-b48c-2c8597704d1a" class="">바로가기 메뉴 선택 시의 기능</h3><ul id="d207471b-612a-4dab-8ca5-51701590e43f" class="bulleted-list"><li>바로가기 메뉴 뷰에서 메뉴가 선택되었을 때 호출되는 메소드는 다음과 같다.</li></ul><pre id="127a6658-ac41-42ab-834f-67bd8537cbf9" class="code"><code>@SuppressWarnings(&quot;StatementWithEmptyBody&quot;)
+@Override
+public boolean onNavigationItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.nav_0) {
+        Toast.makeText(this, &quot;첫번째 메뉴 선택됨.&quot;, Toast.LENGTH_LONG).show();
+        onFragmentSelected(0, null);
+    } else if (id == R.id.nav_1) {
+        Toast.makeText(this, &quot;두번째 메뉴 선택됨.&quot;, Toast.LENGTH_LONG).show();
+        onFragmentSelected(1, null);
+    } else if (id == R.id.nav_2) {
+        Toast.makeText(this, &quot;세번째 메뉴 선택됨.&quot;, Toast.LENGTH_LONG).show();
+        onFragmentSelected(2, null);
+    }
+
+    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawer.closeDrawer(GravityCompat.START);
+    return true;
+}</code></pre></div></article></body></html>

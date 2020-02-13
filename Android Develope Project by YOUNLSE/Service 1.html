@@ -1,0 +1,713 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Service #1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="05d60620-6d43-4e16-b031-4a516fe0cc7d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Service #1</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 21, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="b712e7ca-6972-4e2b-96fd-b06b0fcc6b75" class="">백그라운드 서비스</h3><ul id="675b21ad-5a97-414c-bb4f-b37b41376958" class="bulleted-list"><li>카카오톡 앱은 실행되어 있지 않거나 화면이 사용자에게 보이지 않은 상태에서도 다른 사람이 보낸 메서지를 받을 수 있다.</li></ul><ul id="1ec4ec96-73df-4cb1-bf74-5e4998719602" class="bulleted-list"><li>화면 없이 백그라운드에서 실행되는 서비스가 있기 때문이다.</li></ul><p id="dfd99a60-95ea-47fc-baff-f54f4acc7bcb" class="">
+</p><h2 id="fb4902c6-2b51-4fba-8dd2-092d6911684b" class="">서비스란?</h2><ul id="1d19c7eb-fc01-43b0-9cb4-d5dc3da55543" class="bulleted-list"><li>백그라운드에서 실행되는 앱의 구성요소를 말한다.</li></ul><ul id="c95368b2-467f-4ba1-9cce-54e0184ea10d" class="bulleted-list"><li>이미 만들어보았던 액티비티는 앱의 구성 요소라고 불리는데 서비스도 동일하게 앱의 구성 요소 역활을 한다.</li></ul><ul id="b0a667f8-0dfa-4b93-9c2e-d89bb80df2cf" class="bulleted-list"><li>서비스도 앱의 구성 요소이므로 시스템에서 관리한다.</li></ul><ul id="2116e922-90a0-46c5-b453-bcbe84899b99" class="bulleted-list"><li>그래서 액티비티를 만들 때 매니페스트 파일에 등록했던 것처럼 새로 만든 서비스도 매니페스트 파일에 꼭 등록해야 한다.</li></ul><p id="13730817-e68e-4ecc-8eec-4c6694f4e6c2" class="">
+</p><h3 id="f80f4d9c-793a-45f9-98f9-3f213112bf78" class="">서비스의 실행 원리와 역활</h3><ul id="9cbe67ef-b21f-44fb-b2ff-b47e877ea477" class="bulleted-list"><li>서비스를 실행할려면 메인 액티비티에서 startService() 메서드를 호출하면 된다.</li></ul><ul id="066117a7-d799-44f7-a209-179d636a93ed" class="bulleted-list"><li>서비스의 주요 역활 중 하나는 단말이 항상 실행되어 있는 상태로 다른 단말과 데이터를 주고 받거나 필요한 기능을 백그라운드에서 실행하는 것이다.</li></ul><ul id="18b4b5b8-6198-4cbc-aec5-afda21637740" class="bulleted-list"><li>그래서 서비스는 실행된 상태를 계속 유지하기 위해 서비스가 비상적으로 종료되더라도 시스템이 자동으로 재실행한다.</li></ul><p id="80ef6e3e-9889-4188-8ca1-c9718c80612a" class="">
+</p><figure id="2181e077-a77d-44ee-83d5-f3d8c86b59c2" class="image"><a href="Service%201/nse-8966216798598051338-20893.jpg"><img style="width:432px" src="Service%201/nse-8966216798598051338-20893.jpg"/></a></figure><ul id="24cc53bf-b1a7-4a2c-ad7f-a645719aae1e" class="bulleted-list"><li>서비스를 시작시키기 위해 startService() 메서드를 호출할 때는 인텐트 객체를 파라미터로 전달한다.</li></ul><ul id="9677d0b3-7756-4fb5-9e7f-c918557e0247" class="bulleted-list"><li>이 인텐트 객체는 어떤 서비스를 실행할 것인지에 대한 정보를 담고 있으며 </li></ul><ul id="696ab496-d876-4b59-b4d7-1a61d7de85b5" class="bulleted-list"><li>시스템은 서비스를 시작시킨 후 인텐트 객체를 서비스에 전달한다.</li></ul><ul id="3fb2e8f2-eb5c-478f-b8e0-7bc0cec1109c" class="bulleted-list"><li>그런데 서비스가 실행 중이면 실행 이후에 startService() 메서드를 여러 번 호출해도 서비스는 이미 메모리에 만들어진 상태로 유지된다.</li></ul><ul id="ffb03467-cc26-4e41-b558-e051eaea7edf" class="block-color-red bulleted-list"><li>따라서 startService() 메서드는 서비스를 시작하는 목적 이외에 인텐트를 전달하는 목적으로도 자주 사용된다.</li></ul><ul id="bc5d5691-e7d9-47f8-bbe7-9a30dd41f059" class="bulleted-list"><li>예를 들어, 액티비티에서 서비스로 데이터를 전달하려면 인텐트 객체를 만들고 부가 데이터(Extara data)를 넣은 후 startService() 메서들 호출하면서 전달하면 된다. 그런데 앞에서 가정하고 있는 상태는 서비스가 startService() 메서드에 의하여 메모리에 만들어져 있는 상태이다.</li></ul><ul id="69b724ee-a8eb-4991-8c6b-2e8438797bd7" class="bulleted-list"><li>이런 겨우에는 시스템이 onCreate() 메서드가 아니라 onStartCommand() 메서드를 실행한다.</li></ul><ul id="2eaf2187-fd9c-4c53-b59c-92ff6b87468a" class="bulleted-list"><li>onStartCommand() 메서드는 서비스로 전달된 인텐트 객체를 처리하는 메서드이다.</li></ul><p id="0e7cbc1b-c8cc-4a11-8742-166bd49d97a1" class="">
+</p><p id="77cfa056-bfe6-4341-babd-a54c0f144eb8" class="">
+</p><h3 id="c8f9b17a-493d-4bff-8014-b06e1afbb2d5" class="">Service 클래스 생성</h3><pre id="0ff37760-9d91-4eee-a90e-56218a13f238" class="code"><code>package com.younsle.sampleservice;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
+public class MyService extends Service {
+    public MyService() {
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException(&quot;Not yet implemented&quot;);
+    }
+}</code></pre><ul id="9746d239-d5e8-4e45-8d9e-6f1841d933ff" class="bulleted-list"><li>클래스를 생성하면 AndroidMainfest.xml 파일 안에 &lt;service&gt; 태그도 추가된다.</li></ul><ul id="2caec4ba-90d6-4cd0-a1f9-863b4f761bb1" class="bulleted-list"><li>서비스는 시스템에서 관리하므로 매니페스트에 넣어 앱 설치 시에 시스템이 알 수 있게 해야 한다.</li></ul><ul id="c9d5b4ed-1486-4d2a-a3e4-a14b3097fc98" class="bulleted-list"><li><a href="http://myservice.java">MyService.java</a> 파일에는 자동으로 만들어진 생성자 메서드와 onBlind() 메서드만 있다.</li></ul><ul id="095b1dbe-005b-4489-ad4d-98d6043a57d2" class="block-color-red bulleted-list"><li>하지만 서비스의 수명주기를 관리하기 위하여 onCreate(), onDestroy() 메서드와 인텐트 객체를 전달받기 위한 onStartCommand() 메서들 추가해보곘다. ㅇㅇ</li></ul><p id="5ada2e62-8bd1-4311-bcd8-9fec877a9933" class="">
+</p><h3 id="e7847471-fee0-4729-ae30-07de1a32a4f3" class="">기본 서비스 보내기</h3><ul id="d97919f5-c664-4166-af47-60627b7b7f60" class="bulleted-list"><li>버튼을 누르면 입력상자에 입력한 글자를 서비스에 전달하도록 만든다.</li></ul><ul id="a2f78a6e-8a3b-41ca-af5e-a3ff9b4544d2" class="bulleted-list"><li>서비스에 데이터를 전달할 때는 startService() 메서드를 사용하며 인텐트 안에 부가 데이터를 추가하여 전달하면된다.</li></ul><p id="211011cb-2764-4f27-85ae-abd1984d4a31" class="">
+</p><h3 id="2c723a73-3992-468e-b928-7baf8a8cf0c1" class="">MainActivity.java</h3><pre id="7dd3ad39-7e17-4d3e-8a92-454fa4fa2f19" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = editText.getText().toString();
+
+                Intent intent = new Intent(getApplicationContext(), MyService.class);
+                intent.putExtra(&quot;command&quot;, &quot;show&quot;);
+                intent.putExtra(&quot;name&quot;, name);
+
+                startService(intent);
+            }
+        });
+    }
+}</code></pre><p id="9d287687-21b3-42cc-b64c-a6d7872e2d6f" class="">
+</p><ul id="bb99c16f-d4c5-4fce-9861-4f8c6792f195" class="bulleted-list"><li>intent 객체를 만들고 부가 데이터 넣기</li></ul><ul id="e91279c6-43dd-4a30-b668-feaacff5e5d3" class="bulleted-list"><li>startServie(intetnt) 서비스 시작하기</li></ul><ul id="517e6e63-d83d-46da-8691-7c110680eb9d" class="bulleted-list"><li>인텐트 안에 부가 데이터를 넣았다. 하나는 command라는 key를 부여하였다.</li></ul><ul id="08f8f802-271d-4e5b-b9c1-074a8e2ba77e" class="bulleted-list"><li>또 다른 하나는 name이라는 key를 부여하였다.</li></ul><ul id="688f7557-80bd-4cb0-98be-3eee13bed70c" class="bulleted-list"><li>command는 서비스 쪽으로 전달한 인텐트 객체의 데이터가 어떤 목적으로 사용되는지를 구별하기 위해 넣은것이고</li></ul><ul id="06a97ea7-67fe-46a8-a2f6-72f390a363d1" class="bulleted-list"><li>name은 입력상자에서 가져온 문자열을 전달하기 위한 것이다.</li></ul><ul id="8243422f-e5c3-48a4-a909-55fc5c127507" class="bulleted-list"><li>startService() 메서드에 담은 인텐트 객체는 MyService 클래스의 onStartCommand() 메서드로 전달된다.</li></ul><p id="cf7ebe94-5160-455a-a81a-7d977f57b836" class="">
+</p><h3 id="2bb15d34-59e4-48df-892f-ff58e2b87c09" class="">로그 사용하여 인텐트의 부가 데이터 출력</h3><pre id="bdbccb91-d892-4d1e-a793-7cc8f36e03aa" class="code"><code>private static final String TAG =&quot;MyService&quot;;
+    // 로그 출력을 위한 태그 설정</code></pre><p id="ffad9319-5d78-48b0-9565-683dc62066a5" class="">
+</p><ul id="f63649fe-4f60-4f24-87c5-5e485d94eab3" class="bulleted-list"><li>서비스에 추가한 세 개의 메서드 중 onStartCommand() 메서드가 인텐트 객체를 전달받는다.</li></ul><ul id="e2bc8d9b-548d-42c7-8c9b-f0db41d8e84a" class="bulleted-list"><li>이떄 onStartCommand()메서드는 서비스 내에서 아주 중요한 역활을 한다.</li></ul><ul id="ada7ed0c-b76a-4546-9e28-d934d073606a" class="bulleted-list"><li>서비스는 시스템에 의해 자동으로 다시 시작될 수 있기 때문에 onStartCommand() 메서드로 전달되는 인텐트 객체가 null 인 경우 도 검사한다.</li></ul><pre id="b9a6583a-319d-4bce-ad3f-524798280b4d" class="code"><code>@Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, &quot;onStartCommand() 호출됨&quot;);
+
+        if (intent == null) {
+            return Service.START_STICKY;
+
+        } else {
+            processCommand(intent);
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }</code></pre><ul id="5fefb4f6-2ea9-48df-940d-689278cac2a0" class="bulleted-list"><li>만약 인텐트 객체가 null 이면 onStartCommand() 메서드는 Service.START_STICKY을 반환한다.</li></ul><ul id="bbecfe39-7890-4848-8d6d-67a96e39a74a" class="bulleted-list"><li>그리고 이 값을 반환하면 서비스가 비정상 종료되었다는 의미이므로 시스템이 자동으로 재시작한다. </li></ul><ul id="2ceb1c5b-8d91-4d8b-9b9f-b0562a0c7d12" class="bulleted-list"><li>만약 자동으로 재시작하지 않도록 만들고 싶다면 다른 상수를 사용할 수 있따.</li></ul><p id="bc95305c-e040-4422-942f-687cb30b30d5" class="">
+</p><p id="af7f98d6-f53c-4a79-a4cd-a21d400e38f8" class="">
+</p><p id="a36f6355-1c3d-4f14-98ae-ae15b94471ec" class="">복잡성으로 인해 processCommand() 메서드를 정의하여 호출한다.</p><pre id="9574a216-a09f-4033-8758-edf751b7d60c" class="code"><code>private void processCommand(Intent intent) {
+        String command = intent.getStringExtra(&quot;command&quot;);
+        String name = intent.getStringExtra(&quot;name&quot;);
+
+        Log.d(TAG, &quot;command : &quot; + command + &quot;name : &quot; + name);
+
+        for (int i = 0; i &lt; 5; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {};
+            Log.d(TAG,&quot;waitng &quot; + i + &quot; seconds.&quot;);
+        }
+    }</code></pre><ul id="b9984a37-f1ce-4b58-81bf-50af539db220" class="bulleted-list"><li>processCommand() 메서드는 for 문을 사용해 5초동안 1초에 한 번씩 로그를 출력한다.</li></ul><p id="47240d6f-1475-44e0-8d5e-108c9bd72e50" class="">
+</p><pre id="df60217c-3f4d-4938-ae66-392f99912704" class="code"><code>@Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException(&quot;Not yet implemented&quot;);
+    }
+}</code></pre><ul id="5d464038-5538-43b8-b6c2-85d268e411bb" class="block-color-red bulleted-list"><li>서비스가 서버 역활을 하면서 액티비티와 연결될 수 있도록 만드는 것을 바인딩(Binding)이라고 한다.</li></ul><ul id="e0e11abb-0a9b-45fa-923e-2db7b1e21ad6" class="bulleted-list"><li>이를 위해서는 onBind() 메서드를 재정의해야 한다. 하지만 여기서는 바인딩 기능을 사용하지 않으므로 메서드가 정의된 상태로 두고 다음으로 진행한다.</li></ul><p id="1123484c-0545-41d5-bd80-4d4c332143e9" class="">
+</p><p id="58e288cc-9663-465c-a265-4c49cf928ad7" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f968027d-98b1-41d3-8271-1673ba5c42ad"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">이렇게 액티비티에서 서비스로 데이터를 전달할 수 있는 것처럼 서비스에서 액티비티로도 데이터를 전달할 수 있어야 한다.</div></figure><ul id="52681598-c7de-468c-8326-6caf696fdc67" class="bulleted-list"><li>서비스에서 액티비티로 전달할고 싶다면 서비스에서 startActivity() 메서드를 사용한다.</li></ul><ul id="fd43e280-b79b-4f3b-96bf-7909492651cc" class="bulleted-list"><li>startActivity() 메서드를 호출하면서 인텐트 객체를 전달하면 액티비티에서는 그 안에 들어 있늡 부가 데이터를 받아 볼수 있다.</li></ul><p id="0480f56b-cc35-4323-a917-8f9c9970cc15" class="">
+</p><pre id="16eab470-449f-4ad4-b8f7-df2f4b39e194" class="code"><code>private void processCommand(Intent intent) {
+        중략..
+
+        //Activity 로 Service 인텐트 전달
+        Intent showIntent = new Intent(getApplicationContext(), MainActivity.class);
+        //액티비티를 띄우기 위한 인텐트 객체 생성
+
+        showIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TOP );
+        showIntent.putExtra(&quot;command&quot;, &quot;show&quot;);
+        showIntent.putExtra(&quot;name&quot;, name + &quot;from service&quot;);
+        startActivity(showIntent);
+    }</code></pre><ul id="b43cb931-b998-44a0-834a-13aa14c03152" class="bulleted-list"><li>인텐트 객체를 new 연산자로 생성할 때 첫 번쨰 파라미터로는 getApplicaiotnContext() 메서드를 호출하여 Context 객체가 전달되도록 하였다.</li></ul><ul id="0820b327-5cf5-4f91-b28c-a879f05257f4" class="bulleted-list"><li>그리고 두 번째 파라미터로는 MainActivity.class 객체가 전달되도록 하였다.</li></ul><ul id="2f4a67f1-25c1-48b1-b2ce-67058760e8e6" class="bulleted-list"><li>이 인텐트 객체를 startActivity() 메서드로 호출하면서 전달하면 메인 액티비티 쪽으로 인텐트 객체가 전달된다.</li></ul><ul id="62b7d421-795a-4f97-aaee-4b8c33cb1436" class="bulleted-list"><li>이 인텐트 객체에는 부가 데이터를 두 개 추가했으며 하나는 command, 다른 하나는 name 키를 갖고 있다.</li></ul><ul id="4d6081b2-6ff8-4dd1-8f99-8281a31f376d" class="block-color-red bulleted-list"><li>이렇게 서비스에서 startActivity() 메서드를 호출할 때는 새로운 태스크를 생성하도록 FLAG_ACTIVITY_NEW_TASK 플래그르 인텐트에 추가해야 한다.</li></ul><ul id="81e9f2d9-6c35-46e2-9d48-04b0711d59f4" class="block-color-red bulleted-list"><li>서비스는 화면이 없기 떄문에 화면이 없는 서비스에서 화면이 있는 액티비티를 띄울려면 새로운 태스크를 만들어야 하기 떄문 </li></ul><ul id="f3551e9b-3897-4f3a-8c8f-f0c4af441ccc" class="bulleted-list"><li>그리고 MainActivity 객체가 이미 메모리에 만들어져 있을 때 재사용하도록 플래그들을 인텐트에 추가해야한다.<ul id="5518ca1c-f812-47c1-9392-366b56891b27" class="bulleted-list"><li>FLAG_ACTIVITY_SINGLE_TOP</li></ul><ul id="891d144b-eefb-4c7d-93d9-74661ec3654e" class="bulleted-list"><li>FLAG_ACTIVITY_CLEAR_TOP</li></ul><p id="3285f38a-60f1-46a2-abbd-153e67007640" class="">
+</p></li></ul><ul id="b7eb2ca4-d656-456e-9d21-6727a27b1654" class="bulleted-list"><li>서비스에서 5초후에 메인 액티비티에 전달할 인텐트는 메인 액티비티에서 처리할 수 있다.</li></ul><p id="f8bfda84-1e90-4f96-b019-8d475c1af736" class="">
+</p><p id="2d56bdca-68c3-4589-b2a9-69821f153338" class="">
+</p><pre id="6bd33210-8c95-42c0-83dd-91bd63e9f2bb" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = editText.getText().toString();
+
+                Intent intent = new Intent(getApplicationContext(), MyService.class);
+                intent.putExtra(&quot;command&quot;, &quot;show&quot;);
+                intent.putExtra(&quot;name&quot;, name);
+
+                startService(intent);
+            }
+        });
+        Intent passedIntent = getIntent();
+        processIntent(passedIntent);
+        //액티비티가 새로 만들어질 때 전달된 인텐트 처리하기
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        processIntent(intent);
+        super.onNewIntent(intent);
+        //액티비티가 이미 만들어져 있을 때 전달된 인텐트 처리하기
+    }
+    private void processIntent(Intent intent){
+        if (intent != null) {
+            String command = intent.getStringExtra(&quot;command&quot;);
+            String name = intent.getStringExtra(&quot;name&quot;);
+
+            Toast.makeText(this, &quot;command : &quot; + command + &quot;, name : &quot; + name, Toast.LENGTH_LONG).show();
+        }
+    }
+}</code></pre><p id="61ddb56f-aa9c-4dc2-beea-7dd9c81d7e27" class="">
+</p><ul id="1e3d6e40-8c63-4153-9a2b-edb48b1853f3" class="bulleted-list"><li>MainActivity가 메모리에 만들어져 있지 않은 상태에서 처음 만들어진다면 onCreate() 메서드 안에서 getIntent() 메서드를 호출하여 인텐트 객체를 참조한다.</li></ul><ul id="225c0a39-1f8f-48d9-9992-9ab2a43024c1" class="bulleted-list"><li>하지만 MainActivitiy가 이미 메모리에 만들어져 있다면 onCreate() 메서드는 호출되지 않고 onNewIntent() 메서드가 호출된다.</li></ul><ul id="731ca4c1-831c-4a18-a586-3fc9107178e2" class="bulleted-list"><li>그리고 인텐트는 이 메서드는 파라미터로 전달된다.</li></ul><ul id="e83cc0cb-f9c7-49d3-ab8d-6e5a086dc5d2" class="bulleted-list"><li>여기서는 processIntent() 메서드를 만들고 onNewIntent() 메서드가 호출되었을 때 processIntent() 메서드를 호출하도록 하였다.</li></ul><ul id="dbd4f4b6-a836-4b82-9c1b-818484ca1867" class="bulleted-list"><li>인텐트로 전달받은 데이터는 토스트 메세지로 보이도록 하여 앱을 실행하고 버튼을 누른 후 5초를 기다리면 다음과 같은 토스트 메세지를 확인할 수 있다.</li></ul><p id="fb93876d-c127-4470-b721-68c6f562212e" class="">
+</p><p id="1b9d39ad-99b8-4078-bf7c-d5991e37927b" class="">
+</p><h3 id="d41f69dc-3b86-4a56-9ae3-1a78e13b4882" class="">서비스</h3><ul id="4dc4c13f-037f-45dc-96b2-99cf63c41dff" class="bulleted-list"><li>요즘 앱들은 서비스를 자주 사용한다. 따라서 액티비티에서 서비스로 데이터를 전달하거나 서비스에서 액티비티로 데이터를 전달하는 방법을 잘 알아두어야 한다.</li></ul><ul id="47f5ddb1-d20c-4b9b-83d5-aad8aae5829a" class="bulleted-list"><li>코드에서 이미 살펴본 것처럼 서비스를 시작하려면 startService()를 호출하는 것만으로 충분하다.</li></ul><ul id="0088a603-3eac-4f14-93ec-efb7feb52887" class="bulleted-list"><li>그리고 이렇게 실행된 서비스를 종료하고 싶다면 stopService() 메서드를 호출하면 된다.</li></ul><ul id="9ec1ea44-028f-40c6-9b02-6305c3e24c18" class="bulleted-list"><li>Service 외에도 intentService라는 클래스가 있다.<ul id="76d0980e-1624-47e7-90f1-09ddd9dea9bb" class="bulleted-list"><li>인텐트 서비스는 지금까지 살펴본 서비스와 달리 필요한 함수가  수행되고 나면 종료된다.</li></ul><ul id="a455bedb-85a7-4049-950d-df7574a5fb4c" class="bulleted-list"><li>즉, 백그라운드에서 실행되는 것은 같지만 길게 지속되는 서비스라기보다는 한 번 실행되고 끝나는 작업을 수행할 때 사용한다.</li></ul><ul id="a1d69cfd-5f6b-4f9c-9e0b-ff611cd88788" class="bulleted-list"><li>인텐트 서비스에는 onHandleIntent() 메서드가 있으며 이 함수는 onStartCommand() 메서드로 전달된 인텐트를 전달받으면서 실행된다.</li></ul><ul id="d08a7af5-c806-41e4-b1bd-a1302e1a570d" class="bulleted-list"><li>그리고 이 함수의 실행이 끝나면 서비스는 자동 종료된다.</li></ul><p id="a15b091e-4015-426d-9f58-8708a131542d" class="">
+</p></li></ul><ul id="6856e0c5-ae68-46d4-baf9-230e0b15cbfe" class="block-color-red bulleted-list"><li>서버에 데이터를 요청하고 응답을 기다리는 네트워킹 작업을 서비스로 분리하여 구현하면 사용자가 보는 화면과 관계없이 서버와 통신이 가능하다는 점을 이해해야 한다.</li></ul><p id="1feb0806-c82c-42b9-95d1-6387602994dc" class="">
+</p><p id="ee09f77d-6744-44a3-be27-185a74a90cd6" class="">
+</p></div></article></body></html>

@@ -1,0 +1,835 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>BroadCast Recevier #1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f9b3cf87-2103-4bf9-bb8d-e5f36da1f0fd" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">BroadCast Recevier #1</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 21, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><p id="573b2261-751e-4349-a642-6e95d1c61c6f" class="">
+</p><h3 id="db33b4cd-f3c8-4aaa-8839-6211c6801ca3" class="">브로드캐스팅(Broadcasting) #1</h3><ul id="1e9fca80-c22c-4a1d-9710-bd93053bda77" class="bulleted-list"><li>메세지를 여러 객체에 전달하는 것을 말한다.</li></ul><ul id="952c0ec4-08ea-4130-83a6-05fa05d61306" class="bulleted-list"><li>카카오톡에서 여러 사람에게 메세지를 전달할 때 그룹 채팅방을 만들어 메세지를 전달하는 것 처럼</li></ul><ul id="35594957-15d2-48be-9e4e-929fd1c7ab83" class="bulleted-list"><li>안드로이드도 여러 앱 구성 요소에 메세지를 전달할 때 브로드캐스팅을 사용한다.</li></ul><p id="8c42292f-e077-42cb-a1a8-7f2de699ed7e" class="">
+</p><h3 id="f529100f-da94-4f9d-85cd-1b555b615dd4" class="">브로드캐스팅 예</h3><ul id="585a3eb8-6f00-4d94-9ad2-f4a8f9982f33" class="bulleted-list"><li>다른 사람으로부터 문자를 받았을 때 이 문자를 SMS 수신 앱에 알려줘야 한다면 브로드캐스팅으로 전달하면된다.</li></ul><ul id="157210c4-b345-4148-9b7e-a058bda9da19" class="bulleted-list"><li>이런 메세지 전달 방식은 단말 전체에 적용될 수 있다.</li></ul><ul id="8660ba32-b9c5-4afc-8e2f-7497328f5333" class="bulleted-list"><li>이러 메세지 전달 방식을 &#x27;글로벌 이벤트(Global Event)&#x27;라고 부른다.</li></ul><ul id="0923c445-e052-4dba-b0ba-092b628cd87f" class="bulleted-list"><li>글로벌 이벤트의 대표적인 예로는 &#x27;전화가 왔습니다.&#x27;, &#x27;문자 메세지가 도착했습니다.&#x27; 와 같은 사용자 알림을 들 수 있다.</li></ul><p id="f2066c34-f60d-4559-9968-e50b05cde39b" class="">
+</p><h3 id="f3dfe87d-d8e3-47f9-aee1-e56bea6efbd0" class="">브로드캐스팅 #2</h3><ul id="1f8816e7-84d7-4556-ac37-42eb2fb76627" class="bulleted-list"><li>앱에서 브로드캐스팅 메세지를 받고 싶다면 브로드캐스트 수신자(Broadcast Receiver)를 만들어 앱에 등록하면 된다.</li></ul><ul id="cf1213aa-6b61-4aeb-beff-f5c9fa36451f" class="bulleted-list"><li>기기 안에서 동작하는 다른 앱 A 로부터 특정 메세지를 받기 위해 , 앱에 브로드캐스트 수신자를 등록하면 A앱의 메세지가 앱으로 전달된다.</li></ul><ul id="5c99f174-f936-4c2a-a8e2-ce4fc39d774e" class="bulleted-list"><li>이때 서비스와 마찬가지로 브로드캐스트 수신자도 앱 구성요소이다.</li></ul><ul id="c68b86ab-0b2b-4c72-ac05-0cd62e187658" class="bulleted-list"><li>따라서 새로운 브로드캐스트 수신자를 만들면 매니페스트 파일에 등록해야 시스템이 알수 있고 화면도 없게 된다.</li></ul><ul id="c7903916-0307-453d-9b82-fc790d59b028" class="block-color-red bulleted-list"><li>단 브로드캐스트 수신자는 매니페스트 등록 방식이 아닌 소스 코드에서 registerReceiver() 메서드를 사용해 시스템에 등록할 수 있다.</li></ul><ul id="569d8eb4-980f-465e-807e-9df7385ea2bc" class="block-color-red bulleted-list"><li>소스 코드를 이용하여 브로드캐스트 수신자를 등록하면 액티비티안에서 브로드캐스트 메세지를 전달받아 바로 다른 작업을 수행하도록 만들 수 있다는 장점이 있다. </li></ul><p id="53c8eba2-c35b-430b-adb7-c3c68de46e91" class="">
+</p><h3 id="a0c9c92b-590d-4a09-8b3e-73e9db334563" class="">브로드캐스트 수신자 등록하기, 사용하기</h3><ul id="c731cd72-b2a2-4381-a5b8-dec81b61d904" class="bulleted-list"><li>브로드캐스트 수신자는 onReceive() 메서드를 정의해야 한다.</li></ul><ul id="f2506887-e860-4ab1-8c29-975cb7d9a8e1" class="bulleted-list"><li>이 메서드는 원하는 브로드캐스트 메시지가 도착하면 자동으로 호출된다.</li></ul><ul id="b692b713-b637-4372-afeb-5b5adb5d3aee" class="bulleted-list"><li>하지만 시스템의 모든 메세지를 받을 수는 없다.</li></ul><ul id="9113af6e-c83a-4c0b-ac67-5c51f6c3f84b" class="bulleted-list"><li>만약 원하는 메세지만 받으려먼 어떻게 해야 할까?<ul id="0ce496bd-3d6c-420c-b22b-1e1633bc77b7" class="block-color-red bulleted-list"><li>모든 메세지는 인텐트 안에 넣어 전달되므로 원하는 메시지는 인텐트 필터를 사용해 시스템에 등록하면 된다. </li></ul><p id="20f6e46a-1190-410b-ba56-e00eb03e4de4" class="">
+</p></li></ul><h3 id="06783ed3-f975-460d-9774-b8486f537d08" class="">&lt;receiver&gt; → &lt;intent-filter&gt; → &lt;action&gt;</h3><pre id="5a274e20-99c3-46d5-99b8-dbed32ca4d94" class="code"><code>&lt;action android:name=&quot;android.provider.Telephony.SMS_RECEIVED/&gt;</code></pre><ul id="4b2f0509-9bc1-461c-a112-19ffc1993ca9" class="bulleted-list"><li>이것은 SMS 메세지가 들어간 인텐트를 구분하기 위한 액션 정보이다.</li></ul><ul id="ed4f36c9-101f-46b4-a1b9-703811c4fee0" class="bulleted-list"><li>즉, 단말에서 SMS를 수신했을 때 이 action 정보가 들어간 인텐트를 전달하므로 이 값을 넣어주면 SMS를 받아볼 수 있다.</li></ul><p id="3d9ea45a-e366-4c84-9953-9ce53f80bf39" class="">
+</p><p id="89a881c7-3a0e-45f3-82df-b0b61cc76e1f" class="">
+</p><h3 id="97a459f4-ecc2-4278-8108-2b697d406303" class="">SmsReceiver.java</h3><ul id="74ec5210-fbe9-4031-a659-748b0139a9e1" class="bulleted-list"><li>BroadcastReceiver 클래스를 상속한 SmsReceiver 클래스가 정의되어 있고 그 안에 onReceiver() 메서드가 들어있다.</li></ul><pre id="2022897e-9359-4450-8360-224640cf4216" class="code"><code>public class SmsReceiver extends BroadcastReceiver {
+    public static final String TAG = &quot;SmsReceiver&quot;;
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, &quot;onReceive() 메서드 호출됨.&quot;);
+        // 수신되었을 때 호출되는 콜백 메서드
+        // 매개변수 intent의 액션에 broadcast의 &#x27;종류&#x27; 가 들어있고 필드에는 &#x27;추가정보&#x27;가 들어있다.
+				
+
+        Bundle bundle = intent.getExtras();
+        // 인텐트에서 Bundle 객체 가져오기
+        SmsMessage[] messages = parseSmsMessage(bundle);
+        // parseSmsMessage() 메서드 호출하기
+
+        if (messages != null &amp;&amp; messages.length &gt;0) {
+            String sender = messages[0].getOriginatingAddress();
+            Log.i(TAG, &quot;SMS sender : &quot; + sender);
+
+            String contents = messages[0].getMessageBody().toString();
+            Log.i(TAG, &quot;SMS contents : &quot; + contents);
+
+            Date receivedDate = new Date(messages[0].getTimestampMillis());
+            Log.i(TAG, &quot;SMS receviced date :&quot; + receivedDate.toString());
+
+        }
+    }
+
+}</code></pre><ul id="ff11b0f4-ba63-47bc-b8ea-7518fddb91e7" class="bulleted-list"><li>SMS를 받으면 onReceiver() 메서드가 자동으로 호출된다. </li></ul><ul id="f50169fc-11c4-4d73-847c-c44777f445a6" class="bulleted-list"><li>그리고 파라미터로 전달되는 Intent 객체 안에 SMS 데이터가 들어 있다.</li></ul><ul id="17422623-a4dc-407f-b172-3d54c574219b" class="bulleted-list"><li>먼저 onReceive() 메서드가 호출되었는지 알 수 있도록 onReceive() 메서드 안에 로그 메시지를 출력하는 한 줄을 추가한다.</li></ul><ul id="0608ff2c-3d50-478c-a486-01e1ab1976d2" class="bulleted-list"><li>그리고 인텐트 객체 안에 들어 있는 Bundle 객체를 getExtras() 메서드로 참조한다.</li></ul><ul id="fdedad0e-3905-4f75-a65c-ba912d11c715" class="bulleted-list"><li>이 Bundle 객체 안에는 부가 데이터가 들어 있으며, ParseSmsMessage() 메서드를 호출하여 SMS 메시지 객체를 만들도록한다.</li></ul><ul id="7e837d31-4fc6-480c-b6ed-e80a01305c34" class="bulleted-list"><li>parseSmsMessage() 메서드는 직접 정의한 메서드로 SmsMessage라는 자료형으로 된 배열 객체를 반환하도록 되어 있다.</li></ul><ul id="f697c371-0f98-400d-b0cd-dfba7f2cad82" class="bulleted-list"><li>이 SmsMessage 객체에는 SMS 데이터를 확인할 수 있는 메서드들이 정의되어 있다.</li></ul><p id="b354b6a0-58c6-490c-ab65-d5ab03e1aea8" class="">
+</p><p id="0542248d-fad1-4354-a404-a987e54e8672" class="">
+</p><h3 id="6211ee3f-c720-4fec-97c8-269eecf00895" class="">parseSmsMessage(Bundle bundle)</h3><pre id="0fbcdce4-501d-4aa0-b2eb-16da4001b231" class="code"><code>private SmsMessage[] parseSmsMessage(Bundle bundle) {
+        Object[] objs = (Object[]) bundle.get(&quot;pdus&quot;);
+// 실제 메세지는 object타입의 배열에 PDU 형식으로 저장됨
+        SmsMessage[] messages = new SmsMessage[objs.length];
+        //Bundle 객체에 들어가 있는 부가 데이터 중에서 pdus 가져오기
+
+        int smsCount = objs.length;
+// PDU 포맷으로 되어 있는 메시지를 복원
+        for (int i = 0; i &lt; smsCount; i++) {
+            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+                String format = bundle.getString(&quot;format&quot;);
+                messages[i] = SmsMessage.createFromPdu((byte[]) objs[i], format);
+            } else {
+                messages[i] = SmsMessage.createFromPdu((byte[]) objs[i]);
+            }
+        }
+        // 단말 OS 버전에 따라 다른 방식으로 메서드 호출하기
+        return messages;
+    }</code></pre><ul id="43e81b44-15bb-48f0-b485-a752ef542e51" class="bulleted-list"><li>parseSmsMessage() 메서드는 재사용할 수 있다.<ul id="a8c4839f-4ef6-4ff4-8804-e630834cee94" class="bulleted-list"><li>SMS 데이터를 확인할 수 있도록 안드로이드 API 에 정해둔 코드를 사용하므로 수정될 일이 거의 없기 때문에</li></ul><p id="f56d71dd-d8d7-480e-ba2a-d16740016a6a" class="">
+</p></li></ul><ul id="e788d149-1a9c-4745-b3d0-b3ccf931400f" class="block-color-red bulleted-list"><li>인텐트 객체 안에 부가 데이터로 들어 있는 SMS 데이터를 확인할려면 SmsMessage 클래스이 createFromPdu() 메서드를 사용하여 SmsMessage 객체로 변환하면 SMS 데이터를 확인할 수 있다. </li></ul><ul id="27f81d15-1918-4bfe-b97e-47033daae27c" class="bulleted-list"><li>이 때 Build.VERSION.SDK_INT는 단말의 OS 버전을 확인할 때 사용한다.</li></ul><ul id="bc9e0faa-134c-429d-9711-c562021582be" class="bulleted-list"><li>안드로이드 OS 는 계속 업데이트되면서 새로운 기능이 추가되어왔으므로 단말의 OS 버전에 따라 코드가 약간씩 달라져야 할 떄가 있다.</li></ul><ul id="86b82329-b97c-48da-956d-9ce70604db91" class="bulleted-list"><li>다음과 같은 코드가 버전에 따라 다른 코드를 넣을 때 사용하는 전형적인 코드 중 일부이다.</li></ul><pre id="240b1e9e-f4bf-4b43-bd52-4fce7a53a7e1" class="code"><code>if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) ...</code></pre><p id="0d9266a3-d335-4dbc-b475-2a5c3af56112" class="">
+</p><ul id="6843d781-76cb-4947-9fad-d940b868ec69" class="bulleted-list"><li>Build_VERSION_CODES 에는 안드로이드 OS 버전별로 상수가 정의되어 있다.</li></ul><ul id="2ad7f58d-04c0-463f-9ff1-6889fee33578" class="bulleted-list"><li>앞서 살펴본 코드는 OS가 마시멜로(첫 글자 M) 버전과 같거나 그 이우 버전일 때 중괄호 안의 코드를 실행하겠다는 뜻이다.</li></ul><p id="89a4e032-c7f8-4b1f-a68f-7b77cdc57a73" class="">
+</p><h3 id="33f64f54-dfb8-4a56-ab3b-a3d79a22ddec" class="">onReceive() 메서드</h3><ul id="c313e50d-1ff9-4ad8-9727-39fb69c6452c" class="bulleted-list"><li>onReceive() 메서드의 코드를 살펴보면 SmsMessage 객체에서 SMS 데이터를 확인하기 위한 메서드가 들어 있다.</li></ul><ul id="11a6665e-34da-4fa5-a7ee-e8ada02be416" class="bulleted-list"><li>발신자 번호를 확인하려면 getOriginatingAddress() 메서드를 호출한다.</li></ul><ul id="ef467ad5-ee4a-44c1-bb6d-58eea0db55bf" class="bulleted-list"><li>문자 내용을 확인하려면 getMessageBody().toString() 코드를 사용한다.</li></ul><ul id="50bd4d12-ce6f-4836-8c4b-231dbd70052a" class="bulleted-list"><li>SMS를 받은 시각도 확인할 수 있다.</li></ul><ul id="07abb6e4-ac8a-4a0e-b305-573694ed0c1b" class="bulleted-list"><li>확인한 데이터를 log로 출력</li></ul><ul id="37167292-8e00-43b9-ae57-45b05d32bc81" class="block-color-red bulleted-list"><li>앱에서 SMS를 수신하려면 RECEIVE_SMS라는 권한이 있어야 한다. </li></ul><p id="cc26f965-1298-4be2-a14d-98fb9bea758a" class="">
+</p><h3 id="11c3ae53-7ff6-44b0-af94-62017f7cf4d7" class="">AndroidManifest.xml → 권한 추가 </h3><pre id="dfccfb97-2811-4b15-9464-7ece9b505e6c" class="code"><code>&lt;uses-permission android:name=&quot;android.permission.RECEIVE_SMS&quot;/&gt;</code></pre><p id="0b42148c-2e7b-4fad-9116-6d1ad50f72b9" class="">
+</p><ul id="394c1d50-400b-44a7-acc7-f3ce5a217cd7" class="bulleted-list"><li>&lt;applicaiton&gt; 태그 위쪽에 &lt;uses-permission&gt; 태그를 추가하고 RECEIVE_SMS 권한을 추가했다.</li></ul><ul id="d8bf8a74-c5b0-46c0-8bda-50f622bdf853" class="block-color-red bulleted-list"><li>이 권한은 위험 권한이다. 위험 권한의 경우에는 소스 파일에서 앱 실행 후에 사용자가 권한을 부여할 수 있도록 별도의 코드가 추가되어야 한다는 점 </li></ul><ul id="64863d28-bdbd-4db4-a4e3-c6a3de2af30f" class="bulleted-list"><li>외부 라이브러리를 하나 추가하고 그 라이브러리를 사용해서 간단하게 위험 권한을 추가하는 코드를 넣어 준다. </li></ul><ul id="bd99d71f-6bb7-4225-8d35-e6e33af5eebd" class="bulleted-list"><li>→→→</li></ul><p id="5d32e43f-0f9f-4742-a920-a66dd0e254b7" class="">
+</p><h3 id="4041f9f3-fa97-4723-981d-86964d3dbe4a" class="">AutoPermissionsListener 자동권한 설정 깃허브</h3><pre id="bf32e4b3-03b4-47d8-9cfd-6098cd2dedf9" class="code"><code>allprojects {
+    repositories {
+        maven { url &#x27;https://jitpack.io&#x27; }
+    }
+}
+dependencies {
+   implementation &#x27;com.github.pedroSG94:AutoPermissions:1.0.3&#x27;
+   
+}</code></pre><ul id="b6e02a89-6381-4c6f-b2f8-f6ab11d54942" class="bulleted-list"><li>build.gradle 추가 ㅇㅇ</li></ul><p id="1482d27e-e356-4f7e-844e-f21c1ad89979" class="">
+</p><h3 id="04f2b550-e8b2-4abb-8d46-dd38a1fc7062" class=""><a href="http://mainactivity.java">MainActivity.java</a>  위험권한을 자동으로 부여하는 코드</h3><pre id="7d645d4e-4e9a-4b20-85b1-53408d2b155f" class="code"><code>public class MainActivity extends AppCompatActivity implements AutoPermissionsListener {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        AutoPermissions.Companion.loadAllPermissions(this, 101);
+        // 모든 위험 권한을 자동으로 부여하도록 하는 메서드 호출
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
+    }
+
+    @Override
+    public void onDenied(int requestCode, @NonNull String[] permissions) {
+        Toast.makeText(this, &quot;permissions denied : &quot; + permissions.length,
+                Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onGranted(int requestCode, @NonNull String[] permissions) {
+        Toast.makeText(this, &quot;permissions granted : &quot; + permissions.length,
+                Toast.LENGTH_LONG).show();
+    }
+}</code></pre><p id="4e8a12e4-9501-46ac-879f-ee2a1f38e16d" class="">
+</p><p id="2b7fa6d8-60c5-4772-93f1-7f70d36d7af1" class="">
+</p><h3 id="8dbacaae-54b8-4a3e-9deb-6a712142b4da" class="">SMS 내용 액티비티로 내보내기</h3><p id="a523de8f-0396-4fa3-abe0-31ce75594640" class="">
+</p><h3 id="3c68f300-9095-467c-89e2-4097d0508915" class="">SmsActivity.java</h3><pre id="9dec3495-83a2-4d79-a6e6-d88c2378365d" class="code"><code>public class SmsActivity extends AppCompatActivity {
+    EditText editText;
+    EditText editText2;
+    EditText editText3;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sms);
+
+        editText = findViewById(R.id.editText);
+        editText2 = findViewById(R.id.editText2);
+        editText3 = findViewById(R.id.editText3);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        Intent passedIntent = getIntent();
+        processIntent(passedIntent);
+        //전달받은 인텐트 처리하도록 processIntent 메서드 호출하기
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        processIntent(intent);
+
+        super.onNewIntent(intent);
+    }
+
+    private void processIntent(Intent intent) {
+        if (intent != null) {
+            String sender = intent.getStringExtra(&quot;sender&quot;);
+            String contents = intent.getStringExtra(&quot;contents&quot;);
+            String receiveDate = intent.getStringExtra(&quot;receiveDate&quot;);
+
+            editText.setText(sender);
+            editText2.setText(contents);
+            editText3.setText(receiveDate);
+            // 인텐트가 널이 아니면 그 안에 들어있는 부가 데이터를 화면에 보여준다.
+        }
+    }
+}</code></pre><p id="d74daddc-af77-4cc5-b0af-cf450eda8a39" class="">
+</p><ul id="748bc403-36aa-4448-9596-88280031f8a8" class="bulleted-list"><li>브로드캐스트 수신자로부터 인텐트를 전달받을 것이므로 onCreate() 메서드 안에서 getIntent() 메서드를 호출하여 processIntent() 메서드를 호출하도록 한다.</li></ul><ul id="4555bc11-d454-416c-b18d-de6d5be3664b" class="bulleted-list"><li>그리고 onNewIntent() 메서드를 재정의하여 이 액티비티가 이미 만들어져 있는 상태에서 전달받은 인텐트도 처리하도록 한다.</li></ul><ul id="aa3cf914-4c6f-41db-9688-3ed53d5db2f9" class="bulleted-list"><li>processIntent() 메서드 안에서는 인텐트 객체 안에 들어 있는 부가 데이터를 꺼내서 입력상자에 설정한다.</li></ul><ul id="a452950a-6ace-4189-84d0-9e8f439636f5" class="bulleted-list"><li>화면에 있는 [확인] 버튼을 눌렀을 때 finish() 메서들 호출하여 이 화면을 닫아준다.</li></ul><ul id="040dab79-dd95-40fa-af9d-15d52c076ae4" class="bulleted-list"><li>수신한 SMS 를 보여줄 화면까지 만들었다면 <a href="http://smsreceiver.java">SmsReceiver.java</a> → SmsActivity로 인텐트를 전달하는 코드를 추가한다.</li></ul><p id="2f18cb82-dd6a-44c4-b6f1-bc466ce5a852" class="">
+</p><h3 id="9d993f84-383d-436b-860a-3304d692812b" class=""><a href="http://smsreceiver.java">SmsReceiver.java</a> 추가</h3><pre id="dfe0c736-d2ab-4716-846e-3f70e9578ea3" class="code"><code>public class SmsReceiver extends BroadcastReceiver {
+    public static final String TAG = &quot;SmsReceiver&quot;;
+    public SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);   //format 형식 변경
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, &quot;onReceive() 메서드 호출됨.&quot;);
+        // TODO: This method is called when the BroadcastReceiver is receiving
+        // an Intent broadcast.
+
+        Bundle bundle = intent.getExtras();
+        // 인텐트에서 Bundle 객체 가져오기
+        SmsMessage[] messages = parseSmsMessage(bundle);
+        // parseSmsMessage() 메서드 호출하기
+
+        if (messages != null &amp;&amp; messages.length &gt;0) {
+            String sender = messages[0].getOriginatingAddress();
+            Log.i(TAG, &quot;SMS sender : &quot; + sender);
+
+            String contents = messages[0].getMessageBody().toString();
+            Log.i(TAG, &quot;SMS contents : &quot; + contents);
+
+            Date receivedDate = new Date(messages[0].getTimestampMillis());
+            Log.i(TAG, &quot;SMS receviced date :&quot; + receivedDate.toString());
+
+            sendToActivity(context, sender, contents, receivedDate);
+            //새로운 화면을 띄우기 위한 메서드 호출
+
+        }
+    }
+    private SmsMessage[] parseSmsMessage(Bundle bundle) {
+        Object[] objs = (Object[]) bundle.get(&quot;pdus&quot;);
+        SmsMessage[] messages = new SmsMessage[objs.length];
+        //Bundle 객체에 들어가 있는 부가 데이터 중에서 pdus 가져오기
+
+        int smsCount = objs.length;
+        for (int i = 0; i &lt; smsCount; i++) {
+            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+                String format = bundle.getString(&quot;format&quot;);
+                messages[i] = SmsMessage.createFromPdu((byte[]) objs[i], format);
+            } else {
+                messages[i] = SmsMessage.createFromPdu((byte[]) objs[i]);
+            }
+        }
+        // 단말 OS 버전에 따라 다른 방식으로 메서드 호출하기
+        return messages;
+    }
+
+    private void sendToActivity(Context context, String sender, String contents, Date receivedDate) {
+        Intent myIntent = new Intent(context, SmsActivity.class);
+
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //인텐트 플래그 추가
+
+        myIntent.putExtra(&quot;sender&quot;, sender);
+        myIntent.putExtra(&quot;contents&quot;, contents);
+        myIntent.putExtra(&quot;receiveDate&quot;, format.format(receivedDate));
+
+        context.startActivity(myIntent);
+    }
+
+}</code></pre><ul id="d4242e66-55eb-4d0d-8cc3-636272e4ffa8" class="bulleted-list"><li>sendToActivity() 메서드는 SmsActivity로 인텐트를 보내려고 만든 것이다.</li></ul><ul id="13360273-2ca8-4ad1-80eb-bcd83b30cec5" class="bulleted-list"><li>Intent 객체를 만들 때 두 번째 파라미터로 SmsActivity 객체 (SmsActivity.class)를 전달했으므로 startActivity() 메서드를 사용해 인텐트를 시스템으로 전달하면 시스템이 그 인텐트를 SmsActivity 쪽으로 전달한다.</li></ul><ul id="504d55a6-45ef-418f-a720-58199d6f05cb" class="block-color-red bulleted-list"><li>브로드캐스트 수신자는 화면이 없으므로 인텐트의 플래그로 FLAG_ACTIVITY_NEW_TASK를 추가해야 한다.는 점 </li></ul><ul id="89be742f-cc10-46ff-adf2-844da4728a7f" class="block-color-red bulleted-list"><li>그리고 이미 메모리에 만든 SmsActivity 가 있을 때 액티비티를 중복 생성하지 않도록 FLAG_ACTIVITY_SINGLE_TOP 플래그도 추가한다. </li></ul><ul id="faa32bcf-eaae-4752-b33d-9eb0c016ffc7" class="bulleted-list"><li>이렇게 정의한 sendToActivity() 메서드는 onReceive() 안에서 호출한다.</li></ul><ul id="d5e20277-74f2-4213-8af9-3f8d02c9bf19" class="bulleted-list"><li>수신 시각의 경우 사용자가 알아보기 좋은 날짜 형태로 만들기 위해 SimpleDateFormat 클래스를 사용할 수 있다.</li></ul><ul id="c84ce950-07ca-4c29-b67d-7cb7252bc557" class="bulleted-list"><li>이 클래스는 java.text 패키지 안에 있는 것을 import 하여 사용하며 날짜와 시간을 원하는 형태의 문자열로 만들때 사용한다. </li></ul><p id="430b1eb0-4d89-44cf-aa1c-0d6eb7c82eb3" class="">
+</p><h3 id="d78ec2ed-ce52-4c93-9358-f6190a17370c" class="">다른 방법</h3><ul id="224b3421-129e-4caa-bfe7-f065d416eca1" class="bulleted-list"><li>매니페스트 파일 안에 &lt;receiver&gt; 태그로 추가되어 있지만 매니페스트에 등록하지 않고 소스 파일에서 registerReceiver() 메서드를 사용해 등록할 수도 있다.</li></ul><ul id="270a15f8-ac78-4bb2-87a4-7f04ad60a6bb" class="bulleted-list"><li>소스 파일에서 등록하면 화면이 사용자에게 보일 때만 브로드캐스트 수신자에서 메시지를 받도록 만들 수 있다.</li></ul><p id="03db8dd1-9711-472b-af0c-c980dbd5b945" class="">
+</p><p id="18e47086-992b-4971-b5d6-1e56f4edfaa2" class="">
+</p><h3 id="736ce69d-25e5-4868-9336-69d90c3790c1" class="block-color-gray_background">다른 앱에 메시지르 보낼 수도 있다.</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="bc3bb216-3585-4333-9aa1-aab9aa9aaa88"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">다른 앱에 메시지를 보내고 싶다면 여러분이 만든 앱에서 sendBroadcast() 메시지를 사용할 수 있다.  물론 다른 앱에 브로드캐스트 수신자를 정의햐야 하고 sendBroadcast() 메서드로 메시지를 보낼 때는 인텐트 안에 넣어 보내야 한다.</div></figure><h3 id="131bca5e-aa18-49f3-a150-c0381ec87ef2" class="">SendBroadCast 보내기</h3><ul id="ad1d5b66-3d0e-429b-b14d-2eac13dccb08" class="bulleted-list"><li>SendBroadCast라는 Context에 포함된 함수를 이용하여 인텐트를 전달한다.</li></ul><ul id="d647b97a-ce61-477c-8de8-c909eef2af45" class="bulleted-list"><li>Intent에 putExtra를 통해 Integer, boolean, String 등 여러 단일 타입 또는 배열의 형태로 전달할 수 있다.</li></ul><pre id="f3442027-6f28-4cc7-87e3-e7eb34b6bf25" class="code"><code>Intent sendIntent = new Intent(&quot;com.younsle.myapplication.SEND_BROAD_CAST&quot;);
+sendIntent.putExtra(&quot;isBoolen&quot;, true);
+sendIntent.putExtra(&quot;sendInteger&quot;, 123);
+sendIntent.putExtra(&quot;sendString&quot;, &quot;Intent String&quot;);
+sendBroadcast(sendIntent);</code></pre><p id="5887555d-2dac-466c-a714-6d68c290810b" class="">
+</p><h3 id="acd41ca9-3415-47bf-adb4-a49878c4f426" class="">Receive 받기</h3><ul id="8471b6f5-b32f-4f6e-8729-e0e15b29f93a" class="bulleted-list"><li>SendBroadcast를 통해 전달된 Intent를 수신하는 Receive를 구현해야 한다. receive에 정적리시버, 동적리시버가 있다.<ul id="388b3664-ebc9-4f6c-b9f0-816a8b520819" class="bulleted-list"><li>정적리시버 : 한번 등록하면 해제할 수 없다. 정적리시버는 AndroidManifest.xml에서 receiver를 등록하여 사용하도록한다. 아래와 같이 리시버를 사용한 클래스와 intent Action name을 등록한다.<pre id="8915d47e-893d-4b10-b853-d69261608ace" class="code"><code>&lt;recieve android:name=&quot;.TestReceiver&quot;&gt;
+	&lt;intent-filter&gt;
+		&lt;action android:name=&quot;com.younsle.myapplication.SEND_BROAD_CAST&quot;/&gt;
+	&lt;/intent-filter&gt;
+&lt;/receiver&gt;</code></pre></li></ul><ul id="98714682-a1a7-43ea-8398-35944fa27f75" class="bulleted-list"><li>브로드캐스트 리시버 클래스를 구현하여 수신처리를 등록한다.</li></ul><pre id="e3ec5f55-4d74-4f80-a554-80d9c4be8785" class="code"><code>public class TestReceiver extends BroadcastReceiver { 
+private static final String TAG = TestReceiver.class.getSimpleName(); 
+
+	@Override 
+	public void onReceive(Context context, Intent intent) { 
+		String name = intent.getAction(); 
+
+// Intent SendBroadCast로 보낸 action TAG 이름으로 필요한 방송을 찾는다. 
+	if (name.equals(&quot;com.dwfox.myapplication.SEND_BROAD_CAST &quot;)) { 
+		Log.d(TAG, &quot;BroadcastReceiver ::&quot; + intent.getStringExtra(&quot;sendString&quot;)); 
+// putExtra를 이용한 String전달
+		}
+	 }
+ }
+</code></pre><p id="0a61d72b-8e25-4cb7-87f8-4b8e51031f08" class="">
+</p></li></ul><p id="48d5de9d-b91b-4239-ab98-9ed68fe35d9d" class="">
+</p><ul id="a7651aee-a63b-4827-b7f9-cc64fb6f193f" class="bulleted-list"><li>동적 리시버 : 등록과 해제가 자유롭다. 정적리시버와 달리 AndroidManifest.xml에 추가로 입력할 사항이 없다.<pre id="9698b79c-2b0d-473f-8344-6938dd8746ea" class="code"><code>public class TestActivity extends Activity { 
+	private static final String TAG = ReceiverVideoFinish.class.getSimpleName(); 
+	BroadcaastReceiver mReceiver; 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) { 
+		super.onCreate(savedInstanceState); 
+
+//브로드캐스트의 액션을 등록하기 위한 인텐트 필터 IntentFilter
+		intentfilter = new IntentFilter();
+		intentfilter.addAction(&quot;com.dwfox.myapplication.SEND_BROAD_CAST&quot;);
+
+//동적 리시버 구현 
+		mReceiver = new BroadcastRecevier(){ 
+			@Override
+			public void onRecevie(Context context, Intent intent){
+				String sendString = intent.getStringExtra(&quot;sendString&quot;);
+				Log.d(TAG, sendString); 
+			} 
+		}; 
+//Receiver 등록 
+		registerReceiver(mReceiver, intentFilter); 
+	} 
+//등록된 Receiver는 반드시 해제 해주어야 한다. 
+	unregisterReceiver(mReceiver); 
+}</code></pre><ul id="9a8d4d78-99cc-4a2f-b695-10dca9de0b2e" class="bulleted-list"><li>동적리시버는 등록과 해제가 자유롭게 이루어짐으로서 필요한 부분에 리시버를 등록하고 해지하면서 시스템이나 앱에 부하를 줄일 수 있다. 하지만 해제를 적절하게 해주지 않으면 메모리 릭이 발생한다.</li></ul><p id="8fb8912e-1a8c-44a3-bcab-51a12dd8e053" class="">
+</p><p id="461861e9-23eb-43b5-8576-11f44a1c190e" class="">
+</p><p id="bca16f5c-53c1-476d-addd-d9a4b6e8f34b" class="">
+</p></li></ul><p id="0502bc0c-6bba-41e4-807f-3651cc15b18b" class="">
+</p><h3 id="e887611e-5f8b-47ee-ae5e-2c14bd8ff482" class="block-color-gray_background">SMS를 수신했을 때 단말의 기본 메시지 앱이 먼저 받아 처리한다는 사실?</h3><ul id="ffa98b91-a33e-4c1e-bf66-8653a3fd86fe" class="bulleted-list"><li>SMS 수신 시 문자는 단말의 기본 메시지 앱이 먼저 받아 처리한 후 다른 앱으로 넘겨준다.</li></ul><ul id="11443a72-d227-4622-8876-ca7e2348b528" class="bulleted-list"><li>따라서 만든 앱을 사용자가 단말의 기본 메시지 앱으로 지정하면 단말의 기본 SMS 앱으로 만든 SMS 앱을 띄울 수 있다.</li></ul><ul id="71632759-65ad-487c-a2ee-d0bee58e678e" class="bulleted-list"><li>또한 다른 앱들이 문자르 처리하지 못하도록 할 수 도 있다. 그러나 사용자가 직접 설정에 들어가 지정해 주어야 한다는 번거로움이 있다.</li></ul><p id="c2f6caaa-54ac-4211-9846-d27e0aa2e0d2" class="">
+</p><h3 id="3bc473c7-2b82-4abf-be53-1dc58ede7237" class="">브로드캐스트 수신자 동작 방식 정리</h3><ul id="19649733-0deb-46a8-8015-92c5f02efb13" class="bulleted-list"><li>단말에서는 다른 사람으로부터 SMS 문자를 받았을 때 텔레포니(Telephony) 모듈이 처리하도록 한다.</li></ul><ul id="31c84409-c538-4911-b66d-cadd665de2a9" class="bulleted-list"><li>이렇게 처리된 정보는 인텐트에 담겨 브로드캐스팅 방식으로 다른 앱에 전달된다.</li></ul><ul id="bec7c63b-60b7-480c-8eb5-b60738c86502" class="bulleted-list"><li>직접 만든 앱도 그중의 하나가 되어 인텐트를 전달받으며 인텐트를 받았을때 onReceive() 메서드가 자동으로 호출된다.</li></ul><ul id="fc20588b-35c9-46fc-ab1a-4040836ac759" class="bulleted-list"><li>만들어논 브로드캐스트 수신자는 매니페스트 파일에 등록이되었기 때문에 시스템이 이미 알고 있다.</li></ul><ul id="86a9e43c-193c-4cdf-aa86-ce778532b1e0" class="bulleted-list"><li>따라서 시스템이 만든 앱으로 인텐트를 전달할 수 있다.</li></ul><ul id="9c9de906-de32-4f12-8c9a-c99cc98cf500" class="bulleted-list"><li>SmsReceive 객체에서는 인텐트 안에 들어 있는 데이터를 확인한 후 SmsActivity로 인텐트를 전달한다.</li></ul><p id="c38b3605-fe17-4beb-963b-88dbcef45577" class="">
+</p><h3 id="285c7ecf-2df5-4ffa-83bc-cdd83f3f13c0" class="">브로드캐스트 수신자 사용시 주의할 점</h3><ul id="3485cd19-d578-4221-8ff2-19e1968246ba" class="bulleted-list"><li>앱 A가 실행되어 있지 않아도 앱 A가 원하는 브로드캐스트 메시지가 도착하면 다른 앱 B를 실행하고 있는 도중에도 앱 A가 실행될 수 있다는 점이다.</li></ul><ul id="845170ce-6405-46cb-aaa7-cc4eb7eb914a" class="bulleted-list"><li>이 떄문에 동일한 SMS 수신 앱을 여러 개 수정하여 만들어 설치하면 오류가 발생했을 때 어느 앱에서 생긴 오류인지 찾아내기 힘든 경우가 많다.</li></ul><ul id="7b199290-509e-41dd-a6bc-f401888ed34c" class="bulleted-list"><li>이 떄문에 구 개발 버전의 앱을 한 번 설치한 후 앱의 패키지 이름을 수정하는 등의 방법으로 새 개발 버전의 앱을 만들었을 경우에는 구 개발 버전의 앱을 삭제하는 것이 좋다.</li></ul><p id="73d5dd57-9e6e-44a7-8d7e-0d721dc630e2" class="">
+</p><p id="5b14657c-5721-4a94-82b4-874ae57168e0" class="">
+</p><h3 id="53bc4fd5-85a3-4f3c-8f6f-46429f9d47af" class="">브로드캐스트 정리</h3><ul id="631bcc22-bd27-4c32-a26f-bc265ed96cce" class="block-color-red bulleted-list"><li>앱을 실행하지 않은 상태에서도 인텐트 안에 들어 있는 메시지를 받아볼 수 있다는 점은 브로드캐스트 수신자가 갖고 있는 가장 중요한 특징</li></ul><ul id="ea95043f-e08e-495f-a55a-afc19ee3c91c" class="block-color-red bulleted-list"><li>어떤 특정한 상황에서 필요한 작업을 할 수 있도록 앱을 구성할 수 있기 때문</li></ul><ul id="ea3dc878-eafc-4811-bf23-ec9e3f90de34" class="block-color-red bulleted-list"><li>메인 액티비티가 적어도 한 번은 실행되어야 한다. 브로드캐스트 수신자를 포함하고 있는 앱의 메인 액티비티가 적어도 한 번 실행되어야 브로드캐스트 수신자가 메시지를 받을 수 있다.</li></ul><p id="2f690e7d-80d1-4f27-a79c-23daa8c1b269" class="">
+</p></div></article></body></html>

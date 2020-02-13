@@ -1,0 +1,703 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragment #1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9db6db98-c0b3-4fba-9d18-4c5374b271b5" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Fragment #1</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 13, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="b2e4f617-0f36-45fa-8b90-d6087c5f2c5c" class="">Fragment example?</h3><ul id="9ce64c8d-e39f-4362-917e-8d70ca31c7e1" class="bulleted-list"><li>화면의 일부분을 다른 화면으로 구성하고 싶을 때는 어떻게 해야 할까?<ul id="0e96511d-baaf-423d-bd3c-45ba58ae5724" class="bulleted-list"><li>화면의 아래쪽 일부분에 독립적인 레이아웃을 만들고 그 안에서 동영상을 재생하고 싶다면 어떻게 구성해야 할까?</li></ul><ul id="ddd9061a-d796-464c-9f22-080fccf036f7" class="bulleted-list"><li>화면 전체를 차지하는 메뉴 화면이 있다고 생각해보면 화면이 비교적 작은 스마트폰을 사용할 때는 괜찮지만 화면이 큰 태블릿에서는 이런 메뉴 화면을, 오른쪽에는 선택한 메뉴의 상세 화면이 나타나면 훨씬 편리하다.</li></ul><ul id="494a42a0-846c-4e54-a635-557d15429b7d" class="bulleted-list"><li>즉, 전체 화면 안에 부분 화면을 만들어 넣으면 화면을 전환하지 않아도 되니 불편하지 않고 넓은 화면을 잘 활용할 수 있어 좋다.</li></ul></li></ul><p id="dccc033b-a6aa-4164-bf02-1e2e4fcc1c34" class="">
+</p><h3 id="2351501a-4753-4319-b239-a10bc7c38dc7" class="">Fragment think</h3><ul id="f31d3c8d-cd79-408b-add9-560e2cde5240" class="bulleted-list"><li>하나의 화면을 구성하는 XML 레이아웃을 만들 때는 리니어 레이아웃 안에 또다른 리니어 레이아웃을 넣을 수 있다.</li></ul><ul id="50f74772-65b9-482e-ae8a-9034e4b0f855" class="bulleted-list"><li>즉, 부분 화면은 전체 화면으로 만든 레이아웃 안에 들어있는 또 다른 레이아웃이다.</li></ul><ul id="b018ad9a-f990-44b1-a5d0-8f0cf9ff2d37" class="bulleted-list"><li>이러한 레이아웃을 이용하면 리니어 레이아웃 안에 다른 레이아웃을 추가하거나 각각의 레이아웃 안에 필요한 뷰를 넣어 화면을 만들 수 있다.</li></ul><ul id="cc69de0a-705f-48a1-85e4-b7df79c72769" class="bulleted-list"><li>이렇게 할시 코드가 많이 복잡해진다.<ul id="be613f78-3313-4702-b467-69d79d58b143" class="bulleted-list"><li>화면의 위쪽에 표시된 글 리스트를 보다가 글을 쓰고 싶다면 글 리스트가 보이던 부분을 글쓰기 레이아웃으로 바뀌게 만들 수 있다.</li></ul><ul id="59d0ae62-c20f-49e3-a58a-fcef699c6818" class="bulleted-list"><li>이런 작업이 가능하려면 프레임 레이아웃안에 여러 개의 레이아웃을 넣어 중첩시킨 후 가시성 속성으로 필요한 레이아웃만 보이게 만들면 된다.</li></ul><ul id="ec975ca8-cbf2-4c4e-8144-ae0dac672a72" class="bulleted-list"><li>이때 각각의 레이아웃이 동시에 보이는 상태인지 아닌지에 대한 정보도 알 수 있어야 한다.</li></ul><ul id="13d5edef-56de-4ed0-b6f6-afec28d628f8" class="bulleted-list"><li>그리고 그 안에 들어 있는 객체들이 메모리에 만들어져 있는지 아닌지에 대한 정보도 관리해야 한다.</li></ul><ul id="bf510f79-bb67-4082-9b52-e3f625d647d5" class="bulleted-list"><li>특히 지금 보고 있는 액티비티가 아니라 다른 액티비티에서도 여기에서 사용하는 글쓰기 부분을 보여주고 싶다면 다른 액티비티에서도 동일한 레이아웃을 중복해서 만들어야 하는 문제가 생긴다.</li></ul><ul id="9edcf7de-80c1-445b-a97f-3c88fc4eac09" class="bulleted-list"><li>즉, 하나의 화면 안에 들어가는 부분 화면을 만들어 넣는 것은 자연스러운 일이지만 각각의 부분 화면을 다루는 것이 쉽지만은 않다.</li></ul><p id="7f91e3e0-87b3-4da1-9bde-6fc184636277" class="">
+</p><h3 id="c8428a84-51ee-44df-85c0-e5c35a3d04e1" class="">어떻게 하면 좋을까?</h3><ul id="29aff739-b95a-4120-bdb9-b3f7bcf2695b" class="bulleted-list"><li>하나의 액티비티 안에 여러 개의 액티비티를 부분 화면으로 올려서 보여주는 방법은 어떨까?<ul id="40cf779e-66be-4ec6-8956-351bc67d341a" class="bulleted-list"><li>트위터를 위한 액티비티와 동영상을 위한 액티비티를 만든 후에 하나의 레이아웃에 같이 보이도록 하는 것이 가능할까?</li></ul><ul id="d9784b6e-dda3-4beb-ae95-fa53e8134526" class="bulleted-list"><li>→ 구체적으로 Activity 클래스, Activity Group 클래스를 사용하면 구현할 수 있다.</li></ul><ul id="53f65480-7cca-4cc3-98eb-c682254b5115" class="block-color-red bulleted-list"><li>하지만 액티비티는 하나의 화면을 독립적으로 구성할 때 필요한 여러 가지 속성들을 사용하게 되며, 안드로이드 시스템에서 관리하는 앱 구성 요소이기 때문에 액티비티 안에 다른 액티비티를 넣는 것은 단말의 리소스를 많이 사용하는 비효율적인 방법이다. </li></ul><ul id="92e9df49-7d6a-41c6-be23-01d8af048693" class="bulleted-list"><li></li></ul></li></ul></li></ul><h3 id="236bfcfc-c882-4854-b94d-8acc0edfcbbd" class="">Fragment</h3><ul id="11bdc517-47bb-41d9-83ba-80f1b14b4fe5" class="bulleted-list"><li>하나의 화면을 여러 부분으로 나눠서 보여주거나 각각의 부분 화면 단위로 바꿔서 보여주고 싶을 때 사용하는 것이 프래그먼트이다.</li></ul><ul id="28dd7d0b-e0e4-4e79-86e0-68ed25a095bd" class="bulleted-list"><li>프래그먼트는 태블릿처럼 큰 화면의 단말을 지원하려고 시작했는데 지금은 단말의 크기와 상관없이 화면 UI를 만들 때 사용된다.</li></ul><ul id="f9ad22fc-5b18-4c19-8994-ca7daa56f412" class="bulleted-list"><li>프래그먼트는 하나의 화면 안에 들어가는 부분 화면과 같아서 하나의 레이아웃처럼 보인다.</li></ul><ul id="c31d5f9b-3b0d-4c2e-82e5-7b49494ef4ce" class="block-color-red bulleted-list"><li>하지만 액티비티처럼 독립적으로 동작하는 부분 화면을 만들 때 사용된다. </li></ul><p id="033216c0-0554-4acd-91e8-2132a7bfe4ce" class="">
+</p><h3 id="dd064c5a-7ac8-4c5b-bd66-6e1d952356b8" class="">Fragment 목적</h3><ul id="62692637-f43b-4c00-9782-5e3277c85c2d" class="bulleted-list"><li>코드가 복잡해지는 문제를 해결하기 위해 각 부분 화면의 코드를 분리시킨 것이므로 프래그먼트를 사용하는 가장 큰 목적은 분할된 화면들을 독립적으로 구성하고 그 상태를 관리하는 데 있다.</li></ul><ul id="1c7c4d8e-f395-4941-93bb-7ae818090dd2" class="block-color-red bulleted-list"><li>분할된 화면들을 독립적으로 구성하기 위해 사용한다.</li></ul><ul id="4f7e6aea-c60c-4658-a3e0-d37603063058" class="block-color-red bulleted-list"><li>분할된 화면들의 상태를 관리하기 위해 사용한다.</li></ul><p id="19f1ba75-83d2-46bd-8a58-c5d717db2f9c" class="">
+</p><h3 id="3f553349-3e39-4f19-a9af-9cc7473cfb48" class="">Fragment &quot;화면&quot; VS Activity &quot;화면&quot;</h3><ul id="8728fffd-6cab-4a6c-a47e-b45c38e8f3db" class="bulleted-list"><li>Fragment → 단순히 액티비티 위에 올라가는 화면의 일부, 즉 &#x27;부분 화면&#x27;</li></ul><ul id="e86b2e5b-53e3-4b63-9efc-25af25ca4d25" class="bulleted-list"><li>Activity → 똑같이 XML 레이아웃으로 만들지만 액티비티에 사용되면 시스템에서 관리하는 화면</li></ul><p id="a1488819-973e-4a81-9193-52fc68301aca" class="">
+</p><h3 id="7efe07f3-bdfc-4cb8-b964-9d7c6129ed90" class="">Fragment Think!</h3><ul id="6fa4be2d-d7c4-43c6-bab7-91de3f477325" class="bulleted-list"><li>프래그먼트는 항상 액티비티 위에 올라가 있어야 한다는 점</li></ul><ul id="210b4ee9-6353-4906-81c5-7cba3aaaed62" class="bulleted-list"><li>액티비티로 만든 화면을 분할한 뒤 각각의 부분 화면을 프래그먼트로 만들고 그 프래그먼트를 독립적으로 관리하는 것이 목표이기 때문에 프래그먼트는 액티비티 위에 올라가 있어야 프래그먼트로서의 역활을 할 수 있다.</li></ul><ul id="6d2ee745-c91d-46ab-b7cb-f8e98fb9643c" class="block-color-red bulleted-list"><li>따라서 프래그먼트가 제대로 동작하는 시점은 프래그먼트가 메모리에 만들어진 시점이 아니라 액티비티에 올라가는 시점이다. </li></ul><p id="2367cdda-b5cf-49e3-859e-d49915fa7b95" class="">
+</p><h3 id="802c4b01-284a-4e81-a8a9-aac484cc5714" class="">Fragment Manager</h3><figure id="bc5c51e2-9fcd-4707-8188-c748a759b556" class="image"><a href="Fragment%201/nse-9134553086238541147-20515.png"><img style="width:288px" src="Fragment%201/nse-9134553086238541147-20515.png"/></a></figure><ul id="60c6dd3a-27ac-488e-bf17-574d4b70ae3c" class="bulleted-list"><li>액티비티가 동작하는 액티비티 매니저 방식을 그대로 본떠 만들었다는 것을 알 수 있다.</li></ul><ul id="34037ea1-9bc0-40c3-bd9e-38c29fcc092c" class="bulleted-list"><li>프래그먼트가 액티비티가 시스템 역활을 하게 되므로 액티비티 위에 올라가 있지 않은 프래그먼트는 정상적으로 동작할 수 없다는 것을 짐작할 수 있다.</li></ul><ul id="51892032-a7a9-4033-b81c-1a9c6204bfd3" class="bulleted-list"><li>액티비티 매니저에서 인텐트가 하던 역활을 프래그 매니저 부분에서는 사용할 수 없다.<ul id="c7356227-fb05-4c86-a501-443b8a8b0157" class="bulleted-list"><li>인텐트는 시스템에서 이해하는 객체인데 그것을 프래그먼트와 액티비티 사이에서 전달하게 만드는 것은 바람직하지 않기 때문이다.</li></ul></li></ul><ul id="205cc66b-3ce5-4167-9125-f73a7c3b9d48" class="bulleted-list"><li>액티비티와 프래그먼트 간에 데이터를 전달할 때는 단순히 메서드를 만들고 메서드를 호출하는 방식을 사용한다.</li></ul><p id="97c5849b-5655-478f-8c26-3ae47b62785c" class="">
+</p><h3 id="373e9a2b-fff4-40c4-88fa-9a7cc470b5f6" class="">프래그먼트는 액티비티 위에 항상 두 개 이상이 올라가 있어야 할까?</h3><ul id="89cc8e87-2b77-4e12-aceb-be165071f5c1" class="bulleted-list"><li>하나의 프래그먼트만 액티비티에 올려놓아도 상관없다.</li></ul><ul id="ce991bfe-bc3c-4c4d-bdda-b0446ee2d721" class="bulleted-list"><li>그리고 그 프래그먼트가 화면 전체를 채우도록 할 수 있어 사용자는 프래그먼트가 하나의 전체 화면처럼 느끼게 된다.</li></ul><ul id="9fc706d7-7a77-4286-8397-5c47f9d6cbc4" class="bulleted-list"><li>이런 방식을 사용하면 원하는 시점에 하나의 프래그먼트를 올려놓았다가 다른 프래그먼트로 바꿔서 보여줄 수도 있으므로 액티비티를 전환하지 않아도 화면 전환 효과를 낼 수 있다.</li></ul><ul id="1370f624-ab17-4da8-b52e-821ca99353b8" class="bulleted-list"><li>액티비티는 시스템에서 관리하지만 프래그먼트는 액티비티 위에 올라가 있어 액티비티를 전환하지 않고도 훨씬 가볍게 화면 전환 효과를 만들 수 있게 된다.</li></ul><ul id="83418ce5-a420-4c3c-903e-af93c8034a1c" class="block-color-red bulleted-list"><li>특히 탭 모양으로 화면을 구성할 때 각각의[탭] 버튼을 클릭할 때마다 다른 화면이 보이는 효과를 내고 싶다면 액티비티가 아닌 프래그먼트를 사용하는 것이 좋다. </li></ul><p id="1f7d3e09-ddb9-4022-8b5a-2bdaea2454a9" class="">
+</p><h3 id="f6206364-5ba6-4300-ad4d-ca791c19b9ee" class="">프래그먼트를 화면에 추가하는 방법 이해하기</h3><ul id="766ec90b-905b-47dd-9a73-2b14f43cf349" class="bulleted-list"><li>어떤 방법으로 프래그먼트를 사용할 수 있을까?</li></ul><ul id="26af7ce4-41f3-45bc-89cb-657612a5ba57" class="bulleted-list"><li>앞서 프래그먼트 사용 목적은 부분 화면을 독립적으로 사용하기 위해서이고 액티비티를 본떠 만든 것이라고 했다.</li></ul><ul id="4bcdf676-b315-45b4-92d7-b8988c6df071" class="bulleted-list"><li>이 때문에 프래그먼트를 만들 때도 액티비티를 만들 때의 과정과 비슷하게 진행된다.</li></ul><ul id="c14eb32a-5b34-4f6a-b6ca-43f159ac1ef6" class="bulleted-list"><li>즉, 액티비티라는 것이 하나의 XML 레이아웃과 하나의 자바 소스 파일로 동작하는 것처럼 프래그먼트도 하나의 XML 레이아웃과 하나의 자바 소스 파일로 동작하게 만든다.</li></ul><p id="a640ec89-0845-468f-ac88-2ee8dd85429c" class="">
+</p><h3 id="88243720-9a51-4d45-b0c8-3ce479fdcf99" class="">실습전 코드 설명</h3><ul id="5c87d552-4e20-403a-868d-b7add46c72f1" class="bulleted-list"><li>XML 레이아웃 파일인 fragment_layout.xml을 만든다. 프래그먼트도 부분 화면이므로 화면에 뷰들을 배치할 때 XML 레이아웃으로 만든다.</li></ul><ul id="83f57dc8-5c50-497a-80b1-581f7c003192" class="bulleted-list"><li>프래그먼트를 위한 자바 소스를 만든다. 프래그먼트를 위한 자바 소스는 Fragment 클래스를 상속하여 만들 수 있다.</li></ul><pre id="fbf55ce3-2adf-4944-82a7-555682c06de8" class="code"><code>//[CODE] Fragment
+
+public final Activity getActivity () // 이 프래그먼트를 포함하는 액티비티를 반환함
+
+public final FragmentManager getFragmentManager () 
+// 이 프래그먼트를 포함하는 액티비티에서 프래그먼트 객체들과 의사소통하는 프래그먼트 매니저를 반환함
+
+public final Fragment getParentFragment ()
+// 이 프래그먼트를 포함하는 부모가 프래그먼트일 경우 리턴함, 액티비티이면 null 반환
+
+public final int getId()
+// 이 프래그먼트의 ID를 반환함</code></pre><ul id="514e4685-137b-48a0-9d77-cbbbd819a16b" class="bulleted-list"><li>프래그먼트를 위한 클래스 까지 만들었다면 XML 레이아웃 파일의 내용을 소스 파일과 매칭하는 과정이 필요하다.</li></ul><ul id="dfa8cb98-73d8-45a5-84a8-7fb412cbf268" class="bulleted-list"><li>그런데 프래그먼트에는 setContentView() 메서드가 없다. 그래서 인플레이션 객체인 LayoutInflater를 사용해 인플레이션을 진행해야 한다.</li></ul><ul id="8ba6624e-6289-4b69-9c94-209bcf2e7c03" class="bulleted-list"><li>XML 레이아웃 파일의 내용을 인플레이션한 후 클래스에서 사용하도록 하는 코드는 onCreateView() 메서드 안에 들어간다.</li></ul><ul id="3e9ea52c-c387-4cae-b0ed-93fa407cab32" class="bulleted-list"><li>onCreateView() 메서드는 콜백 메서드로 인플레이션이 필요한 시점에 자동으로 호출된다.</li></ul><ul id="9ed4212e-0ee1-4d3d-a2e5-691060937238" class="bulleted-list"><li>따라서 이 메서드 안에서 인플레이션을 위한 inflate() 메서드를 호출하면 되고 인플레이션 과정이 끝나면 프래그먼트가 하나의 뷰처럼 동작할 수 있는 상태가 된다.</li></ul><p id="8e8d6237-f35b-4b62-87ef-51677c2c2a83" class="">
+</p><h3 id="4d9f1ad1-2f6e-4367-8072-3abeafa2bed5" class="">Fragment</h3><ul id="faf32587-1ee3-44d6-9492-1c02133c140e" class="bulleted-list"><li>프래그먼트는 버튼이나 레이아웃처럼 화면의 일정 공간을 할당받을 수 있다.</li></ul><ul id="5c7d00b9-951d-40a4-b5a6-6f6b1174585a" class="bulleted-list"><li>새로 만든 프래그먼트를 메인 액티비티에 추가하는 방법은 뷰와 마찬가지로 XML 레이아웃에 추가하거나 또는 소스 코드에서 new 연산자로 객체를 만든 후 프래그먼트 매니저로 추가할 수 있다.</li></ul><ul id="1e1e7695-3695-45c9-af07-19b1de062f32" class="bulleted-list"><li>좀 더 구체적으로 말하면, 메인 화면을 위해 만든 activity_main.xml 파일에 직접 &lt;fragment&gt; 태그를 사용해 프래그먼트를 추가할 수도 있고</li></ul><ul id="c3aeca68-5180-4646-acf7-3c05dd0e9154" class="bulleted-list"><li>새로 정의한 프래그먼트 클래스의 인스턴스 객체를 new 연산자로 만든 후 FragmentManager 객체의 add() 메서드를 사용하여 액티비티에 추가할 수도 있다.</li></ul><ul id="7cc08fb6-fc9a-4245-8e94-5a2f281a032d" class="bulleted-list"><li>메인 액티비티의 레이아웃 파일인 activity_main.xml 파일에 프래그먼트를 추가하면 프래그먼트 화면이 액티비에 추가된다.</li></ul><ul id="c4f85848-ef2c-4efa-a38d-bd803ca51095" class="bulleted-list"><li>만약 코드에서 프래그먼트를 추가하고 싶다면 프래그먼트 관리를 담당하는 프래그먼트 매니저를 사용해야 한다.</li></ul><pre id="7248bced-b9ee-458e-b065-5b5c97d7f2a3" class="code"><code>//[CODE] FragmentManager
+
+public abstract FragmentTransaction beginTransaction ()
+// 프래그먼트를 변경하기 위한 트랜잭션을 시작한다.
+
+public abstract Fragment findFragmentById (int id)
+// ID를 이용하여 프래그먼트 객체를 찾음
+
+public abstract Fragment findFragmentByTag (String tag)
+// 태그 정보를 사용해 프래그먼트 객체를 찾는다.
+
+public abstract boolean executePendingTransactions ()
+// 트랜잭션은 commit() 메서드를 호출하며 실행되지만 비동기 방식으로 실행되므로 즉시 실행하고
+//싶다면 이 메서드를 추가로 호출해야 한다.
+
+</code></pre><ul id="6c35be44-92e4-43b6-a5e2-e8432a042bd4" class="bulleted-list"><li>FragmentManager 객체는 프래그먼트를 액티비티에 추가(add), 다른 프래그먼트로 바꾸거나(replace), 삭제(remove) 할 때 주로 사용할 수 있다.</li></ul><ul id="a05a5c36-9a74-4e50-8e61-2a2750403e1e" class="bulleted-list"><li>getFragmentManager() 메서드를 호출하면 참조할 수 있다.</li></ul><p id="25ee9df6-5719-4df5-ab02-862530c9803f" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b260ebf3-f17d-4d2d-9d19-3013fdb73880"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">getSupportFragmentManager() 메서드가 getFragmentManager() 메서드와 같은 기능을 한다는 것을 알고 있나요?</div></figure><p id="95261019-f0d5-42d6-b972-e43f47bb58aa" class="">프래그먼트 매니저 객체를 참조하려면 getFragmentManager() 메서드를 호출할 수도 있고 getSupportFragmentManager() 메서드를 호출할 수도 있다.</p><p id="5636c520-5b39-4ab2-a895-bb1f5ab9762f" class="">이것은 이전 버전의 단말에서도 동작할 수 있도록 appcompat 라이브러리(Android Compativility Library)의 기능을 사용하기 때문이다.</p><p id="f03d69d3-6d99-4353-a367-0a2d95b45c5c" class="">일반적인 경우에는 예전 버전까지 호환되도록 만드는것이 좋으므로 <mark class="highlight-pink_background"><strong>getSupportFragmentManager()</strong></mark> 메서드를 사용하는 것을 권장한다.</p><p id="5447d1ff-5d53-4230-b933-e21b472521a5" class="">
+</p><h3 id="478d2e66-3d67-4c61-89cf-36fc472d8fec" class="">Fragment 특성</h3><ul id="4d1fcd58-7537-4483-993d-38768eff62b8" class="bulleted-list"><li>큰 화면과 해상도를 가진 태블릿의 경우에 더욱 유용하게 사용될 수 있다.</li></ul><div id="65d4b5a3-9e83-423f-8e83-eec323e7269d" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th>특성</th><th>설명</th><th>Column</th><th>Column 1</th></tr></thead><tbody><tr id="0adaf12f-4737-4b12-933c-40c6bce8b66a"><td class="cell-title"><a href="Fragment%201/Untitled%20Database/Untitled.html">뷰 특성</a></td><td class="cell-m#(F">뷰 그룹에 추가되거나 레이아웃의 일부가 될 수 있다. (뷰에서 상속받은 것은 아니며 뷰를 담고 있는 일종의 틀)</td><td class="cell-+j&quot;)"></td><td class="cell-&#x27;^]1"></td></tr><tr id="951e5931-2492-46f7-9101-a91f4e50294d"><td class="cell-title"><a href="Fragment%201/Untitled%20Database/Untitled%201.html">액티비티 특성</a></td><td class="cell-m#(F">액티비티처럼 수명주기 가지고 있다.(컨텍스츠 객체는 아니며 라이프사이클을 액티비티에 종속된다.)</td><td class="cell-+j&quot;)"></td><td class="cell-&#x27;^]1"></td></tr><tr id="5e825952-63e3-40eb-b8a1-4606c4bf8d10"><td class="cell-title"><a href="Fragment%201/Untitled%20Database/Untitled%202.html">Untitled</a></td><td class="cell-m#(F"></td><td class="cell-+j&quot;)"></td><td class="cell-&#x27;^]1"></td></tr></tbody></table></div><h3 id="ec0701ea-c32e-4538-925d-591620e9a16c" class="">Fragment 미리 정의된 클래스들</h3><ul id="e40ef3ac-9427-4577-9ac8-f0ea92467ffe" class="bulleted-list"><li>DialogFragment<ul id="d0a28f68-753b-4cb9-a41c-56c9853359dc" class="bulleted-list"><li>액티비티의 수명주기에 의해 관리되는 대화상자를 보여줄 수 있도록 한다.</li></ul><ul id="12f980f9-dd21-4855-9dcd-aaa76f61577e" class="bulleted-list"><li>이 프래그먼트는 액티비티의 기본 대화상자 대신 사용할 수 있다.</li></ul></li></ul><p id="9419a6e5-1dec-4b96-93db-25134732e7dd" class="">
+</p><h3 id="10801476-dc3a-4590-9ff8-23af24eef823" class="">프래그먼트를 만들어 사용하는 과정</h3><ol id="6d5f081a-f955-433d-861d-4dd3965b659c" class="numbered-list" start="1"><li>프래그먼트를 위한 XML 레이아웃 만들기</li></ol><ol id="bad39924-2ff0-4956-bb19-29599a45782e" class="numbered-list" start="2"><li>프래그먼트 클래스 만들기</li></ol><ol id="2aa9f35c-2f07-4c3b-86b0-c9d9d8e456e2" class="numbered-list" start="3"><li>액티비티를 XML 레이아웃에 추가하기</li></ol><p id="64dca5a0-5179-4a5b-8fe3-e26377f7581e" class="">
+</p><ul id="78df9f6d-0405-4dc4-ae7a-b5a8e12260fc" class="bulleted-list"><li>화면은 XML과 소스코드가 분리되어 있다. 따라서 화면에 뷰를 추가하는 방법도 XML 레이아웃에 추가하는 방법과 소스 코드를 사용해 추가하는 방법으로 나눈다.</li></ul><h3 id="1e27137e-1669-4dfa-863a-86770ce28c6d" class="">화면에 뷰를 추가하는 방법</h3><ol id="37edf591-920d-430a-85f8-f31a97c106b1" class="numbered-list" start="1"><li>XML 레이아웃에 추가하는 방법</li></ol><ol id="9c775d81-e1ca-4b86-acb6-b0ce92c6b6c8" class="numbered-list" start="2"><li>자바 소스 코드로 추가하는 방법</li></ol><p id="086ddcdb-013a-4cd4-99d1-dcd0469cac95" class="">
+</p><ul id="5ff51e6f-4e85-4980-a9bd-ca16e8ff5b0a" class="bulleted-list"><li>프래그먼트도 새로 만든 프래그먼트를 액티비티의 XML 레이아웃에 넣어 화면에 추가하는 것뿐만 아니라 코드에서 직접 추가하는 것도 가능하다.</li></ul><ul id="dd93fc09-cd2a-4fb7-8f2b-92edbaa39dde" class="block-color-red bulleted-list"><li>코드에서 프래그먼트를 추가할 때는 프래그먼트 매니저에게 요청해야 한다는 것 </li></ul><p id="258e1396-75a0-4a5b-a42e-c6bf4108b153" class="">
+</p><p id="75e85994-fb3f-4556-a545-51bef7aa5f46" class="">
+</p><h3 id="46b33594-557b-4ae7-98a2-e210af4fac3d" class="">버튼을 클릭했을 때 코드에서 프래그먼트 추가하기</h3><p id="1f6e9421-56e6-4e01-8f56-4af3d7c7a75a" class="">MainFragment.java</p><pre id="959801d0-4046-405c-a186-8673dd271224" class="code"><code>public class MainFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_main, container, false);
+        // 메인 프래그먼트 안에 표시되는 최상위 레이아웃은 인플레이션을 통해 참조한 rootView 객체이다.
+        //-&gt; 좀더 쉽게 설명하자면 최상위 레이아웃(rootView)은 메인 프래그먼트 안에 들어 있는 것이고
+        // 메인프래그먼트는 이 레이아웃을 화면에 보여주기 위한 툴이라고 생각할 수 있다.
+        // 그래서 rootView의 findViewById() 메서드를 사용하여 레이아웃에 들어 있는 버튼 객체를 찾아낼 수 있다.
+        // 그리고 이 객체의 setOnClickListener() 메서드를 호출하여 리스너를 등록하면 버튼이 클릭되었을 때 이벤트를 처리할 수 있다.
+        //onClick() 메서드 안에서는 MainActivity() 객체를 참조한 후 onFragmentChanged() 메서드를 호출하도록한다.
+        Button button = rootView.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.onFragmentChanged(0);
+                //onFragmentChanged() 메서드는 메인 액티비티에 새로 추가할 메서드로 프래그먼트 매니저를 이용하여 프래그먼트를 전환하는 메서드이다.
+                //이렇게 코드를 입력한 이유는 프래그먼트가 액티비티를 본떠 만들었고 액티비티 관리를 시스템에서 하는 것처럼 프래그먼트 관리를 액티비티가 하기 때문이다.
+                //액티비티에서 프래그먼트를 전환하도록 만들어야 하기 때문이다. -&gt; 다시말해, 하나의 프래그먼트에서 다른 프래그먼트를 직접 띄우는 것이 아니라 액티비티를 통해 띄어야 한다.
+                //프래그먼트에서는 getActivity() 메서드르 호출하여 프래그먼트가 올라가 있는 액티비티가 어떤 것인지 확인할 수 있다.
+            }
+        });
+        return rootView;
+        // Inflate the layout for this fragment
+//        return inflater.inflate(R.layout.fragment_main, container, false);
+        //onCreateView() 메서드의 파라미터로 LayoutInflater 객체가 전달되므로 이 객체의 inflate() 메서드를 바로 호출할 수 있다.
+        //inflate() 메서드로 전달되는 첫 번째 파라미터는 XML 레이아웃 파일이 되므로 R.layout.fragment_main 가 되며
+        //두번째 파라미터는 이 XMl 레이아웃이 설정될 뷰 그룹 객체가 되는데 onCreateView() 메서드로 전달되는 두 번째 파라미터가 이 프래그먼트의 가장 상위 레이아웃이다.
+        //따라서 container 객체를 전달하면 된다.
+        //inflate() 메서드를 호출하면 인플레이션이 진행되고 그 결과로 ViewGroup 객체가 반환된다.
+        //이 객체를 return 키워드를 사용하여 반환한다.
+    }
+
+}</code></pre><p id="eca09706-e562-43dd-956f-f3a95b9902da" class="">
+</p><p id="f929b597-ac50-4ef4-8cab-31c6f3664672" class="">activity_main.xml</p><pre id="d973f9c1-b7c5-4757-bd4f-45c9789f8bcc" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    tools:context=&quot;.MainActivity&quot;
+    android:id=&quot;@+id/container&quot;&gt;
+
+    &lt;fragment
+        android:id=&quot;@+id/mainFragment&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:name=&quot;com.younsle.fragment_1.MainFragment&quot;/&gt;
+&lt;/RelativeLayout&gt;</code></pre><p id="6df327c1-af5f-49e0-9010-a5c795d134fb" class="">
+</p><p id="1baf301c-80cb-47ed-b909-f00506a058c0" class="">Menufragment.java</p><pre id="b398f51b-307c-450a-b215-7b3e42a53d1b" class="code"><code>public class MenuFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_menu, container, false);
+        //inflate() 메서드로 전달되는 첫 번째 파라미터의 값이 R.layout.fragment_menu 로 바뀌었으므로 이 MenuFragment 클래스에는 fragment_menu.xml 파일의 내용이 인플레이션되어 설정된다.
+        //메뉴화면을 위한 프래그먼트를 만들었으므로 이제 메인 프래그먼트 안에 들어 있는 버튼을 클릭했을 때 메뉴 프래그먼트로 전환되도록 해야한다.</code></pre><p id="d13c4b1b-48fa-4156-b1fb-996d44abe247" class="">
+</p><p id="c9efe7e7-e068-457b-a20e-b2239d10de60" class="">MainActivity.java</p><pre id="f30b1fcf-d7f6-4ff1-af75-a8338c46b24d" class="code"><code>public class MainActivity extends AppCompatActivity {
+    MainFragment mainFragment;
+    MenuFragment menuFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.mainFragment);
+        //메인 프래그먼트는 액티비티를 위한 activity_main.xml 파일에 추가되어 있으므로 id를 사용해서 찾아야 한다.
+        //그런데 프래그먼트는 뷰가 아니라서 Activity 클래스에 있는 findViewById() 메서드로 찾을 수 없다.
+        //대신 프래그먼트를 관리하는 FragmentManager 객체의 findFragmentById() 메서드를 사용해서 찾을 수 있다.
+        //메인프래그먼트는 findFragmentById() 메서드를 사용해 찾은 후 변수에 할당하고 메뉴 프래그먼트는 new 연산자를 사용하여 새로운 객체로 만들어 변수에 할당한다.
+        menuFragment = new MenuFragment();
+    }
+
+    public void onFragmentChanged(int index) {
+        if(index == 0) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    menuFragment).commit();
+        }else if (index == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    mainFragment).commit();
+        }
+    }
+    //onFragmentChanged() 메서드는 프래그먼트에서 호출할 수 있도록 정의한 것으로 퍼러미터로 전달된 정수의 값이 0이면 메인 프래그먼트가 보이게 하고
+    //1 이면 메뉴 프래그먼트가 보이게 할 수 있다.
+    //이 메서드 안에서는 FragmentManager 객체의 replace() 메서드를 사용하여 프래그먼트를 바꾸도록 입력한다.
+    //replace() 메서드로 전달되는 첫번째 파라미터는 프래그먼트를 담고 있는 레이아웃의 id가 되어야 하므로 R.id.container를 전달한다.
+    //이 코드에서 볼수 있는 것처럼 프래그먼트 매니저 객체를 사용할 때는 트랜잭션이 사용된다.
+    //메인 액티비티에서 프래그먼트를 다루기 위해서는 먼저 getFragmentManager() 메서드를 호출하여 매니저 객체를 참조한다.
+    //[Reference] public FragmentManager getFragmentManager()
+    //프래그먼트 매니저는 프래그먼트를 다루는 작업을 해주는 객체로 프래그먼트 추가, 삭제 또는 교체 등의 작업을 할 수 있게 한다.
+    //그런데 이런 작업들은 프래그먼트를 변경할 때 오류가 생기면 다시 원래 상태로 돌릴 수 있어야 하므로 트랜잭션 객체를 만들어 실행한다.
+    //트랜잭션 객체는 beginTransaction() 메서드를 호출하면 시작
+    //commit() 메서드를 호출하면 실행된다.
+
+}</code></pre></div></article></body></html>

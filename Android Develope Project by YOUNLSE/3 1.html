@@ -1,0 +1,863 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>서버에 데이터 요청 하고 응답받기#3</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="48663372-1cb2-4186-8644-95f6c80c6b67" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">서버에 데이터 요청 하고 응답받기#3</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 08, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="5dc1b6eb-5410-4d97-aa88-576dddf0a8d2" class="">Volley 사용하기</h3><ul id="8c1975bd-6b6b-4fea-aae8-a2c894fbbda2" class="bulleted-list"><li>웹서버에 요청하고 응답을 받을 때는 앞서 살펴본 HttpURLConnection 객체를 사용할 수 있지만 요청과 응답에 필요한 코드의 양이 많다.</li></ul><ul id="003ffa66-a8c7-4be4-8dc5-caa7b9f6b64a" class="bulleted-list"><li>그리고 스레드를 사용하면서 넣어야 하는 코드의 양도 많다.</li></ul><ul id="ad9c988f-3402-4bc7-87af-ffb44546faa1" class="bulleted-list"><li>핸들러에 대한 이해가 없다면 앱이 비정상 종료될 수도 있겠지</li></ul><ul id="b64c038e-ffc8-49f2-896a-65b8e7df224e" class="bulleted-list"><li>이러한 문제를 해결하기 위해 여러가지 라이브러리들이 만들어졌다.</li></ul><ul id="93b230cb-9c25-4f49-aba8-25ff5a7c6807" class="bulleted-list"><li>그중에서도 가장 많이 사용되는 것 중의 하나가 Volley이다.</li></ul><ul id="8bcc7e1b-2997-4e1f-a22d-f9bda4d3fabe" class="bulleted-list"><li>Volley라이브러리는 웹 요청과 응답을 단순화하기 위해 만들어진 라이브러리이다.</li></ul><p id="48f07f6d-9d8b-4751-b186-de4df48e173b" class="">
+</p><figure id="65fee2ad-54b5-403e-ac48-19858f210eee" class="image"><a href="3%201/Untitled.png"><img style="width:576px" src="3%201/Untitled.png"/></a></figure><ul id="9c5effe2-c7db-4f0f-a535-f2cdbffd0e58" class="bulleted-list"><li>Volley를 사용하려면 먼저 요청(Request) 객체를 만들고 이 요청 객체를 요청 큐(Requset Queue)라는 곳에 넣어주기만 하면 된다.</li></ul><ul id="7ebbb285-e9da-4cef-bc00-b839f62c641a" class="bulleted-list"><li>그러면 요청 큐가 알아서 웹서버에 요청하고 응답까지 받아준다.</li></ul><ul id="c2150720-5063-4677-9a70-e07203634b52" class="bulleted-list"><li>우리가 응답을 받을 수 있도록 지정된 메서드를 만들어주기만 하면 응답이 왔을 때 그 메서드가 자동으로 호출된다.</li></ul><p id="70a9ee0c-dc8c-4cb7-8a79-2b72da4af670" class="">
+</p><p id="3e7b877a-8de0-432f-bb5e-b4a2b9fa872c" class="">
+</p><h3 id="20e379fa-a43e-4aec-9e7b-71f42d671dd4" class="">Volley 라이브러리 장점</h3><ul id="b7cb6b7f-81db-425d-bb56-bd75bd130d71" class="bulleted-list"><li>스레드를 신경 쓰지 않아도 된다는 점</li></ul><ul id="6fabe483-3bd8-4f9f-b726-bcf0e2de7a4e" class="bulleted-list"><li>요청 큐가 내부에서 스레드를 만들어 웹서버에 요청하고 응답받는 과정을 진행하는데, 응답을 처리할 수 있는 메서드를 호출할 때는 메인 스레드에서 처리할 수 있도록 만들기 떄문이다.</li></ul><ul id="e8d9c9a2-84d1-4e86-b04d-712c38a1e121" class="bulleted-list"><li>따라서 스레드를 사용할 필요도 없고 화면에 결과를 표시할 때 핸들러를 사용할 필요도 없다.</li></ul><ul id="59b550c0-9252-4a82-8259-a33c0788fa81" class="bulleted-list"><li>Volley를 사용해서 웹 요청과 응답을 처리하는 과정을 살펴보겠다.</li></ul><p id="731719a6-f3e9-41ab-8722-6c6a810634eb" class="">
+</p><h1 id="546056e3-ff5b-4365-8de8-3c1675772848" class="">간단한 요청 보내기</h1><ul id="ce92f22c-5bd7-45c0-b0f1-6dfeef8bdcb6" class="bulleted-list"><li>고급 단계이서는 RequestQueue를 만들고 Request 객체를 전달하여 Volley를 사용한다.</li></ul><ul id="dd1c7fbb-5e0b-4d7d-a63b-bd4e333c9225" class="bulleted-list"><li>RequestQueue에서는 네트워크 작업을 실행하고 캐시를 읽고 쓰고 응답을 파싱하기 위해 작업자 스레드를 관리한다.</li></ul><ul id="a42cbeee-cf26-4d0e-a635-e2c9038b3f50" class="bulleted-list"><li>요청에서 원시 응답을 파싱하고 Volley에서 파싱된 응답을 전달을 위해 기본 스레드에 돌려보낸다.</li></ul><ul id="1a48b194-b733-4ff5-aced-34178df7f960" class="bulleted-list"><li>이 과정에서 RequestQueue를 설정해주는 Volley.newRequestQueue 편의 메서드를 사용하여 요청을 보내는 방법을 설명한다.</li></ul><p id="767846ff-77f3-4e9a-9f0c-0b4bfe367e6e" class="">
+</p><h3 id="d420f2f2-5c3f-44ae-99ca-c1e5629d84f4" class="">newRequestQueue 사용</h3><ul id="9a272973-bf7e-4d4d-b12f-5239690da58e" class="bulleted-list"><li>Volley에서는 기본값을 사용하여 RequestQueue를 설정해주는 편의 메서드 Volley.newRequestQueue를 제공하고 대기열을 시작한다.</li></ul><pre id="494bab2b-f0ab-4642-97c3-98a91e8b462d" class="code"><code>final TextView textView = (TextView) findViewById(R.id.text);
+    // ...
+
+    // Instantiate the RequestQueue.
+    RequestQueue queue = Volley.newRequestQueue(this);
+    String url =&quot;http://www.google.com&quot;;
+
+    // Request a string response from the provided URL.
+    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener&lt;String&gt;() {
+        @Override
+        public void onResponse(String response) {
+            // Display the first 500 characters of the response string.
+            textView.setText(&quot;Response is: &quot;+ response.substring(0,500));
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            textView.setText(&quot;That didn&#x27;t work!&quot;);
+        }
+    });
+
+    // Add the request to the RequestQueue.
+    queue.add(stringRequest);</code></pre><ul id="124046d0-4b8e-43ee-8a05-7b46dcd06df3" class="bulleted-list"><li>Volley에서는 항상 기본 스레드에서 파싱된 응답을 전달한다.</li></ul><ul id="a2c9ccbe-2e78-4633-ad03-5da7e789bf44" class="bulleted-list"><li>기본 스레드에서 실행하면 응답 핸들러에서 직접 UI 컨트롤을 자유롭게 수정할 수 있으므로 수신된 데이터로 UI 컨트롤을 채우는 데 편리하지만 라이브러리에서 제공한, 특히 요청 취소와 관련된 대부분의 의미 체계에 특히 중요하다.</li></ul><p id="9e21874d-b3a2-4a6a-aa22-3ef904f8dfbf" class="">
+</p><p id="78df2c93-1fc6-4c2c-a352-498a00b9ed43" class="">
+</p><h3 id="5f8ed424-771b-4066-a7d6-bd256cab34d9" class="">요청 보내기</h3><ul id="02c1e3dd-e3d2-4cd0-bfc2-fd1c5f53a9cf" class="bulleted-list"><li>요청을 보내려면 요청을 구성하고 위에 표시된 대로 add() 를 사용하여 RequestQueue에 추가하면 된다.</li></ul><ul id="54162532-c9f7-4cac-91d1-d810cab669fd" class="bulleted-list"><li>요청을 추가하면 요청이 파이프라인을 통해 이동하고 처리되며 원시 응답이 파싱되어 전달된다.</li></ul><ul id="787a0582-1d6c-4500-b1e4-96cff46b04dc" class="bulleted-list"><li>add() 를 호출하면 Volley에서 캐시 처리 스레드 하나와 네트워크 전달 스레드의 풀을 실행한다.</li></ul><ul id="9fc5ca33-222a-4c2e-8fd1-a3daf3b3e8df" class="bulleted-list"><li>대기열에 요청을 추가하면 요청이 캐시 스레드에 의해 선택되고 분류된다.</li></ul><ul id="cd05b2e8-ad4f-46b4-a2ec-70ddcc0c5830" class="bulleted-list"><li>캐시에서 요청을 처리할 수 있는 경우 캐싱된 응답이 캐시 스레드에서 파싱되고 파싱된 응답이 기본 스레드에서 전달된다.</li></ul><ul id="7128ee9d-d9ba-4f31-b705-1cadd645a115" class="bulleted-list"><li>캐시에서 요청을 처리할 수 없는 경우에는 요청이 네트워크 대기열에 추가된다.</li></ul><ul id="6712db1d-68bd-4ea9-9654-ad913f863bae" class="bulleted-list"><li>사용 가능한 첫 번째 네트워크 스레드가 대기열에서 요청을 가져오고 HTTP 트랜잭션을 실행하고 작업자 스레드에서 응답을 파싱하고 응답을 캐시에 쓴 다음 파싱된 응답을 전달을 위해 기본 스레드에 다시 게시한다.</li></ul><ul id="f57ebec9-44fe-474b-8029-3e65d0aa0e7f" class="bulleted-list"><li>I/O 차단 및 파싱/디코딩과 같이 많은 비용이 드는 작업은 작업자 스레드에서 실행된다.</li></ul><ul id="8cc0d15d-71ca-46a7-8780-1ae8d47e2eca" class="bulleted-list"><li>어느 스레드에서나 요청을 추가할 수 있지만 응답은 항상 기본 스레드에서 전달된다.</li></ul><h3 id="021e009d-9ce0-4d00-bd06-70b13be9d143" class="">요청 처리 과정</h3><figure id="0de084b0-8ac1-4065-b43c-64c1cca0b3ff" class="image"><a href="3%201/Untitled%201.png"><img style="width:564px" src="3%201/Untitled%201.png"/></a></figure><h3 id="4f7ea175-7bdf-4cf7-8bb8-0ac98845b930" class="">요청 취소</h3><ul id="78fd3526-8639-4aa3-9803-812efc755b82" class="bulleted-list"><li>요청을 취소하려면 Request에서 cancel()을 호출하면된다.</li></ul><ul id="6e9f2c85-de64-48e1-8c97-544025d00a98" class="bulleted-list"><li>요청이 취소되면 Volley에서 요청 핸들러가 호출되지 않도록 보장한다.</li></ul><ul id="b2290ef7-c5db-45bf-8fca-ec902fc63e62" class="bulleted-list"><li>즉 활동의 onStop() 에서 대기 중인 모든 요청을 취소할 수 있으며 onSaveInstaceState() 또는 다른 방어 사용구가 호출되었는지 관계없이 getActivity() == null 이 있는지 확인하기 위해 응답 핸들러를 혼란스럽게 할 필요가 없다.</li></ul><ul id="ba5475b9-34d0-4a61-b24b-b3aa0cf4686a" class="bulleted-list"><li>이 동작을 이용하려면 일반적으로 진행 중인 모든 요청을 추적하여 적절한 시간에 취소할 수 있도록 해야 한다.</li></ul><ul id="f304bb90-e093-4233-aeb3-4aa2804d6d79" class="bulleted-list"><li>각 요청에 태그 개체를 연결하면 더 쉽게 추적할 수 있다.</li></ul><ul id="57ba3dd7-930a-44cf-8071-012f8f46a541" class="bulleted-list"><li>그런 다음 이 태그를 사용하여 취소할 응답의 범위를 제공할 수 있다.</li></ul><ul id="da4b0579-e1a6-4919-8f08-df36845691c7" class="bulleted-list"><li>예를 들어 요청이 대신 작성된 Activity로 모든 요청을 태그하고 onStop() 에서 requestQueue.cancelAll(this)를 호출할 수 있다.</li></ul><ul id="bd5c7d22-9dbd-4c9b-9bf7-5465975e7229" class="bulleted-list"><li>마찬가지로 ViewPager 탭의 모든 미리보기 이미지 요청을 개별 탭으로 태그하고 스와이프 시 취소하여 새 탭이 다른 탭의 요청에 의해 지연되지 않도록 할 수 있다.</li></ul><h3 id="85458648-bad2-4677-b44a-4f3c5c3a2643" class="">태그에 문자열 값을 사용하는 예</h3><ol id="2aaae8d7-6a5e-44f8-863c-7cfcedd04257" class="numbered-list" start="1"><li>태그를 정의하여 요청에 추가한다.</li></ol><pre id="2feb18f3-7149-4edd-9be8-5b771e00255a" class="code"><code>public static final String TAG = &quot;MyTag&quot;;
+    StringRequest stringRequest; // Assume this exists.
+    RequestQueue requestQueue;  // Assume this exists.
+
+    // Set the tag on the request.
+    stringRequest.setTag(TAG);
+
+    // Add the request to the RequestQueue.
+    requestQueue.add(stringRequest);</code></pre><p id="2fb99d6b-30ba-4c6c-a6ff-96687d31814b" class="">
+</p><p id="c7ae4a12-eadd-4d35-a33b-2c122727ddb3" class="">2. 활동의 onStop() 메서드에서 이 태그가 포함된 모든 요청을 취소한다.</p><pre id="79720a22-a9ff-43cb-a34c-462caf7e084b" class="code"><code>@Override
+    protected void onStop () {
+        super.onStop();
+        if (requestQueue != null) {
+            requestQueue.cancelAll(TAG);
+        }
+    }</code></pre><ul id="32578c58-3fbe-490d-bf01-e043da388567" class="bulleted-list"><li>요청을 취소할 때는 중의하세요.</li></ul><ul id="a6c4ca26-84d3-4b1f-bef9-7e891550c20e" class="bulleted-list"><li>응답 핸들러에 의존하여 상태를 진행하거나 다른 프로세스를 시작하는 경우 요청 취소를 고려해야 한다.</li></ul><ul id="4b140963-3aff-4731-96f0-d26e0169af73" class="bulleted-list"><li>다시 한 번 망하지만 응답 핸들러는 호출되지 않는다.</li></ul><p id="429c0fce-bc0c-48bb-9979-894d136ca8be" class="">
+</p><p id="5672a8cd-3277-473b-bade-f6edb28383ce" class="">
+</p><h1 id="cad90280-a1a5-4f42-8952-1af5c66e7027" class="">RequestQueue 설정</h1><ul id="de144cc9-74e6-4878-90ee-6c3154c44790" class="bulleted-list"><li>이전 과정에서는 편리한 Volley.newRequestQueue 메서드를 사용하여 RequestQueue를 설정하고 Volley의 기본 동작을 활용하였었다.</li></ul><ul id="cd71b5d0-4781-4a23-8e01-e55d94c52141" class="bulleted-list"><li>이 과정에서는 RequestQueue를 만들어 자체 맞춤 동작을 제공하는 방법을 단계적으로 나타내보겠다.</li></ul><ul id="d8033cbd-be86-4d4f-a298-b137f641b180" class="bulleted-list"><li>이 과정에서는 또한 RequestQueue를 싱글톤으로 만드는 권장되는 방법을 설명한다.</li></ul><ul id="932b31ee-9262-4962-a995-3983df6ce8ca" class="bulleted-list"><li>이렇게 하면 RequestQueue가 앱의 전체 기간 동안 지속된다.</li></ul><p id="912f5c90-a455-495b-a1e4-28ffc0445e7a" class="">
+</p><h3 id="23658ed8-27ad-479e-89ff-ebf0c67c0618" class="">네트워크 및 캐시 설정</h3><ul id="9bd3d66b-672c-4a4b-8c15-866a020960f2" class="bulleted-list"><li>RequestQueue가 작업을 실행하기 위해서는 요청을 전송하기 위한 네트워크와 캐싱을 처리하기 위한 캐시가 필요하다.</li></ul><ul id="e3cb4818-9a1c-4fa3-bbd5-1272f96c4993" class="bulleted-list"><li>Volley 도구 상자에 다음과 같은 표준 구현이 있다.</li></ul><ul id="0e5c4608-bf09-497f-9b25-9e4395098158" class="bulleted-list"><li>DiskBasedCache는 응답당 캐시 파일 하나를 메모리 내 색인과 함께 제공하고 BasicNetwork는 선호하는 HTTP 클라이언트를 기반으로 한 네트워크 전송 기능을 제공한다.</li></ul><ul id="c7e3919e-2fbd-4a0a-878b-8a0b5f1cdaf4" class="bulleted-list"><li>BasicNetwork는 Volley의 기본 네트워크 구현이다.</li></ul><ul id="6b6c3c0b-d07e-42a9-b827-70a05649afe4" class="bulleted-list"><li>BasicNetwork는 앱에서 네트워크에 연결하는 데 사용하는 HTTP 클라이언트로 초기화해야 한다.</li></ul><ul id="9f357198-f67f-45bb-ab5a-b3e71f3ed467" class="bulleted-list"><li>일반적으로 이 클라이언트는 HttpURLConnection 이다.</li></ul><h3 id="f2e71a00-f7f5-434c-b35d-8b53186ad5a0" class="">스니펫은 RequestQueue를 설정하는 데 포함한 단계</h3><pre id="4d0c0713-f27d-4d81-84a0-305138346c39" class="code"><code>RequestQueue requestQueue;
+
+    // Instantiate the cache
+    Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+
+    // Set up the network to use HttpURLConnection as the HTTP client.
+    Network network = new BasicNetwork(new HurlStack());
+
+    // Instantiate the RequestQueue with the cache and network.
+    requestQueue = new RequestQueue(cache, network);
+
+    // Start the queue
+    requestQueue.start();
+
+    String url =&quot;http://www.example.com&quot;;
+
+    // Formulate the request and handle the response.
+    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+            new Response.Listener&lt;String&gt;() {
+        @Override
+        public void onResponse(String response) {
+            // Do something with the response
+        }
+    },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+        }
+    });
+
+    // Add the request to the RequestQueue.
+    requestQueue.add(stringRequest);
+
+    // ...</code></pre><ul id="e62cebe2-c4c2-4cda-a09f-44883e24de71" class="bulleted-list"><li>한 번만 요청하면 되고 스레드 풀을 남겨두고 싶지 않은 경우에는 필요할 때마다 RequestQueue를 만들고 응답 또는 오류가 반환된 후 간단한 요청 보내기에 설명된 Volley.newRequestQueue() 메서드를 사용하여 RequestQueue에서 Stop()을 호출하면 된다.</li></ul><ul id="56c8cdd5-2846-4bf5-bcae-add17929d69d" class="bulleted-list"><li>하지만 가장 일반적인 사용 사례는 다음 섹션에 설명된 대로 RequestQueue를 싱글톤으로 만들어 앱의 전체 기간 동안 계속 실행하는 것이다.</li></ul><p id="12267c35-45b7-49fb-b458-6c57b25a4dcf" class="">
+</p><h3 id="dfe1779b-d76c-4e0e-8053-d5722ec0e9c5" class="">싱글톤 패턴 사용(네트웤크를 지속적)</h3><ul id="42899d6f-46b1-4e4e-8b04-7be3860bc569" class="bulleted-list"><li>애플리케이션에서 네트워크를 지속적으로 사용하는 경우 아마도 앱의 전체 기간 동안 지속되는 RequestQueu의 단일 인스턴스를 설정하는 것이 가장 효율적이다.</li></ul><ul id="dd8d3714-17d6-4c25-95c1-cffdf4d82543" class="bulleted-list"><li>다양한 방법으로 단일 인스턴스를 설정할 수 있다.</li></ul><ul id="5d7d7484-d93b-4505-95c5-4d566ca97a1a" class="bulleted-list"><li>권장되는 방법은 RequestQueue 및 기타 Volley 기능을 캡슐화하는 싱글톤 클래스를 구현하는 것이다.</li></ul><ul id="bdc948f3-7a48-40cd-ae8b-5d80cf0caf12" class="bulleted-list"><li>다른 방법은 Application의 서브 클래스를 만들고, Appication.onCreate() 에서 RequestQueue를 설정하는 것이다.</li></ul><ul id="3d77456c-b04e-4ce8-b48a-bc18a552e85e" class="bulleted-list"><li>하지만 이 방법은 권장되지 않는다. </li></ul><ul id="d6ad0389-eb5e-4002-8345-adcfbfefe63c" class="bulleted-list"><li>정적 싱글톤이 더 모듈화된 방식으로 같은 기능을 제공할 수 있다.!!!</li></ul><ul id="36fbca1d-062e-410d-9a65-6b2a782d1dbc" class="bulleted-list"><li>핵심 개념은 Activity 컨텍스트가 아니라 Application[ 컨텍스트로 RequestQueue를 인스턴스화해야 한다</li></ul><ul id="f56dbdd9-a413-40f3-be37-84d7809123eb" class="bulleted-list"><li>이렇게 하면 활동이 다시 만들어질(예: 사용자가 기기를 회전할)때마다. RequestQueue가 다시 만들어지는 대신 앱의 전체 기간 동안 지속된다.</li></ul><p id="b724682d-c03b-4e23-99d6-7104436d0083" class="">
+</p><h3 id="cbebb680-14ba-42f5-b29a-6720d42322fb" class="">RequestQueue 및 ImageLoader 기능을 제공하는 싱글톤 클래스</h3><pre id="931588ea-c586-4893-8efa-6e2ce6c071ff" class="code"><code>public class MySingleton {
+        private static MySingleton instance;
+        private RequestQueue requestQueue;
+        private ImageLoader imageLoader;
+        private static Context ctx;
+
+        private MySingleton(Context context) {
+            ctx = context;
+            requestQueue = getRequestQueue();
+
+            imageLoader = new ImageLoader(requestQueue,
+                    new ImageLoader.ImageCache() {
+                private final LruCache&lt;String, Bitmap&gt;
+                        cache = new LruCache&lt;String, Bitmap&gt;(20);
+
+                @Override
+                public Bitmap getBitmap(String url) {
+                    return cache.get(url);
+                }
+
+                @Override
+                public void putBitmap(String url, Bitmap bitmap) {
+                    cache.put(url, bitmap);
+                }
+            });
+        }
+
+        public static synchronized MySingleton getInstance(Context context) {
+            if (instance == null) {
+                instance = new MySingleton(context);
+            }
+            return instance;
+        }
+
+        public RequestQueue getRequestQueue() {
+            if (requestQueue == null) {
+                // getApplicationContext() is key, it keeps you from leaking the
+                // Activity or BroadcastReceiver if someone passes one in.
+                requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
+            }
+            return requestQueue;
+        }
+
+        public &lt;T&gt; void addToRequestQueue(Request&lt;T&gt; req) {
+            getRequestQueue().add(req);
+        }
+
+        public ImageLoader getImageLoader() {
+            return imageLoader;
+        }
+    }</code></pre><p id="1d73f17c-4fc9-454c-b776-7fd96ee978f5" class="">
+</p><h3 id="4d8b6126-4add-4b42-9726-be84c5ccb86f" class="">싱글톤 클래슬 사용하여 RequestQueue 작업을 실행</h3><pre id="9aa2af97-6976-41c9-b93d-f2afd5fb27fb" class="code"><code>// Get a RequestQueue
+    RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).
+        getRequestQueue();
+
+    // ...
+
+    // Add a request (in this example, called stringRequest) to your RequestQueue.
+    MySingleton.getInstance(this).addToRequestQueue(stringRequest);</code></pre><p id="80e8e2d4-cf98-4f27-bb9d-8f46776c800f" class="">
+</p><p id="777f995f-7413-49b1-988f-ffa83ece6455" class="">
+</p><p id="3bc6da96-7728-4f11-8ae5-384eec85e755" class="">
+</p><h1 id="f083cf55-22b3-469b-ba09-1e2021b4f47e" class="">표준 요청 실행</h1><ul id="28342896-1f8d-4595-96a5-cc1c7485f170" class="bulleted-list"><li>이 과정에서는 Volley에서 지원하는 일반적인 요청 유형을 사용하는 방법을 설명</li></ul><ul id="db39de4b-4b3b-402e-b2cd-ce008bbe009b" class="bulleted-list"><li>StringRequest.URL을 지정하고 원시 문자열을 응답으로 수신한다.</li></ul><ul id="4410ba0d-910e-41ef-b67f-46d80746242e" class="bulleted-list"><li>요청 대기열 설정</li></ul><ul id="70366c49-fcfe-49ba-bda0-32ba112138eb" class="bulleted-list"><li>JsonObjectRequest 및 JsonArrayRequest(둘 다 JsonRequest의 서브클래스임).URL을 지정하고 각각 JSON 개체 또는 배열을 응답으로 수신한다.</li></ul><ul id="47920e33-f6e5-41cf-bfbd-4a15a0fd8c54" class="bulleted-list"><li>이러한 유형의 응답 중 하나가 예상되면 아마도 맞춤 요청을 구현할 필요가 없다.</li></ul><ul id="1f3ccd9d-ced5-4d99-90e3-1a4391c18c49" class="bulleted-list"><li>이 과정에서는 이러한 표준 요청 유형을 사용하는 방법을 설명한다</li></ul><ul id="8804647f-9e54-41f3-9af2-b661adf569ed" class="bulleted-list"><li>자체 맞춤 유형을 구현하는 방법</li></ul><p id="7c076b48-5982-467c-afcf-ba86e49261e3" class="">
+</p><p id="ac564627-4292-47c8-9e15-7e9bc3629bbf" class="">
+</p><h3 id="6ee36d54-2a8a-4e04-a998-a516c4a5ce18" class="">요청 JSON</h3><ul id="c961903f-d8f1-47d8-a83a-2aed3a504473" class="bulleted-list"><li>Volley 에서는 다음과 같은 JSON 요청 클래스를 제공한다.</li></ul><ul id="7ec6585d-0828-4b3b-b500-0ba6d720aa61" class="bulleted-list"><li>JsonArrayRequest<ul id="092374b3-251f-4e7b-950a-c9721a2e6e26" class="bulleted-list"><li>지정된 URL에서 JSONArray 응답 본문을 가져오기 위한 요청</li></ul></li></ul><ul id="7e0f18eb-cea4-4e93-9955-aa68b452bfbc" class="bulleted-list"><li>JsonObjectRequest<ul id="0e5e20bb-acb4-4a17-89d4-59de044a1df0" class="bulleted-list"><li>지정된 URL에서 JSONObject 응답 본문을 가져오기 위한 요청으로 요청 본문의 일부로 선택적 JSONObject를 전달할 수 있다.</li></ul></li></ul><ul id="aa893f69-b32e-4d84-a4b4-1abed9aa5d41" class="bulleted-list"><li>두 클래스 모두 공통적인 기본 클래스 JsonRequet를 기반으로 한다.</li></ul><ul id="7091d7c4-ab35-4584-81bb-8ec525e85340" class="bulleted-list"><li>이 클래스는 다른 유형의 요청에 사용하는 거과 동일한 기본 패턴에 따라 사용한다.</li></ul><ul id="255bdc0e-64c4-4cda-ad09-713b0894582a" class="bulleted-list"><li>예를 들어 다음 스니펫은 JSON 피드를 가져와 UI에 텍스트로 표시한다.</li></ul><pre id="32834510-5f8e-4385-85d5-ff3515624a2e" class="code"><code>String url = &quot;http://my-json-feed&quot;;
+
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+            (Request.Method.GET, url, null, new Response.Listener&lt;JSONObject&gt;() {
+
+        @Override
+        public void onResponse(JSONObject response) {
+            textView.setText(&quot;Response: &quot; + response.toString());
+        }
+    }, new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            // TODO: Handle error
+
+        }
+    });
+
+    // Access the RequestQueue through your singleton class.
+    MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);</code></pre><p id="e9520905-f803-4d58-8cd7-f0af3be2a885" class="">
+</p><h2 id="766d7336-ef44-420e-8a35-a0ceafa840ae" class="">맞춤 요청 작성</h2><ul id="7a090b04-f8b6-4cf1-a4e7-86bc04e76fa3" class="bulleted-list"><li>대부분의 요청은 도구상자에서 즉시 사용할 수 있다.</li></ul><ul id="25dfaeec-9460-4b4e-a78d-6265a1bcdc4e" class="bulleted-list"><li>응답이 문자열, 이미지 또는 JSON인 경우 아마도 맞춤 Request를 구현할 필요가 없다.</li></ul><ul id="8882e52e-f8c7-480c-ba8e-532ed202325a" class="bulleted-list"><li>맞춤 요청을 구현해야 하는 경우 다음과 같이 하면 된다.<ul id="6b813d9c-d27a-477c-89fc-05fcd5c677e7" class="bulleted-list"><li>Request&lt;T&gt; 클래스를 확장한다. 여기서 &lt;T&gt;는 요청에서 예상하는 파싱된 응답의 유형을 나타낸다. 따라서, 예를 들어 파싱된 응답이 문자열인 경우 Request&lt;String&gt;을 확장하여 맞춤 요청을 만드세요. Request&lt;T&gt;를 학장하는 예는 Volley 도구 상자 클래스 StringRequest, ImageRequest를 참조</li></ul><ul id="627cfafa-649e-44e8-a904-3a0775339f37" class="bulleted-list"><li>아래에 자세히 설명된 추상 메서드 parseNetworkResponse() 및 deliverResponse()를 구현한다.</li></ul></li></ul><h3 id="39fddefc-c506-469e-9f10-ad465caf589c" class="">parseNetworkResponse</h3><ul id="a5ff4e4a-b370-40ac-8cf5-8cc44e1af54a" class="bulleted-list"><li>Response은 지정된 유형(예: 문자열, 이미지 또는 JSON)에 따라 전달할 파싱된 응답을 캡슐화한다.</li></ul><pre id="21bf9de4-10e9-4bdd-8c39-6056d0215139" class="code"><code>@Override
+    protected Response&lt;T&gt; parseNetworkResponse(
+            NetworkResponse response) {
+        try {
+            String json = new String(response.data,
+            HttpHeaderParser.parseCharset(response.headers));
+        return Response.success(gson.fromJson(json, clazz),
+        HttpHeaderParser.parseCacheHeaders(response));
+        }
+        // handle errors
+    // ...
+    }</code></pre><ul id="02606cf7-2d0e-4a77-b03a-6a53870c74c4" class="bulleted-list"><li>parseNetworkResponse() 에서는 응답 페이로드가 byte[], Http 상태 코드 및 응답 헤더로 포함된 NetworkResponse를 매개변수로 사용한다.</li></ul><ul id="5140ba22-a9ec-43df-868e-6e5d66afa7bd" class="bulleted-list"><li>구현에서는 입력한 응답 개체 및 캐시 메타데이터 또는 파싱 실패의 경우 오류가 포함된 Response&lt;T&gt;를 반환해야 한다.</li></ul><p id="e3b37d9f-78c6-4c9d-8bb5-5d435cb6df4a" class="">
+</p><ul id="12ae35f4-b1e0-4497-969d-4a16e2096b9e" class="bulleted-list"><li>프로토콜에 표준이 아닌 캐시 의미 체계가 포함되어 있는 경우 Cache.Entry를 직접 빌드할 수 있지만 재부분 요청의 경우 다음과 같이 하면된다.</li></ul><pre id="e79e1596-fe85-4032-9b73-cfde0a7c0e0d" class="code"><code>return Response.success(myDecodedObject,
+            HttpHeaderParser.parseCacheHeaders(response));</code></pre><ul id="b67ef029-6d61-45df-9c7d-874db9d69a4f" class="bulleted-list"><li>Volley는 작업자 스레드에서 parseNetworkResponse()를 호출합니다. </li></ul><ul id="f0a6b0d1-746c-4694-b510-b8beafdd1041" class="bulleted-list"><li>이에 따라 JPEG을 비트맵으로 디코딩하는 것과 같이 많은 비용이 드는 파싱 작업이 UI 스레드를 차단하지 않습니다.</li></ul><p id="78c4bf5f-b6fd-423c-8eeb-34b3513eee23" class="">
+</p><h3 id="dc50192d-fd13-4849-b307-b355e29e9c3b" class="">deliverResponse</h3><ul id="dbca466f-b211-4020-be25-1e58de62d32b" class="bulleted-list"><li>Volley는 기본 스레드에서 parseNetworkResponse()에서 반환한 개체를 사용하여 콜백합니다. 대부분의 요청은 여기에서 콜백 인터페이스를 호출합니다. 예:</li></ul><pre id="a2b20117-6b84-49c5-bb64-b369a10bac84" class="code"><code>protected void deliverResponse(T response) {
+            listener.onResponse(response);</code></pre><p id="b7218f59-6ab2-4526-ab0a-ddc9609d0112" class="">
+</p><h3 id="153efa27-85ce-4c0e-b5ee-951989f528e5" class="">GsonRequest</h3><ul id="677be301-1dee-4123-93dd-0e0d2cfddb34" class="bulleted-list"><li>Gson은 리플렉션을 사용하여 Java 개체와 JSON 간을 변환하는 라이브러리입니다. </li></ul><ul id="51eba3fe-ff9c-4a7a-a85d-f43971056074" class="bulleted-list"><li>해당하는 JSON 키와 이름이 동일한 자바 개체를 정의하고 Gson에 클래스 개체를 전달하면 Gson에서 필드를 채웁니다. </li></ul><ul id="0d660d0c-e155-42f7-9b9f-ab62a2f8a8bc" class="bulleted-list"><li>다음은 Gson을 파싱에 사용하는 Volley 요청의 전체 구현입니다.</li></ul><pre id="d03c5207-8523-46ee-927b-d7c95280aeef" class="code"><code>public class GsonRequest&lt;T&gt; extends Request&lt;T&gt; {
+        private final Gson gson = new Gson();
+        private final Class&lt;T&gt; clazz;
+        private final Map&lt;String, String&gt; headers;
+        private final Listener&lt;T&gt; listener;
+
+        /**
+         * Make a GET request and return a parsed object from JSON.
+         *
+         * @param url URL of the request to make
+         * @param clazz Relevant class object, for Gson&#x27;s reflection
+         * @param headers Map of request headers
+         */
+        public GsonRequest(String url, Class&lt;T&gt; clazz, Map&lt;String, String&gt; headers,
+                Listener&lt;T&gt; listener, ErrorListener errorListener) {
+            super(Method.GET, url, errorListener);
+            this.clazz = clazz;
+            this.headers = headers;
+            this.listener = listener;
+        }
+
+        @Override
+        public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+            return headers != null ? headers : super.getHeaders();
+        }
+
+        @Override
+        protected void deliverResponse(T response) {
+            listener.onResponse(response);
+        }
+
+        @Override
+        protected Response&lt;T&gt; parseNetworkResponse(NetworkResponse response) {
+            try {
+                String json = new String(
+                        response.data,
+                        HttpHeaderParser.parseCharset(response.headers));
+                return Response.success(
+                        gson.fromJson(json, clazz),
+                        HttpHeaderParser.parseCacheHeaders(response));
+            } catch (UnsupportedEncodingException e) {
+                return Response.error(new ParseError(e));
+            } catch (JsonSyntaxException e) {
+                return Response.error(new ParseError(e));
+            }
+        }
+    }</code></pre><p id="fe71cbb9-571b-4556-a4d0-c7e4c08889c7" class="">
+</p><p id="46f85de9-ac7f-467a-b81f-deb5953cccbc" class="">
+</p><hr id="b008948a-d990-4cc4-8587-0706c265bc0e"/><h1 id="32740510-414c-42af-acbe-f49f67d496cf" class="">Volley Code</h1><pre id="d8b44cc2-9b2c-4d6e-b01c-a4e8fa28099d" class="code"><code>public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    TextView textView;
+
+    static RequestQueue requestQueu;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRequest();
+            }
+        });</code></pre><ul id="ba0531b4-328f-4efe-b316-d8999e8cd92e" class="bulleted-list"><li>사용자가 버튼을 클릭했을 때 요청 객체를 만들고 요청 큐에 넣어준다.</li></ul><ul id="7fcae327-5d82-47c6-99b9-8d08bb6ce227" class="bulleted-list"><li>요청 큐는 한 번만 만들어 계속 사용할 수 있기 때문에 static 키워드로 클래스 변수를 선언한 후 할당하였다.</li></ul><ul id="746e3473-7096-40a9-8d5d-29b623ef5fc2" class="bulleted-list"><li>요청 큐를 이 액티비티에서만 사용하는 것이 아니라 앱 전체에서 사용하는 것이 일반적이다.</li></ul><ul id="cec66342-76dd-4fed-b6a0-eba0c9761661" class="bulleted-list"><li>따라서 실제 앱을 만들 때는 Application 클래스 안에 넣어두거나 별도의 클래스를 하나 만들어서 넣어둘 수 있다.</li></ul><ul id="9227692d-2985-4e50-8eeb-4ee59763b618" class="bulleted-list"><li>요청 큐를 만들 때는 Volley.newRequestQueue() 메서드를 사용할 수 있다. 이 코드는 onCreate() 메서드 안에 넣어준다.</li></ul><p id="a4a1221d-02b8-4c79-add1-db79f7ae5e1e" class="">
+</p><p id="f6397da3-9744-46aa-b11d-8789551c209c" class="">
+</p><h3 id="77dd02f2-951a-4e50-857b-a2fc8841cf28" class="">RequestQueue 객체 생성</h3><pre id="f58dbaff-3216-4c0b-9a0f-bf2fec1f4e28" class="code"><code>// RequestQueue 객체 생성하기
+        if (requestQueu == null) {
+            requestQueu = Volley.newRequestQueue(getApplicationContext());
+        }
+    }</code></pre><p id="ea8e6b7b-c2f6-480e-ac65-04ceec649a33" class="">
+</p><h3 id="7e27c4de-b56a-4198-b7f4-ce1cf23cac9e" class="">makeRequest() , StringRequest</h3><pre id="a828829b-baf1-433b-8597-79ae793f048f" class="code"><code>public void makeRequest() {
+        String url = editText.getText().toString();
+        // 요청을 보내기 위한 StringRequest 객체 생성하기
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener&lt;String&gt;() {
+                    @Override
+                    public void onResponse(String response) {
+                        println(&quot;응답-&gt; &quot; + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        println(&quot;에러-&gt;&quot; + error.getMessage());
+                    }
+                }
+                ){
+            protected Map&lt;String, String&gt; getParams() throws AuthFailureError {
+                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();
+                return params;
+            }
+        };
+        request.setShouldCache(false);
+        requestQueu.add(request);
+        println(&quot;요청 보냄&quot;);
+    }
+
+    public void println(String data) {
+        textView.append(data+&quot;\n&quot;);
+    }
+}</code></pre><ul id="b8478c19-3753-4523-b662-fb0db37be3a6" class="bulleted-list"><li>요청 객체는 StringRequest 클래스로 만들 수 있다.</li></ul><ul id="c77238a8-2528-474f-b414-b96573eff0c0" class="bulleted-list"><li>StringRequest는 문자열을 주고받기 위해 사용하는 요청 객체이며 Volley 라이브러리 안에는 이외에도 여러 가지 유형의 요청 객체가 들어 있다.</li></ul><ul id="8fe03bdc-0a19-4792-9490-e89d3adc253a" class="bulleted-list"><li>하지만 일반적으로는 StringRequest 객체만으로도 충분하다.</li></ul><ul id="8aeb8984-5d9e-42dc-a4d9-bd23facf0cbc" class="bulleted-list"><li>요청 객체를 new 연산자로 만들 때는 네 개의 파라미터를 전달할 수 있다.</li></ul><p id="03dbc3b5-e9cc-445d-8578-6d7a732c2bc5" class="">
+</p><h3 id="a7ee904b-ee43-4a63-9d48-3c2a99c630d5" class="">StringRequest() </h3><pre id="cf49407c-cae4-4bb7-aed4-a5390802de8e" class="code"><code>public StringRequest(int method, String url, Listener&lt;String&gt; listener,
+ErrorListener errorListener)</code></pre><h3 id="e430af0f-fab0-454c-9a2f-56a736e23120" class="">파라미터</h3><ol id="1b19d981-c366-4066-8f28-85c54e604d0d" class="numbered-list" start="1"><li>int method<ol id="fa95476e-6e0e-4a64-9c32-42099d31b7aa" class="numbered-list" start="1"><li>GET(), POST() 메서드를 전달한다.</li></ol><ol id="e2c80f4c-02cf-4976-bab1-dfb26fd405c3" class="numbered-list" start="2"><li>요청 방식을 지정하는 것</li></ol></li></ol><ol id="511810f8-8870-4ba8-bad6-f0d97fc7c639" class="numbered-list" start="2"><li>String url<ol id="53fb5822-7bb0-46e4-83c1-e7f73c8676e9" class="numbered-list" start="1"><li>웹 사이트 주소를 전달한다.</li></ol></li></ol><ol id="31b6a6a0-3cc7-45c3-90ae-683b7ef1ea8f" class="numbered-list" start="3"><li>Listener&lt;String&gt; listener<ol id="777b5b28-c7b9-4cc9-9f89-9b9884d23970" class="numbered-list" start="1"><li>응답받을 리스너 객체를 전달.</li></ol><ol id="262ae1f3-fe79-4c89-b409-ae072373c00a" class="numbered-list" start="2"><li>이 리스너의 onResponse() 메서드는 응답을 받았을때 자동으로 호출된다.</li></ol></li></ol><ol id="f3365a10-638a-4f83-b68b-e405a2cb5cf7" class="numbered-list" start="4"><li>ErrorListener errorListener<ol id="bd838b45-9ed5-44e4-a494-6d8cb45e08c3" class="numbered-list" start="1"><li>에러가 발생했을 때 호출될 리스너 객체를 전달한다.</li></ol><p id="ebd8c374-e289-42b8-b1fd-958ab50b88a3" class="">
+</p><pre id="9e832168-0924-4f59-82ca-dee7531cd0be" class="code"><code>protected Map&lt;String, String&gt; getParams() throws AuthFailureError {
+                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();
+                return params;
+            }</code></pre></li></ol><ul id="6aad1438-443e-40a5-8f3b-3b3b8dee6867" class="bulleted-list"><li>여기에서는 GET 방식을 사용했지만 POST 방식을 사용하면서 요청 파라미터를 전달하고자 한다면 getParams() 메서드에서 반환하는 HashMap 객체에 파라미터값들을 넣어주면된다.</li></ul><ul id="4e77f505-e680-4e01-a5a5-410b3cbd3b81" class="bulleted-list"><li>여기서는 파라미터가 없기 때문에 비워두었다.</li></ul><p id="c12d1a6c-7c3b-4203-81a7-4cf0f13b547e" class="">
+</p><p id="91ff1514-33bb-4e24-8014-8838431991af" class="">
+</p><pre id="f81f3c57-cc8f-4ef5-b5cf-f870ad6db29f" class="code"><code>request.setShouldCache(false);
+requestQueu.add(request);
+println(&quot;요청 보냄&quot;);</code></pre><ul id="9e7b41b3-da96-4322-afe4-0bf4118bed30" class="bulleted-list"><li>요청 객체를 만들었다면 이 객체는 요청 큐에 넣어준다.</li></ul><ul id="e4ac2c76-7e4d-4f6b-a774-23330905a35d" class="bulleted-list"><li>요청 큐의 add() 메서드로 요청 객체를 넣으면 요청 큐가 자동으로 요청과 응답 과정을 진행한다.</li></ul><ul id="4f1d9229-b3ef-4805-8f43-b791ed5118dd" class="bulleted-list"><li>요청 객체는 cache 매커니즘을 지원하는데 만약 이전 응답 결과를 사용하지 않겠다면 setSchedulCache() 메서드를 사용해서 cache를 사용하지 않도록 설정하면된다.</li></ul><ul id="2d2deb27-e95e-436f-a422-b8f0bab31e9f" class="bulleted-list"><li></li></ul></div></article></body></html>

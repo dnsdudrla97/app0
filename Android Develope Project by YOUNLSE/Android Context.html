@@ -1,0 +1,578 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Android Context</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b62e5c1d-fb31-44be-a012-cbfe3b609f5e" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Android Context</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 15, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span><span class="selected-value">Basic</span><span class="selected-value">JAVA</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="2073554d-b14a-459b-a748-1b0d36ac9820" class="">Android Context</h3><ul id="559523d3-2bd9-46a9-a076-6c79b00011cc" class="bulleted-list"><li>Context 는 크게 두 가지 역활을 수행하는 Abstract 클래스 이다.<ul id="4b90a659-0b8c-4ea8-a34c-06acb1dbfa80" class="bulleted-list"><li>어플리케이션에 관하여 시스템이 관리하고 있는 정보에 접근하기</li></ul><ul id="5c2306f3-7cfa-469d-9d1e-9e8cf30e16ac" class="bulleted-list"><li>안드로이드 시스템 서비스에서 제공하는 API를 호출 할 수 있는 기능</li></ul></li></ul><p id="8137f96c-1354-43a4-9158-f66cf8480b94" class="">
+</p><ul id="a7278def-e662-4492-90c5-6ea9f27ceb87" class="bulleted-list"><li>Context interface가 제공하는 API 중 getPackageName(), getResource() 등의 메서드들이 첫 번째 역활을 수행하는 대표적인 메서드이다.</li></ul><ul id="d0b55abf-9b87-44e1-bc9c-1387ce01877e" class="bulleted-list"><li>보총 get 이라는 접두어로 시작하는 메서드들이다.</li></ul><ul id="a705085c-f37b-4f9e-958e-30ece2a05428" class="bulleted-list"><li>그 외에, startActivitiy(), bindService() 와 같은 메서드들이 두 번째 역활을 수행하기 위한 메서드라고 할 수 있다.</li></ul><p id="dae5c805-dc8e-4c04-ae8c-687e21ce260b" class="">
+</p><h3 id="2d41f55b-966a-48df-a84a-f783ac459f00" class="">Why Context ?</h3><ul id="f9c0d769-0318-4925-8508-3f608c0d5645" class="bulleted-list"><li>전연적인 어플리케이션 정보에 접근하거나 어플리케이션 연관된 시스템 기능을 수행하기 위해, 시스템 함수를 호출하는 일은 안드로이드가 아닌 다른 플랫폼에서도 늘상 일어나는 일이다.</li></ul><ul id="1a5b4d3e-cb92-46c9-9dc0-056bdb0b3d4f" class="bulleted-list"><li>또, 그런 일들은 대게의 경우 어떠한 매개체를 거칠 필요없이, 직접적으로 시스템 API를 호출하면 된다.</li></ul><ul id="94c446e2-3ad0-4588-aa1b-305fe54b2750" class="block-color-red bulleted-list"><li>반면 안드로이드에서는 Context 라는 인스턴스화된 매개체를 통해야만 유사한 일들을 수행할 수 있다.</li></ul><p id="64460907-87f6-446d-bf64-717e648304f4" class="">
+</p><pre id="56e692aa-183d-4ab8-a753-f607881eec9f" class="code"><code>//Get an application name
+String applicationName = this.getPackageName();
+
+//Start a new activity(application)
+this.startActivity(new Intent(this, Test.class));</code></pre><ul id="7951b56d-9a66-413d-9ac5-1c0003288c48" class="bulleted-list"><li>안드로이드에서는 Context에 정의된 인스턴스 함수를 호출해야만 가능하게 되어 있다.</li></ul><ul id="2aa191e1-6277-4d65-acea-279630752b85" class="bulleted-list"><li>반드시 인스턴스화된 Context 클래스(여기서는 this)를 사용한 셈</li></ul><p id="879c5f96-8a4d-4cf4-af0b-7eab9addaceb" class="">
+</p><h3 id="6bd4fec4-29b9-40f9-b01f-b5bd115e6bc3" class="">어떻게 정적 함수 호출을 통해서 어플리케이션에 관한 정보를 가져오고, 시스템 함수를 호출 할 수 있는 걸까?</h3><ul id="461f7051-be8a-4e3b-a347-7b680716c5a8" class="bulleted-list"><li>일반적인 경우, 어플리케이션 프로세스가 아주 긴밀하게 연결되어 있기 때문이다. </li></ul><ul id="15e9fe97-f302-4241-bbab-5247664968cf" class="bulleted-list"><li>OS 커널의 가장 중요한 일 중 하나는 프로세스를 관리하는 것이다...</li></ul><ul id="d089d29c-1ea4-4ede-85b1-40f0a4f6b333" class="bulleted-list"><li>특정 프로세스가 특정 어플리케이션과 맵핑이된다면, 우리는 별다른 매개체 없이 시스템에 직접 프로세스의 정보에 관해 물어 볼 수 있고, 프로세스와 연관된 시스템 함수를 호출할 수 있다.</li></ul><p id="f44fc0d2-887f-4160-8424-77824e012c61" class="">
+</p><h3 id="48632ba6-d5d8-44f7-8cac-65b786a3a3b6" class="">안드로이드 부분</h3><ul id="7807f16b-ebbe-447c-b754-35ea2d738adc" class="bulleted-list"><li>어플리케이션과 프로세스와의 관계는 조금 요상한 구석이 있다.</li></ul><ul id="106571ab-afc6-47ef-9458-d11aca7c5a7e" class="bulleted-list"><li>안드로이드 어플리케이션과 프로세스는 서로 독립적으로 존재한다. </li></ul><ul id="0633d985-57be-43ef-99cb-b0e1490ad0c6" class="bulleted-list"><li>안드로이드 멀티태스킹...</li></ul><ul id="7eefd267-cf42-47c8-a409-44f65cc116ec" class="bulleted-list"><li>예를 들자면, 안드로이드 플랫폼에서는 프로세스가 없는 상황에도 어플리케이션은 살아있는 것처럼 사용자에게 표시되기도 하고</li></ul><ul id="3be8aebf-22e9-4e4c-8481-a05297629f38" class="bulleted-list"><li>메모리가 부족한 상황이 될 경우, 작동중이던 프로세스가 강제로 종료되고, 대시 해당 프로세스에서 작동중이던 어플리케이션에 관한 일부 정보만 별도록 관리하고, 이 후에 메모리 공간이 확보되면 저장되어있던 어플리케이션 정보를 바탕으로 새로운 프로세스를 시작하는등의 신기한 일이 벌어진다.</li></ul><p id="5887b398-2fea-4565-a990-484395bd0aee" class="">
+</p><ul id="ce343cdd-b00b-4474-a533-bf6f74f3b4ba" class="bulleted-list"><li>안드로이드에서도 프로세스는 당연히 OS커널에서 관리된다. 어플리케이션과 프로세스가 별도로 관리되고 있다면,</li></ul><h3 id="1a234fb6-3706-44d7-9c59-20f6e99d2374" class="">어플리케이션 정보는 어디서 관리하고 있을까?</h3><ul id="dd829f6b-4660-4d99-b884-84dc144deed7" class="bulleted-list"><li>안드로이드 시스템 서비스 중 하나인 ActivityManagerService 에서 그 책임을 진다.</li></ul><h3 id="3845011c-3040-4913-abe6-f8a04c56512c" class=""> ActivityManagerService 는 어떤식으로 어플리케이션으 관리하고 있을까?</h3><ul id="0e45f18f-1dc9-4040-8be9-6e03cd643003" class="bulleted-list"><li>특정 토큰을 키값으로 &#x27;key-value&#x27; 쌍으로 이루어진 배열을 이용해 현재 작동중인 어플리케이션 정보를 관리한다.</li></ul><p id="54e23a83-bb7c-4490-9749-a2abb4229380" class="">
+</p><ul id="3683a043-f0be-41a5-8b51-4d02c2b31dff" class="bulleted-list"><li>Context 는 어플리케이션과 관련된 정보에 접근하고자 한거나 어플리케이션과 연관된 시스템 레벨의 함수를 호출하고자 할 때 사용된다.</li></ul><ul id="17acc312-a5ee-403b-bbb4-4025e37995ce" class="bulleted-list"><li>그런데 안드로이드 시스템에서 어플리케이션 정보를 관리하고 있는 것은 시스템이 아닌 ActivityManagerService 라는 일종의 또 다른 어플리케이션이다.</li></ul><ul id="3e694046-2eb1-4346-b10b-1c11b2114ee9" class="bulleted-list"><li>따라서 다른 일반적은 플랫폼과 달리 안드로이드에서는 어플래케이션과 관련된 정보에 접근하고자 할때는 ActivityManagerService를 통해야만 한다.</li></ul><ul id="0c82db66-d810-4f68-b567-305459c883bd" class="bulleted-list"><li>어떤 어플리케이션인지에 관한 키 값도 필요하다.</li></ul><p id="c6dac80a-4a2e-4950-adba-2b4b184b3e6b" class="">
+</p><h3 id="16eb7baf-1fe2-4df0-a0e4-4280a2cc4c94" class="">Context 역활</h3><ol id="021a018a-c519-4654-85ae-4797e51f8a0b" class="numbered-list" start="1"><li>자신이 어떤 어플리케이션을 나타내고 있는지 알려주는 ID 역활</li></ol><ol id="bae44b25-cee0-4bae-8426-fabe73a0f830" class="numbered-list" start="2"><li>ActivityManagerService에 접근할 수 있도록 하는 통로 역활</li></ol><p id="f534bf36-8174-4bf3-aa2b-3c5aea4954d1" class="">
+</p><ul id="0a91c1dd-76a7-4292-b4f1-0f756b44b98c" class="bulleted-list"><li>특정 어플리케이션이 자신이 본인임을 확인 받을 수 있는 방법은 자신이 작동중인 Process를 보여주는 것이 아니라, 자신이 건내받은 ID 카드를 제시하는 것이다.</li></ul><ul id="84564ace-f876-4795-9c58-04da8a1a1770" class="bulleted-list"><li>이 때 ID 카드의 역활을 수행하는 것이 바로 Context이고 당연히 이 카드는 위변조가 가증하기 때문에, 자신의 권한을 제3의 어플리케이션에게 념겨주는 PendingIntent 와 같은 기능도 가능해진다.</li></ul></div></article></body></html>

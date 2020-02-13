@@ -1,0 +1,607 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Picasso</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="56ebe200-c10d-4c7d-946f-f1a8653278c1" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔧</span></div><h1 class="page-title">Picasso</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 10, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span><span class="selected-value">JAVA</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="cbd54c9e-f81b-43bf-bc09-6dae4d27902a" class="">이미지 로딩 라이브러리</h1><h2 id="0f5ae8d0-736a-4e57-aaf0-489202509fd5" class="">Picasso, Glide</h2><p id="f2798907-5c89-45fd-afc9-75762fb8b3ff" class="">두 라이브러리 모두 로컬 저장소에 파일 형태로 저장된 이미지와 인터넷에 존재하는 이미지들을 쉬운 방버으로 로딩하고 표시하는 기능을 핵심 기능으로 제공하고 있다.</p><p id="14750901-2eed-40ea-91d2-7fdea4d53345" class="">
+</p><p id="4bc2fe22-9c5e-495e-84af-e13cb2457a8e" class="">
+</p><h3 id="6cad6000-2b8c-4290-b6e7-d7e2751748bb" class="">Picasso 활용</h3><p id="2212db95-6c1e-4c3b-aea2-0b83d06e395e" class="">
+</p><figure id="d2bc88a7-fd61-4c8f-a123-8abf6c73bbf9" class="image"><a href="Picasso/Untitled.png"><img style="width:293px" src="Picasso/Untitled.png"/></a></figure><h3 id="48990fe0-f7fa-436a-9d1f-795eded7ba4f" class=""><a href="http://square.github.io/picasso/">Picasso</a> </h3><p id="cfbba9ed-63f0-4477-951f-a37164448fa9" class="">
+</p><h3 id="6c216fa1-a5c9-4e9b-ba78-3915e99265b4" class="">설치</h3><ul id="c5e4713b-8f8f-4685-bf63-ef8306ba565b" class="bulleted-list"><li>Picasso를 설치하기 위해서는 안드로이드 스튜디오에서 프로젝트 내의 Gradle Script밑의 build.gradle(Module: app) 파일을 수정하면 된다.</li></ul><pre id="74bd5775-1545-433f-9cb0-a5a0e5cd024b" class="code"><code>dependencies {
+    ...
+    implementation &#x27;com.squareup.picasso:picasso:2.71828&#x27;
+    ...
+}</code></pre><ul id="8128fb77-7835-4d30-9419-e52f9f740541" class="bulleted-list"><li>2.71828 피카소 버전 → 최신버전을 사용할 수 있으면 좋다.</li></ul><p id="da273b33-5ff8-47b1-999c-c4faec93dcf4" class="">
+</p><h3 id="c7418416-d542-4b45-ad11-ac9a59dd15f7" class="">사용</h3><ul id="1b654afb-28f3-4e59-b30c-0fba2b86ffda" class="bulleted-list"><li>Picasso를 사용하기 위해서는 Picasso 오브젝트의 load()를 불러 이미지를 로드하고, into()로 원하는 ImageView에 로드된 이미지를 표시하는 방식이다.</li></ul><pre id="cc007f2d-9e93-4c41-a82d-07f30560a3ca" class="code"><code>// Select the ImageViews to display the images into
+ImageView imageViewRes = (ImageView) findViewById(R.id.view_picasso_resource);
+ImageView imageViewFile = (ImageView) findViewById(R.id.view_picasso_file);
+ImageView imageViewUrl = (ImageView) findViewById(R.id.view_picasso_url);
+
+// Display a jpg iamge from the project resource
+Picasso.get().load(R.drawable.picasso_test).into(imageViewRes);
+
+// Display a png image from the specified file
+Picasso.get().load(&quot;file:///android_asset/picasso_test.png&quot;).into(imageViewFile);
+
+// Display a jpg image from the given url
+Picasso.get().load(&quot;http://android.example.com/picasso_test.jpg&quot;).into(imageViewUrl);</code></pre><p id="3b9ea2f7-e272-421a-a545-203d5c08640f" class="">
+</p><ul id="406bee6d-1c4b-4083-b63c-09fe97e4da5b" class="bulleted-list"><li>위 예제에서 첫 번째 부분은 프로젝트에 포함된 리소스에서 JPG 이미지를 로드하여 imageViewRes에 표시한다. </li></ul><ul id="dc876169-2879-4978-ae63-610096bbe46d" class="bulleted-list"><li>두 번째는 파일시스템의 지정된 위치에서 PNG 이미지를 로드하여 imageViewFile에 표시한다. </li></ul><ul id="846b175c-2520-4ff4-b65c-e5ed3e15280b" class="bulleted-list"><li>마지막 세 번째는 지정된 웹 주소에서 JPG 이미지를 로드하여 imageViewUrl에 표시한다.</li></ul><p id="9737d33d-9f94-4c64-bbdd-bc8d62099cda" class="">
+</p><p id="0811786a-ccfd-4033-a37f-605605059d58" class="">
+</p><h1 id="0e7d7992-d98c-4f0b-889b-516534f666d3" class=""> Glide 활용</h1><p id="44302a1a-50c2-4de7-b55c-8ade2ce2cf4f" class="">
+</p><figure id="180da502-98de-4aff-bcb1-9d9b114c2542" class="image"><a href="Picasso/Untitled%201.png"><img style="width:340px" src="Picasso/Untitled%201.png"/></a></figure><p id="e622fe2b-8aa7-4ee0-8219-b375c9b9a627" class=""><a href="https://github.com/bumptech/glide">Glide</a></p><p id="b753331a-52c0-4b66-9edd-f4d323ef39d3" class="">
+</p><h3 id="58485c43-e45a-419a-85fa-c0d5c12320e3" class=""><strong>설치</strong></h3><ul id="23155f9e-c8de-4eef-b094-d69a894f6ed3" class="bulleted-list"><li>Glide의 설치 역시 안드로이드 스튜디오에서 프로젝트 내의 <strong>Gradle Scripts</strong>밑의 <strong>build.gradle (Module: app)</strong> 파일을 수정하는 것으로 간단히 끝낼 수 있다.</li></ul><pre id="e00c7ef6-9860-429b-be78-8199e42e0b61" class="code"><code>dependencies {
+    ...
+    implementation &#x27;com.github.bumptech.glide:glide:4.9.0&#x27;
+    annotationProcessor &#x27;com.github.bumptech.glide:compiler:4.9.0&#x27;
+    ...
+}</code></pre><p id="3dc3ba38-b335-4391-8e03-62e3ba7326e1" class="">
+</p><h3 id="b41c61a1-fcf7-4c1a-83ff-8fdc86044f61" class="">사용</h3><ul id="c0fb1e10-a482-4c94-8ee3-036b24b32307" class="bulleted-list"><li>Glide역시 Picasso와 유사한 형식으로 쉽게 사용할 수 있다. </li></ul><ul id="a270f555-001e-48bf-a880-0db68404a343" class="bulleted-list"><li>한 가지 다른 점은 Picasso에서는 Picasso객체의 get()을 사용하여 객체를 얻었지만, Glide의 경우는 with()를 사용한다는 점이다. </li></ul><ul id="e35b020c-787a-4e40-b51c-82746a60b029" class="bulleted-list"><li>실제 사용 예제 코드는 다음과 같다.</li></ul><pre id="90a47589-40ed-4985-9043-f0bd143375d5" class="code"><code>// Select the ImageViews to display glide images into
+ImageView imageViewRes = (ImageView) findViewById(R.id.view_glide_resource);
+ImageView imageViewUrl = (ImageView) findViewById(R.id.view_glide_url);
+
+// Display a png image from the the project resource
+Glide.with(this).load(R.drawable.glide_test).into(imageViewRes);
+
+// Display a jpg image from the given url
+Glide.with(this).load(&quot;android.example.com/glide_test.jpg&quot;).into(imageViewUrl);</code></pre><ul id="a069e1d9-41fa-475d-918c-11d46ca201ac" class="bulleted-list"><li>위 예제에서 글라이드의 첫 호출을 with() 메서드로 인자로는 ImageView가 들어있는 액티비티의 컨텍스트를 전달하면 된다. </li></ul><ul id="22662503-7ba6-487e-9ea9-bb24a8206e5c" class="bulleted-list"><li>첫 번째는 안드로이드 프로젝트 리소스 내의 png파일을 로드하여 표시한다. </li></ul><ul id="233dbb21-a268-49ac-90f5-3b467b388841" class="bulleted-list"><li>두 번째 예제는 주어진 웹 주소의 jpg 이미지를 다운로드하여 표시한다.</li></ul><p id="8eaacef1-6df8-47f4-a0bd-6fd16dce3c9a" class="">
+</p><figure id="31015a73-c1c8-48f4-900f-50c839fad204" class="image"><a href="Picasso/Untitled%202.png"><img style="width:720px" src="Picasso/Untitled%202.png"/></a></figure><p id="c845aae9-f9ac-4ffb-8e10-56f9a41f5c59" class="">
+</p></div></article></body></html>

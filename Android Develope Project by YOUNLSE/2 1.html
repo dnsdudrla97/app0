@@ -1,0 +1,640 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>서버에 데이터 요청 하고 응답받기#2</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24eeab13-476f-49fd-834a-4dd0d46666ac" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">서버에 데이터 요청 하고 응답받기#2</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 08, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="ab94c094-a77b-4805-99f8-26ae6f7253dc" class="">HTTP 프로토콜</h3><ul id="c2c9bdea-860e-4465-961f-5a48ff5bf377" class="bulleted-list"><li>비연결성(Stateless) 인 HTTP 프로토콜은 페이지 정보를 요청할 때마다 소켓을 새로 연결하고 응답을 받은 다음에는 소켓의 연결을 끊는 것이 일반적이다.</li></ul><ul id="e419f417-8186-4987-a00f-08fa555ed70f" class="bulleted-list"><li>그리고 그 소켓 연결 위에서 HTTP 프로토콜에 맞는 요청을 보내고 응답을 받어 처리한다.</li></ul><p id="ab5320e0-5697-4163-b7fd-8e4e51f35718" class="">
+</p><h3 id="e3315d09-054d-4293-8184-941e407872e2" class="">HTTP로 웹 서버에 접속하기</h3><ul id="1fab679f-97d8-417d-8270-74841058150e" class="bulleted-list"><li>HTTP 로 웹서버에 접속하는 것도 소켓의 경우와 마찬가지로 표준 자바의 방식을 그대로 사용할 수 있다.</li></ul><ul id="ae204938-962d-4d7e-8c02-043a2c0b3fec" class="bulleted-list"><li>자바에서 HTTP 클라이언트를 만드는 가장 간단한 방법은 URL 객체를 만들고 이 객체의 openConnection() 메서드를 호출하여 HttpURLConnection 객체를 만드는 것이다.</li></ul><pre id="367d289e-89cf-45e8-8056-7ab141b875ee" class="code"><code>// [API]
+public URLConnection openConnection()</code></pre><ul id="71f795ce-0faa-494c-8bbd-76ea273f8dca" class="bulleted-list"><li>URL 객체에 들어 있는 문자열이 &quot;http://&quot;를 포함하면 HTTP 연결을 위한 객체를 만들게 되므로 openConnection() 메서드가 리턴하는 URLConnection 객체를 HttpConnection으로 형변환하여 사용할 수 있다</li></ul><ul id="8ec0d2d1-699f-4112-b05e-30fd41412fda" class="bulleted-list"><li>HttpURLConnection 객체로 연결할 경우에는 GET이나 POST와 같은 요청 방식과 함께 요청을 위한 파라미터들을 설정할 수 있다.</li></ul><p id="28574e6b-0d69-463a-b37c-848c0543cc30" class="">
+</p><pre id="fc544dc7-d120-4fde-b477-86168308f29a" class="code"><code>// [API]
+public void setRequestMethod(String method)
+public void setRequestProperty(String field, String new Value)</code></pre><ul id="c42dee79-da85-4013-be1e-a9da742b7896" class="bulleted-list"><li>요청 방식을 지정하는 메서드는 setRequestMethod()로 GET이나 POST 문자열을 파라미터로 전달한다.</li></ul><ul id="7d4528d7-86a6-476f-8e74-e7f50c6ae36e" class="bulleted-list"><li>setRequestProperty() 메서드는 요청할 때 헤더에 들어가는 필드 값을 지정할 수 있도록한다.</li></ul><ul id="832494cb-4221-4ac9-bfb5-d7444636e323" class="bulleted-list"><li>웹페이지를 가져오는 기능은 간단하게 만들 수 있는데 이번에는 GET 방식을 사용하여 웹페이지 주소를 입력하면 해당 페이지의 내용을 가져오는 앱을 만들어 보겠다.</li></ul><p id="95cc2a09-88b1-4ed5-ab87-b9d55d4d13ae" class="">
+</p><p id="9c6086eb-d44a-469a-bcfd-a2c9795825d3" class="">
+</p><h3 id="43a80842-9be9-4f7c-8efd-0c0abb25fafc" class="">버튼 클릭시 스레드 안에서 request() 메서드 호출하기</h3><pre id="31ed24dc-f51a-4106-8132-b73600d06add" class="code"><code>@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String urlStr = editText.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        request(urlStr);    
+// 스레드 안에서 request() 메서드 호출하기
+                    }
+                }).start();
+            }
+        });</code></pre><p id="afb53e24-89a2-454a-a59b-dbff62794b5d" class="">
+</p><ul id="5675b41b-27ae-41ae-a86f-568e57c63e1c" class="bulleted-list"><li>버튼을 눌르면 사용자가 입력한 사이트 주소를 이용해 requset() 메서드를 호출한다.</li></ul><ul id="8518a366-c63f-41f7-aaea-57615d336a54" class="bulleted-list"><li>* request() 메서드 안에서는 인터넷을 사용할 것이므로 스레드 안에서 동작하도록 스레드 객체를 하나 생성하고 그 안에서 request() 메서드를 호출하도록 한다.</li></ul><ul id="704741f4-bb81-4ea7-ab58-cc8b260c60b0" class="bulleted-list"><li>* 스레드에서 처리한 결과물을 화면에 표시할 때 사용하도록 핸들러 객체도 만들어 변수에 할당해 둔다.* request() 메서드 코드 다음과 같다.</li></ul><p id="432cc5df-8da2-463d-bea4-f84e77c8c725" class="">
+</p><h3 id="cc38f6c1-ef57-4147-a30b-100d1ce149d1" class="">request() </h3><pre id="da11e849-9039-44a4-b3f3-9e1fff5f0a28" class="code"><code>public void request(String urlStr) {
+        StringBuilder output = new StringBuilder();
+        try {
+            URL url = new URL(urlStr);
+
+            // HttpURLConnection 객체 만들기
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            if (conn != null) {
+                conn.setConnectTimeout(10000);
+                conn.setRequestMethod(&quot;GET&quot;);
+                conn.setDoInput(true);
+
+                int resCode = conn.getResponseCode();
+                // 입력 데이터를 받디 위한 Reader 객체 생성하기
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line = null;
+                while (true) {
+                    line = reader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    output.append(line + &quot;\n&quot;);
+                }
+                reader.close();
+                conn.disconnect();
+            }
+        } catch (Exception ex) {
+            println(&quot;예외 발생함: &quot; + ex.toString());
+        }
+        println(&quot;응답 -&gt; &quot; + output.toString());
+    }</code></pre><p id="cbfbd0f6-400f-430b-9bea-6bea3dbbe2c7" class="">
+</p><ul id="c64a6c9d-e4c4-4ff3-8763-87c5f0b02464" class="bulleted-list"><li>* request() 메서드에서는 응답 결과물을 모아 화면에 출력한다.</li></ul><ul id="1c97fe8c-e7ab-4400-8763-e3b3299c130e" class="bulleted-list"><li>* 화면에 출력할 때 사용하는 println() 메서드는 핸들러를 사용하면서 화면에 들어있는 텍스트뷰의 append() 메서드를 호출하도록 한다.</li></ul><ul id="5395ac5e-f091-480f-a970-2129de97467f" class="bulleted-list"><li>* request() 메서드 안에 정의된 웹페이지 요청 부분을 보면 가장 먼저 URL 객체를 만들고 있다.</li></ul><ul id="ab60c5e3-c79d-452a-a998-e1c299a2c58b" class="bulleted-list"><li>* <mark class="highlight-yellow_background">파라미터로 전달된 URL 문자열을 이용해 만들어진 객체의 openConnection() 메서드를 호출하면 HttpURLConnection 객체가 반환된다</mark>.</li></ul><ul id="2f3b88ac-6340-4d50-8b60-1b5169df91f5" class="bulleted-list"><li><mark class="highlight-yellow_background">이 객체에 몇 가지 속성을 설정하고 getResponseCode 메소드를 호출하면 웹 서버에 연결하고 응답을 받아준다.</mark></li></ul><ul id="c9e8b978-567c-4566-b86b-1935a534eb74" class="bulleted-list"><li><mark class="highlight-yellow_background">연결이 만들어진 객체의 getInputStream 메소드를 호출하면 InputStream 객체를 참조할 수 있으며 이 객체로부터 응답 데이터를 읽어 들인다.</mark></li></ul><ul id="eb73a908-b68f-4134-a99e-306f87ed1d2c" class="bulleted-list"><li>* 이 객체에 GET 방식으로 요청한다는 내용을 setRequestMethod()로 설정하고 getResponseCode() 메서드를 호출하면 이 시점에 내부적으로 웹서버에</li></ul><ul id="e1f50d42-25ce-42fd-818b-ad998e0bae3b" class="bulleted-list"><li>* 페이지를 요청하는 과정을 수행하게 된다.</li></ul><ul id="85ba85ee-37e5-4ff9-82f5-ca14e7bec80c" class="bulleted-list"><li>* setConnectionTimeout() 메서드는 연결 대기 시간을 설정하는 것으로 10초 동안 연결되기를 기다린다는 의미이다.</li></ul><ul id="b65be731-a2a1-4968-82e9-a06ef983af3f" class="bulleted-list"><li>* setDoInput() 메서드는 이 객체의 입력이 가능하도록 만들어 준다.</li></ul><ul id="0e24b173-3c5b-43f7-b67b-b335e043706e" class="bulleted-list"><li>* 응답 코드가 HTTP_OK인 경우에는 정상적으로 응답이 온 경우이므로 응답으로 들어온 스트림을 문자열로 변환하여 반환한다.</li></ul><ul id="ac30ec57-f4ef-4dc3-b25d-1bbfbea0c4e0" class="bulleted-list"><li>* 만약 요청한 주소의 페이지가 없는 경우에는 HTTP_NOT_FOUND 코드가 반환되며, 이외에도 다양한 응답 코드가 정의되어 있다.</li></ul><ul id="67eed83d-f9b2-497a-818b-307716acdf3d" class="bulleted-list"><li>* 스트림에서 한 줄씩 읽어 들이는 메서드인 readLine()은 BufferedReader 클래스에 정의되어 있으므로 HttpURLConnection 객체의 스트림을 이 클래스의 객체로 만든 후에 처리한다.</li></ul><p id="1f1354fd-5b9f-4389-8766-881a9ece4595" class="">
+</p><h3 id="e5776ca7-42aa-4f03-8b9a-e6273903664c" class="">println()</h3><pre id="1439b030-0260-49be-997b-cc5f46acb784" class="code"><code>public void println(final String data) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                textView.append(data + &quot;\n&quot;);
+            }
+        });
+    }
+}</code></pre><ul id="554ba9bb-8383-4015-8ff1-a2a3368271ff" class="bulleted-list"><li>setText, append 메소드를 호출하면 글자가 보이게 된다.</li></ul><ul id="01980d58-268b-487c-8e20-1df2cfb5e08d" class="bulleted-list"><li>다만 스레드에서 응답을 받은 것이므로 핸들러를 반드시 이용해야 한다는 것!!</li></ul><figure id="4b9c0a95-9e8e-47c4-ae14-83f47bfe8323" class="link-to-page"><a href="2%201/MainActivity%20java.html">MainActivity.java</a></figure><p id="2275f5c8-0652-4230-8797-0e598c1c2704" class="">
+</p><h3 id="1c574446-a2b5-456a-9a89-cf78e4a432ba" class="">접근 권한 설정</h3><pre id="51d81003-e487-42e8-826b-fc134cfb18b0" class="code"><code>&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+
+    &lt;application
+        android:usesCleartextTraffic=&quot;true&quot;</code></pre><p id="8be3e5d2-4318-4d2a-a9e1-abe2e09087ba" class="">
+</p></div></article></body></html>

@@ -1,0 +1,643 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쓰레드핸들러#3</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="addc55fe-12c3-48d7-95f4-f3930966ebe5" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">쓰레드핸들러#3</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 04, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="1b1c7bcd-a779-4836-bf1f-684d930a8766" class="">AsyncTask 사용하기</h3><p id="a2c82aaa-543d-4d10-ad27-bcf10a00bf76" class="">
+</p><p id="1e2f16d0-f8db-4506-ab76-bbb3127ed2d5" class="">쓰레드핸들러#2 부분의 코드를 보면 코드가 많이 복잡하다.</p><p id="3277ad56-6464-40c4-b357-4e536319bbf9" class="">또한 코드가 순서대로 실행된다기보다 는 순서 없이 이곳저곳에서 실행되는 느낌도 들 수 있다.</p><h3 id="6517dbb1-7a3b-478b-8a85-d89488f218f4" class="">핸들러를 사용하지 않고서 좀 더 간단하게 작업하는 방법도 있다. </h3><p id="fdd3665d-cdd3-4c27-9066-2105deb2c805" class="">
+</p><ul id="253a512a-c900-4838-b041-6fdc9d66c9af" class="bulleted-list"><li>AsyncTask 클래스를 상속하여 새로운 클래스를 만들면 그 안에 스레드를 위한 코드와 UI 접근 코드를 한꺼번에 넣을 수 있다.</li></ul><ul id="115d5e84-99dc-4c8e-a6ef-265ab5c668ff" class="bulleted-list"><li>따라서 스레드로 처리해야 하는 코드를 하나의 AsyncTask 클래스로 정의할 수 있다는 장점이 생긴다.</li></ul><ul id="20f4dc6d-db56-439f-8706-f114611fb027" class="bulleted-list"><li>예를 들어, 웹서버에서 고객 이름을 가져오는 작업과 웹서버에서 제품이름을 가져오는 작업을 서로 다른 코드로 분리시키고 싶다면 두 개의 AsyncTask 상속 클래스를 만든후 각각의 코드를 넣으면 된다.</li></ul><ul id="44a74c9a-be4e-4760-9410-3dd356130eea" class="bulleted-list"><li>AsyncTask 객체를 만들고 execute() 메서드를 실행하면 이 객체는 정의된 백그라운드 작업을 수행하고 필요한 경우에 그 결과를 메인 스레드에서 실행하므로 UI 객체에 접근하는 데 문제가 없다.<p id="1532c277-498d-4624-8647-80e57e52e293" class="">
+</p><figure id="8d6b3bdb-5aa0-45aa-9117-2a3a97ee8992" class="image"><a href="3/_4.png"><img style="width:432px" src="3/_4.png"/></a></figure><p id="9004b1e7-2ca8-46c3-a3d0-a2aa45b06427" class="">AsyncTask를 이용한 작업 수행 방식</p><p id="35a5a7d8-0844-4458-b3f1-b31a1aa68cb2" class="">
+</p></li></ul><ul id="fd618794-4af6-4e61-9ac3-782cbfd3c485" class="bulleted-list"><li>AsyncTask 클래스를 상속하여 새로운 클래스를 정의하면 그 내부에서 필요한 경우마다 콜백 메서드들이 자동으로 호출된다.</li></ul><ul id="259e8a2f-2c29-493e-abd8-5fb7335dab0a" class="bulleted-list"><li>doInBackground() 메서드에는 새로 만들어진 스레드에서 실행되어야 할 코드들을 넣을 수 있다.</li></ul><ul id="6d85c8ef-32f0-4d7e-aeaa-4987885ebe18" class="bulleted-list"><li>즉, 스레드에서 동작하는 것이다.</li></ul><ul id="118af485-edd5-48bd-8430-1ef80ea558af" class="bulleted-list"><li>onPreExecute(), onProgressUpdate, onPostExecute() 메서드는 새로 만든 스레드가 아닌 메인 스레드에서 실행된다.</li></ul><ul id="d77c4d30-76aa-47aa-b61a-97091fc3357d" class="bulleted-list"><li>따라서 UI 객체에 자유롭게 접근할 수 있다.</li></ul><ul id="d4efc1d6-9847-49c8-b595-d4f8561e6f1c" class="block-color-red bulleted-list"><li>결국 하나의 클래스 안에 스레드에서 동작해야 하는 작업과 그 작업의 결과를 UI 객체에 반영하는 코드를 같이 구현할 수 있다. </li></ul><ul id="ecb354f1-f305-41f8-80f4-696b68bcb988" class="bulleted-list"><li>따라서 스레드로 수행해야할 어떤 기능을 하나의 클래스만으로 만들 수 있다는 장점이 있다.</li></ul><p id="bffa3cfb-f657-4093-af7b-38e400b57212" class="">
+</p><p id="b5dd8ede-a0e0-4f1b-bb89-12d9a301e961" class="">AsyncTask에 정의된 주요 메서드들에 대한 상세한 설명은 다음과 같다.🙄</p><figure id="adee360e-d67e-44f3-8552-f9c41596513a" class="image"><a href="3/_5.png"><img style="width:2660px" src="3/_5.png"/></a></figure><p id="a715f335-12b7-4dff-89dc-094244a9790d" class="">
+</p><ul id="bd673e78-0da8-474c-83a0-84b21feeedc5" class="bulleted-list"><li><mark class="highlight-red">AsyncsTask 객체의 cancel() 메서드를 호출하면 작업을 취소할 수 있는데</mark>, 이 메서드로 작업을 취소했을 때는 <mark class="highlight-red">onCancelled() 메서드가 호출된다</mark>.</li></ul><ul id="bdddb3da-01ca-4980-a04b-c49ef009e02d" class="bulleted-list"><li>작업의 진행 상황을 확인하고 싶을 때는 AsyncTask 객체의<mark class="highlight-red"> getStatus()</mark> 메서드를 사용할 수 있다.</li></ul><ul id="07fcbf7c-0309-4f19-9cb0-b0b6f7d43737" class="bulleted-list"><li>이 메서드를 호출했을 때 반환되는 AsyncTask.Status 객체는 상태를 표현하고 있으며, 각각의 상태는 PENDING, RUNNING, FINISHED로 구분된다.</li></ul><ul id="cfa9c6db-51c0-454e-b16d-288f2103900e" class="bulleted-list"><li>상수의 이름을 보면 쉽게 알 수 있듯이 PENDING은 작업이 아직 시작되지 않았다는 것을 의미</li></ul><ul id="ecb22016-c22d-4fe4-ade2-25ccd7741517" class="bulleted-list"><li>RUNNING은 실행중, FINISHED는 종료되었음을 의미한다.</li></ul><p id="4b976d8b-43d8-4eb8-af0a-43024ed7dbe9" class="">
+</p><p id="0bb57633-c4b7-4a77-8eef-857c391840fa" class="">
+</p><p id="6162cf27-a5e7-4b0d-a563-2fa3410c2b53" class="">이 화면의 버튼을 클릭하면 별도의 스레드에서 값을 1씩 증가 시키도록 하였다.</p><p id="e899e29c-33c1-4164-bb9c-80d1e3d67573" class="">100밀리 초마다 한 번씩 값을 증가시키므로 프로그레스바의 최대값으로 지정된 100이 될때까지 10초가 걸리게 된다. → AsyncTask를 사용해 백그라운드 작업을 수행하는 메인 액티비티읰 코드</p><figure id="d27ffa55-cbb7-4692-9b23-ea7031242813" class="image"><a href="3/Untitled.png"><img style="width:192px" src="3/Untitled.png"/></a></figure><h3 id="7d948ac7-fedc-4e6f-845b-808bfc0e7c4f" class="">MainActivity.java</h3><pre id="4298dd5e-cad2-4c65-9933-978d895957cc" class="code"><code>
+public class MainActivity extends AppCompatActivity {
+    BackgroundTask task;
+    int value;
+
+    ProgressBar progressBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.progressBar);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Task 객체 만들어 실행하기
+                task = new  BackgroundTask();
+                task.execute();
+            }
+        });
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                task.cancel(true);
+            }
+        });
+    }
+
+    class BackgroundTask extends AsyncTask&lt;Integer, Integer, Integer&gt; {
+        protected void onPreExecute() {
+            value = 0;
+            progressBar.setProgress(value);
+        }
+        // 태스크 객체 안에서 백그라운드 작업 수행하도록 하기
+        protected Integer doInBackground(Integer ... values) {
+            while (isCancelled() == false) {
+                value++;
+                if (value &gt;= 100) {
+                    break;
+                } else {
+                    publishProgress(value);
+// onProgress 자동 호출
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {}
+            }
+            return value;
+// 다끝난후 onPostExecute 호출
+        }
+
+        protected void onProgressUpdate(Integer ... values) {
+            progressBar.setProgress(values[0].intValue());
+        }
+
+        protected void onPostExecute(Integer result) {
+            progressBar.setProgress(0);
+        }
+
+        protected  void onCancelled() {
+            progressBar.setProgress(0);
+        }
+    }
+}</code></pre><ul id="36bd4e9c-08ee-4ec8-81f3-cd36d1c32d6a" class="bulleted-list"><li>백그라운드 작업을 수행할 클래스는 BackgroundTask라는 이름의 클래스로 정의하고 AsyncTask 클래스를 상속받는다.</li></ul><ul id="c4b8c871-70cf-41b8-84f4-820f420a3a53" class="bulleted-list"><li>이 클래스는 추상 클래스이므로 새로 정의한 클래스에서는 필요한 메서드를 다시 정의하여 사용한다.</li></ul><pre id="654700fc-d9ab-432e-a23b-110b0c1c8898" class="code"><code>AsyncTask&lt;Integer, Integer, Integer&gt;</code></pre><ul id="f47f0966-0538-4e3c-a367-ae7a3e315713" class="bulleted-list"><li>그런데 AsyncTask 클래스를 상속하는 코드를 보면 &lt; 기호와 &gt; 기호 안에 세개의 자료형이 명시되어 있다.</li></ul><ul id="9b64224e-30d9-41b1-9e4a-f339e5e598e3" class="bulleted-list"><li>이 자료형은 이 클래스를 상속하면서 재정의할 새로운 클래스의 메서드가 어떤 자료형의 파라미터를 가질 것인지를 알려주는 역활을 한다.</li></ul><ul id="c74c51df-4710-4ff6-ac3b-e4e5ff607d73" class="bulleted-list"><li>구체적으로 &lt;기호와&gt; 기호 안에 명시한 자료형은 그 순서에 따라 각각 doInBackground() 메서드의 파라미터, onProgessUpdate() 메서드의 파라미터, onPostExecute() 메서드의 파라미터를 결정한다.</li></ul><ul id="d50fa7e4-dd92-4afd-9545-b61c5dc08dc0" class="bulleted-list"><li>예를들어, <ul id="48d3b78b-a3f1-41ff-9b55-55b548159041" class="block-color-red bulleted-list"><li>&lt;기호와&gt; 기호의 첫 번째 자료형을 Integer로 명시할시 doInBackground() 메서드의 파라미터는 Integer ... values로 자동 입력된다. </li></ul><p id="bac4c560-0ca2-4be1-a7e3-19dd8a00491b" class="">
+</p></li></ul><ul id="3fd20cc0-5efa-45cc-93de-5d97ba6fa635" class="bulleted-list"><li>먼저 onPreExecute() 메서드는 초기화 단계에서 사용되므로 값을 저장하기 위해 메인 액티비티에 정의한 value 변수의 값을 0으로 초기화하고 프로그레스바의 값도 0으로 만들어 준다.</li></ul><ul id="a88dd93b-1d58-4a17-9f61-1455734bdcef" class="bulleted-list"><li>doInBackground() 메서드는 주된 작업을 실행하는 데 사용되므로 while 구문으로 value의 값을 하나씩 증가시키도록 한다.</li></ul><ul id="cb2e4b5e-546c-488f-bd61-3159a3559d8d" class="bulleted-list"><li>루프를 빠져나오는 조건은 작업이 취소되었거나 value의 값이 100 이상일 때이므로 루프는 100번 수행된다.</li></ul><ul id="6feb72c0-cf49-4092-80e0-d09df834ad00" class="bulleted-list"><li>중간 중간 진행 상태를 UI에 업데이트하도록 만들기 위해 publishProgress() 메서드를 호출한다.</li></ul><ul id="d0bb0131-f4b5-4858-988f-fe39f938d519" class="bulleted-list"><li>onProgressUpdate() 메서드는 doInBackground() 메서드 안에서 publishProgress() 메서드가 호출될 때마다 자동으로 호출된다.</li></ul><ul id="b6b49ea8-769e-490e-9ddf-2f4bb1988d06" class="bulleted-list"><li>이 안에서는 프로그레스바의 값을 전달된 파라미터의 값(여기서는 value 변수의 값과 동일)으로 설정한다.</li></ul></div></article></body></html>

@@ -1,0 +1,577 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>나인패치</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7f3f6376-f0d3-4399-ba6f-721849996563" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">나인패치</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 23, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h2 id="68e39c9f-c3e0-400a-a971-937bd1fdd6cb" class="">나인패치</h2><ul id="137d6267-751f-42f2-88f3-4d989a65e139" class="bulleted-list"><li>이미지뷰를 XML 레이아웃에 추가해서 화면에 보여줄 때 이미지가 나타나는 영역보다 원본 이미지가 작으면 시스템이 이미지 크기를 자동으로 늘려준다.</li></ul><ul id="b5e054c6-0a65-4951-b28e-4ed2cd57fc78" class="bulleted-list"><li>이 기능은 해상도가 서로 다른 단말에서도 일정한 비율로 이미지의 크기를 지정하면 이미지가 자동으로 크기에 맞게 늘어나거나 줄어들게 하므로 아주 유용한 기능이다.</li></ul><ul id="0b8c36fd-2239-4d35-9617-34ce0987d636" class="bulleted-list"><li>이런 나인패치 과정을 거치면 이미지의 일부분이 깨져 보이거나 왜곡이 발생하기 때문에 발생한 문제점을 해결할 방법이 필요하게 된다.<ul id="b9e54fff-6742-471e-9b08-2f409e6d8edd" class="bulleted-list"><li>예를 들면, 버튼의 경우에는 텍스트만 보여주거나 텍스트와 아이콘을 같이 보여주는 방식만을 사용하면 모르겠지만</li></ul><ul id="33e3c537-8507-44a6-af5a-752f390c3a89" class="bulleted-list"><li>버튼 자체를 포토샵과 같은 그래픽 프로그램에서 만든 후 버튼에 표시하는 방식을 사용하면 버튼 이미지의 크기와 버튼의 크기가 같아야 하는 문제가 생긴다.</li></ul><ul id="1dfc6f06-b560-4375-9519-3cdd1512944b" class="bulleted-list"><li>앱을 만들 떄는 단말의 해상도에 상관없이 크기를 지정하는 경우가 많기 때문에 &quot;100dp&quot;와 같은 값으로 버튼의 가로 크기를 지정하였다면 실제 픽셀 수는 단말에 따라 달라질것이다.</li></ul><ul id="2495fd34-537a-4c24-b9a7-6a3535420cd3" class="bulleted-list"><li>이 과정에서 버튼에 올린 이미지는 실제 크기와 달라지는데 그럴 경우 이미지의 일부가 왜곡되어 보이게 된다.</li></ul></li></ul><p id="4bf361eb-66a8-4679-bc7e-e2205c4786b2" class="">
+</p><p id="d9ae2d69-5208-41a4-8ad2-6278b47bb454" class="">
+</p><h3 id="649b6d48-3cfd-459e-b13e-20ad930f59e6" class="">왜곡정도 </h3><p id="2a85883b-6997-41f1-add6-93ab5b6db31d" class="">
+</p><figure id="44e949da-5c43-4b47-8304-c3e95a026fd8" class="image"><a href="Untitled%204/Untitled.png"><img style="width:432px" src="Untitled%204/Untitled.png"/></a></figure><ul id="8474b929-92ac-4e17-8850-477a2b921330" class="bulleted-list"><li>왼쪽 이미지는 버튼 모양을 그래픽으로 만든것이다. 그림의 파란색 부분은 투명 영역을 의미한다.</li></ul><ul id="2ab5edf7-e2b3-4c3e-a591-66a5d4dbb848" class="bulleted-list"><li>만약 이미지의 크기가 옆으로 늘어나면 모서리 부분이 옆으로 늘어나면서 왜곡이 생긴다. 왜곡은 다른 부분보다. 특히 모서리 부분에 많이 생기는데 그 이유는 버튼 이미지의 모서리를 곡선 모양으로 처리했기 때문이다.</li></ul><p id="ad9e8ff4-319d-4df3-8376-6c2fd6a33f91" class="">
+</p><h3 id="f29ca505-88a1-431c-b1c1-214eaced6385" class="">나인 패치(Nine Patch) 로 해결해보자</h3><ul id="f3c224c1-1268-4488-b883-bf040a495361" class="bulleted-list"><li>이미지가 늘거나 줄거나 할때 생기는 이미지 왜곡을 해결하는 방법을 정의</li></ul><ul id="f0c32da0-59ee-4a15-aad2-eee45f26899a" class="bulleted-list"><li>다음 사진은 나인패치를 적용한 것입니다. 각각의 이미지의 크기는 가로, 세로 각각 2px 커졌으며, 이미지의 가로와 세로 끝부분의 픽셀들은 흰색 또는 검은색으로 지정되어 있다.</li></ul><p id="56ac86d6-7a0f-4fff-bd50-2f4bf1328e6f" class="">
+</p><figure id="96de7bb3-92b6-4031-ba4a-e4b1efa0f8df" class="image"><a href="Untitled%204/Untitled%201.png"><img style="width:432px" src="Untitled%204/Untitled%201.png"/></a></figure><ul id="4fd0fa50-6461-4644-8ba5-6045ac4ada3c" class="bulleted-list"><li>이렇게 수정한 이미지 파일 이름은 ooo.9.png 처럼 파일 확장자 앞에 &#x27;.9&#x27;를 붙여야 한다.</li></ul><ul id="b319f081-e29c-4531-bb44-15ae46dc074c" class="bulleted-list"><li>안드로이드에서는 이 방식으로 이름을 지은 파일을 원본 이미지의 가로, 세로 끝부분의 픽셀을 모두 나인패치 이미지의 정보를 담은 것으로 인식한다.</li></ul><ul id="9ecdcc23-eb65-414e-bd55-3d467e971cf8" class="bulleted-list"><li>이 정보는 흰색인 경우 늘어나지 않는 영역, 검은색인 경우 늘어나는 영역으로 구분되는데 위의 그림과 같이 지정하면 가운데 부분만 늘어나므로 이미지의 크기가 커지더라도 모서리 부분은 원래의 이미지 모양을 유지할 수 있다.</li></ul><ul id="1f76c506-6425-4d42-be0b-a05f8b3427e1" class="bulleted-list"><li>나인 패치 이미지를 만들고 싶다면 포토샵과 같은 그래픽 편집 툴을 사용하면 된다.</li></ul><ul id="80f87061-5549-4f39-b8f7-d9962fd3cc4c" class="bulleted-list"><li>가장 간단한 방법은 png, jpg와 같은 이미지보다 가로,세로 크기가 2픽셀씩 큰 이미지를 새로 만들고 원본 이미지를 가운데에 복사하면 된다. 그러면 가장자리 한 픽셀씩을 흰색 또는 검은색으로 바꿀 수 있다.</li></ul><p id="b1b3c10d-0365-443a-890f-501c58b86638" class="">
+</p><h3 id="9f7e7b14-61fb-4143-aefd-b09365483a2f" class="">Nine Patch 적용/미적용</h3><div id="accb4d71-6ac3-492b-82ed-6623080d4e32" class="column-list"><div id="46a54736-8111-47bd-af91-b522745d17e2" style="width:33.33333333333333%" class="column"><p id="15eff7db-7f66-4808-a88b-79433399419d" class="">
+</p></div><div id="a22b21dd-babb-4201-ae3a-23678a140a34" style="width:33.33333333333333%" class="column"><figure id="a54fce18-08aa-4512-8d78-8c5e0d96b56b" class="image"><a href="Untitled%204/button_image_02.9.png"><img style="width:108px" src="Untitled%204/button_image_02.9.png"/></a></figure></div><div id="b16ebb11-a531-483c-b4ea-4d357ae7dc3e" style="width:33.33333333333333%" class="column"><figure id="6a12b670-5815-43a3-92d6-562b7a853419" class="image"><a href="Untitled%204/button_image_01.png"><img style="width:108px" src="Untitled%204/button_image_01.png"/></a></figure></div></div><p id="cd369db7-f9c9-4d0f-8be7-bafd91d71ac5" class="">
+</p><p id="a71c3df8-e2a1-4bf7-888e-dff53fb14c18" class="">
+</p><ul id="32f40d53-4a7b-4aec-8df1-7a2ef13ce9e1" class="bulleted-list"><li>버튼의 배경으로 이미지를 설정한 것처럼 자바 코드에서도 설정할 수 있다. 뷰의 배경색으로 색생과 이미지를 지정하는 메서들은</li></ul><pre id="8e17f069-74cf-4ee2-91bc-802f8a6c2ea9" class="code"><code>//[Reference]
+void setBackgroundColor (int color)
+void setBackgroundDrawable (Drawable d)
+void setBackgroundResource (int resid)</code></pre><ul id="f30324eb-8221-4305-9060-7fb29cfedf3b" class="bulleted-list"><li>setBackgroundResource() 메서드는 xml 레이아웃의 background 속성과 같으므로 xml 레이아웃에 추가된 각각의 버튼들은 이 속성 값으로 지정된 이미지를 배경으로 설정하고 text 속성으로 설정된 텍스트의 길이 갑셍 맞추어 이미지 크기가 자동으로 변경된다. </li></ul></div></article></body></html>

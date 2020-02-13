@@ -1,0 +1,604 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>😀Mainfest.xml</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a049c574-8002-4f85-a23e-c50b4032e052" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/rijksmuseum_jansz_1641.jpg" style="object-position:center 80%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">📕</span></div><h1 class="page-title">😀Mainfest.xml</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 12, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span><span class="selected-value">Basic</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><pre id="1ca32325-e0c3-4e23-bb79-9dcc9d232a5a" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+package=&quot;com.sofsqared.yun&quot;&gt;
+&lt;application
+android:allowBackup=&quot;true&quot; //앱 백업 서비스 지원 여부
+android:icon=&quot;@mipmap/ic_launcher&quot; //앱 설치시 나타낼 아이콘
+android:label=&quot;@string/app_name&quot; //프로젝트를 생성시 입력한 앱의 이름을 제시
+android:roundIcon=&quot;@mipmap/ic_launcher_round&quot; //아이콘이 원형으로 출력되는 상황을 제시
+android:supportsRtl=&quot;true&quot; //Right , Left 레이아웃 지원여부를 나타댄다.
+android:theme=&quot;@style/AppTheme&quot;&gt; //앱의 테마를 설정 -&gt; android:theme=&quot;@style/App Theme&quot;
+//테마는 앱에서 사용되는 모양, 색깔 등을 지정하므로 변경되면 전체적인 느낌이 변경
+&lt;activity android:name=&quot;.MainActivity&quot;&gt;
+&lt;intent-filter&gt;
+&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt; 
+//시작 액티비티를 지정하기 위한 액션을 지정한다.
+&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+//인텐트 필터에 카테고리 이름을 추가한다. 
+//애플리케이션에서 가장 먼저 실행되는 액티비티
+&lt;/intent-filter&gt;
+&lt;/activity&gt;
+&lt;/application&gt;
+&lt;/manifest&gt;</code></pre><p id="985c8823-de7c-48ee-98ac-2e391c164275" class="">
+</p><pre id="2ea5bb69-dab0-408b-b530-09d7c289f4de" class="code"><code>&lt;activity android:name=&quot;.MainActivity&quot;&gt;</code></pre><ul id="12dff3cd-48ca-468b-a66b-f5e45fa1402d" class="bulleted-list"><li>activity는 화면에 가장 먼저 띄어주는 최상위 화면이며, 여기 메소드로 보면 Mainactivity를 가장 먼저 띄어준다.</li></ul><ul id="e6fe05c3-5379-4107-8c35-e8233bc17c90" class="bulleted-list"><li>App을 구성하고 있는 Component에 무엇무엇이 있는지, 또 어떤 기능을 하는지가 적혀있고 App이 잗동할때 필요한 권한들이 적혀있다고 한다.</li></ul><ul id="ab8c1cf1-82cd-4c7f-920e-769d7d7f912f" class="bulleted-list"><li>Mainfest에 App, App&#x27;s Component에 대한 구조와 meta-data에 정의가 되어있기 때문에 중요하다.</li></ul><p id="918cff8f-3cd5-4f10-8d16-761e97a0cbe3" class="">
+</p><h3 id="02312218-25fd-41b8-acec-dea184cbf032" class="">Mainfest</h3><ol id="ffffefef-98fd-4ccb-b6d6-11e4261ffcfb" class="numbered-list" start="1"><li>application의 root directory에 있는 xml 파일</li></ol><ol id="1876d6b9-a949-41e2-b169-7a05d0ca61b0" class="numbered-list" start="2"><li>App의 필수적인 정보를 안드로이드 시스템에 전달한다.</li></ol><ol id="4c9d129f-92ca-4284-b5f3-390478bcd062" class="numbered-list" start="3"><li>필수적인 정보는 App의 코드를 실행하는데 필요한 정보를 말한다.</li></ol><ol id="767e2be4-0f16-4a65-874c-9d5ae017ca98" class="numbered-list" start="4"><li>App을 위한 다른것들과 중복 X, java 패키지명을 정의한다.</li></ol><ol id="0e1f6b1e-4697-43e5-9394-8873de4fe120" class="numbered-list" start="5"><li>앱을 구성하는 Component의 클래스명을 정의한다.</li></ol><ol id="ca78debf-2db4-4230-acab-b93ef24ba747" class="numbered-list" start="6"><li>해당 Component가 처리하는 기능이 무엇인지 &lt;intent-filter&gt;를 통하여 정의한다.</li></ol><ol id="ad28d848-2ab4-46d9-84d8-3573f00f6d2f" class="numbered-list" start="7"><li>App에서 어떤 Component가 존재하고 어떤 조건에서 작동하는지 핸드폰이 알 수 있다.</li></ol><ol id="6015f00f-ba05-488a-ac3e-79a391ec6c20" class="numbered-list" start="8"><li>App이 핸드폰의 제한된 API에 접근하거나 다른 App의 Component를 사용하기 위한 권한을 설정한다.</li></ol><ol id="4af446a3-5d32-4428-ab24-92fb09bc389b" class="numbered-list" start="9"><li>모니터링 Instrumentation class를 설정 → 개발 종료시, 배포시 삭제</li></ol><p id="e599c69f-def9-4354-b12b-88d577e63214" class="">
+</p><h3 id="d1d5669f-f1d8-4bec-9873-d918812d8460" class="">App Component App을 구성하는 Component 앱의 4대 구성요소</h3><ul id="6b9e2c45-6163-4a54-b949-0c9767cc7870" class="bulleted-list"><li>Activity</li></ul><ul id="e6687fa8-a5ff-42b9-84b3-cd144928356d" class="bulleted-list"><li>Service</li></ul><ul id="452aae23-ff74-4e85-b009-d7ec717ed32e" class="bulleted-list"><li>&lt;receiver&gt; Broadcast Receiver</li></ul><ul id="e3c617f9-207f-4e4b-8699-64c2193fd239" class="bulleted-list"><li>&lt;provider&gt; Content Provider<ul id="4b268a11-bce7-4dce-ac09-a2dc4505f92e" class="bulleted-list"><li>이 컴포넌트 클래스가 앱에서 실행될려면 androidmainfest.xml에서 각각의 클래스에 해당하는 &lt;activity&gt;, &lt;service&gt;, &lt;receiver&gt;, &lt;provider&gt;가 선언되어야 한다.</li></ul></li></ul><blockquote id="eddd12b3-a5e0-4af0-ab8f-b396dfe02fca" class="">Activity : UI를 지시하고 화면에 대한 상호작용을 처리한다.</blockquote><blockquote id="230165b0-f3e3-40cd-bec7-f3d5b07cae89" class="">Service : 백그라운드 프로세싱 관련 애플리케이션 처리</blockquote><ul id="2fcc6e81-6574-4f4a-856e-368a4f7c6643" class="bulleted-list"><li>&lt;receiver&gt; BroadCast Receivers : Android os와 앱 사이의 통신을 처리한다.</li></ul><ul id="14dfefe5-e35b-4aae-8766-99c62f92b707" class="bulleted-list"><li>&lt;provider&gt; Content Providers : 데이터및 데이터베이스 관리 문제를 처리한다.</li></ul><p id="5daf35ec-9778-4c63-8adc-02e3607a3bda" class="">
+</p><h3 id="d92ef8b2-b274-4020-83fa-fdfd4bcf423c" class="">Contain(CONTAINED IN, CAN CONTAIN, MUST CONTAIN)</h3><h3 id="c18b76fb-6f47-43aa-bb2f-44db08ce733e" class="">MAINFEST</h3><ul id="09bc3c98-f75e-423e-a0e4-1591034e6637" class="bulleted-list"><li>permission<ul id="e3c5f363-888f-4b06-8fd3-c84825927105" class="bulleted-list"><li>이 응용프로그램이나 다른 응용프로그램의 특정 구성 요소 나 기능에 대한 액세스 제한</li></ul></li></ul><ul id="7ab20515-26c9-49c1-9a2c-289b0c3ca585" class="bulleted-list"><li>uses-configuration<ul id="e72d23b2-d44b-43f9-b3f0-1561a5e2f260" class="bulleted-list"><li>응용프로그램이나 필요한 하드웨어 및 소프트웨어 기능을 나타낸다.</li></ul><ul id="5c0d88e0-77ec-4de4-b237-69b4ab1940db" class="bulleted-list"><li>실제 키보드나 특정 탐색 장치가 필요하다.</li></ul></li></ul><ul id="c40d8008-b5bb-40b4-a555-87dc80fcbc1b" class="bulleted-list"><li>uses-sdk<ul id="57e98379-3e39-490e-a4c4-f67405d267a6" class="bulleted-list"><li>안드로이드 시스템의 API레벨과 비교를 통해 안드로이드 기기에서 서로 다를수 있다.</li></ul></li></ul><ul id="f9a1c5c0-df7c-41d4-aaa2-f93692abe8ae" class="bulleted-list"><li>instrumentation<ul id="a07915f9-effa-40c7-82e4-8cdf3fb4d2e6" class="bulleted-list"><li>계측기, 응용프로그램과 시스템의 상호작용을 모니터링 할 수 있는 클래스를 선언한다. 오브젝트는 응용프로그램의 구성 요소보다 먼더 인스턴스화 한다.</li></ul></li></ul><ul id="aceb4627-934a-4cd0-bf33-5ffb046ca9d5" class="bulleted-list"><li>uses-feature<ul id="edf20bb8-10f5-4abd-936b-3a8c7fd0c654" class="bulleted-list"><li>단일 하드웨어, 소프트웨어 기능을 선언한다. 선언의 목적은 외부 엔터티에 애플리케이션이 의존하는 하드웨어 및 소프트웨어 기능 집합을 알려준다.</li></ul><ul id="a0155e85-68a5-4ce2-b53b-8b847bc2729e" class="bulleted-list"><li>이 요소는 required 특성을 제공한다. 이 특성을 통해 애플리케이션에 선언된 기능이 필요하고 해당 기능 없이는 작동할 수 없음을 지정</li></ul><ul id="98f8561b-d2c1-49a0-8955-fce1242cf39e" class="bulleted-list"><li>해당 기능을 가지는 것을 선호하지만 해당 기능 없이는 작동할 수 있음을 지정할 수 있다.</li></ul><ul id="7f96e1e1-c41a-4965-b7d2-007bdc8455be" class="bulleted-list"><li>기기별 가변 기능을 설명하는 중요한 역활을 한다.</li></ul></li></ul><ul id="48d1144f-1775-4b0d-8847-b2c29bfefbfb" class="bulleted-list"><li>uses-permission<ul id="6a97cfba-7688-4729-96c9-b69c805b1a39" class="bulleted-list"><li>앱 작동시 사용자가 반드시 부여해야 하는 시스템 권한이다.</li></ul></li></ul><ul id="508642a5-935a-4219-906d-2ed54babff25" class="bulleted-list"><li>uses-permission-sdk-23<ul id="b34d06fc-816d-4e4b-8b0b-3110dd569f5c" class="bulleted-list"><li>앱이 특정 권한을 원한다는 것을 지정한다.(안드로이드 6)이상 실행하는 기기에서 설치되는 경우에만 해당</li></ul><ul id="c201abbb-c435-4477-bb86-d74c0b41caa4" class="bulleted-list"><li>새 기능을 포함하기 위해 앱을 업데이트 하는 경우 유용한다.</li></ul></li></ul><ul id="6469364d-99da-49d8-b1d5-d2f2c7f71c87" class="bulleted-list"><li>permission-grou<ul id="90327f91-d788-447a-9dd4-2fa17ab022d4" class="bulleted-list"><li>관련 권한의 논리적 그룹 이름을 선언한다.</li></ul><ul id="a06ab74b-816d-4af1-8e49-29b5f77594b4" class="bulleted-list"><li>개별 권한은 &lt;permission&gt;요소의 속성을 통해 그룹에 가입한다.</li></ul><ul id="ce061f77-95fa-4f1b-9c2d-efb9298d4ecb" class="bulleted-list"><li>그룹의 구성원은 사용자 인터페이스에 함께 표시한다.</li></ul></li></ul><ul id="e666b9a4-4ef7-456c-b6bb-a1baa4358402" class="bulleted-list"><li>support-screens<ul id="e2089289-5e93-4a01-a292-41d0083bbb90" class="bulleted-list"><li>응용프로그램이 지원하는 화면 크기를 지정하고 응용프로그램이 지원하는 것보다 큰 화면에 대해 화면 호환성 모드를 활성화 할 수 있다.</li></ul><ul id="14fc313a-b7c3-4449-acc1-89280efcf6da" class="bulleted-list"><li>응용프로그램에서 항상이 요소를 사용하여 응용프로그램이 지원하는 화면 크기를 지정해야 한다.</li></ul></li></ul><ul id="af7a64c5-d600-413b-8013-48d580e31f2d" class="bulleted-list"><li>compatible-screens<ul id="b1dcd3f9-0c90-4717-b55a-c2b222a4c7c7" class="bulleted-list"><li>호환 화면, 각 화면 구성을 지정한다.</li></ul></li></ul><ul id="9d6940bb-1dc0-46bc-bc5b-bc3e493544b8" class="bulleted-list"><li>support-gi-texture<ul id="42836ba7-6248-461d-adb6-f467bb79cf91" class="bulleted-list"><li>앱이 지원하는 단일 GL 텍스처 압축 형식을 선언한다. </li></ul><ul id="7fab1d8a-e124-494c-87a0-e65233d6aaf4" class="bulleted-list"><li>응용프로그램이 장치에 설치되면 해당 압축 된 텍스처 자신을 제공 할 수 있는 경우 응용 프로그램은 GL 텍스처 압축 형식 &quot;지원&quot; 한다.</li></ul><ul id="1c82f291-b244-4245-a317-671b876216e2" class="bulleted-list"><li>응용프로그램은 내부에서 압축된 자산을 로컬로 제공 하거나 런타임에서 다운로드 할 수 있다.</li></ul></li></ul><ul id="8f445fdc-2169-466e-85fb-97b37d3f806a" class="bulleted-list"><li>permission-tree<ul id="cbd3c87e-5ccb-4e5a-9628-734c271be307" class="bulleted-list"><li>권한 트리의 기본 이름을 선언한다.</li></ul><ul id="3663b94e-74ba-4295-b624-01e952387da9" class="bulleted-list"><li>응용프로그램은 트리내의 모든 이름을 소유호출하여 트리에 새로운 권한을 동적으로 추가할 수 있다.</li></ul></li></ul><h3 id="64d162ab-6e69-4fb3-8f4c-21648b0742b9" class="">&lt;mainfest&gt;&lt;application&gt; 이 무조건 포함되어 있어야한다.</h3><h3 id="a0be7322-c51d-461e-8d61-845c6a55f3d5" class="">&lt;intent-filter&gt;는 &lt;action&gt;, &lt;data&gt;, &lt;category&gt;를 포함해야한다.</h3><h3 id="05403dba-4fa2-475f-b4dc-8ae782e17614" class="">&lt;provider&gt;는 &lt;grant-uri-permission&gt;, &lt;path-permission&gt;을 포함해야한다.</h3><p id="0de86dfb-b61e-405d-bb66-f98dcbb8c03f" class="">
+</p><h3 id="ef0ce072-ae74-4260-99eb-091fdc157b38" class="">우선순위</h3><ol id="5b84c821-e471-4206-a8e5-665edb5f14eb" class="numbered-list" start="1"><li>첫번째 속성 : &lt;mainfest&gt;, &lt;application&gt;</li></ol><ol id="209b1e17-834d-4ad6-be4e-f6fd231974ce" class="numbered-list" start="2"><li>두번째 속성 : &lt;activitiy&gt;, &lt;activity-alias&gt;, &lt;provider&gt;, &lt;receiver&gt;, &lt;service&gt;</li></ol><ol id="725cd6e5-dff9-4648-9140-83e90c56d5d2" class="numbered-list" start="3"><li>세번째 속성 : &lt;intent-filter&gt;, &lt;action&gt;, &lt;meta-data&gt;</li></ol><ol id="b7374eec-49e6-442c-8f4d-d09a823fcbfe" class="numbered-list" start="4"><li>네번째 속성 : &lt;permission&gt;, &lt;uses&gt;</li></ol><ol id="a8adce33-a8cf-441f-be8b-f0a00bc58756" class="numbered-list" start="5"><li>다섯번째 속성 : &lt;tag&gt;..</li></ol><p id="cde3dbb0-2b28-4b73-830c-65095b36932d" class="">
+</p><p id="65ca769d-4a33-4e87-a38c-0938a71665d1" class="">
+</p><h3 id="eb55fd97-2707-464a-b3ab-c12351036def" class="">First priority</h3><ul id="f7b92755-de0d-453a-909b-94f99ddd4a65" class="bulleted-list"><li>&lt;mainfest&gt; 는 xml 파일의 근본 요소이고 xmlns:android와 package의 속성을 지정한다.</li></ul><ul id="07670586-1d8e-4c0d-a01c-d2841098190e" class="bulleted-list"><li>xmlns:android<ul id="81fac292-2f9c-4a8c-9a0f-a48e6b8c4915" class="bulleted-list"><li>안드로이드에 namespace를 정의하고 항상 <a href="http://schemas.android.com/apk/res/android">http://schemas.android.com/apk/res/android</a>&quot;으로 설정해야한다고 한다.</li></ul></li></ul><ul id="6a04a586-cd9e-42f8-a5ae-64689fc5d604" class="bulleted-list"><li>package<ul id="bd2802c2-fc75-4b41-8846-a436f96aa707" class="bulleted-list"><li>안드로이드에서 프로젝트를 생성할때 내가 생성한 package 이름이 나와있다. 중복불가</li></ul></li></ul><ul id="ed30a2c1-9618-49ed-a333-a34f8b96cab0" class="bulleted-list"><li>android:sharedUserId<ul id="546e4ce3-282c-4ec7-90d8-7484e99dec5a" class="bulleted-list"><li>다른 앱과 공유할 리눅스 아이디의 이름이다.</li></ul></li></ul><p id="c6bbb6ad-5495-4f57-b404-0c379f4894c1" class="">서로다른 어플에서 동일하게 설정하면 데이터를 엑세스할 수 있고 원하는 경우 동일한 프로세스에서 실행될 수도 있다. → 인증서가 동일해야 한다</p><ul id="26d9137b-391d-4472-9570-207b4f2871eb" class="bulleted-list"><li>android:sharedUserLabel<ul id="31d3971c-d9aa-4522-ab9a-61a9a7e4a2ee" class="bulleted-list"><li>동일한 UserId를 사용할 때 앱을 구분하기 위한 닉네임</li></ul></li></ul><ul id="94d46228-1f1f-4a2d-8eac-cb5aec795f40" class="bulleted-list"><li>android:versionCode<ul id="a4a229e3-2e9b-43bc-a373-86384023da1c" class="bulleted-list"><li>내부 버전 번호로 최신버전인지 아닌지를 확인하는데 사용한다.</li></ul></li></ul><ul id="72f9a8cf-f553-46e2-a037-fda8c20fd696" class="bulleted-list"><li>android:versionName<ul id="d321aa62-eba5-4694-b333-d90b95ccfd22" class="bulleted-list"><li>사용자에게 버전을 보여주는 용도</li></ul></li></ul><ul id="f8a8912b-f7f2-4c14-b474-07c1940d8915" class="bulleted-list"><li>android:installLocation<ul id="77b750c4-90a7-4a05-84ba-dc0f8005df86" class="bulleted-list"><li>앱을 설치할때 내부 저장장치에만 할 수 있는지 외부 저장장치에도 할 수 있는지 설정한다.명령어 → internalOnly, auto, perferExternal</li></ul></li></ul><h3 id="0e4ca82c-85ca-4abe-865d-02658389c8c5" class="">##&lt;application&gt;</h3><ul id="212139d9-081f-4b46-9aa7-d652a17c2897" class="bulleted-list"><li>어플리케이션 선언문<ul id="87df2661-0dc0-48fb-b135-cd8faaa59157" class="bulleted-list"><li>이 태그는 어플리케이션의 각 컴포넌트를 선언하는 하위요소를 포함(&lt;activity&gt;, &lt;service&gt;)</li></ul><ul id="95bf9b9a-09b0-4748-9b64-b45afa2d68cf" class="bulleted-list"><li>모든 컴포넌트에 영향을 줄 수 있는 attribute를 가지고 있다.</li></ul><ul id="c88e151f-8af2-4efb-9293-8b6ba0953c3d" class="bulleted-list"><li>어플리케이션의 속성은 컴포넌트에 영향을 주는 것이고 이 컴포넌트들은 대부분 메인 컴포넌트를 의미한다</li></ul></li></ul><ul id="6dec0f51-3baf-4ced-b76e-cdc472b53d26" class="bulleted-list"><li>android:allowBackup<ul id="115f8cfe-f408-40a3-bed6-97b1c6a911a1" class="bulleted-list"><li>앱이 백업 서비스 지원 b여부를 나타낸다.</li></ul></li></ul><ul id="6214859e-61c2-4c17-a25d-f8221622a6b1" class="bulleted-list"><li>android:icon<ul id="d057bde3-c0a4-4ce5-ad72-9aa3681090d1" class="bulleted-list"><li>앱을 섪치하면 나타낼 아이콘ㅇㅇ</li></ul></li></ul><ul id="c23156e5-7953-4e0b-9048-1c0a270bf068" class="bulleted-list"><li>android:label<ul id="005c866a-5dec-43de-a1ba-65938be6c560" class="bulleted-list"><li>프로젝트를 생성할때 입력한 앱의 이름을 나타낸다. 앱 설치시 나타나는 이름</li></ul></li></ul><ul id="b6dc1215-c228-407d-a371-8e1c4f43f4ff" class="bulleted-list"><li>android:roundicon<ul id="627652c5-750b-4ffa-a449-5970724ff1fb" class="bulleted-list"><li>User Interface, Adaptive Icons와 관련있는 항목으로 적한한 상황에서는 아이콘</li></ul><ul id="fe6ff065-5e3d-48b1-bdc5-215be610e741" class="bulleted-list"><li>원형으로 출력되고 이외에서는 사각형 아이콘을 출력하게하는 속성</li></ul></li></ul><ul id="ef81148c-68a6-4c68-8528-5f3876f3f372" class="bulleted-list"><li>android:supportRtl<ul id="d466d488-5a03-4d77-8ede-65844cc14ece" class="bulleted-list"><li>Right to Left 레이아웃 지원여부를 나태낸다.</li></ul></li></ul><ul id="1ddfb1f4-efe7-42ef-893e-1e2527788438" class="bulleted-list"><li>android:theme<ul id="ecc09968-105d-49fc-ba3f-a0b03d745ab3" class="bulleted-list"><li>앱의 테마를 설정 → android:theme=&quot;@style/App Theme&quot;</li></ul><ul id="6a2e6bbd-c843-45f1-ab14-a8d972e16856" class="bulleted-list"><li>테마는 앱에서 사용되는 모양, 색깔 등을 지정하므로 변경되면 전체적인 느낌이 변경</li></ul><p id="3acc9661-5fdb-46df-ac65-41db5ad58e9f" class="">
+</p></li></ul><h3 id="af7e9f3a-ea61-4281-9028-179ecd2d9e3e" class="">#Secnod priority</h3><h3 id="d8f6141f-1f4d-4eac-a8df-497151720ce7" class="">##&lt;activity&gt;</h3><ul id="7646ac78-15fb-4fe0-a50b-8e0cf6422674" class="bulleted-list"><li>Activity<ul id="92516ed2-d80b-4184-8ac9-eaf93230b44b" class="bulleted-list"><li>Subclass는 App의 시각적 UI를 요소를 구현하는 역할을 한다.</li></ul><ul id="79e35fd3-2ee8-4ac6-a496-0c8fc0661c5e" class="bulleted-list"><li>이러한 모든 Activity class는 mainfest file에서 &lt;activity&gt;로 나타나야 한다.</li></ul><ul id="57408ead-f589-4a0f-81a5-1a925193d065" class="bulleted-list"><li> Activity class를 mainfest file에 &lt;activity&gt;로 나타내지 않으면 시스템은 Activity class를 실행하지 않는다</li></ul></li></ul><ul id="b426c8df-29ca-409d-9be5-9a5bed9ad980" class="bulleted-list"><li>android:allowEmbedded<ul id="3676841d-d0de-477f-9ebe-d9f7e6e8cd29" class="bulleted-list"><li>액티비티가 다른 액티비티의 포함된 하위 항목으로 시작할 수 있음을 나타낸다.</li></ul></li></ul><ul id="ac0b50d4-d78e-42a1-b3f4-78fc176a883b" class="bulleted-list"><li>android:allowTaskReparenting<ul id="11bc71ae-713b-4ca7-8023-4249e231047f" class="bulleted-list"><li>액티비티를 시작한 작업에서 해당 작업이 다음 앞으로 나올 때 액티비티를 선호하는 그다음 작업으로 이동할 수있는지를 나타낸다. 이값이 true인 경우 이동 가능 false인 경우 시작한 작업에 그대로 머물러 있어야한다.</li></ul><p id="4079a104-1730-40ac-b4b6-7ec2961d7529" class="">
+</p></li></ul><h3 id="66639bc9-ded3-4a1a-88e3-4d06f1b6dc85" class="">##&lt;provider&gt;</h3><ul id="f033ff61-f9e2-48dd-af5b-fbabf38d8fb6" class="bulleted-list"><li>&lt;activity&gt;와 동일하게 유일하게 사용하여야한다<ul id="eb80fdab-3f3f-4d11-80ca-dfb8e87e2593" class="bulleted-list"><li>다른 App이 데이터베이스 접근이나 데이터를 공유하는것을 관리한다.</li></ul><ul id="5bb3c7a0-91d0-4cd0-bf16-8efb397a66cf" class="bulleted-list"><li>기본적으로 다른 App의 data에 접근할 수 없기 때문에 Content Provider를 통해 접근을할 수 있게 허락한다.</li></ul><ul id="9f87e2f3-c7aa-4a17-b71e-57275091443a" class="bulleted-list"><li> 다른 App에 데이터를 제공해주는 Component이다. 그렇다고 아무데나 제공하는게 아니라 요청이들어와야한다.</li></ul></li></ul><ul id="d3c67b5b-74f9-4504-a419-05526b1f2150" class="bulleted-list"><li> Content<ul id="e157478a-49e0-4880-a708-bc1a9a0a5ae2" class="bulleted-list"><li>Provider가 data를 제공해주는데 요청은 Content Resolver class의 method로 할 수 있다.</li></ul><ul id="cedb094e-65cd-4aa1-9178-fd53f7fae9cd" class="bulleted-list"><li>전화번호부와 카카오톡을 생각해보면 전화번호부에 등록외어 있는 전화번호 data가 자동으로 연동되어 카카오톡에 친구가 추가된다. 전화번호부에 Content Provider가 전화번호에 접근 할 수 있게 해주는것이고 카카오톡의 Content Resolver가 전화번호를 요청하여 친구 추가에 이용하는 것이다.</li></ul></li></ul><ul id="6d53b8d9-0f0b-46bc-9675-b4e97d5e855b" class="bulleted-list"><li>[android:authorities = &quot;list&quot;]가 반드시 포함되어야 한다. 안드로이드 시스템은
+Content Provider의 Content Uri의 일부인 authority string에 따라 Content
+Provider를 참조하여 저장한다. → 전화번호에 돤련된 Content Provider에 접근한다고 하면 ContentReslover.query()를 사용해야한다. ContentReslover.query()는 provider를 식별하는 URI를 가져온다.</li></ul><h3 id="4eae970e-f81c-422f-8d4a-b1b78a0e2a03" class="">##&lt;receiver&gt;</h3><ul id="d0c2e42f-e7bd-4c7b-9a67-20f22272c440" class="bulleted-list"><li>Broadcasr Receiver를 사용하면 App의 다른 Component가 실행되고 있지 않아도</li></ul><ul id="4f0fe348-a20d-4dd9-9807-b71c15184552" class="bulleted-list"><li>Android, os, ...App이 보내는 intents를 받을 수 있다.</li></ul><ul id="a950b518-4deb-4d58-9c9f-38f87e50eae6" class="bulleted-list"><li>OS, App이 작동하면서 어떤 이벤트가 발생하면 알림을 보내는데 이를 Broadcast라 한다.</li></ul><ul id="80dff4bb-cc9b-43b2-a59e-b47bbe9530fb" class="bulleted-list"><li>이벤트 발생 알림을 보낸다고 해서 OS, APP이 무조건 반응하지 않는다.</li></ul><ul id="fb1186e7-d37c-4ca3-bb4e-aacafaa7758b" class="bulleted-list"><li>App도 필요한것만 시청, 받는다.<ul id="085077b6-7198-4bc3-82a2-db1817143813" class="bulleted-list"><li>요즘 문자로 인증번호가 오면 인증번호가 자동으로 입력되는 App이 있는데 이는 OS문자가 왔다고 BroadCast하면 해당 App이 이를 BroadCast Receiver를 통해 수신해서 일련의 과정을 거쳐 자동으로 입력되는것이다.</li></ul></li></ul><ul id="4fe570af-0136-4818-85a6-37863c704a6e" class="bulleted-list"><li>BroadCast Receiver<ul id="3a4ad093-0baf-46e0-b912-f6b031a4c1a0" class="bulleted-list"><li>Static Receiver: mainfest에 &lt;receiver&gt;를 등록하느것이고</li></ul><ul id="805737f4-37d4-4eac-8bb6-a3e548f2b78a" class="bulleted-list"><li>Dyamic Receiver: 특정 Componet에 context.registerReceiver()를 이용하여 등록</li></ul></li></ul><ul id="ad9657d2-2417-46af-a2a1-688a09949d77" class="bulleted-list"><li>Component의 생명주기가 끝나면 사라진다.</li></ul><ul id="19b3825c-af89-4ba2-bdf5-215b1b7e763c" class="bulleted-list"><li>Receiver 개수가 많아지면 배터리, 메모리 누수가 생기므로 Dynamic Reciver를 사용할 때</li></ul><ul id="ee7fc23d-1654-49d4-97a4-c0bba3698f7e" class="bulleted-list"><li>Receiver가 필요 없어지면 unregisterReciver()를 통해 해제해준다.</li></ul><ul id="828b8ec5-c7bb-4e28-9bcc-b1fc21b628ae" class="bulleted-list"><li>Receiver의 종류가 2가지인 이뉴느 앞서말한 메모리의 누수 때문이다.</li></ul><ul id="5e835f62-f3cd-4109-b92c-51325e28dddf" class="bulleted-list"><li>Static Receiver는 한번 등록하면 계속 유지되는데 이게 단점이 될수 있다.</li></ul><ul id="3c0b2f19-1165-4b29-a8d5-e03d6a142f40" class="bulleted-list"><li>Receiver개수가 많아지면 차지하는 메모리가 많아지고 배터리도 빨리 방전되기 때문이다.</li></ul><ul id="8149eeba-1673-473c-a94e-d83b790833dc" class="bulleted-list"><li> 계속 유지되어야하는 Receiver가 아니라면 Dynamic Receiver를 통해 등록과 해제를 적극적으로 활용하자</li></ul><ul id="06858956-5b8a-4a36-972f-8584c3bfb5e9" class="bulleted-list"><li> !Dynamic Receiver의 장점은 메모리 누수를 잡는것 뿐만 아니라 Component 내에 코드를 작성하기 때문에 해당 Component에 멤버변수를 활용하기 편하다.</li></ul><h3 id="32c5580e-09cd-414f-a8af-13887edd7680" class="">##&lt;Service&gt;</h3><ul id="a59a28b7-0cc7-4774-ac49-3f6d658e3157" class="bulleted-list"><li>&lt;Activity&gt;와 달리 시각적 UI를 가지지 않는다.</li></ul><ul id="e6060950-9c2a-4373-8e28-90a56e7f7de5" class="bulleted-list"><li>Service subclass는 다른 App에서 호출할 수 도있는 다양한 통신 API를 구현</li></ul><ul id="c3a4d87c-a95d-4426-b965-d644fe7054f8" class="bulleted-list"><li>long-running 백그라운드 작업에 사용된다.</li></ul><ul id="bed43503-7e9c-4fde-a4bc-a1a7f2019e1f" class="bulleted-list"><li> service도 반드시 mainfestfile에 &lt;service&gt;로 나타내야 실행된다.</li></ul><ul id="3c71a2b9-98a5-4bad-a9f6-56a50f8dab19" class="bulleted-list"><li> 백그라운드에서 구동되는 Component인 service는 한번 실행되면 App이 종료되어도 백그라운드에서 계속 실행된다.</li></ul><h3 id="88606b92-1c08-4ba4-8c50-eebe8e32c2de" class="">##&lt;intent-filter&gt;</h3><ul id="6e1a80c6-d5f1-4686-93dc-6539606219f3" class="bulleted-list"><li>Component(Content Provider X)가 상황에 따라 다른 Component 실행이 필요하다면</li></ul><ul id="16955b62-0a13-401d-a93e-70e04786b7f9" class="bulleted-list"><li> 실행 할 Component에 대한 정보를 누군가(ActivityManager)에게 실행시켜달라고 요청해야한다.</li></ul><ul id="b20a39ba-7899-4bbe-90b8-5df8c37ed4cb" class="bulleted-list"><li>Component에 대한 정보(이름)가 intent이다.</li></ul><ul id="aa02f93a-2dc1-486c-b375-9c53f906e85c" class="bulleted-list"><li> intent는실행될 Component에 전달해야 하는 data도 담을수 있다. (Intent는 목적의 뜻을 가지는데 IntentComponent를 실행하기 위한 의도를 전달하는 거지 직점 Component를 실행시키는게 아니기 때문이다라고 생가함)</li></ul><ul id="692cfed3-1f52-4959-8b22-2550d3bacd35" class="bulleted-list"><li>Intent를 활용하여 Component를 활성한다.</li></ul><ul id="66f2c79a-6b6c-4365-b477-86ed66701a74" class="bulleted-list"><li>Explict Intent(명시적 인텐트)<ul id="c40faf4f-ec9c-4d83-b78c-d568bbf2ecdf" class="bulleted-list"><li>Component가 포함되어 있는 패키지명과 Component 이름을 정확하게 전달하는 경우</li></ul></li></ul><ul id="de55edc2-2541-4002-8770-32a94c8ac954" class="bulleted-list"><li>Implicit Intent(암시적 인텐트)<ul id="84c5a8a8-95c2-4d91-9d74-cc152b50c1d5" class="bulleted-list"><li>패키지명과 이름을 전달하는게 아니라 Intent를 통해 Component가 수행 할 동작을 전달하는 경우</li></ul></li></ul><ul id="0c77cdb8-2be4-49aa-8e95-0695d07a6b21" class="bulleted-list"><li>동작 Component를 모두 보여준다. 2개이상일경우 사용자가 Component를 선택할 수 있게 한다.</li></ul><ul id="8c5e1bf4-203d-4d00-9ca4-64829adf2df4" class="bulleted-list"><li>&lt;Intent-filter&gt;는 암시적 인텐트를 사용하기 위해 작성한다.</li></ul><ul id="ccda5d05-5a4b-4cd8-ba30-327f4e9fafee" class="bulleted-list"><li>암시적 인텐트는 Component를 콕 찝어서 언급하는게 아니라 Component가 수행 할 동작을 전달한다.</li></ul><ul id="e5ec8a2c-bc82-4dae-9e32-23b16001a030" class="bulleted-list"><li>암시적 인텐트는 Component가 어떤 작업을 수행할 수 있는지, 어떤 데이터 유형을 처리할 수 있는지, 처리할 데이터의 주소는 무엇인지 등을 담고 있다.</li></ul><ul id="690a489e-354c-465d-a9e5-47e92e6916aa" class="bulleted-list"><li>Component중에서 Intent가 담고 있는 정보에 맞는 Component를 찾는 과정이 필요하다.</li></ul><ul id="1850ba44-638c-4e82-90d3-3cafff13b5ad" class="bulleted-list"><li>인텐트해석(Intent Resolving)이라고 한다.</li></ul><ul id="362f03f0-c751-443c-9c78-34059cc5e204" class="bulleted-list"><li>Component가 자신에게 해당하는 Intent의 조건이 무엇인지 mainfest file에 정의해두는데 이게 &lt;intent-filter&gt;이다.</li></ul><p id="14b96859-685a-4340-8521-ebe68d546e11" class="">(인텐트를 걸러주는 조건(필터)라고 생각..)</p><ul id="2bb5a964-3e01-47d7-8808-d4bd90453062" class="bulleted-list"><li>컴포넌트 입장에사 생각해보면 수많은 인텐트 중에서 자신에게 맞는 인텐트만 받기 위해서 인텐트 필터 조건을작성해두는 것이다.</li></ul><h3 id="6c389dfa-9104-400a-8b8b-6ab889c6a56a" class="">#암시적 인텐트가 존재하는 이유</h3><p id="b4bf7af2-65a2-43be-9b4c-432bfb42bc51" class="">- 안드로이드
+OS에는 App간 경계가 없기 때문이다.</p><p id="57598dbf-a2e1-4e04-840b-980aea054767" class="">- 자기가 만든
+App에서는 Package와 Component명을 알고 있으니 명시적 인텐트를 사용하면 되지만</p><p id="7215d8cd-8f7f-409e-aca7-17477fc0a74b" class="">내가 만든것이 아닌
+App의 Component 명을 아는건 매우 어려운 일이다.</p><p id="8aa97a9f-62a3-474e-a453-068ed2cf1b5d" class="">안드로이드 os는
+Native App도 본이이 원하느 걸로 변경할 수 있는데</p><p id="b647e510-218a-4c88-b4fc-3404e4657833" class="">여기서 Native
+App의 Component를 명시적인텐트로 사용한다면</p><p id="38b39901-f1ef-4997-b86f-c3de1a3d15a4" class="">Native
+App을 변경한 사용자의 폰에서는 내가 만든 App이 똑바로 작동하지 않거나</p><p id="d1789907-5666-483c-9a83-40ce8854d38a" class="">다른 App으로
+Native App을 대체하는게 힘들어 지기 때문이다.</p></div></article></body></html>

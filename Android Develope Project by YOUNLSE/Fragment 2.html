@@ -1,0 +1,607 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragment #2</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8999fca6-2428-4c71-b2c0-840c996afabe" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Fragment #2</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 14, 2020 → Jan 15, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="b26bf181-9f06-4218-b5b4-dbb6f4c50981" class="">프래그먼트의 수명주기</h3><ul id="228feaf7-44ce-46ae-a123-2e3d3f81eb4b" class="bulleted-list"><li>프래그먼트 클래스를 정의할 때 XML 레이아웃의 내용을 인플레이션하는 코드가 들어 있는 메서드의 이름이 onCreteView()라고 했다.<ul id="82523f6c-63ef-44ab-ac11-948e304db693" class="bulleted-list"><li>이 이름은 액티비티의 onCreate()와 비슷한 이름이다</li></ul><ul id="60dac699-b41e-4ced-8c10-abbc13fa1f17" class="bulleted-list"><li>짐작했겠지만 이 메서드는 onCreate() 메서드처럼 어떤 상태가 되면 자동으로 호출되는 메서드이다.</li></ul></li></ul><ul id="6bdb4400-bdfb-4c71-80cb-a59eecbbdd50" class="bulleted-list"><li>프래그먼트는 액티비티를 본떠 만들면서 액티비티처럼 독립적으로 동작하도록 수명주기 메서드를 추가하였다.</li></ul><ul id="850d07ec-74bc-48a0-b940-bf8150228bea" class="bulleted-list"><li>따라서 상태에 따라 API에서 미리 정해둔 콜백 함수가 호출되므로 그 안에 필요한 기능을 넣을 수 있다.</li></ul><ul id="3f1d37af-fc76-4fa5-a1ed-1fda478bc83d" class="bulleted-list"><li>프래그먼트를 사용하는 목적 중의 하나가 분할된 화면들의 상태를 관리하는 것인데 이것을 가능하게 하는 것이 수명주기 메서드들이다.</li></ul><ul id="86c33533-1b1a-4119-9a09-24fba9ebde4b" class="bulleted-list"><li>즉, 액티비티 안에 들어 있는 프래그먼트도 필요할 때 화면에 보이거나 보이지 않게 되므로 액티비티처럼 각각의 상태가 관리되것이 필요하다.</li></ul><ul id="b76716e9-a9a2-48d4-9f2c-d97cbb7c84f4" class="bulleted-list"><li>프래그먼트는 액티비티 위에 올라가는 것이므로 프래그먼트의 수명주기도 액티비티의 수명주기에 종속적이지만 프래그먼트만 가질 수 있는 독립적인 상태 정보들이 더 추가되었다. 특히 프래그먼트가 화면에 보이기 전이나 중지 상태가 되었을 때 액티비티처럼 onResume() 메서드와 onPause() 메서드가 호출되는데 프래그먼트는 액티비티에 종속되어 있으므로 이 상태 메서드 이외에도 세분화된 상태 메서드들이 더 있다.</li></ul><p id="a27a8cf7-b265-494e-be0c-17e94932d5f3" class="">
+</p><h3 id="f9caf2cf-781e-4ebd-9a78-039346e7ac0c" class="">프래그먼트가 화면에 보이기 전까지 호출될 수 있는 수명주기 메서드들</h3><div id="a4866613-22e0-4af7-bc9a-8bd279729982" class="collection-content"><h4 class="collection-title">프래그먼트 수명주기-</h4><table class="collection-content"><thead><tr><th>메서드</th><th>설명</th></tr></thead><tbody><tr id="0332b291-9eda-4720-aa59-6c2b025fc25a"><td class="cell-title"><a href="Fragment%202/Untitled/onAttach%20Activity.html">onAttach(Activity)</a></td><td class="cell-ql?n">프래그먼트가 액티비티와 연겨될때 호출된다.</td></tr><tr id="76b26f56-071c-47da-8370-b07affbb0ecc"><td class="cell-title"><a href="Fragment%202/Untitled/onCreate%20Bundle.html">onCreate(Bundle)</a></td><td class="cell-ql?n">프래그먼트가 초기화될 때 호출된다.(new 연산자를 이용해 새로운 프래그먼트 객체를 만드는 시점이 아니라는 점에 주의해야 한다.)</td></tr><tr id="fbe36493-c54a-487f-beef-813e526d796f"><td class="cell-title"><a href="Fragment%202/Untitled/onCreateView%20LayoutInflatorViewGroup%20Bundle.html">onCreateView(LayoutInflatorViewGroup, Bundle)</a></td><td class="cell-ql?n">프래그먼트와 관련되는 뷰 계층을 만들어서 리턴한다.</td></tr><tr id="3b146225-3c70-436b-8a6a-d01d0faa395c"><td class="cell-title"><a href="Fragment%202/Untitled/onActivityCreate%20Bundle.html">onActivityCreate(Bundle)</a></td><td class="cell-ql?n">프래그먼트와 연결된 액티비티가 onCreate() 메서드와 작업을 완료했을 떄 호출된다.</td></tr><tr id="3928abec-a909-45c1-a3c6-9290c7d182e9"><td class="cell-title"><a href="Fragment%202/Untitled/onStart.html">onStart()</a></td><td class="cell-ql?n">프래그먼트와 연결된 액티비티가 onStart() 되어 사용자에게 프래그먼트가 보일 때 호출된다.</td></tr><tr id="80c894df-6971-4af7-82e3-d7078453a4f3"><td class="cell-title"><a href="Fragment%202/Untitled/onResume.html">onResume()</a></td><td class="cell-ql?n">프래그먼트와 연결된 액티비티가 onResume() 되어 사용자와 상호작용할 수 있을 때 호출된다.</td></tr></tbody></table></div><ul id="88fa513d-02dc-439e-b4a9-8c29a145b00f" class="bulleted-list"><li>위 표에서 확인한 메서드들은 프래그먼트가 처음 만들어지고 화면에 나타나기 전에 호출되는 메서드들이다.</li></ul><ul id="a9346dc3-f001-46f2-bc80-445aba12c8bb" class="bulleted-list"><li>액티비티가 메모리에 처음 만들어질 때는 onCreate() 메서드가 호출된다는 것은 잘 알고 있겠지?</li></ul><ul id="3e07c323-3f37-4993-b602-8a3911681c47" class="bulleted-list"><li>이거랑 동일하게 프래그먼트도 초기화될 때 onCreate() 메서드가 호출된다.</li></ul><ul id="f8daa6ad-9384-4e3e-9703-dbc437232dbf" class="block-color-red bulleted-list"><li>한 가지 주의할점<ul id="797743bf-8b50-4e9a-a460-1c5c243b9ac5" class="bulleted-list"><li>프래그먼트는 액티비티 안에 추가되어 사용되면서 동시에 액티비티에 종속되어 있어 프래그먼트와 액티비티가 연결되어야 초기화될 수 있다.</li></ul><ul id="70f998e8-cb44-4d5b-954d-8981294d2fc9" class="bulleted-list"><li>즉, 프래그먼트는 액티비티 위에 올라가야 제대로 동작한다.</li></ul><p id="74283650-57d8-4c66-853c-50f7d9ddfc30" class="">
+</p></li></ul><ul id="e2e9b24f-a3de-417f-997a-31051af56494" class="block-color-red bulleted-list"><li>이 때문에 new 연산자를 사용해 프래그먼트 객체를 만드는 시점과 onCreate() 메서드가 호출되는 시점이 달라진다. </li></ul><ul id="7a3c2b28-c506-47f0-a9da-83bcf8579053" class="bulleted-list"><li>이 과정을 순서대로 보면 먼저 onAttach() 메서드가 호출되며 액티비티에 프래그먼트가 추가되고 그 다음에 onCreate() 메서드가 호출된다.</li></ul><ul id="50514515-20ba-4b61-b4aa-73c6a01bc1a8" class="bulleted-list"><li>onAttach() 메서드가 호출될 때 파라미터로 전달되는 액티비티 객체 위에 프래그먼트가 올라가 있게 된다.</li></ul><ul id="6ad872bb-0d4f-452d-8702-a6fde2a5e5c6" class="bulleted-list"><li>그러므로 액티비티를 위해 설정해야 하는 정보들은 이 onAttach() 메서드에서 처리해야 한다.</li></ul><p id="a0d943ca-a17b-483f-8f0f-2f116e6b79d4" class="">
+</p><ul id="0fd0080b-dfb8-44bb-a622-bf8a9bb7df02" class="bulleted-list"><li>프래그먼트가 새로 만들어질 때 그 안에 뷰들을 포함하게 되면 뷰그룹처럼 뷰들의 레이아웃을 결정해주어야 한다.</li></ul><ul id="20c20085-848c-4a3e-9913-ed5e5daa147c" class="bulleted-list"><li>onCreateView() 메서드는 프래그먼트와 관련되는 뷰들의 계층도를 구성하는 과정에서 호출된다.</li></ul><ul id="fdaefb59-39cd-4545-aa58-6b5c252cfc02" class="bulleted-list"><li>액티비티가 메모리에 처음 만들어질 때는 액티비티의 onCreate() 메서드가 호출되지만 프래그먼트의 경우에는 onActivityCreated() 메서드가 호출된다.</li></ul><ul id="adbf5c33-c8c5-40d0-8938-075fbc0aeb0a" class="bulleted-list"><li>이 메서드는 프래그먼트에서 액티비티가 만들어지는 상태를 알 수 있도록 해주는데 프래그먼트에서 다시 정의해 둔 onCreate() 메서드와 구별해야 한다.</li></ul><p id="4d9c14b4-bcba-4664-ae38-a5d20192038b" class="">
+</p><h3 id="ec972a79-4038-4833-90dd-5c177c6b544b" class="">프래그먼트가 화면에서 보이지 않게 되면서 호출되는 상태 메서드들</h3><div id="a0b79b62-fbc2-435b-bf39-54df7f9a4958" class="collection-content"><h4 class="collection-title">프래그먼트 생명주기</h4><table class="collection-content"><thead><tr><th>매소드</th><th>설명</th></tr></thead><tbody><tr id="c20cfaff-d5be-48a1-9454-d8fd0757a81f"><td class="cell-title"><a href="Fragment%202/Untitled%201/onPause.html">onPause()</a></td><td class="cell-WpjR">프래그먼트와 연결된 액티비티가 onPause() 되어 사용자와 상호작용을 중지할 때 호출된다. </td></tr><tr id="42a1b3da-7544-4b33-97a7-a0638453ed45"><td class="cell-title"><a href="Fragment%202/Untitled%201/onStop.html">onStop()</a></td><td class="cell-WpjR">프래그먼트와 연결된 액티비티가 onStop()되어 화면에서 더 이상 보이지 않을 때나 프래그먼트의 기능이 중지되었을때 호출된다.</td></tr><tr id="083487fb-9707-40a2-af23-31cc15f895a9"><td class="cell-title"><a href="Fragment%202/Untitled%201/onDestroyView.html">onDestroyView()</a></td><td class="cell-WpjR">프래그먼트와 관련된 뷰 리소스를 해제할 수 있도록 호출된다.</td></tr><tr id="6762b562-5a65-4ce5-b03b-daf2758a8aea"><td class="cell-title"><a href="Fragment%202/Untitled%201/onDestroy.html">onDestroy()</a></td><td class="cell-WpjR">프래그먼트의 상태를 마지막으로 정리할 수 있도록 호출된다.</td></tr><tr id="ee37b40b-9f68-41ae-afb7-3636030deb18"><td class="cell-title"><a href="Fragment%202/Untitled%201/onDetach.html">onDetach()</a></td><td class="cell-WpjR">프래그먼트가 액티비티와 연결을 끊기 바로 전에 호출된다.</td></tr><tr id="9f77705e-53bf-4811-9806-8857be470386"><td class="cell-title"><a href="Fragment%202/Untitled%201/Untitled.html">Untitled</a></td><td class="cell-WpjR"></td></tr></tbody></table></div><figure id="8f05a575-bfba-4b14-bf80-54f4b095b463"><div class="source"><a href="Fragment%202/phishing_IP.txt">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9745090-01b2-454a-9d9f-ced8ce40b833/phishing_IP.txt</a></div></figure><ul id="b0212c4e-992f-4fed-90d8-502613c8987f" class="bulleted-list"><li>onPause(), onStop() 메서드는 액티비티의 onPause(), onStop() 메서드가 호출될 때와 같은 상태 메서드이다.</li></ul><ul id="aa4543de-0321-406a-8fd1-eb37cc5a7717" class="bulleted-list"><li>onDestroyView() 메서드는 프래그먼트 안에 들어 있는 뷰들의 리소스를 해제할 때 재정의하여 사용하며</li></ul><ul id="bb4eca23-4ca7-43e2-bfc9-99501ac04540" class="bulleted-list"><li>onDetach() 메서드는 onAttach()와 반대로 프래그먼트가 액티비티와 연결을 끊기 바로 전에 호출된다.</li></ul><p id="b2229359-3122-4e20-999d-b7df39a5a52b" class="">
+</p><figure id="05297145-491d-4838-86b3-89e935afa964" class="image"><a href="Fragment%202/nse-4633262017232119777-20519.jpg"><img style="width:432px" src="Fragment%202/nse-4633262017232119777-20519.jpg"/></a></figure><ul id="65f54283-33c3-4ffc-a604-d260aeb785b2" class="bulleted-list"><li>onAttach(), onDetach() 메서드는 프래그먼트가 액티비티 위에 올라갈 때와 액티비티에서 떨어져 나올때 호출된다.</li></ul><ul id="07d88e31-8e64-4579-ad4d-fd51d365c1ce" class="bulleted-list"><li>이 메서드가 수명주기의 시작과 끝이 되는 이유는<ul id="095c036b-8b79-4e2a-b90e-31164b738f6c" class="bulleted-list"><li>프래그먼트는 액티비티 위에 올라가지 않고서는 프래그먼트로서 동작하지 않기 때문이라는 점</li></ul><ul id="6a1543ea-4a6f-4b56-bae2-8e7091062419" class="bulleted-list"><li>프래그먼트 객체가 new 연산자로 만들어 졌더라도 액티비티 위에 올라가기 전까지는 프래그먼트로 동작하지 않다는 점도 </li></ul><p id="42488f40-82c3-4cab-b229-17252fac31f3" class="">
+</p></li></ul><pre id="d8d30053-66fd-4e5f-853e-a9ce7069647e" class="code"><code>Myfragment fragment = new MyFragment();
+// -&gt; 프래그먼트 객체는 만들어 졌지만 프래그먼트로 동작하지 않는다.
+
+getSupportFragmentManager().beginTransaction().add(fragment).commit();
+// -&gt; 액티비티에 추가된 후 프래그먼트로 동작한다.</code></pre><p id="d6a9d86f-f8c3-44d9-81fe-7cc9dab565f7" class="">
+</p><p id="8fbe2790-2031-4fa6-bde5-73ac4a2b4d4c" class="">
+</p><h3 id="896e18ab-7a72-4026-a35c-85d005639ee4" class="">onAttach()</h3><p id="33c19c37-c4e1-4867-8715-71c5ef80d635" class="">Fragment가 Activity에 attach될 때 호출된다.</p><p id="d432fee9-22b2-4d80-848f-e40d2717cf77" class="">코드적으로 재미있는 것은, 호출되면서 인자로 context가 주어진다는 점입니다.</p><p id="5aa0c5de-e20c-4d49-a4f7-b52401a89700" class="">이 context를 가지고, 부모 액티비티에 lisnter interface를 implement했다면, 형변환을 해서, 아래와 같이 가져올 수 있다.</p><p id="16b7fd5d-63cb-4614-ba46-37885fa8c971" class="">
+</p><pre id="d28ebf52-d7c5-48be-a5c9-6dbb24546ead" class="code"><code>public void onAttach(Context context) {
+	super.onAttach(context);
+	if (context instanceof OnFragmentInteractionListener) {
+		mListener = (OnFragmentInteractionListener) context;
+	} else {
+			throw new RuntimeException(context.toString()
+							+ &quot;must implement OnFragmentInteractionListener&quot;);
+	</code></pre><p id="dfd91e00-334d-4c10-9289-c6bec75ed8c6" class="">
+</p><h3 id="07ad37f3-fe65-4ad9-8d80-dbb0c1065a96" class="">onCreate()</h3><p id="cb34b820-0379-40a7-9fe2-ac9bf5d1a907" class="">액티비티와 마찬가지로 초기화해야하는 리소스들을 여기서 초기화 해준다.</p><p id="1f216b03-060a-4dbc-944b-2c09739c0dc7" class="">프래그먼트를 생성하면서 넘겨준 값들이 있다면, 여기서 변수에 넣어주면된다.</p><p id="6ebcc7f2-b62e-4ed8-a1fa-190b0cfa334b" class="">하지만, 주의해야 할 점은, 여기서 UI 초기화는 할 수 없다는 점이다.</p><p id="816326ae-7d1f-49d4-b8f8-84c44af283e6" class="">UI 초기화는 다음단계에서 해준다.</p><p id="f9ccdd1a-6a2f-44b4-9a64-9d0da9b8f72a" class="">
+</p><pre id="44ab67b5-f736-44d9-b0d2-46fb0ce8f9e1" class="code"><code>public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	if (getArguments() != null) {
+		mParam1 = getArguments().getString(ARG_PARAM1);
+		mParam2 = getArguments().getString(ARG_PARAM2);
+	}
+}</code></pre><p id="f7adf42a-c0d5-484d-9fee-e8b9bac6f270" class="">
+</p><h3 id="5016c08b-c389-4936-a75a-33d75fd30560" class="">onCreateView()</h3><p id="553f519a-8d4a-4ac3-b8c4-5d4e09ec7f39" class="">Layout을 inflate하는 곳이다. view 객체를 얻을 수 있으므로, 여기서 View와 관련되서, 버튼이나 EditText, TextView등을 초기화 할 수 있다.</p><p id="4a221c78-0be3-4ad3-a9fa-c05fd89e3609" class="">
+</p><pre id="151cca03-0c63-412d-b140-45cb41a33240" class="code"><code>@Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list, container , false);</code></pre><p id="eddfba7f-dad9-491c-a1a6-9dcbfcb8611d" class="">
+</p><h3 id="4aa884fa-149f-40d8-8c16-606de2d6e513" class="">onActivityCreated()</h3><p id="2cbe8331-5421-4ae1-93f5-6c7fd0d09f1c" class="">Fragment에서의 OnCreateView를 마치고, Activity에서 onCreate()가 호출되고 나서 호출되는 메소드이다.</p><p id="dfd7b3a1-ff35-4be8-b20a-83dee627a525" class="">Activity와 Fragment의 뷰가 모두 생성된 상태로, View를 변경하는 작업이 가능한 단계이다.</p><p id="651ecd65-029b-468e-b791-d254d5340a07" class="">
+</p><h3 id="e2892c84-5105-4a59-80cf-66b90dfb4645" class="">onStart()</h3><p id="8aa83eca-0e40-46a0-b019-21d807671a94" class="">Activity에서의 역활과 비슷하다.</p><p id="9e17803e-0e83-462f-9c51-d742ae2a0ba0" class="">유저에게 Fragment가 보이도록 해준다.</p><p id="b7751fc6-1d21-44a2-95d6-f4aeff9d4f03" class="">Activity는 이단계에서는 started 상태이다.</p><p id="2e9a1555-c4de-4db0-9db4-fff17bd04bb3" class="">
+</p><h3 id="5c15431e-f12b-47bd-b838-ceaaebe13a2a" class="">onResume()</h3><p id="2b0cd976-b4d8-4644-b4ad-865503a8e35e" class="">이부분도  Activity와 비슷한데요 유저에게 Fragment가 보여지고, 유저와 상호작용이 가능하게 되는 부분이다.</p><p id="0b624cbd-9603-4754-a45e-d6b79e67d014" class="">
+</p><h3 id="0fc57a3b-a571-46bb-9894-890def29ee10" class="">onPause(), onStop()</h3><p id="4991104b-5bad-4bdd-bc28-e2b54eb312e3" class="">onPause에서 onStop으로 가는 단계도, 액티비티의 생명주기와 유사하다.</p><p id="8d354bce-9121-4be7-b19c-eb3109905baf" class="">프래그먼트의 부모 액티비티가 아닌, 다른 액티비티가 foreground로 나오게 되면, onPause()를 콜하며 Backstack으로 들어가게 된다.</p><p id="0666ea8a-0c76-4b40-ad34-f36670d8f17f" class="">
+</p><h3 id="9ba250a5-8520-4c52-a81b-431d55c83c65" class="">onDestoryView()</h3><p id="74e2c6e6-3361-4ec2-b4ed-8354993fec3f" class="">메소드 이름에서도 알수있겠지만, 프래그먼트와 관련된 View가 제거되는 단계이다.</p><p id="c2259f4d-b0b1-40a2-8ea3-d3f74f9ad943" class="">
+</p><h3 id="8e5518dd-61af-4365-b915-c8c4d434a9bc" class="">onDestroy()</h3><p id="a58b0278-b7eb-4c28-acf4-566e83a6f4a1" class="">프래그먼트는 생성될 때 onCreate → onCreateView로, 초기화할 리소스들과, 초기화할 뷰를 순서대로 호출하였는데 Destroy할때는 반대로 onDestroyView에서  View를 제거하고, onDestroy()로 호출한다.</p><p id="1c5c9d82-b9d9-4eac-9597-728e71f1914e" class="">
+</p><h3 id="57a542ce-76f7-41fd-9aa4-6ff60abcbb0e" class="">onDetach()</h3><p id="e17ff309-711b-4613-8aa6-497d8ede51e7" class="">프래그먼트가 액티비티로부터 해제되어질때 호출된다.</p><p id="e89c8f49-9f8b-42ab-8ae8-a5b05b83c472" class="">
+</p><p id="806bcc99-d2e7-4f76-91c9-45bd38d8e377" class="">
+</p><h3 id="254ab441-aded-4b6a-a4a9-c98673eeba5d" class="">프래그먼트로 화면 만들기</h3><p id="ad962ece-1069-49b2-8b1b-114a94173eac" class="">Source Code 참고😁😁</p></div></article></body></html>

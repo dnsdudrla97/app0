@@ -1,0 +1,632 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>그래들 이해하기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5f6db0a3-098d-484e-8078-cc438b188d70" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">그래들 이해하기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 22, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><p id="758240f0-e8da-4606-a13a-195b82ff1bb5" class=""> 그래들(Gradle)</p><ul id="db6e08e0-40b9-4d0f-96ca-b0bde08de30d" class="bulleted-list"><li>안드로이드 앱을 실행하거나 앱을 올릴 때 소스 파일이나 리소스 파일을 빌드하거나 배포하는 작업이 필요하다. 이 때 사용되는 것이 그래들이다. 다시 말해, 그래들은 안드로이드스튜디오에서 사용하는 빌드 및 배포 도구 이다. 😀😀😀😀😀😀😀😀😀😀</li></ul><ul id="6bb1ce05-21f4-4ecb-9300-120eeca8f144" class="bulleted-list"><li>한 앱의 빌드 설정은 build.gradle 파일에 넣어 관리한다.</li></ul><ul id="3d45849e-e877-4839-8a93-36e62134e1a2" class="bulleted-list"><li>이때 그래들 파일은 프로젝트 수준과 모듈 수준으로 나눠 관리하기 때문에 새로운 프로젝트를 만들면 두 개의 build.gradle 파일이 생긴다.</li></ul><p id="2c8d1ccf-97d2-4b82-8b91-53feda2b19fe" class="">
+</p><h3 id="62b94106-8f5e-4b90-8786-317b307933bf" class="">build.gradle (Project: samplePermission2) code.</h3><pre id="7aed2582-4bf4-4a7b-99e8-db454b885f24" class="code"><code>// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath &#x27;com.android.tools.build:gradle:3.5.3&#x27;
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}</code></pre><ul id="8ffd5053-ae27-4ee6-8ca9-15f94ff16396" class="bulleted-list"><li>이 파일은 프로젝트 안에 들어있는 모든 모듈에 적용되는 설정을 담고 있다.</li></ul><ul id="05b1065f-6903-4eff-b8cf-af87c9fa77d1" class="bulleted-list"><li>이 파일을 수정하는 경우는 거의 없다.</li></ul><ul id="b1f6504e-f78a-4223-b39b-3797d6ebc5ca" class="bulleted-list"><li>가끔 외부 도구를 포함시키기 위해 buildscript의 dependencies 안에 classpath를 추가하는 정도의 수정만 있을 수 있다.</li></ul><p id="1891bddc-3548-4c20-8d1e-8134705d905c" class="">
+</p><h3 id="f407f9a1-1ff4-4514-b552-81477c482ff5" class="">build.gradle (Module:app) code.</h3><pre id="446d91bb-a155-401b-896d-725f224c9f34" class="code"><code>apply plugin: &#x27;com.android.application&#x27;
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion &quot;29.0.2&quot;
+    defaultConfig {
+        applicationId &quot;com.younsle.samplepermission2&quot;
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName &quot;1.0&quot;
+        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&#x27;proguard-android-optimize.txt&#x27;), &#x27;proguard-rules.pro&#x27;
+        }
+    }
+    allprojects {
+        repositories {
+            maven { url &#x27;https://jitpack.io&#x27;}
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: &#x27;libs&#x27;, include: [&#x27;*.jar&#x27;])
+    implementation &#x27;androidx.appcompat:appcompat:1.1.0&#x27;
+    implementation &#x27;androidx.constraintlayout:constraintlayout:1.1.3&#x27;
+    implementation &#x27;com.github.pedroSG94:AutoPermissions:1.0.3&#x27;
+    testImplementation &#x27;junit:junit:4.12&#x27;
+    androidTestImplementation &#x27;androidx.test.ext:junit:1.1.1&#x27;
+    androidTestImplementation &#x27;androidx.test.espresso:espresso-core:3.2.0&#x27;
+}</code></pre><p id="99552325-20a7-4208-a914-b2795b588c3e" class="">
+</p><ul id="b061e65e-1a53-41bf-8185-83994f3d8b4b" class="bulleted-list"><li>이 파일은 각각의 모듈에 대한 설정을 담고 있다. 프로젝트가 만들어지면 app 모듈은 기본으로 만들어지는데, 이 파일이 app 모듈의 설정 정보를 담고 있는 것이다.</li></ul><ul id="3478e5d7-8323-4ca8-be23-adc90a01d31b" class="bulleted-list"><li>만약 새로운 모듈을 추가한다면 그 모듈에 대한 build.gradle 파일도 새로 추가된다.</li></ul><ul id="4281f5c6-73af-4f9d-9e9b-e330379bb6ce" class="bulleted-list"><li>이 파일에는 빌드에 중요한 정보들이 들어 있다.</li></ul><p id="33a52eb7-ef1e-4e0d-9afd-575fc1c89849" class="">
+</p><h3 id="3e6cae93-d95b-4d52-b55b-045bdb7378f5" class="">좋은 모듈 정리</h3><ul id="8c480026-f3f5-4f6f-9d10-8ca75bf91517" class="bulleted-list"><li>applicationId<ul id="5bb9d183-90cc-4e8f-b290-ddbca74ee049" class="bulleted-list"><li>이 앱의 id 값이다. 여러분이 만든 앱은 id 값으로 구분되기 때문에 id 값은 전 세계에서 유일한 값으로 설정되어야 한다.</li></ul></li></ul><ul id="bf496411-681e-496e-88f7-236c526ed2fb" class="bulleted-list"><li>compileSdkVersion<ul id="e67c4fce-bf65-4689-810c-ba06bd9c9c24" class="bulleted-list"><li>빌드를 진행할 때 어떤 버전의 SDK를 사용할 것인지를 지정한다. 보통 최신 버전 SDK 버전을 지정하게 된다.</li></ul></li></ul><ul id="da3e6a18-241d-4f23-9d8b-75c30b205509" class="bulleted-list"><li>mimSdkVersion<ul id="a67d51d2-3d74-492b-a389-f60a8c9c791e" class="bulleted-list"><li>이앱이 어떤 하위 버전까지 지원하도록 할 것인지를 지정한다. 모든 단말을 지원하면 좋겠지만 보통 앱에서 사용하는 최신 기능을 하위 단말에서 지원하지 못하는 경우에는 앱에서 사용하는 기능을 지원하기 시작한 버전을 minSdkVersion으로 지정하게 된다.</li></ul></li></ul><ul id="037ca09d-2965-42f6-946d-3eb0c8f3eb2f" class="bulleted-list"><li>targetSdkVersion<ul id="fa4c2cd7-285a-4856-8616-80cf29700727" class="bulleted-list"><li>앱이 검증된 버전이 어떤 SDK 버전인지를 지정한다. 만약 새로운 SDK 가 출시되었다고 하더라도 해당 SDK에서 검증되지 않은 앱은 이 버전을 이전 버전으로 지정할 수도 있다. 만약 SDK가 출시되었다고 하더라도 해당 SDK에서 검증되지 않은 앱은 이 버전을 이전 버전으로 지정할 수도 있다.</li></ul></li></ul><ul id="eb12493c-eb33-4d97-b0b8-4eb044cc68eb" class="bulleted-list"><li>dependencies<ul id="42b176e6-e6ec-434a-a4d6-a2ca3020801e" class="bulleted-list"><li>외부 라이브러리를 추가할 수 있다. 위의 기본 설정을 사용하면 libs 폴더 안에 들어있는 jar 파일을 읽어 들이고 support 패키지를 추가한다.</li></ul></li></ul><ul id="f6078abb-d696-431e-b0e9-b2fe8a321d7b" class="bulleted-list"><li>implementation <ul id="b1786c1c-9f4b-46b4-a1c7-77ed7a7bd0ea" class="bulleted-list"><li>외부 라이브러리</li></ul><p id="b427ea29-c0e7-47c2-be96-9f89f76cbc4f" class="">
+</p></li></ul><h3 id="d3262332-943d-4663-bd16-9ecc3557d48f" class="">settings.gradle</h3><pre id="225f71e4-80ff-4a24-a48e-6129fd8ee4d2" class="code"><code>include &#x27;:app&#x27;</code></pre><ul id="e5bd4254-8c81-4892-a010-d9808e4f2242" class="bulleted-list"><li>어떤 모듈을 포함할 것인지에 대한 정보..</li></ul><p id="c4eb0564-d52b-4fd8-b93e-7f6f5f34888f" class="">
+</p><h3 id="8f5c99ab-97c9-45ea-986d-9668734fc3d8" class="">정리</h3><ul id="98862c69-c49b-4c04-9c50-0c5c6b2c6615" class="bulleted-list"><li>이 설정들은 어떻게 설정하는가에 따라 자동으로 변경된다.</li></ul><ul id="9567c678-55e8-4391-9d56-51e74224c57c" class="bulleted-list"><li><a href="http://local.properties">local.properties</a> 파일 안에는 현재 사용하고 있는 PC에 설치된 SDK의 위치가 기록되어 있다.</li></ul><ul id="0450b8f9-4a7e-4faf-9958-c94e41c8b858" class="bulleted-list"><li><a href="http://gradle.properties">gradle.properties</a> 파일 안에는 메모리 설정이 들어있다. 그리고 <a href="http://gradle-wrapper.properties">gradle-wrapper.properties</a> 파일에는 그래들 버전 정보 등이 들어있다.</li></ul><p id="8b7a7b5d-2b9f-4c71-be31-21cb0020a2a1" class="">
+</p></div></article></body></html>

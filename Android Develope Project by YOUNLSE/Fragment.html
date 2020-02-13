@@ -1,0 +1,666 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragment 상단 탭</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f9374759-fae0-42b6-80ac-89f6ae3686ff" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Fragment 상단 탭</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 16, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="d1055900-d253-4a06-af75-198bfd6c65ae" class="">상단 탭 보여주기</h3><ul id="9d3114ac-0d94-4d20-a9e7-79cab8ea2c3b" class="block-color-red bulleted-list"><li>모바일 단말은 일반적으로 화면의 크기가 작기 떄문에 하나의 화면에 너무 많은 구성 요소를 넣으면 성능이나 사용성 면에서 좋지 않다. </li></ul><ul id="86803406-ad52-43bb-b8f3-0e5348975fb6" class="bulleted-list"><li>안드로이드 경우에도 하나의 화면을 나타내는 액티비티를 최대한 많이 분리시켜서 하나의 화면에 보이는 뷰의 개수를 줄여주는 것이 좋다.</li></ul><ul id="a7e4be6d-3990-4c1a-85f3-af59027110e6" class="bulleted-list"><li>그러나 때로는 하나의 화면에 여러 가지 구성 요소를 넣어두고 필요할 때 전환하여 보여주는 게 좋을때도 있다.<ul id="4eb5913f-5a2f-4e6c-b92b-af182edd7139" class="bulleted-list"><li>대표적인 것들로 서브 화면들이다. 예를 들어, 상단에 버튼이 두 개 있고 그 두개의 버튼을 누를 때마다 아래에 다른 화면을 보여주는 방식으로 만든다면 고객의 일반 정보와 신용도를 구분 하여 보여줄 수 있다.</li></ul><ul id="8a52204d-81fd-48bb-b57c-fc701c16c0e6" class="bulleted-list"><li>이처럼 한 명의 고객과 관련된 서로 다른 두 가지 정보를 한 화면에서 전환하여 보여줄 수 있으므로 더 직관적인 화면을 구성할 수 있다.</li></ul></li></ul><p id="d4fa52a0-9aed-4946-bbd6-c4c47c5e0145" class="">
+</p><h3 id="af796c91-023e-477b-bbee-c2e0c1175a42" class="">탭 뷰(Tab)</h3><ul id="c2259e7d-d69c-407a-b044-ac50533cd104" class="bulleted-list"><li>몇 개의 버튼을 두고 그중 하나의 버튼을 눌러 서브 화면을 전환하는 방식처럼 하나의 뷰에서 여러 개의 정보를 볼 때 일반적으로 사용하는 뷰</li></ul><ul id="e123a3ff-3580-48de-bbce-e1cdbadebe9b" class="bulleted-list"><li>탭은 안드로이드의 전화번호부를 비롯한 몇 개의 기본 앱에서 볼 수 있는데 상단에 있는 탭을 누를 때마다 내용이 보이는 화면 영역이 전환되어 나타난다.</li></ul><ul id="53378b8a-0009-43a3-9b92-bab0c6b046a3" class="bulleted-list"><li>탭은 내비게이션 위젯이라고 불리기도 하며 상단 탭과 하단 탭으로 구분할 수 있다.</li></ul><ul id="f6f94485-1948-4c49-a96a-da2d261904a3" class="block-color-red bulleted-list"><li>최근에는 하단 탭을 더 많이 사용한다. </li></ul><ul id="e23e4fdb-b675-4695-9438-8c4f4f25fdd0" class="block-color-red bulleted-list"><li>상단 탭의 경우에는 액션바에 탭 기능을 넣어 보여주는 방법으로 제공 </li></ul><ul id="262a816b-4865-4fbc-8f2f-6b2500ba8b8e" class="block-color-red bulleted-list"><li>하단 탭은 별도의 위젯으로 제공 </li></ul><p id="15369056-ee9b-4e97-befe-a847269f62b1" class="">
+</p><h3 id="ea979eae-ced0-41b6-986b-483c5d307424" class="">레이아웃에 추가</h3><ul id="73cf3b16-af5d-405f-b859-6b35fa7dc25e" class="bulleted-list"><li>메인 액티비티의 XML 레이아웃에 상단 타이틀 부분의 레이아웃을 직접 정의할 수 있다.</li></ul><ul id="58a369a4-ea39-42ce-8c06-50645a10df1c" class="bulleted-list"><li>자동으로 만들어지는 메인 액티비티의 레이아웃에는 타이틀 부분이 빠져있고 액션바가 들어간 스타일이 지정되어 있지만 액션바가 들어가 있지 않은 스타일로 바꾸는 경우에는 직접 상단의 타이틀 부분 레이아웃을 만들 수 있다.</li></ul><h3 id="6fdc2b87-b515-4356-a5af-f8912a110618" class="">XML 제작</h3><pre id="b0240444-88b4-4871-8c4a-4b6908b6341c" class="code"><code>&lt;CoordinatorLayout&gt;
+	&lt;AppBarLayout&gt;
+		&lt;Toolbar&gt;
+		&lt;/Toolbar&gt;
+		&lt;TabLayout&gt;
+		&lt;/TabLayout&gt;
+	&lt;/AppBarLayout&gt;
+	&lt;FrameLayout&gt;
+	&lt;FrameLayout&gt;
+&lt;/CoordinatorLayout&gt;</code></pre><ul id="ac8c0f83-54a6-496e-bdc0-5c30c97a9e42" class="bulleted-list"><li>상단의 액션바 부분과 가운데 내용이 보이는 부분이 함께 들어간 구조에서는 두 부분의 크기가 잘 맞게 보여야 하므로 CoordinatorLayout이 사용된다.</li></ul><ul id="8a7cad5e-78f6-49a1-aaa8-5cbeed9c3afe" class="bulleted-list"><li>그리고 그 안에 AppBarLayout과 FrameLayout이 들어간다.</li></ul><ul id="d44ca8ba-0b84-4e65-a07e-cd3f3124b3b6" class="bulleted-list"><li>AppBarLayout이 상단의 액션바 영역, FrameLayout이 내용이 보이는 화면 부분이 된다</li></ul><ul id="5f0c0823-eee7-4467-941a-ff96c6e05bb6" class="bulleted-list"><li>Toobar는 액션바 안에서 타이틀이 메뉴 아이콘이 보일 영역을 말하며 탭 버튼이 그 아래에 보일 수 있도록 TabLayout이 들어가 있다.</li></ul><ul id="6db4b7db-a836-47cc-99b7-a70cce8c0bc1" class="bulleted-list"><li>탭 버튼을 보이지 않게 하고 싶다면 TabLayout을 넣지 않으면 된다.</li></ul><p id="d2212990-0af9-41f1-ad6f-44e7eccf52d9" class="">
+</p><h3 id="67c73fe4-045e-4c66-a69f-f5d0ed885977" class="">CoordinatorLayout</h3><ul id="cf3eb6c4-19e9-4987-8f27-957886a383fa" class="bulleted-list"><li>액션바 영역을 포함한 전체 화면의 위치를 잡아주는 역활을 하므로 가장 바깥에 위치하고 있다.</li></ul><ul id="01dc73c7-db2b-436b-aa9d-887a945cbadb" class="bulleted-list"><li>CoordinayotLayout 안에 AppBarLayout 과 함께 다른 레이아웃을 넣으면 그 둘 간의 간격이나 위치가 자동으로 결정된다.</li></ul><p id="af68f5ca-64bf-4d2c-a763-2dbd115363ba" class="">
+</p><h3 id="710ea5d4-7fdb-45ba-a013-45a6a7beec2c" class="">AppBarLayout</h3><ul id="ebc5b7fa-342d-4cf0-8eb1-38dc67709d1b" class="bulleted-list"><li>액션바를 가리키는데 이 안에는 Toolbar 가 들어갈 수 있으며, 탭을 사용하는 경우에는 탭의 버튼들이 들어갈 수 있는 TabLayout을 추가할 수 있다.</li></ul><ul id="cc68ac8d-f3d3-43bd-9c7a-ab51c538988a" class="bulleted-list"><li>AppBarLayout 아래쪽에는 FramLayout을 넣어 화면의 내용을 구성할 수 있다.</li></ul><p id="f599192d-8c2e-4e2e-a2c5-4aefb55b3cc2" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a085ec1c-0c26-4059-95e4-29f7cf5ce445"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">app → xml 코드 에서 사용하는 속성 중에서 안드로이드 기본 API가 아니라 외부 라이브러리에 들어 있는 속성을 지정하고 싶을 때 사용한다.</div></figure><h3 id="5281feb9-7769-4ce8-9a5d-dafc3708bce2" class="">속성 앞에 붙는 접두어</h3><pre id="2c57d665-6c5e-405b-92c9-b2cc210d5d79" class="code"><code>xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</code></pre><ul id="63a54536-9b61-4a71-9bd7-89429ae4f5d6" class="bulleted-list"><li>xmlns:app 대신 xmlns:myapp 으로 변경하고 싶다면 그 파일 안에서 참조하는 app도 모두 myapp으로 변경해야 한다.</li></ul><p id="4d859824-0db2-46ff-bc86-0eee5a8f9134" class="">
+</p><h3 id="2403e2e5-1051-4478-a7ba-f8dcc2d225dc" class="">TabLayout</h3><ul id="83ed4730-f219-4eec-b289-ee1901e0b2f0" class="bulleted-list"><li>tabMode의 값을 fixed</li></ul><ul id="4359e108-e032-4e8f-9d89-15721167a543" class="bulleted-list"><li>tabGravity의 값을 fill로 설정하여 [탭] 버튼들이 동일한 크기를 갖게 만든다.</li></ul><h3 id="aa060042-0c28-49b4-9975-770d211d74e2" class="">FrameLayout</h3><ul id="1672d59e-0861-4141-b2e6-33fda921fc06" class="bulleted-list"><li>id 값은 container로 설정하여 자바 소스 코드에서 이 안에 프래그먼트르 넣을 수 있도록 한다.</li></ul><p id="c8c6f786-b021-4255-8733-a8e524f19910" class="">
+</p><p id="b450071c-d5f7-4020-b61c-a474f9236710" class="">
+</p><h3 id="f94c0156-e120-443e-be58-76c97f243aec" class="">액션바 속성 팁</h3><pre id="ee997391-8207-4802-8b3b-190f8b1d1aa4" class="code"><code>actionBar.setDisplayHomeAsUpEnabled(false);			
+//액션바 아이콘을 업 네비게이션 형태로 표시합니다.
+
+actionBar.setDisplayShowTitleEnabled(false);		
+//액션바에 표시되는 제목의 표시유무를 설정합니다.
+
+actionBar.setDisplayShowHomeEnabled(false);			
+//홈 아이콘을 숨김처리합니다.</code></pre><p id="81435fe9-fbf1-469e-9465-85627b7d2a23" class="">
+</p><p id="f265bb4e-fcf3-41d7-883b-f6952f369b80" class="">
+</p><p id="de08270a-b9d0-4137-b421-c1692d91c9fc" class="">
+</p><h3 id="17fcf34b-2ff6-4f65-9c0b-71e4d9e67a40" class="">탭 3개 전환 방법</h3><ol id="ea840ef2-c2f2-47b2-bd36-c9337f13bafe" class="numbered-list" start="1"><li>탭은 세 개를 만들 것이다.</li></ol><ol id="79fad308-48db-4ac9-bf0f-cb9950f77ac9" class="numbered-list" start="2"><li>각각의 탭을 누를 때마다 하단에 다른 내용이 보여야 한다.</li></ol><ol id="80eda14c-db2b-44a5-a7e6-5fdb05bf8531" class="numbered-list" start="3"><li>액티비티는 하나인데 그중에서 일부분만 화면이 변경되도록 해야 하므로 앞에서 살펴보았던 프래그먼트를 사용할 수 있다.</li></ol><ol id="535086ed-bb5c-42a2-b674-b60c65353de8" class="numbered-list" start="4"><li>FrameLayout으로 하단에 공간을 확보한 후 그 안에 상황에 따라 서로 다른 프래그먼트를 넣어줄 수 있다.</li></ol><ol id="a346ef03-1ce5-4554-bbcd-bdf85ac9a5bb" class="numbered-list" start="5"><li>여기서는 FrameLayout 안에 세 개의 프래그먼트를 넣을 것이므로 먼저 세 개의 프래그먼트를 프로젝트 폴더의 res/layout 폴더 안에 추가한다.</li></ol><ol id="a61e25dc-c3cd-4e93-9cb3-5c70e6f0adb3" class="numbered-list" start="6"><li>첫 번째 프로그먼트를 위한 xml 레이아웃은 fragment1.xml 이름으로 만들고 최상위 레이아웃은 linearLayout으로 변경한 후 그 안에 버튼을 하나 추가한다.</li></ol><p id="5318ab18-8475-40c7-8628-35fa2909e909" class="">
+</p><h3 id="f935c1a7-885b-4ab0-8890-3f3214a96631" class=""><a href="http://fragment1.java">Fragment1.java</a> → 나머지 1,2,3 동일하게 inflate 션 한다.</h3><pre id="99c1f10d-5eed-4b73-b181-0cde1f569c77" class="code"><code>public class Fragment1 extends Fragment {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment1, container, false);
+    }
+}</code></pre><p id="efcb8214-2486-48ee-8c95-39bcf623bebc" class="">
+</p><h3 id="d1b64afc-3673-4bc8-b2f7-e8b2d298f152" class="">MainActivity.java</h3><pre id="654d0274-adeb-4d65-9ec7-ab564a1906b7" class="code"><code>public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
+
+    Fragment1 fragment1;
+    Fragment2 fragment2;
+    Fragment3 fragment3;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //Toolbar 객체는 코드에서 setSupportActionBar() 메서드를 사용해 액션바로 설정해야 한다.
+        //setSupportActionBar() 메서드는 액티비티에 디폴트로 만들어진 액션바가 없을 경우에만 동작한다.
+        //그런데, 프로젝트가 만들어질때 메인 액티비티에는 자동으로 액션바가 만들어진다. -&gt; 이것은 테마(theme)를 액션바가 들어 있는 테바로 설정했기 때문이다.
+        //styles.xml -&gt; NoActionBar 로 변경한다. -&gt; 이 스타일을 적용한 액티비티에는 액션바가 만들어지지 않는다.
+        //따라서 setSupportActionBar() 메서드로 호출하여 직접 액션바를 설정해야 한다.
+        //이미 액션바를 코드에서 설정했으므로 세 개의 프래그먼트 객체를 만들어 변수에 할당하고 첫 번째 프래그먼트가 화면에 보이도록 한다.
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        fragment1 = new Fragment1();
+        fragment2 = new Fragment2();
+        fragment3 = new Fragment3();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment1).commit();
+
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.addTab(tabs.newTab().setText(&quot;Call Log&quot;));
+        tabs.addTab(tabs.newTab().setText(&quot;Spam log&quot;));
+        tabs.addTab(tabs.newTab().setText(&quot;CallBook&quot;));
+
+        //addTab() 메서드가 있어서 [탭] 버튼을 추가할수 있게 한다.
+        //여기서는 세 개의 [탭] 버튼을 추가했으며 각각이 [탭] 버튼을 눌렀을 때 container라는 id를 가진 FrameLayout 안에 각각의 [탭] 버튼에 해당하는 프래그먼트 화면이 보이도록 한다.
+        //OnTabSelectedListener -&gt; 이 리스너는 [탭] 버튼이 선택될 때마다 그 리스너 안에 있는 onTabSelected() 메서드가 호출되도록 한다.
+        //이 메서드로는 현재 선택된 탭 객체가 전달되므로 탭의 position 정보를 확인한후 각각의 fragment에 축한다.
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Log.d(&quot;MainActivity&quot;, &quot;selected Tab : &quot; + position);
+
+                Fragment selected = null;
+                if (position == 0) {
+                    selected = fragment1;
+                } else if (position == 1) {
+                    selected = fragment2;
+                } else if (position == 2) {
+                    selected = fragment3;
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+}zxx</code></pre><p id="cebe04aa-0fdb-491f-a733-9e45f3d491c1" class="">
+</p></div></article></body></html>

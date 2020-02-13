@@ -1,0 +1,597 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Content Provider</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e1622185-630e-42c9-bf8c-ba0cc0ff17e7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Content Provider</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 07, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="067a5608-37a4-425d-b302-de39e0a53365" class="">Content Provider</h3><ul id="6efb7f9a-effd-4aaa-a7fb-2edffacece13" class="bulleted-list"><li>앱과 앱 저장소 사이에서 데이터 접근을 쉽게 하도록 관리해주는 클래스<ul id="24a1c48e-582a-43a7-b94e-a164c6e75237" class="bulleted-list"><li>앱의 집접적인 코드 변경 없이 데이터 접근/변경할 수 있도록 해준다.</li></ul><ul id="5e5a9855-8a14-4bfd-8df6-e72f422d55f8" class="bulleted-list"><li>Loader, CursorAdapter 같은 클래스 사용</li></ul><ul id="c3989077-def8-467f-b626-01e759c30e05" class="bulleted-list"><li>다른 사용자들이 앱에 접근, 사용, 수정할 권한을 준다.</li></ul></li></ul><ul id="dd0004a8-1072-4944-b75d-e3fcb82961fa" class="bulleted-list"><li>Mainfest에 권한 부여</li></ul><p id="9cd1f1a7-454a-44aa-9a3d-717b6d8a3501" class="">
+</p><h3 id="ce00620a-133d-400a-8665-5e1eafcbc68b" class="">Content Resolver</h3><ul id="66288491-4919-4f1d-bbcd-403a6ea82ee7" class="bulleted-list"><li>폰 안에 여러 앱, 여러 프로바이더가 있기 때문에 이들을 관리하고 흐름을 통제.</li></ul><ul id="d4fb6a46-a5a1-4344-b2e0-f095b55a8156" class="bulleted-list"><li>앱이 접근하고자 하는 프로바이더 사이에서 중개자 역활</li></ul><ul id="e66e145d-46f1-449f-a876-8cd6cc062df4" class="bulleted-list"><li>query(읽기), insert, update, delete 작업이 가능</li></ul><pre id="f8c7ba3c-5f24-4ad1-a8a9-87a78bfcbd77" class="code"><code>ContentResolver resolver = getContentReslover();
+Cusrsor cursor = resolver, query(DroidTermsExampleContract.CONTENT_URI,
+							null, null, null, null);
+</code></pre><p id="09af80bf-e7eb-4a07-8472-9065290badd6" class="">
+</p><h3 id="29b3b1cf-8b7f-4286-aaf9-a8613644f064" class="">Content Provider 사용</h3><ul id="bbd90da6-ba6e-4a8c-8c53-2ce4d7061c09" class="bulleted-list"><li>우선 manifest에 등록해야 한다. application 안에 및 name, authority 등록</li></ul><ul id="eb45d5d3-8e64-492e-a5e8-6582069aacb5" class="bulleted-list"><li>Uri에 자주 쓰이는 Schema, authority, path 등은 String 및 Uri 변수로 설정<ul id="1db6d9de-7caa-44bc-8d26-24ff07c5a20b" class="bulleted-list"><li>여러곳에서 쓰기 위해 Private static String/Uri 로 선언이 편함</li></ul></li></ul><p id="cbcf0b70-8baf-4ea2-9ca2-7f6c67b6c9f2" class="">
+</p><ul id="26494a37-b96e-41cb-a478-7fd034c1f077" class="bulleted-list"><li>예를 들어, 앱 내에 사용되는 Uri가 content://authority와 content://authority/path 두 가지라면 각각의 경우에 다른 처리가 필요하다.</li></ul><ul id="96909a5d-6c38-4a95-99a9-9a65749897cc" class="bulleted-list"><li>이를 만약 if 문으로 구분하게 되면 경우의 수가 많아지므로 &#x27;UriMatcher&#x27;를 사용한다.</li></ul><p id="121b1ecd-29c6-462a-87f3-b9285cfe0621" class="">
+</p><h3 id="a30bf6eb-2bc4-4a50-b01d-6bd433b833b5" class="">UriMatcher</h3><ul id="ef2a6d1a-41c6-44bd-9d70-d7b2716bb4d2" class="bulleted-list"><li>Content Provider가 받는 Uri의 종류를 결정해 준다.</li></ul><ul id="b5ee5796-5238-466a-a0a6-533762658cb4" class="bulleted-list"><li>사용자가 Uri1 / Uri2를 구분해놓고, 상수 와일드카드(#) 사용할 수 있다.</li></ul><ul id="056e82f3-c29c-450c-a05c-22adf1ff9eb6" class="bulleted-list"><li>UriMatcher 함수 안에서 NO MATCH 및 추가 MATCH 등록하여 사용하면 편리</li></ul><pre id="efe5e275-9379-4a3a-92ad-c21a3a279b68" class="code"><code>public static final int CODE_ALL = 100;
+public static final int CODE_ID = 101;
+private static final UriMatcher sUriMatcher = buildUriMatcher();
+//아래 함수 작성 후, 프로바이더에서 편하게 사용하기 위해 static 선언
+
+public static UriMatcher buildUriMatcher() {
+  UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+  uriMatcher.addUri(Contract.AUTHORITY, Contract.PATH, CODE_ALL);
+  uriMatcher.addUri(Contract.AUTHORITY, Contract.PATH + &quot;/#&quot;, CODE_ID);
+  // 위 코드는 특정 정수 로우값을 가질 경우 사용
+  return uriMatcher;
+}</code></pre><ul id="6f82830d-271a-42e3-bd28-dc412663545a" class="bulleted-list"><li>UI에서 데이털를 query(읽기) 할 경우 Reslove를 가져와 query 메소드 호출(Uri 같이 전달) → Uri 의 Authority를 확인하여 매치되는 Provider를 찾아 쿼리를 전달 → 쿼리 함수에서 UriMatcher를 사용해 가져올 데이터 종류 확인</li></ul><ul id="f3efa4ac-e794-4bd7-be38-9021503514e4" class="bulleted-list"><li>Uri와 기타 파라미터를 해독해 알맞은 SQL 코드 작성 → 해당되는 Data 가져온다. → Cursor 반환</li></ul><p id="b1c0703d-13c2-41fa-a495-72a2f7e14ab0" class="">
+</p><h3 id="cd41646e-fb90-4f22-8136-d5e53c2922ab" class="">Content Provider 메소드</h3><ul id="7059fa18-6ca4-4fa6-9996-f7dc3204fc5f" class="bulleted-list"><li>6개의 메소드를 Override 한다.<ul id="94079ad1-9d31-4e59-9da8-f1549a9e804f" class="bulleted-list"><li>OnCreate (void)</li></ul><ul id="5d268df3-9e2d-4d8d-9bcb-b59c975b3ef0" class="bulleted-list"><li>insert (return Uri)</li></ul><ul id="2014031e-2315-4a91-bf2b-273470bb070c" class="bulleted-list"><li>query (return Cursor)</li></ul><ul id="4575aafc-4aad-4f0b-9c25-8529ab35632d" class="bulleted-list"><li>update (return int)</li></ul><ul id="c68e977d-5423-4b71-9b97-16d52d28962a" class="bulleted-list"><li>delete (retrun int)</li></ul><ul id="1736eff8-23be-4932-a048-a1602317283b" class="bulleted-list"><li>getType (return String)</li></ul><p id="1693b3b5-3b3a-4102-8868-4115ab3ec835" class="">
+</p></li></ul><pre id="e4df1cdd-84cc-4f24-a8b2-5d50ac64d9ce" class="code"><code>Cursor c =  getContentResolver().query(
+                ContactsContract.CommonDataKinds
+                        .Phone.CONTENT_URI,  // 조회할 컬럼명
+                null, // 조회할 컬럼명
+                null, // 조건 절
+                null, // 조건절의 파라미터
+                null);// 정렬 방향
+
+</code></pre><ul id="4bdf4fbc-cae6-447c-95a2-a0576c84c30b" class="bulleted-list"><li>데이터베이스에 쿼리분 실행하고 레코드 세트를 받아오듯이</li></ul><ul id="5e3529ed-445b-4688-b641-925def39bad1" class="bulleted-list"><li>ContentResolver 객체의 query() 메소드로 콘텐츠 제공자(Content Provider) 로부터 데이터 세트를 받아온다.</li></ul><ul id="4364efa3-f297-41f8-8b3d-385ce864d89f" class="bulleted-list"><li>이를 다루기 위해 Cursor 객체가 쓰여지고 있고</li></ul><ul id="3c86edf4-bfbe-49c9-8da2-4a36752c00cc" class="bulleted-list"><li>moveToFirst(), moveToNext() 메소드로 데이터 세트를 하나하나 뽑아 낸다.</li></ul><ul id="2c24416d-32b2-4dcc-8ae3-ef5d0d728f41" class="bulleted-list"><li>query() 메드에 넘겨주는 매개 변수들은 데이터 형태등에 따라 달라진다.</li></ul><ul id="ed5dd9f4-3d7f-4e8d-8098-a56a3584ce40" class="bulleted-list"><li>첫 번째 매개변수가 콘텐트 URI인 콘텐트 제공자 안에 있는 테이블을 가리키는 URI 이다.</li></ul><p id="27b23308-3b91-47a2-8e11-ab2e265a4a8c" class="">
+</p><figure id="15a9e053-5c40-4e14-8356-ac9c94a76ca2" class="image"><a href="Content%20Provider/Untitled.png"><img style="width:602px" src="Content%20Provider/Untitled.png"/></a></figure><p id="73e58798-d232-490e-a34a-51022dbf57c4" class="">
+</p><p id="50b393c7-850a-472f-a971-c0a7c26b77ce" class="">
+</p><p id="c390b6a4-c69a-404e-b712-f2a41839a99c" class="">
+</p></div></article></body></html>

@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Inflate ##</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ca90b580-cdf5-40a3-a3f4-44113107e286" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">Inflate ##</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 15, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><pre id="8fef7e92-eff1-4cd8-ae56-9b6ee7b7b3ee" class="code"><code>public class MainActivity extends AppCompatActivity {
+	@Override
+
+	protected void onCreate( BundlesavedInstanceState ) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+}</code></pre><ul id="f1e7bd75-810a-453f-97db-b54d54d54be6" class="bulleted-list"><li>Super.onCreate() 메서드는 부모 클래스의 동일한 메서드를 호출하는 것이니 사실상 setContentView() 메서드가 소스 코드의 전부인 셈<ul id="6ac3fcfd-6d1e-4081-bf0e-bb0b02c788e9" class="bulleted-list"><li>setContentView(R.layout.activity_main) 으로 xml 레이아웃 파일과 연결 해준다.</li></ul><ul id="496d7f3c-0673-48a9-ab8a-a380ce1b7523" class="bulleted-list"><li>R.layout.레이아웃파일명</li></ul><ul id="947a2833-8e25-4285-a251-2d68edf3f7a9" class="bulleted-list"><li>R = res 폴더를 의미</li></ul><ul id="9b85f624-7a18-4baa-a123-1d1d779419bb" class="bulleted-list"><li>Layout = /res/layout</li></ul><p id="82e74b42-9ff5-4143-b539-46d0c0ead0ec" class="">
+</p></li></ul><h3 id="80da598b-32b7-49b5-ae62-8b0088c4c4af" class="">인플레이션(Inflation)</h3><ul id="c6ab4673-684a-4774-a5ba-fec15538210f" class="bulleted-list"><li>앱이 실행될 때 XML 레이아웃의 내용이 메모리에 객체화되고 객체화된 XML 레이아웃을 소스 파일에서 사용한다.</li></ul><ul id="8f7d7bb7-5dce-44af-8a72-c14528d87fb1" class="bulleted-list"><li>XML 레이아웃의 내용이 메모리에 객체화되는 과정이다.</li></ul><ul id="45fd6b9d-f159-4b29-a848-b5857bbd7cf6" class="bulleted-list"><li>XML 레이아웃은 앱이 실행되는 시점에 메모리에 객체화 된다.</li></ul><ul id="d996c989-27fd-49a4-829d-1a4c7a764d99" class="bulleted-list"><li>XML 레이아웃 파일에 &lt;Button&gt; 태그를 정의해도 앱은 자신이 실행되기 전까지 버튼이 있는줄 모른다.</li></ul><ul id="f2e1cd6f-f3d3-4c73-999c-602467a62b30" class="bulleted-list"><li>만약 메모리에 객체화되지 않은 버튼 객체를 참조하려고 했을 경우 널 포인터 예외 오류가 발생하게 된다.</li></ul><p id="5a9f5a26-93f3-468a-b606-78f1cb49ac6c" class="">
+</p><h3 id="ba5419bf-5204-4ae7-bb70-7ff66434c02f" class="">SetContentView()</h3><ul id="be9e963a-5e4e-45de-a633-d9718005cd56" class="bulleted-list"><li>화면에 나타날 뷰를 지정</li></ul><ul id="cac7d4aa-468a-4fbc-98a3-bb4560f89e9e" class="bulleted-list"><li>레이아웃 내용을 메모리에 객체화하는 두가지 역활을 수행한다.</li></ul><p id="bf37ab83-c66b-41a8-a68d-d1b139c5c45c" class="">
+</p><pre id="d59aecb1-c53f-4dc2-aa87-46aa12f754f0" class="code"><code>[Reference]
+Public void setContentView (int layoutResID)
+Public void setContentView (View view [, ViewGroup.LayoutParams params])</code></pre><p id="c89b3fec-5608-4fff-a75f-4f468dae4932" class="">
+</p><h3 id="e855957a-d5b6-44bc-84a6-e28a524217ba" class="">부분 화면을 보여주는 법</h3><ul id="31abdc0c-4d75-4b79-bc10-ac72f7ee4560" class="bulleted-list"><li>부분 화면을 메모리에 객체화하려면 인플레이터르 사용해야 한다.</li></ul><ul id="1773c3e7-8b23-4b68-8c2e-2ec2e65d894d" class="bulleted-list"><li>시스템 서비스로 LayoutInflater라는 클래스를 제공한다.<ul id="b72c8e26-2cad-45a3-a972-b0ab2480a915" class="bulleted-list"><li>시스템서비스 : 단말이 시작되면서 항상 실행되는 서비스이다.</li></ul></li></ul><ul id="611b0489-e5ae-4f21-aeed-0c5a9602bd56" class="bulleted-list"><li>LayoutInflater<ul id="fd3a6b90-11db-4dc3-8f9f-fd2668f8e63e" class="bulleted-list"><li>이 클래스는 시스템 서비스로 제공하는 클래스이므로 다음 getSystemService() 메서드를 이용하여 LayoutInflater 객체를 참조한 후 사용해야 한다.</li></ul><p id="3dda3f6e-88ee-4251-89e6-7604bd993079" class="">
+</p></li></ul><pre id="2a37f04e-8d8d-4a5b-804d-4cbedcf39bfd" class="code"><code>[Reference]
+getSystemService(Context.LAYOUT_INFLATER_SERVICE)</code></pre><p id="0ebaafdd-e4e5-437e-832c-11074c8f4d36" class="">
+</p><h3 id="ddaf451f-61a5-4b75-a491-5280bdb63efc" class="">정리</h3><ul id="ddb18da8-ffbe-48bd-b281-410b7c34978a" class="bulleted-list"><li>메인 레이아웃에 부분 레이아웃이 포함되어 있다면 메인 레이아웃(activity_main.xml)은 소스코드에서 setContentView(R.layout.activity_main)와 같은 방법으로 객체화하여 화면에 나타낸다.</li></ul><ul id="6ea59a41-07ce-444a-a567-10a59fe911e9" class="bulleted-list"><li>그중 일부 화면을 분리한 부분 화면(button.xml)은 LayoutInflater 객체를 사용해 뷰 그룹 객체로 객체화(인플레이션) 한 후 메인 레이아웃에 추가해야 한다.</li></ul><p id="342e5735-bf5f-49b6-8b24-ea36b77dca05" class="">
+</p><h3 id="17427039-83a8-4119-810d-58426532639e" class="">LayoutInflater.inflate()</h3><pre id="004b2a69-8dda-44e3-80dc-5c28834583fd" class="code"><code>//[Reference]
+View inflate (int resource, ViewGroup root)
+// inflate() 메서드는 첫 번째 파라미터로 XML 레이아웃 리소스 두번째 파라미터로 
+//부모 컨테이너를 지정한다.</code></pre><p id="390f966c-162d-4081-ab81-4721257e02f5" class="">
+</p><h3 id="845353fb-7c22-437e-97a9-aa02b29b2e1b" class="">LayoutInflater</h3><ul id="920953a9-334e-4799-bc57-1382ea599a50" class="bulleted-list"><li>시스템 서비스로 제동되므로 getSystemService() 메서드를 호출하는 방법을 사용</li></ul><ul id="05afc6fa-7bfe-4453-b9af-ed283bf8b5bf" class="bulleted-list"><li>LayoutInflater 클래스의 from() 메서드를 호출하여 참조</li></ul><pre id="86a9e919-2838-4590-a0f0-3111b9a6d339" class="code"><code>//[Reference]
+Static LayoutInflater LayoutInflater.from (Context context)</code></pre><p id="e635b676-90ee-43cb-8675-a006fa8784ad" class="">
+</p><pre id="63a250bc-4ad9-4e1b-a3e2-484fff72f863" class="code"><code>public class MenuActivity extends AppCompatActivity {
+	LinearLayout container;
+
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_menu);
+		container = findViewById(R.id.container);
+		
+		Button button = findViewById(R.id.button);
+		button.setOnClickListener(new View.OnClickListener(){
+		
+			@Override
+			public void onClick(View view){
+				LayoutInflater inflater=(LayoutInflater)
+				getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				inflater.inflate(R.layout.sub1,container,true);
+				//sub1.xml의내용을메모리를객체화
+				//getSystemService()메서드를사용하여LayoutInflater객체를참조
+				//참조한인플레이터의inflate()메서드의파라미터로R.layout.sub1,container객체를전달한다.
+				//id로갖는리니어레이아웃객체에sub1.xml파일의레이아웃을설정하느것
+				
+				CheckBox checkBox = container.findViewById(R.id.checkBox);
+				checkBox.setText(&quot;로딩되었어요&quot;);
+				//이제부분레이아웃파일(sub1.xml)이객체화되었으므로부분레이아웃에들어있던텍스트뷰와체크박스를참조할수있다.
+				//단,container(LinearLayout)객체에설정되어있으므로container객체의findViewById()메서드를사용해야한다.
+	
+	}
+});
+}</code></pre><p id="30991329-4c74-45a0-a491-f7d2a21e3732" class="">
+</p><p id="f76e802e-06ad-4533-a670-d94ae2747418" class="">
+</p><h3 id="e51912fa-bf54-4a8d-bd07-e7ca1d2a7c51" class="">여러 화면 만들고 화면 간 전환하기</h3><ul id="ff0e0853-477f-41f6-b4d2-f1ed8e4cd959" class="bulleted-list"><li>앱의 기본 구성요소<ul id="251f1472-7c9e-4869-8e53-20a2c51c527b" class="bulleted-list"><li>액티비티</li></ul><ul id="bc8d7e61-879d-4edb-80ac-eb310c112ca3" class="bulleted-list"><li>서비스</li></ul><ul id="228abcb0-f2d4-4ee6-847a-5627e6d5e06d" class="bulleted-list"><li>브로드캐스트 수신자</li></ul><ul id="013140fc-b0e8-414c-a863-956f345fb0f9" class="bulleted-list"><li>내용 제공자</li></ul></li></ul><ul id="1291dd5a-404e-4a18-ae42-c9dd1a92b6b7" class="bulleted-list"><li>앱을 만들어 단말에 설치했을 때 안드로이드 시스템이 이 요소에 대한 정보를 요구한다.</li></ul><p id="a99358b9-01c2-47bf-91cc-13a7a1beac36" class="">
+</p><h3 id="249dc2a4-13f7-4f73-9407-b3df8d8662fe" class="">Activity (startActivityForResult)</h3><ul id="aea645ce-a0ac-4d97-ab89-0d069a2b6352" class="bulleted-list"><li>startActivty() 메서드를 사용하면 소스 코드에 띄울 수 있다 단순히 화면에 보이도록 만든다.</li></ul><ul id="043405ca-a5c2-4dc1-b6c3-d871ae94b19d" class="bulleted-list"><li>어떨때 띄울지 띄었던 액티비티로부터 다시 원래의 액티비티로 돌아오면서 응답을 받아 처리하는 코드가 필요하다.<ul id="c8575922-efbf-49e3-ae63-6b2cec845e5a" class="bulleted-list"><li>startActivityForResult() 메서드를 사용해야 해결 가능하다.</li></ul></li></ul><pre id="905cbcef-0ab5-4105-b051-7b41279e3e49" class="code"><code>//[Reference]
+startActivityForResult (Intent intent, int requestCode)</code></pre><p id="b3e56784-28e3-4372-845e-650c9dde61e3" class="">
+</p><h3 id="53d538b4-2841-43fb-ba74-e0515e323e54" class="">startActivityForResult()</h3><ul id="65d2f853-f6b0-4ec7-a975-22053fd03af4" class="bulleted-list"><li>파라미터는 인텐트와 정수로 된 코드 값이다.</li></ul><ul id="25d13f8d-2377-45c9-8884-1545ed1a4299" class="bulleted-list"><li>코드 값은 일반적으로 각각의 액티비티를 구별하기 위해 사용</li></ul><ul id="af4266d2-ee9f-42a0-b45c-3ba219ca8113" class="bulleted-list"><li>(액티비티에서 새 액티비티를 띄우기만 하는 것은 startActivity() 메서드로 구현해도 상관없다. 하지만 새 액티비티에서 원래의 액티비티로 돌아 오면서 새 액티비티의 응답을 받아 처리해야 하느 ㄴ경우에는 어떤 액티비티로부터 돌아온 응답인지를 구분해야 이 응답을 처리할 수 있다.)</li></ul><p id="f751deeb-aa37-40b9-bea7-38b2b2ee3454" class="">
+</p><pre id="c937355a-2fd8-4b96-af3b-82710e7e0b93" class="code"><code>//[Reference]
+Protected void onActivitiyResult(int requestCode, int resultCode, Intetn intent)</code></pre><ol id="b6e361cf-a9aa-4ef1-82d0-95ac449c2727" class="numbered-list" start="1"><li>첫 번째 파라미터는 액티비티를 띄울 때 전달했던 요청 코드와 같다. 이 값으로 어떤 액티비티로부터 응답을 받은 것인지 구분할 수 있다.</li></ol><ol id="91513070-b10e-4e71-92d4-a52d17bc01d7" class="numbered-list" start="2"><li>두 번째 파라미터는 새 액티비티로부터 전달된 응답 코드이다. 응답 코드는 새 액티비티에서 처리한 결과가 정상인지 아닌지를 구분하는 데 사용횐다.<ol id="5ae3430a-ab99-4175-80d2-d997900f6192" class="numbered-list" start="1"><li>평균적으로 Activity.REQUEST_OK 상수를 전달하는 방법으로 정상 처리임을 알린다.</li></ol><ol id="b496e4a4-0b6b-4b50-adb1-f7ac885466ea" class="numbered-list" start="2"><li>임의 코드를 제작해도 상관업다.(200성공, 400실패)</li></ol></li></ol><ol id="6de33bae-d623-458e-ab47-1d8f9074fac7" class="numbered-list" start="3"><li>세 번째 파라미터는 새 액티비티로부터 전달 받은 인텐트이다. 이 인텐트 안에 새 액티비티의 데이터를 전달할 수 있다.<ol id="7d37eaa1-50cd-44d1-a308-f5c15492768d" class="numbered-list" start="1"><li>인텐트 객체는 주소 새 액티비티로부터 원래의 액티비티로 데이터를 전달할 때 사용한다.</li></ol><p id="8943441e-0f6a-4779-80c5-ea96c2419bcf" class="">
+</p></li></ol><p id="5054fab9-ce77-41f4-9a6c-1fa0f4f6c4a9" class="">
+</p><h3 id="63fbecd7-31f1-42ef-a80a-dcadfd0c0d07" class="">@ putExtra()</h3><ul id="afc4940f-3ca7-4492-a476-69f91006d4b1" class="bulleted-list"><li>인텐트 객체에 데이터를 넣는 방법</li></ul><ul id="28aca550-158f-4277-a477-851bd2cd5d94" class="bulleted-list"><li>키, 데이터를 쌍으로 넣어야 한다.</li></ul><ul id="f709de96-422b-4140-8e1b-f9e5fefe2307" class="bulleted-list"><li>이 값을 다시 확인할 경우에는 키를 사용해 데이터 값을 가져올 수 있다.</li></ul><p id="e06c5dde-9bfd-4fee-985a-7e9dcf50a43e" class="">
+</p><h3 id="f8b34ba1-45b7-45d3-b0cc-25948d8bb7ee" class="">@ 과정</h3><ul id="6bbd6e1d-37e7-4575-92c7-0148434b3b37" class="bulleted-list"><li>새로운 액티비티 만들기<ul id="65e11cf1-2b5e-4a74-827b-6a63853e4bc5" class="bulleted-list"><li>새로운 액티비티를 추가하면 XML 레이아웃 파일 하나와 자바 소스 파일 하나가 만들어지고 매니페스트 파일에 액티비티 태그가 추가된다.</li></ul></li></ul><ul id="7320774f-34a8-43f7-a8cf-99987a96087c" class="bulleted-list"><li>새로운 액티비티의 XML 레이아웃 정의하기<ul id="f7a1ac9b-a98c-46b0-ba4d-c2c2d4507fdd" class="bulleted-list"><li>새로 만들어진 XML 레이아웃을 수정하여 새로운 액티비티의 화면이 어떻게 배치될지를 작성한다.</li></ul></li></ul><ul id="fc24eefe-bc62-4fd3-86d3-31b104e0f329" class="bulleted-list"><li>메인 액티비티에서 새로운 액티비티 띄우기<ul id="68fe44f4-cd64-4f43-bfdc-100f730bd9fe" class="bulleted-list"><li>메인 액티비티의 버튼을 클릭하면 startActivityForResult() 메서드로 새로운 액티비티를 띄운다.</li></ul></li></ul><ul id="370f432c-519c-48da-a0e3-8dc094600f33" class="bulleted-list"><li>새로운 액티비티에서 응답 보내기<ul id="f6ad100c-4492-4d28-9110-4699d82724dd" class="bulleted-list"><li>세로운 액티비티가 보이고 그 안에 들어 있는 버튼을 클릭하면 0esult() 메서드로 응답을 보낸다.</li></ul></li></ul><ul id="31747ccc-5ef9-4fdc-8c53-a762a0b023cc" class="bulleted-list"><li>응답 처리하기<ul id="aa2b5e09-2c9f-43ce-a12c-7baba9d162df" class="bulleted-list"><li>메인 액티비티에서 onActivityResult() 메서드를 재정의하여 새로 띄었던 액티비티에서 보내오는 응답을 처리한다.</li></ul></li></ul><ul id="5053dbe8-7b33-4544-b306-22f7db1bb71e" class="bulleted-list"><li>인텐트는 앱 컴포넌트가 무엇을 할 것인지를 담는 메시지 객체, 메세지는 의사소통을 하기 우이해 보내고 받는 것이다</li></ul><ul id="f6612c99-5442-4872-a48a-f95086881185" class="bulleted-list"><li>메세지를 사용하는 가장 큰 목적은 다른 액티비티, 서비스, 브로드캐스트 리시버, 컨텐트 프로바이더 등을 실행하는 것</li></ul><ul id="0466cffa-c0c0-4663-a0bb-5efa1aeccd86" class="bulleted-list"><li>그들 사이에 데이터를 주고 받기 위한 용도로 쓰인다.</li></ul><p id="bdb544fe-8244-4aaf-938a-d2e4c6f43c25" class="">
+</p><h3 id="f2f1b483-1e02-40cf-9a52-618a097bf42f" class="">@ 화면전환</h3><ul id="e1c2fd01-4e88-46ff-996b-5957e342bf28" class="bulleted-list"><li>화면은 하나의 액티비티로 생각할 수 있다.</li></ul><ul id="f662913a-cc6f-4424-91a0-37ba07583369" class="bulleted-list"><li>화면 간의 이동하는 과정은 각각의 액티비트를 필요에 따라 띄우거나 닫는 과정과 같다.</li></ul><ul id="c09da9f8-e4d0-46cf-92d8-dfcd5a898442" class="bulleted-list"><li>애플리케이션을 구성하다보면 메인 액티비티에서 띄어야 할 화면들이 여러개가 될 뿐만 아니라 띄었던 화면을 닫고 원래의 메인 화면으로 돌아올 때 데이터를 새로 적용해야 하는 경우등 다양한 케이스를 고려하여 작업하여 한다.</li></ul><ul id="a137df5d-f7cb-4e5a-b3dc-6858201f2704" class="bulleted-list"><li>단순히 액티비티를 띄어주는 것이 아니라 어떤 액티비티를 띄운 것인지 그리고 띄었던 액티비티로부터의 응답을 받아 처리하는 코드가 필요하다.</li></ul><ul id="8ce3d7be-bda0-4264-9b21-4353be0b087f" class="bulleted-list"><li>액티비트를 띄우기 위해 사용하는 메서드<ul id="af051443-24a8-4337-9d67-0b1610b7317c" class="bulleted-list"><li>startActivity()</li></ul><ul id="aee6e617-d3a1-4ac4-82a8-46de29f437ae" class="bulleted-list"><li>startActivityForResult()</li></ul></li></ul><h3 id="3f7a8b19-660f-4d4b-aa1a-3e636b78aa19" class="">@인텐트</h3><ul id="d288c509-5754-4a51-bfa6-d59449278291" class="bulleted-list"><li>인텐트는 다른 액티비티를 띄우거나 기능을 동작시키기 위하 수단으로 사용하였다.</li></ul><ul id="98cafb3c-795c-4ea4-8a16-ad213802630c" class="bulleted-list"><li>무언가 작업을 수행하기 위해 사용되는 일종의 명령 또는 데이터를 전달하는데 사용하였다.</li></ul><ul id="4e6ed4b0-de1c-4f3d-a226-17a2e74e18a8" class="bulleted-list"><li></li></ul><h3 id="dc5a5cb2-f42f-4067-bc34-65348944d468" class="">@ 인텐트의 역활과 사용 방식</h3><ul id="8531a151-1f46-48e2-af2e-09714cb76f91" class="bulleted-list"><li>Android.content 패키지 안에 정의되어 있다. 즉 화면 간이 이동 과정은 각각의 액티비티를 필요에 따라 띄우거나 닫는 과정과 같다.</li></ul><p id="12fac7bb-f880-42df-86ba-c6d62187a0ae" class="">
+</p><pre id="ed352d48-0056-44c6-b129-24d16651fbc3" class="code"><code>//[Reference ( 다른 앱 구성 요소에 인텐트를 전달할 수 있는 대표적인 메서드) ]
+
+startActivity(), startActivityForResult() // 액티비티를 화면에 띄울 때 사용
+
+startService(), bindService() // 서비스를 시작할때
+
+broadcastIntent() // 브로드캐스팅 방식으로 전송할 때 사용</code></pre><ul id="161feed4-704f-4afb-a687-0cb998726ae0" class="bulleted-list"><li>인텐트의 기본 구성 요소는 액션, 데이터 이다.<ul id="67a186ce-9b2a-49a0-aec3-95e3f6a9f698" class="bulleted-list"><li>액션은 수행할 기능<ul id="321a2a4e-015d-40dc-a77f-bab39660056e" class="bulleted-list"><li>ACTION_VIEW, ACTION_EDIT…</li></ul><ul id="2b672214-5016-491d-9e55-0f47fe26b8a1" class="bulleted-list"><li>인텐트 객체를 만들 때 ACTION_VIEW와 함께 웹페이지 주소를 전달하면 단말 안에 설치되어 있던 웹브라우저의 화면이 뜨면서 해당 웹페이지를 보여준다.</li></ul></li></ul><ul id="512b4776-4bc2-43e4-b88c-b9503b32d214" class="bulleted-list"><li>데이터는 액션이 수행될 대상의 데이터를 의미</li></ul><ul id="a4553905-b835-4687-b7cb-c998ee759e9e" class="bulleted-list"><li>ACTION_DIAL <a href="tel:01077881234">tel:01077881234</a><ul id="f2b41be1-f377-4346-8c69-17105bd6a585" class="bulleted-list"><li>주어진 전화번호를 이용하여 전화걸기 화면을 보여준다.</li></ul></li></ul><ul id="c09de63b-3666-43f1-883e-55f127065a16" class="bulleted-list"><li>ACTION_VIEW <a href="tel:01077881234">tel:01077881234</a><ul id="3d8c23fa-c538-4afc-a19e-c8b330d26c0e" class="bulleted-list"><li>주어진 전화번호를 이용하여 전화걸기 화면을 보여준다. URI 값의 유형에 따라 VIEW 액션이 다른 기능을 수행한다.</li></ul></li></ul><ul id="0a35f0fb-c9d5-42d1-8f07-114bb48a9f7a" class="bulleted-list"><li>ACTION_EDIT content://contacts/people/2<ul id="fc625367-e1fd-44f7-bf5f-5e9dc909dbc8" class="bulleted-list"><li>전화번호부 데이터베이스에 있는 정보 중에서 ID 값이 2인 정보를 편집하기 위한 화면을 보여준다</li></ul></li></ul><ul id="165b4a04-30b0-4836-907b-33d9da00d042" class="bulleted-list"><li>ACTION_VIEW content://contacts/people<ul id="47b959f6-80d1-4f43-93d0-d5f5ace99221" class="bulleted-list"><li>전화번호부 데이터베이스의 내용을 보여준다.</li></ul><p id="8dbc72b7-72a7-4a70-af4b-086c847a23ec" class="">
+</p></li></ul><pre id="6f16d7ca-4d05-4aaa-8686-f447846f6396" class="code"><code>//[Reference]
+
+Intent()
+
+Intent(Intent 0)
+
+Intent(String action [,Uri uri])
+
+Intent(Context packageContext, Class&lt;?&gt; cls)
+
+Intent(String action, Uri uri, Context packageContext, Class&lt;?&gt; cls)</code></pre></li></ul><h3 id="f5819eb8-9ffe-4e02-8553-bd0b1aa3de06" class="">명시적인텐트</h3><ul id="2492b09c-79ee-4768-ad44-c6bd52b2d5ca" class="bulleted-list"><li>인텐트에 클래스 객체나 컴포넌트 이름을 지정하여 호출할 대상을 확실히 알 수 있는 경우</li></ul><p id="9db8af95-3e34-433e-b494-c835c995e47e" class="">
+</p><h3 id="cc957564-d6b5-405c-8bd8-30fe20e7c729" class="">암시적인텐트</h3><ul id="fc36a67d-6d46-4b40-9217-9e1028bde722" class="bulleted-list"><li>액션과 데이터를 지정하긴 했지만 호출한 대상이 달라질 수 있는 경우</li></ul><ul id="4603e77d-4e8c-4fda-90b4-3be56a50b754" class="bulleted-list"><li>MIME 타입에 따라 시스템에서 적절한 다른 앱의 액티비티를 찾은 후 띄우는 방식을 사용하게 된다.</li></ul><ul id="7b1d8478-0cb3-4ef8-9fd0-4c3adcd4947c" class="bulleted-list"><li>설치된 앱 정보를 알고 있는 시스템이 인텐트를 이용하여 요청한 정보를 처리할 수 있는 적절한 컴포넌트를 찾아본 다음 사용자에게 그 대상과 처리 결과를 보여주는 과정을 거치게 된다.<ul id="94b0ddea-1712-4f8c-ba5f-abd26f255e3f" class="bulleted-list"><li>카테고리<ul id="13dae3a7-7d14-4b30-b6ee-30535fa5ca91" class="bulleted-list"><li>액션이 실행되는데 필요한 추가적인 정보 제공 (CATEGORY_LAUNCHER 최상위 앱으로 설치된 앱들의 목록을 보여주는 애플리케이션 런처화면에 이 앱을 보여주어야 한다는 것을 의미</li></ul></li></ul><ul id="9176ae34-f316-49a0-83b7-50323d37989b" class="bulleted-list"><li>타입<ul id="ecef17fd-d1a8-43e6-a35f-c8735031275d" class="bulleted-list"><li>데이터의 MIME타입을 명시적으로 지정한다. 명시적으로 지정할 필요가 있을 수 있다.</li></ul></li></ul><ul id="d2179773-0d6d-4e7b-ae9c-c60372b1abed" class="bulleted-list"><li>컴포넌트<ul id="bdab5d32-b9b2-48ae-aa51-2d626fb0f968" class="bulleted-list"><li>인텐트에 사용될 컴포넌트 클래스 이름을 명시적으로 지정한다.</li></ul><ul id="813ec92f-b690-4999-9f05-9559fe1c34bd" class="bulleted-list"><li>이 정보는 다른 정보를 통해 결정된다. 이 속성이 지정될 경우에는 지정된 컴포넌트가 실행되도록 한다.</li></ul><ul id="efc2ad86-685f-4d74-b675-7b74d24a97bf" class="bulleted-list"><li>새로운 액티비티를 정의하고 그 액티비티의 클래스 객체를 인텐트에 전달하여 실행하는 방법도 컴포넌트를 지정하는 방식과 같다.</li></ul></li></ul><ul id="8e0c405e-7d4c-42c5-a0fa-6a0844f83c9a" class="bulleted-list"><li>부가데이터(Extra Data)<ul id="e1f062d1-e65d-4a69-b68e-955dd17ea22e" class="bulleted-list"><li>추가적인 정보를 넣을 수 있도록 번들 객체를 담고 있다.</li></ul><ul id="89f9cc30-e46d-45e8-9e4b-76ddafc02be5" class="bulleted-list"><li>이 객체를 통해 인텐트 안에 더 많은 정보를 넣어 다른 앱 구성 요소에 전달 할 수 있다.</li></ul><ul id="9db87257-e6f1-4f8a-8790-de89d1cb9d1e" class="bulleted-list"><li>이메일을 보내는 액션이 있다면 이메일에 들어갈 제목, 내용 등을 부가 데이터로 넣어 전달해야 이메일 앱이 그 데이터를 받아 처리할 수 있다.</li></ul></li></ul></li></ul><ul id="9b6ee7ae-a9e1-4105-a66e-45a7972eb283" class="bulleted-list"><li>인텐트에 액션과 데이터를 넣어 다른 앱의 액티비티를 띄우는 경우</li></ul><ul id="6bc00f10-5cb5-40bc-84e6-48614ebbe0a2" class="bulleted-list"><li>컴포넌트 이름을 이용하여 새로운 액티비티를 띄우는 경우</li></ul><p id="dabb34a4-0d29-4535-ac78-bb34f94a4641" class="">
+</p><h3 id="03b73c1b-1ce1-4560-97d6-493392cd5a16" class="">@액티비티 처리 방식</h3><ul id="a4c791c1-5444-409d-b939-b2b0d7efd422" class="bulleted-list"><li>액티비티 매니저라는 객체에 의해 &#x27;액티비티 스택&#x27;이라는 것으로 관리된다.</li></ul><ul id="d936e117-c3ac-49a7-a7ae-14e7aa9c9bde" class="bulleted-list"><li>스택은 액티비티를 차곡차곡 쌓아두었다가 가장 상위에 있던 액치비티가 없어지면 이전의 액티비티가 다시 화면에 보이게 한다.</li></ul><ul id="8efe45ed-1ae2-4d78-b30d-d697bfd7b43d" class="bulleted-list"><li>새로운 액티비를 만들어 매니패스트 파일에 등록하면 그 액티비티는 startActvity(), startActivityForResult()( 메서드를 사용해 실행된다.</li></ul><ul id="7dfd7d3d-5953-4eca-92af-c6aaa83c6c3d" class="bulleted-list"><li>이렇게 실행된 액티비티는 화면에 띄어지는데 새로운 액티비티가 화면에 띄어지면 이전에 있던 액티비티는 액티비티 스택에 저장되고 새로운 액티비티가 화면에 보이는 구조로 나타난다.</li></ul><ul id="49e9d9d5-e6df-4bfc-b7c1-8b8ee89132cc" class="bulleted-list"><li>화면에 보이던 액티비티가 없어지면 액티비티 스택의 가장 위에 있던 액티비티가 화면에 보이면서 화면 기능이 다시 동작한다.</li></ul><ul id="4943355f-3bab-425f-a639-84942bda0510" class="bulleted-list"><li>새로운 화면이 보이면 이전의 화면들은 그화면의 뒤에 차곡차곡 가려져 있다고 생각할 수도 있다.</li></ul><p id="de229f9e-1079-45b1-a92f-82b6f6e32ab0" class="">
+</p><h3 id="c1e97919-2139-4b07-aeef-2b5dcc96bd4e" class="">@플래그</h3><pre id="58061c38-8203-4db8-b5ce-3135b1fbe2ac" class="code"><code>[Reference]
+
+FLAG_ACTIVITY_SINGLE_TOP
+
+FLAG_ACTIVITY_NO_HISTORY
+
+FLAG_ACTIVITY_CLEAR_TOP</code></pre><h3 id="06f9834d-b501-4c0c-a981-ae8107ca035d" class="">@FLAG_ACTIVITY_SINGLE_TOP</h3><ul id="6a323df1-fe4a-4036-b89b-c4772da9759e" class="bulleted-list"><li>플래그는 액티비티를 생성할 때 이미 생성된 액티비티가 있으면 그 액티비트를 그대로 사용하라는 플래그 이다.</li></ul><ul id="2a00865b-30e2-44ae-983f-89ceb7f03b3b" class="bulleted-list"><li>기존에 만든 동일한 액티비티를 그대로 사용하게 된다.</li></ul><ul id="d88f8bfa-b88f-47ba-a07f-830031f67c87" class="bulleted-list"><li>화면에 보이는 액티비티가 새로 만들어지지 않고 기존에 있는 것이 보인다면 시스템에서 전달하는 인텐트 객체는 어떻게 전달받을 수 있을 까?<ul id="80c61a3f-4644-4c23-80f3-ccd47a30e05a" class="bulleted-list"><li>새로운 액티비티를 띄어주는 액티비티를 부모 액티비티라고 부른다면, 부모 액티비티로부터 전달하는 인텐트는 새로 만들어진 인텐트의 onCreate() 메서드 안에서 getIntent() 메서드로 참조할 수 있다.</li></ul></li></ul><ul id="107b2d8a-f911-4945-bd34-bf25fd9729af" class="bulleted-list"><li>액티비티가 새로 만들어지지 않고 재사용된다면 액티비티의 onCreate() 메서드가 호출되지 않는다.<ul id="7022537a-45f0-4ac4-aff7-8710dbf98df9" class="bulleted-list"><li>새로 띄어지는 액티비티에서 인텐트를 전달 받아 처리하는 방법이 따로 있어야 한다. 그것이 바로 onNewIntent() 메서드</li></ul><ul id="1050a332-c163-4274-ae71-7dcae5133903" class="bulleted-list"><li>onNewIntente() 메서드를 재정의하면 액티비티가 새로 만들어지지 않았을 때 인텐트 객체만 전달 받을 수 있다.</li></ul></li></ul><ul id="7c4e9222-9795-47fd-a501-c5d961a7a571" class="bulleted-list"><li>이미 만들어져 있는 액티비티를 다시 띄울 때 인텐트 처리 방법<ul id="63a13fb6-f57a-4582-8ee3-bd80bc5ee857" class="bulleted-list"><li>액티비티가 이미 메모리에 객체로 만들어져 있다면 액티비티를 다시 띄우더라도 onCreate() 메서드가 호출되지 않는다.</li></ul><ul id="55546f4b-6de8-4a00-98de-b6525270b937" class="bulleted-list"><li>onNewIntent() 메서드를 재정의하여 사용해야 한다.</li></ul><ul id="49d57ee3-9196-4ff4-9e5d-b8a7051279ea" class="bulleted-list"><li>onNewIntent() 메서드는 액티비티가 이미 객체로 만들어져 있을 때 시스템으로부터 자동으로 호출되며 파라미터로 인텐트 객체를 전달 받을 수 있다.</li></ul><pre id="9b5598a1-d327-4f49-aea7-e078fcbaef55" class="code"><code>[Reference]
+
+Public void onNewIntent(Intent intent)</code></pre></li></ul><h3 id="31eaa602-5f10-41af-8d6a-1fc492a0f6db" class="">@FLAG_ACTIVITY_NO_HISTORY</h3><ul id="6016f008-1bdb-4ac1-932c-418a2f6af492" class="bulleted-list"><li>처음 이후에 실행된 액티비티는 액티비티 스택에 추가되지 않는다.</li></ul><ul id="63a3d199-2dec-4ce9-b73e-1f631f3c6001" class="bulleted-list"><li>플래그가 설정되지 않은 경우에는 이전에 실행되었던 액티비티가 스택에 추가되므로 시스템 [BACK] 키를 누르면 이전의 액티비티가 보인다.</li></ul><ul id="e73fbe83-e0b8-48bc-931f-6ef812bb2a24" class="bulleted-list"><li>이 플래그를 시용하면 항상 맨 처음에 실행되었던 액티비티가 바로 보이게 된다.</li></ul><ul id="1c3a1e15-57f0-4604-8c8e-d657091dc388" class="bulleted-list"><li>알람 이벤트가 발생하여 사용자에게 한 번 알림 화면을 보여주고 싶을 때 유용하게 쓰인다.</li></ul><ul id="de90acb4-dbb3-4285-96f0-532c04846a9e" class="bulleted-list"><li>그 화면만 한 번 보여주는 형태로 만들 수 있다.</li></ul><h3 id="b2a317ee-27f9-4973-9a4d-675ad13a51f9" class="">@FLAG_ACTIVITY_CLEAR_TOP</h3><ul id="0705fcf1-fc75-481b-9b61-0592b9aef933" class="bulleted-list"><li>액티비티 위에 있는 다른 액티비티를 모두 종료시키게 된다.</li></ul><ul id="6bca0433-d792-41f1-b212-579f145ad355" class="bulleted-list"><li>이 플래그는 홈 화면과 같이 다른 액티비티보다 항상 우선하는 액티비티를 만들 때 유용하게 사용할 수 있다.</li></ul><ul id="08c31ba9-cdc5-428b-818d-ccbd6002d63d" class="bulleted-list"><li>홈 화면이 여러 개 있는 것이 아니라 하나만 만들어 지는 것으로 하고 싶을 때 플래그와 함계 설정하면 항상 하나의 객체다 메모리에 존재하면서</li></ul><ul id="36030030-6362-4f99-bded-4a186bfbf1d7" class="bulleted-list"><li>그 상위의 액티비티를 모두 종료시킬 수 있다.</li></ul><ul id="36e507f9-b80a-4614-a9ec-75a4b90562fc" class="bulleted-list"><li>! 간단히 현재 액티비티에서 어느 액티비티로 이동하는데, 스택 중간에 있었던 액티비티들을 지우는 역활은 한다. 이 플래그가 없으면, 중간에 액티비티는 스택에 그대로 남아 있기 때문에 이동 중간에 화면에 표출되어 UI 흐름을 망친다. 또한 시간이 지나면서 수 많은 액티비티가 쌓이게 되어 메모리 낭비를 초래한다.</li></ul><h3 id="dfe2a40d-365b-4361-a006-bfdccc51ba64" class="">@부가 데이터</h3><ul id="c9593874-1b0c-4d62-a23c-b0343fe3b2a9" class="bulleted-list"><li>한 액티비티에서 다른 액티비티를 띄울 때 데이터를 전달해야 하는 경우가 있다.</li></ul><ul id="5b673dd7-835c-42e2-9f5c-7137965d9082" class="bulleted-list"><li>로그인 화면에서 로그인 버튼을 눌러 로그인을 성공하면 메뉴 화면으로 아이디를 전달하여 표시해야 할 수 도 있다.</li></ul><ul id="e98bbd4e-bc9f-40b0-8639-bce170106868" class="bulleted-list"><li>아이디 데이터를 전달할 수 있는 방법?<ul id="580ab882-ed75-4718-8ad5-c66eb034cc02" class="bulleted-list"><li>가장 간단한 방법은 별도의 클래스를 만든 다음 그 안에 클래스 변수(Static 키워드를 이용하여 선언한 변수)를 만들어 두 개 화면에서 모두 그 변수를 참조하게 하는 벙법이다.</li></ul><ul id="9e4f9e41-92e5-407e-a415-1a3279afb7f1" class="bulleted-list"><li>로그인 화면에서 값을 설정하고 메뉴 화면에서 로그인 화면의 변수 값을 참조하면 된다.</li></ul></li></ul><ul id="5fb3c4da-3e1f-4d59-a0b9-224da812451e" class="bulleted-list"><li>위에 방식이 안될 수 있기 때문에 기본적으로는 액티비티를 띄울 때 전달되는 인텐트 안에 부가 데이터(Extra data)를 넣어 전달하는 방법을 권장한다.</li></ul><ul id="d2c5d1f4-e1a6-4b16-9790-45d725996ff9" class="bulleted-list"><li>인텐트 안에는 번들 객체가 들어 있는데, 번들 객체는 해시케이블과 유사해서 putExtra(), get___Extra() 메서드로 데이터를 넣거나 빼낼 수있다.(여기에 ___ 기본 자료형의 이름)</li></ul><ul id="b541b733-f21d-4efb-9a44-5a33971467ab" class="bulleted-list"><li>문자열을 넣고 싶다면 putExtra() 메서드를 호출하고 문자열을 다시 빼내고 싶다면 getStringExtra() 메서드를 사용하면 된다.</li></ul><ul id="38518013-f293-441e-abcd-7403bf534832" class="bulleted-list"><li>기본적으로 기본 자료형(Primitive Data Type)을 넣었다 뺄 수 있지만 바이트 배열이나 Serializable객체도 넣었다 뺄수 있다.</li></ul><ul id="1d8c5ce5-ed06-451d-ada0-928ea276e213" class="bulleted-list"><li>번들 객체 안에 넣은 데이터를 부가 데이터라고 하며 시스템에서 건들이지 않고 다른 앱 구성요소로 전달한다.</li></ul><ul id="49e25d63-411c-4549-ac1b-54cccff11be9" class="bulleted-list"><li>번들 안에 문자열이나 정수와 같은 부가 데이터를 넣을 때는 키, 값을 쌍으로 만들어 넣는다.</li></ul><ul id="46defddf-d0e1-42fc-a648-7fbcbc63edd6" class="bulleted-list"><li>문자열과 정수 그리고 이진 값을 넣거나 뺄 때 사용하는 대표적인 메서드</li></ul><pre id="f39bb8af-b693-42f9-a83f-6eff806dd248" class="code"><code>[Reference]
+
+Intent putExtra(String name, String value)
+
+Intent putExtra(String name, int value)
+
+Intent putExtra(String name, boolean value)
+
+String getStringExtra(String name)
+
+Int getInExtra(String name, int defaultValue)
+
+Boolean getBooleanExtra(String name, boolean defaultValue)</code></pre><ul id="c99e2191-69a9-40e0-8431-853eb8ed3a2d" class="bulleted-list"><li>Get___()형태를 가진 메서드는 데이터 값이 없으며 디폴드로 설정한 defaultValue 값이 반환된다.</li></ul><ul id="211955ce-70c1-457e-9e64-4bb3af1055e5" class="bulleted-list"><li>전달하고 싶은 데이터가 기본 자료형이 아니라 객체 자료형인 경우에는 객체 자체를 전달할 수 없다.</li></ul><ul id="379df91d-b3c4-4393-a36b-ee299c9fa880" class="bulleted-list"><li>객체 데이터는 바이트 배열로 변환하거나 Serializable 인터페이스를 구현하는 객체를 만들어 직렬화한 다음 전달해야 한다.</li></ul><ul id="cdacb44b-0bcc-407a-bcda-94bb4fa4dcd9" class="bulleted-list"><li>Parcelable 인터페이스를 권장<ul id="858b5abb-4586-46d6-8f58-0ba7da41a493" class="bulleted-list"><li>Serializable과 유사하지만 직렬화했을 때 크기가 작아 안드로이드 내부의 데이터 전달에 자주 사용된다.</li></ul><ul id="157a5f59-916c-4907-94e7-8661c1ed7bb3" class="bulleted-list"><li>이 인터페이스를 사용하면 객체를 직접 번들에 추가하여 데이터를 전송할 때 사용할 수 있다.</li></ul><ul id="10462fc6-5e9c-47c1-92b0-43b31e7f96c5" class="bulleted-list"><li>다음의 메서드를 모두 구현해야 한다.<ul id="f00008d5-e7fb-4c61-8f92-302f652f9788" class="bulleted-list"><li>[Reference]<ul id="11dbdc60-0590-4f19-a283-94a500f72417" class="bulleted-list"><li>Public abstract int describeContents()</li></ul><ul id="4bb92af3-4fad-4ba5-9972-2551630a63f1" class="bulleted-list"><li>Public abstract int writeToParcel(parcel dest, int flags)</li></ul></li></ul></li></ul><ul id="f76e29a2-d561-419a-bc1e-48c598353f29" class="bulleted-list"><li>describeContents() 메서드는 직렬화하려는 객체의 유형을 구분할 때 사용한다.</li></ul><ul id="6d2cc168-a2e6-4a0c-98e7-eb5f1fe65ee7" class="bulleted-list"><li>단순히 0을 반환하도록 한다.</li></ul><ul id="9f5ea7fa-6396-471f-8ce0-72d0873c81a9" class="bulleted-list"><li>writeToParcel() 메서드는 객체가 가지고 있는 데이터를 Parcel 객체로 만들어주는 역활을 한다.</li></ul><ul id="bea046b4-7eca-49b2-b53b-77a6d1559131" class="bulleted-list"><li>이 Parcel 객체는 Bundle 객체처럼 read___(), write___() 형태를 가진 메서드를 제공하므로 기본 데이터 타입을 넣고 확인할 수 있도록 한다.</li></ul><ul id="9158725e-a112-4127-8ce2-6be0635e312f" class="bulleted-list"><li>위의 두가지 메서드를 모두 구현한 다음에는 CREATOR라는 상수를 만들어야 한다. 이 상수는 Parcel 객체로부터 데이터를 읽어 들여 객체를 생성하는 역활을 한다.</li></ul><ul id="0c791faf-ea08-463a-a63b-88bf4259c327" class="bulleted-list"><li>이 객체는 상수로 정의되고 반드시 static final로 선언되어야 한다.</li></ul></li></ul><h3 id="63aed0a6-3009-4b82-bed6-27a1546ed748" class="">@태스크 관리</h3><ul id="3c46986f-6a5e-4f72-bc2f-19144d9bc41d" class="bulleted-list"><li>앱은 하나의 프로세스 위에서 동작한다.</li></ul><ul id="69c0184a-df8b-4f90-9f7d-56a55b6b870f" class="bulleted-list"><li>프로세스가 하나 실행되고 그 위에는 VM이 만들어지며, 또다시 가상머신 위에서 앱이 실행된다.</li></ul><ul id="3ec6a436-ac42-4c60-b733-ef1d4f3202f0" class="bulleted-list"><li>앱에서 시스템으로 인텐트를 보내는 방법으로 전화 앱을 띄울 수 있다.</li></ul><ul id="4ba98e34-5efb-4806-98a2-3b51a792d9f0" class="bulleted-list"><li>이렇게 하면 전화 앱은 별도의 프로세스로 동작하게 된다.</li></ul><ul id="772bf2db-34f1-496b-8f81-290b562f1737" class="bulleted-list"><li>전화 앱의 화면에서 시스템[BACK] 키를 누르면 자연스럽게 앱 화면으로 돌아올 수 있어야 한다. 그런데 프로세스는 독립적인 상자와 같아서 프로세스 간의 정보 고유가 어렵다.</li></ul><ul id="78de23d6-380b-49a1-8755-a03674c837cf" class="bulleted-list"><li>그래서 태스크라는 것이 만들어져 있다.</li></ul><ul id="601ce9da-0a38-43c2-bef5-226aa4f20f97" class="bulleted-list"><li>태스크는 앱이 어떻게 동작할지 결정하는 데 사용된다.</li></ul><ul id="6868b417-10e2-4781-a128-421c01d3af82" class="bulleted-list"><li>즉, 태스크를 이용하여 프로세스처럼 독립적인 실행 단위와 상관없이 어떤 화면들이 같이 동작해야 하는지 흐름을 관리할 수 있다.</li></ul><ul id="afc43cfa-ce35-44ff-9595-5e5344701519" class="bulleted-list"><li>프로세스는 독립적인 하나의 상자와 같이서 다른 프로세스와 어떤 정보를 공유할 수 없다고 명했다.</li></ul><ul id="dd74d89c-0656-44c5-9b60-618bd9884053" class="bulleted-list"><li>따라서 하나의 프로세스에서 다른 프로세스의 화면을 띄우려면 시스템의 도움이 필요하다.</li></ul><ul id="4fde1828-6751-40ea-851f-6bd69131ef8b" class="bulleted-list"><li>시스템에서 이런 액티비티의 각종 정보를 저장해두기 위해 태스크라는 것을 만들게 된다.</li></ul><ul id="aca78e7b-8725-480e-9491-014543eaeef2" class="bulleted-list"><li>만약 앱에서 전화 앱의 화면을 띄우지 않고 전화 앱을 따로 실행시키면 전화 앱의 태스크는 앱의 태스크와 별도로 만들어지게 된다.</li></ul><ul id="81609cab-74ab-48a3-9871-28aca317a948" class="bulleted-list"><li>시스템은 알아서 태스크를 관리하지만 직접 제어해야 하는 경우도 생긴다. 이를 위해 매니페스트 파일에 액티비티를 등록할 때 태스크도 함께 설정할 수 있다.</li></ul><ul id="13dfcb91-ad63-4db8-a73a-f448ae668003" class="bulleted-list"><li>화면을 차례대로 스택에 넣어서 관리한다.</li></ul><ul id="9c566635-862c-43ff-8a28-8dd5324b44ef" class="bulleted-list"><li>&lt;activity&gt; 태그에 launchMode 속성을 추가하고 그 값을 standard로 한것과 같다.</li></ul><p id="8a832723-403b-42de-805c-8a500a737c07" class=""><strong>&lt;</strong><strong>activity</strong><strong>android</strong><strong>:name</strong><strong>=&quot;.MainActivity&quot;</strong><strong>android</strong><strong>:launchMode</strong><strong>=&quot;singleTop&quot;</strong><strong>&gt;</strong></p><p id="c70b7ad0-7f83-41e9-916b-83e29c2cec6f" class=""><strong>// </strong><strong>SingleTop</strong><strong>으로</strong> <strong>설정하면</strong> <strong>태스크의</strong> <strong>가장</strong> <strong>위쪽에</strong> <strong>있는</strong> <strong>액티비티는</strong> <strong>더</strong> <strong>이상</strong> <strong>새로</strong> <strong>만들지</strong> <strong>않게</strong> <strong>된다</strong><strong>.</strong></p><ul id="55123061-36d5-4455-a55d-3cbc7dce1577" class="bulleted-list"><li>앱을 실행하고 버튼을 여러 번 누른 후 [BACK] 키를 누르면 한번만 눌러도 앱의 화면이 사라지는 것을 볼수 있다.</li></ul><ul id="abd04670-a306-4e9c-afaf-098c323cc46c" class="bulleted-list"><li>결국 MainActivity 화면은 한 번만 생성된다. 이 경우 MainActivity 쪽으로 전달되는 인텐트는 onNewIntent() 메서드로 전달받아야한다.</li></ul><ul id="8d520755-5390-4e68-9d7e-45d8559c7027" class="bulleted-list"><li>SingleTask로 설정하면 이 액티비티가 실행되는 시점에 새로운 태스크를 만들게 되고 SingleInstance로 설정하면 이 액티비티가 실행되는 시점에 새로운 태스크를 만들면서 그 이후에 실행되는 액티비티들은 이 태스크를 공유하지 않도록 한다.</li></ul><ul id="5f19fb1d-f766-44ed-843f-9c48548b01f1" class="bulleted-list"><li>액티비티를 띄우면서 태스크를 새로 만들도록 설정해야 한다는 점</li></ul><h3 id="db0c0997-cbc7-4346-93b3-0d1f8aa7af94" class="">@액티비티의 수명주기와 SharedPreferences</h3><ul id="a0d4ff90-cd54-47e5-87d1-608015fdffc5" class="bulleted-list"><li>안드로이드 시스템은 실행되는 앱의 상태를 직접 관리한다.</li></ul><ul id="2f182973-e69b-4441-9afb-26b83b0ef30b" class="bulleted-list"><li>대부분의 모바일 OS에서 사용하는 방법이자 독립적인 앱이 시스템에 의해 관리되지 않으면, 실행된 앱이 메모리를 과도하게 점유하거나 화면을 보여주는 권한을 과도하게 갖기 때문에 전화기의 원래 기능인 전화 수신 또는 발신 기능을 사용하지 못할 수도 있다.</li></ul><ul id="285cfa56-2767-4d99-8628-57b2a2b02d3a" class="bulleted-list"><li>이전에 실행한 액티비티는 액티비티 스택에 보관하다가 현재 화면에 보이는 액티비티가 사라지면 다시 이전 액티비티가 동작하는 과정을 거친다.</li></ul><ul id="dea85659-6ed9-4b21-9da8-769348c3822a" class="bulleted-list"><li>이 때문에 하나의 액티비티가 화면에 보이거나 보이지 않게 되었을 때 다른 액티비티의 상태에 영향을 미칠 수 있다.</li></ul><ul id="7fe0304d-96de-4dd1-8ab3-4fce832a15ea" class="bulleted-list"><li>예) 우리가 만든 앱이 실행되는 도중에 전화가 오면 단말의 통화 앱이 화면에 나타나기 때문에 우리의 앱 화면은 다른 화면 뒤로 들어가 중지될 수 있다.</li></ul><ul id="b22abd6e-2408-4b73-bf63-300852c04398" class="bulleted-list"><li>이처럼 액티비티는 처음 실행될 때 메모리에 만들어지는 과정부터 시작해서 실행과 중지, 그리고 메모리에서 해제되는 여러 과정의 상태 정보를 갖고 있다.</li></ul><ul id="d3dd3a67-bae3-42ed-9103-c3551244a963" class="bulleted-list"><li>이러한 상태 정보는 시스템이 관리하면서 각각의 상태에 해당하는 메서드를 자동으로 호출하게 된다.</li></ul><ul id="e06c4121-61cc-4065-b70f-f2cf009e1a7a" class="bulleted-list"><li>예) 액티비티에 기본으로 만들어져 있는 onCreate() 메서드는 액티비티가 만들어 질 때 시스템이 자동으로 호출하는 메서드</li></ul><div id="aad1f08b-9f3d-47a4-82ed-353bf5e3e1f4" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th>상태</th><th>설명</th></tr></thead><tbody><tr id="89e07b59-d466-499f-b910-827a9d35f6d0"><td class="cell-title"><a href="Inflate/Untitled%20Database/Running.html">실행(Running)</a></td><td class="cell-_SIf">화면상에 액티비티가 보이면서 실행되어 있는 상태. 액티비티 스택의 최상위에 있으며 포커스를 가지고 있다.</td></tr><tr id="1923761b-bd4b-4580-b1f5-848d456d0e59"><td class="cell-title"><a href="Inflate/Untitled%20Database/Paused.html">일시정지(Paused)</a></td><td class="cell-_SIf">사용자엑게 보이지만 다른 액티비티가 위에 있어 포커스를 받지 못하는 상태대화상자가 위에 있어 일부가 가려진 경우에 해당한다.</td></tr><tr id="9d462c58-9da4-4514-9d73-b58a132e8d8e"><td class="cell-title"><a href="Inflate/Untitled%20Database/Stopped.html">중지(Stopped)</a></td><td class="cell-_SIf">다른 액티비티에 의해 완전히 가려져 보이지 않는 상태</td></tr></tbody></table></div><div id="3f3a3498-07eb-450f-a387-39b48ae2b00b" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th>상태 메서드</th><th>설명</th></tr></thead><tbody><tr id="f5820f88-98c2-4302-a128-d644220125b8"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onCreate.html">onCreate()</a></td><td class="cell-I!Uq">액티비티가 처음에 만들어졌을 때 호출된다.화면에 보이는 뷰들의 일반적인 상태를 설정하는 부분이전 상태가 저장되어 있는 경우에는 번들 객체를 참조하여 이전 상태 복원 가능이 메서드 다음에는 항상 onStart() 메서드가 호출된다.</td></tr><tr id="51213f4b-36f5-447f-9aac-794a89828a6c"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onStart.html">onStart()</a></td><td class="cell-I!Uq">액티비티가 화면에 보이기 바로 전에 호출된다.액티비티가 화면 상에 보이면 이 메서드 다음에 onResume() 메서드가 호출된다.액티비티가 화면에서 가려지게 되면 이 메서드 다음에 onStop() 메서드가 호출된다.</td></tr><tr id="362f13d1-e18e-40e6-a6eb-feba020a2c78"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onResume.html">onResume()</a></td><td class="cell-I!Uq">액티비티가 사용자와 상호작용하기 바로 전에 호출된다.</td></tr><tr id="a17fdd48-3d2b-487d-ab20-37b98792078c"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onRestart.html">onRestart()</a></td><td class="cell-I!Uq">액티비티가 중지된 이후에 호출되는 메서드로 다시 시작되기 바로 전에 호출된다.이 메서드 다음에는 항상 onStart() 메서드가 호출된다.</td></tr><tr id="abbe52d8-111e-4548-a70e-d5ea5953789c"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onPause.html">onPause()</a></td><td class="cell-I!Uq">또 다른 액티비티를 시작하려고 할 때 호출된다.저장되지 않은 데이터를 저장소에 저장하거나 애니메이션 중인 작업을 중지하는 등의 기능을 수행하는 메서드이 메서드가 리턴하기 전에는 다음 액티비티가 시작될 수 없으므로 이 작업은 매우 빨리 수행된 후 리턴되어야 한다.액티비티가 이 상태에 들어가면 시스템은 액티비티를 강제 종료할 수 있다.</td></tr><tr id="7d1ca35f-32fe-4d5d-980b-6701c5dfda9e"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onStop.html">onStop()</a></td><td class="cell-I!Uq">액티비티가 사용자에게 더 이상 보이지 않을 때 호출된다.액티비티가 소멸되거나 또 다른 액티비티가 화면을 가릴 때 호출된다.액티비티가 이 상태에 들어가면 시스템은 액티비티를 강제 종료할 수 있다.</td></tr><tr id="deaf89c6-8f17-4447-8426-c99acbbe9b88"><td class="cell-title"><a href="Inflate/Untitled%20Database%201/onDestory.html">onDestory()</a></td><td class="cell-I!Uq">액티비티가 소멸되어 없어지기 전에 호출된다.이 메서드는 액티비티가 받는 마지막 호출이 된다.액티비티가 앱에 의해 종료되거나(finish() 메서드 호출) 시스템이 강제로 종료시키는 경우 호출될 수 있다.위의 두 가지 경우를 구분할 때 isFinishing() 메서들 이용액티비티가 이상태에 들어가면 시스템은 액티비티를 강제 종료할 수 있다.</td></tr></tbody></table></div><ul id="5a66ee2a-1e05-44cc-8fbb-b6e9e515a189" class="bulleted-list"><li>게임과 같은 실제 앱을 구성할 때는 중간에 전화가 오거나 갑자기 전화기가 종료된 이후에도 게임 진행중이던 상태로 다시 돌아갈 수 있어야 한다.</li></ul><ul id="d9ab0514-7731-41fe-8ccc-358dc6244433" class="bulleted-list"><li>예를 들어, 사용자가 게임의 2단계를 진행하고 있는 상태였다면 그 정보를 저장해 두었다가 앱이 다시 실행되었을 때 그 상태부터 다시 시작할 수 있도록 만들어 주어야 한다.</li></ul><ul id="2bed2a47-5e5d-4e44-a520-c81523821ffa" class="bulleted-list"><li>이런 경우에 사용되는 액티비티의 수명주기 메서드는 onPause(), onResume()이다.</li></ul><ul id="f8d0941a-5b9b-4dde-b117-92a7b0de2c94" class="bulleted-list"><li>이 두가지 메서드는 앱이 멈추거나 없어질 때, 그리고 앱이 다시 보이거나 새로 실행될 때 호출되므로 이 두가지 메서드를 구현하여 앱의 상태를 저장하거나 복원해야 한다.</li></ul><ul id="b892d16b-cc76-4666-9e0c-1a80c4d6227f" class="bulleted-list"><li>이 방법 의외에도 액티비티를 중지시키거나 전에 호출되는 onSaveInstanceState() 메서드를 이용하여 데이터를 임시로 저장할 수도 있다.</li></ul><ul id="024ca6d6-ec9d-4e54-9287-4a5a1f97a675" class="bulleted-list"><li>onSaveInstanceState() 메서드의 파라미터로 전달되는 번들 객체를 이용하여 데이터를 저장하면 onCreate() 메서드나 onRestoreInstanceState() 메서드로 저장했던 데이터가 전달된다.</li></ul><ul id="7314bd24-fa7e-4693-993a-484cd0b7429d" class="bulleted-list"><li>이 방식을 사용하면 앱이 강제 종료되거나 비정상 종료된 이후에 앱이 재실행되었을 때도 그 상태 그대로 보일 수 있도록 만들어 준다.</li></ul><ul id="c9f58fee-4f5c-4170-a933-3a4971528a78" class="bulleted-list"><li>onCreate -&gt; onStart -&gt; onResume -&gt; onPause -&gt; onStop -&gt; onDestroy</li></ul><ul id="290518a1-ffd5-4fc4-9fe9-a27117a489a5" class="bulleted-list"><li>화면이 보일때는 onCreate, onStart, onResume 순으로 호출이 된다.</li></ul><ul id="0044c65d-a819-48f0-bf55-6b996491fa22" class="bulleted-list"><li>시스템 BACK 버튼을 눌러 화면을 없앨 때는 onPause, onStop, onDestroy 순으로 호출된다.</li></ul><ul id="6fa4aa8c-4c66-436b-99d9-0b9043285653" class="bulleted-list"><li>화면이 전환될 때는 메인 액티비티의 onDestory() 메서드가 호출되지 않는다.</li></ul><ul id="f6b9bd4a-c6db-47ea-afce-1cac53234457" class="bulleted-list"><li>즉, 메뉴 액티비티가 화면에 보이는 시점에 메인 액티비티는 화면 뒤쪽에 숨어있는 것과 같은 상태가 되고(실제로는 액티비티 스택으로 들어감)</li></ul><ul id="4c645c0c-20d5-4e2e-8f88-c8d4c7786d32" class="bulleted-list"><li>앞에 있던 메뉴 액티비티가 사라지면 다시 onResume() 메서드가 호출되면서 화면에 보이게 된다.</li></ul><ul id="d4695c85-9545-4aaf-ad9d-ea587a86c089" class="bulleted-list"><li>그런데 화면이 보일 때, 화면이 보이질 않을 때 항상 호출되는 메서드가 있다. 바로 onResume(), onPause() 메서드는 아주 중요하다.<ul id="f1731c7b-d8bb-40f1-8b7f-236fcfbdc866" class="bulleted-list"><li>앱이 갑자기 중지되거나 또는 다시 화면에 나타날 때 앱 데이터의 저장과 복원이 필요하기 때문이다.</li></ul><ul id="3e817be0-6e9c-48be-8818-daa192c42914" class="bulleted-list"><li>게임을 할 때 사용자의 점수가 갑자기 사라지지 않도록 하려면 onPause() 메서드 안에서 데이터를 저장하고 onResume() 메서드 안에서 복원해야 한다.</li></ul></li></ul><ul id="c10bfa9c-7607-44fb-ab75-2708a4ebe2df" class="bulleted-list"><li>앱 안에서 간단한 데이터를 저장하거나 복원할 때는 sharedPreferences를 사용할 수 있다.<ul id="c7c74f20-1b66-4a9d-80c2-6b23069ed8bf" class="bulleted-list"><li>앱 내부에 파일을 한 만드는데 이 파일 안에서 데이터를 저장하거나 읽어올 수 있게 한다.</li></ul><ul id="b1b78073-462b-4295-a4c4-05b4fd415895" class="bulleted-list"><li>개발자는 실제로 파일을 만들 필요 없이 SharedPreferences의 저장, 복원 메서드를 호출하면된다.</li></ul></li></ul></div></article></body></html>

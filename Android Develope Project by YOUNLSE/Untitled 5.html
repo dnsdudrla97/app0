@@ -1,0 +1,666 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>새로운 뷰 만들기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a0d2cbc5-7be3-45af-a60f-ef4a47c99882" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">새로운 뷰 만들기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 23, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="670c6e35-f8bd-451d-b452-d1ca0d036d37" class="">새로운 뷰 만들기</h3><ul id="6c4fb749-75f1-440d-be3f-67a6a23963ec" class="bulleted-list"><li>새로운 뷰 즉, 원하는 기능을 가진 위젯을 구상할 때 만들어야 한다.</li></ul><ul id="8fd2a92f-0b38-443c-9a6e-e597c748e0d4" class="bulleted-list"><li>이번에는 API에서 제공하는 뷰를 사용해서 새로운 뷰를 정의해 보겠다.</li></ul><ul id="58bdbe13-c444-4a57-8b55-7de3f1b4d2c3" class="bulleted-list"><li>API에서 제공하는 뷰를 사용하려면 API의 뷰를 상속해야 한다. 그리고 API의 뷰를 상속하여 새로운 뷰를 만들 때는 뷰가 그려지는 방법을 반드시 이해해야 한다.👍👍</li></ul><ul id="c395ff8f-972f-44b7-b4bd-cbfd9d6734c6" class="bulleted-list"><li>뷰의 영역과 크기는 그 뷰를 포함하고 있는 레이아웃의 영향을 받아 정해진다.</li></ul><ul id="9d46d6e9-7d6f-45d5-8d3b-1348d3c82b4f" class="bulleted-list"><li>이때 개발자가 뷰의 상태에 따라 추가적인 코드를 넣을 수 있도록 콜백 메서드가 호출된다.</li></ul><ul id="910472b0-c959-4983-82ae-428e9d56fdf5" class="bulleted-list"><li>뷰가 스스로의 크기를 정할 때 자동으로 호출되는 메서드는 onMeasure()이고</li></ul><ul id="5f5de43c-3e10-43db-8834-87e7da78d067" class="bulleted-list"><li>스스로를 레이아웃에 맞게 그릴 떄는 onDraw() 메서드가 자동으로 호출된다.</li></ul><pre id="6edd32ae-5bfb-4fb6-896e-25f2feb32486" class="code"><code>//[Reference]
+public void onMeasure (int widthMeasureSpec, int heightMeasureSpec)
+public void onDraw (Canvas canvas)</code></pre><p id="f4486d8a-7043-46cf-9bb0-32ec901a6aa3" class="">
+</p><h3 id="e26d0489-be38-4c99-9eaa-3afd88a1eb1b" class="">onMeasure()</h3><ul id="f4245120-030e-416b-bb76-2195deedcd08" class="bulleted-list"><li>파라미터로 전달되는 widthMeasureSpec, heightMeasureSpec은 이 뷰를 담고 있는 레아웃에서 이 뷰에게 허용하는 여유 공간의 폭과 높이에 대한 정보이다.</li></ul><ul id="da036f43-fb64-4566-882e-7beec4576405" class="bulleted-list"><li>즉, 부모 컨텐이너에서 여유 공간에 대한 정보를 전달하는데 이 값을 참조하여 뷰가 보일 적절한 크기를 반환하면 이 크기 값으로 뷰가 그려지게 된다.</li></ul><ul id="ec9d89f0-0077-4cc8-a6f9-7dbacec25b46" class="bulleted-list"><li>onMeasure() 메서드 안에서 이 뷰를 담고 있는 레이아웃에게 이 뷰의 크기 값을 반환하고 싶다면 다음 메서드를 사용한다.</li></ul><pre id="673b0ff9-8188-4611-baae-9f81f5bb8524" class="code"><code>//[Reference]
+void setMeasuredDimension (int measuredWidth, int measuredHeight)</code></pre><ul id="11ecd5a9-9af9-4348-ad24-2b230f331a2b" class="bulleted-list"><li> 이 메서드의 두 파라미터는 뷰의 폭과 높이 값이 된다</li></ul><p id="0b5b78f2-8bf4-4cda-814f-b0460ff7a09d" class="">
+</p><p id="bdceb5e9-dc52-45df-ad86-460c88b033d3" class="">
+</p><h3 id="57e4571f-4982-4061-8119-99a37f22ee79" class="">onDraw() 메서드, invalidate() 메서드 </h3><ul id="d7ac65f5-65dd-4aaf-a3c2-2a69ce72a770" class="bulleted-list"><li>뷰가 화면에 보일 때는 onDraw() 메서드가 호출된다.</li></ul><ul id="a7ecc4cb-29f1-4c9c-9814-1f95fb7e44ae" class="bulleted-list"><li>예를 들어, 버튼의 경우에는 그림으로 된 아이콘이나 글자가 그 위에 표시되려면 먼저 그 버튼을 담고 있는 레이아웃에 따라 버튼의 위치와 크기가 정해져야 한다.</li></ul><ul id="4bfbb242-66ba-4ebf-a126-13d209f9be4d" class="bulleted-list"><li>그런 다음 버튼의 모양과 그 안의 아이콘 또는 글자를 화면상에 그려주는 과정을 거치게 된다.</li></ul><ul id="2e3b64b8-eb37-49ff-a837-e84ded6a908e" class="bulleted-list"><li>이렇게 그려지는 과정에서 호출되는 onDraw() 메서드를 다시 정의하면 여러분이 보여주려는 내용물을 버튼 위에 그릴 수 있다.</li></ul><p id="514b2131-d814-4beb-9839-12402d56e6d3" class="">
+</p><figure id="35e6c6db-7fdc-4ee9-ade5-b6fbe7bbe479" class="image"><a href="Untitled%205/Untitled.png"><img style="width:432px" src="Untitled%205/Untitled.png"/></a></figure><ul id="a70611f4-c222-4627-b778-c5a8bdb75b57" class="bulleted-list"><li>결국, 새로운 뷰를 클래스로 정의하고 그 안에 onDraw() 메서드를 다시 정의한 후 필요한 코드를 넣어 기능을 구현하면 다른 모양으로 보이는 뷰를 직접 만들 수 있는 것이다.</li></ul><ul id="fff77911-96d2-401c-bf1e-0c44ca4d18ef" class="bulleted-list"><li>뷰 위에 그래픽을 그리는 과정을 설명하는 그림에서 볼 수 있듯이, 새로 정의한 MyVIew 클래스의 onDraw() 메서드는 새로 정의한 뷰가 화면에 보이기 전에 호츨되므로 이 메서드 안에서 원하는 모양의 그래픽을 화면에 그리면 그 모양대로 화면에 표현할 수 있다.</li></ul><ul id="573b62f4-bea3-4be5-b5de-e3c7a052abd7" class="bulleted-list"><li>또한 손가락으로 터치하여 화면에 그려진 뷰를 이동시키려고할 때는 뷰가 이동한 후에 그 뷰의 그래픽을 다시 그려야 할 필요가 있는데 → 이때 invalidate() 메서드를 호출하면된다.</li></ul><ul id="2b73d6b0-753b-4bfb-a1cd-3099e0a831c5" class="bulleted-list"><li>invalidate() 메서드가 호출되면 자동은 onDraw() 메서드가 다시 호출되어 이동한 좌표에 뷰의 그래픽을 다시 그리도록 만들 수 있다.</li></ul><p id="fdbaee2d-f421-4754-944e-e214f7956165" class="">
+</p><p id="5602aba6-ae2b-402e-ba3f-53a1f0e00d72" class="">
+</p><h3 id="70101e0f-acde-443a-810a-c1f719318650" class="">AppCompatButto 상속</h3><p id="977c9fc0-d94c-40c1-a7d8-0db54c77f228" class="">
+</p><pre id="709414a1-24ad-4d54-9ed7-ec42157f1033" class="code"><code>public class MyButton extends AppCompatButton {
+    public MyButton(Context context) {
+        super(context);
+    }
+
+    public MyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+}</code></pre><ul id="513130f5-abf2-4ba2-8592-62715d1c10e7" class="bulleted-list"><li>첫번째 생성자 는 Context 객체만 파라미터로 전달받으며 두 번째 생성자는 Context 객체와 AttributeSet 객체를 파라미터로 전달받는다.</li></ul><ul id="ca949fd3-dd69-4ab0-887d-114338ec23be" class="bulleted-list"><li>안드로이드는 UI 객체를 만들 때 Context 객체를 전달 받도록 되어 있으므로 생성자에는 항상 Context 객체가 전달되어야 한다.</li></ul><ul id="6901a9a9-80a0-405c-ac9b-2140738b243d" class="bulleted-list"><li>AttributeSet 객체는 XML 레이아웃에서 태그에 추가하는 속성을 전달받기 위한 것으로 이 뷰를 XML 레이아웃에 추가하는 경우 이 두번 째 생성자가 사용된다.</li></ul><ul id="df445823-4952-4ee7-b3e5-fa0bfaf1298d" class="bulleted-list"><li>첫 번째 생성자는 이 뷰를 소스 코드에서 new 연산자로 생성하는 경우에 사용된다.</li></ul><p id="672a12a8-5989-4deb-9765-6603f0ecdb50" class="">
+</p><pre id="33de1ddf-f7cc-4d42-9357-380fa95432fc" class="code"><code>// [Reference]
+public MyButton(Context context)
+public MyButton(Context context, AttributeSet attrs)</code></pre><ul id="0d61418f-439e-4aba-ac9f-ee1033bace6d" class="bulleted-list"><li>생성자가 두 개이므로 이 뷰가 초기화될 때 필요한 코드는 init() 메서드를 만들어 그 안에 정의한다.</li></ul><ul id="b78ee18c-4317-4471-bf0f-448800dc1079" class="bulleted-list"><li>이렇게 하면 두 개의 생성자에서 모두 init() 메서드를 호출하도록 할 수 있어 어떤 생성자가 호출되든 상관없이 동일한 초기화 작업이 진행되도록 만들 수 있다.</li></ul><p id="ece7ebeb-c258-4fe9-9de4-0b1d52a69c0a" class="">
+</p><p id="a5279a1a-6348-4c20-bd0e-1c25f2767681" class="">
+</p><h3 id="b36143f1-d952-4c71-91bb-5ca96f173d69" class="">초기화</h3><pre id="af2cad89-5842-46f0-ae92-a6bf03d4a96c" class="code"><code>public class MyButton extends AppCompatButton {
+    public MyButton(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public MyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context) {
+        setBackgroundColor(Color.CYAN);
+        setTextColor(Color.BLACK);
+
+        float textSize = getResources().getDimension(R.dimen.text_size);
+        setTextSize(textSize);
+        //초기화를 위한 메서드 정의하기
+    }
+}</code></pre><ul id="f07cbb17-9aae-412c-a0ec-fea33c29476f" class="bulleted-list"><li>init() 메서드에는 Context 객체를 전달하도록 했으며</li></ul><ul id="dd4dd3a8-03ed-41d8-94bc-f3021a557984" class="bulleted-list"><li>init() 메서드 안에서는 뷰의 배경색과 글자색을 설정하도록 하였다.</li></ul><ul id="acf18a08-4fa5-4ebb-93ce-0f61a6787be8" class="bulleted-list"><li>배경색을 설정할 때는 setBackgroundColor() 메서드를 호출하면 되고 글자색을 설정할 때는 setTextColor() 메서드를 호출하면된다.</li></ul><ul id="382075d8-4ab0-454e-ab80-2456d6dbb2e6" class="bulleted-list"><li>setTextSize() 메서드를 이용하면 글자 크기도 설정할 수 있다.</li></ul><ul id="a10a6c48-d102-4e6a-873a-c9b0d82428bb" class="bulleted-list"><li>하지만 이 방법은 픽셀 단위 설정만 할 수 있다.</li></ul><ul id="b6c816c4-a769-4e00-81a4-2a0a26a6bc2f" class="bulleted-list"><li>그래서 이 방법은 잘 사용하지 않는다.</li></ul><ul id="605e908b-354e-4d2f-a1f3-da122de8d957" class="block-color-red bulleted-list"><li>글자 크기는 화면 크기별로 다르게 표현되는 sp 단위를 사용하는 것을 권장 </li></ul><ul id="8a4f13c5-a47f-4dfa-8d50-08db8957e006" class="bulleted-list"><li>sp 단위 설정으로 글자 크기를 조절하려면 소스 코드가 아니라 XML 파일을 사용해야 한다.</li></ul><p id="3452bce1-9127-419c-9d36-296f98db214f" class="">
+</p><h3 id="d2d920a5-ee29-4fb2-aa98-03b29f45897e" class="">dimes.xml → /app/res/values/dimes.xml</h3><pre id="ed5b30ef-5718-4f49-a04c-50676e20cbd5" class="code"><code>&lt;resources&gt;
+    &lt;dimen name=&quot;text_size&quot;&gt;16sp&lt;/dimen&gt;
+&lt;/resources&gt;</code></pre><ul id="49fdb2ec-37af-43f2-941a-cd62f08bcb68" class="bulleted-list"><li>&lt;resource&gt; 태그 안에 &lt;dimen&gt; 태그를 추가하고 dp, sp 또는 다른 단위의 크기 값을 정의하면 소스 코드에서 그 값을 참조할 수 있다.</li></ul><ul id="3c9ae91d-6156-4f29-a1ac-728b93125cc7" class="bulleted-list"><li>소스 코드에서 참조할 때는 Resource 객체의 getDimension() 메서드를 사용한다.</li></ul><ul id="894d1a16-03d7-4097-a8b5-468e7117df8d" class="bulleted-list"><li>이 메서드에서 반환하는 값은 픽셀 값으로 자동으로 변환된 값이다.</li></ul><p id="714b7699-63ed-45a3-ab69-16010eb2b698" class="">
+</p><p id="673d8966-fff3-4e01-b11f-726e719fa856" class="">
+</p><h3 id="36d31cf7-6c4f-4d7b-8a5b-c6f09c60a5ab" class="">onDraw(), onTouchEvent()</h3><pre id="f33ba2c1-89af-4cf6-b97d-d20e0b962dc2" class="code"><code>public class MyButton extends AppCompatButton {
+    public MyButton(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public MyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context) {
+        setBackgroundColor(Color.CYAN);
+        setTextColor(Color.BLACK);
+
+        float textSize = getResources().getDimension(R.dimen.text_size);
+        setTextSize(textSize);
+        //초기화를 위한 메서드 정의하기
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        Log.d(&quot;MyButton&quot;, &quot;onDraw 호출&quot;);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d(&quot;MyButton&quot;, &quot;onTouch 호출&quot;);
+
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                    setBackgroundColor(Color.BLUE);
+                    setTextColor(Color.RED);
+                    break;
+            case  MotionEvent.ACTION_OUTSIDE:
+            case  MotionEvent.ACTION_CANCEL:
+            case  MotionEvent.ACTION_UP:
+                setBackgroundColor(Color.CYAN);
+                setTextColor(Color.BLACK);
+                break;
+        }
+        invalidate();
+
+        return true;
+    }
+}</code></pre><ul id="9e61c584-9034-4429-9cde-0b4970f3d3e6" class="bulleted-list"><li>처음에 만들어지 MyButton 뷰의 배경색은 밝은 파랑으로 글자색은 검은색으로 만들어지지만 버튼을 누르면 배경색은 파란색으로 글자색은 빨간색으로 변경된다.</li></ul><ul id="fbe276d7-2419-4674-91d2-3a8704f85a7a" class="bulleted-list"><li>onTouchEvent() 메서드가 호출되면서 전달되는 MouseEvent 객체에는 getAction() 메서드가 있어서 손가락으로 눌렀는지, 눌린 상태로 드래그되는지 또는 손가락이 떼어졌는지를 알 수 있도록 코드를 작성하였다.</li></ul><ul id="0d063424-0c18-4632-b849-bced137f519c" class="bulleted-list"><li>getAction() 메서드는 정수형(int) 값으로 이 상태를 반환한다.</li></ul><ul id="a1997fdd-c934-43cc-aa22-6ea47c6ecb05" class="bulleted-list"><li>반환 값은 각각 MotionEvent 객체의 ACTION_DOWN, MOVE, UP 상수로 정의되어 있다.</li></ul><ul id="d33fff0c-4516-417d-9f1b-ca42b67b10ff" class="bulleted-list"><li>이 값을 이용하여 손가락이 눌린 상태를 검사할 수 있다.</li></ul><ul id="8ff59593-cdd5-4a53-9830-27b3dd0c708e" class="bulleted-list"><li>손가락이 눌렸을 때 배경색과 글자색을 바꾸었다면 invalidate() 메서들 호출하여 뷰를 다시 그린다.</li></ul><ul id="ad382071-a564-4a76-ad47-afdb01511c1a" class="bulleted-list"><li>뷰가 다시 그려진다면 onDraw() 메서드가 동작하겠지 ㅇㅇ</li></ul><ul id="fab52841-4df9-443a-847d-38fc935c4e22" class="bulleted-list"><li>그래서 onDraw() 메서드에 Log.d() 메서드를 작성해 두었다.</li></ul><ul id="81672413-ffc9-49e6-9095-7214e6937316" class="bulleted-list"><li>이렇게 정의한 새로운 버튼은 XML 레이아웃에 추가하거나 또는 소스 코드에서 new 연산자를 사용해 새로운 객체로 만든 후 레이아웃 객테의 addView() 메서드를 추가할 수 있다.</li></ul><p id="2fa956b1-6736-4824-bdc4-0b8fa9208f08" class="">
+</p><h3 id="e8e28fc1-5c1a-4269-ac81-3917eaa8bafd" class="">XML 작성</h3><pre id="8cb7c227-138e-4bea-86f5-a0e2e4324448" class="code"><code>&lt;com.younsle.sampleview.MyButton
+        android:id=&quot;@+id/button&quot;
+        android:layout_width=&quot;200dp&quot;
+        android:layout_height=&quot;80dp&quot;
+        android:layout_centerInParent=&quot;true&quot;
+        android:text=&quot;Start&quot;/&gt;</code></pre></div></article></body></html>

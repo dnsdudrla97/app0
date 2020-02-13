@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쓰레드핸들러#1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d6a255aa-71df-4eed-a9fd-01391cb51733" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">쓰레드핸들러#1</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 02, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="725f67dc-1753-4060-bfb9-d57c7c841e61" class="">Handler 핸들러</h3><ul id="49ebef0a-29d4-4bf5-8225-98e5f3c45cad" class="bulleted-list"><li>새로운 프로젝트를 만들면 자동으로 생성되는 메인 액티비티는 앱이 실행될 때 하나의 프로세스에서 처리된다.</li></ul><ul id="27cb72d3-5a14-480a-a6a4-2c685f50b907" class="bulleted-list"><li>따라서 메인 액티비티 내에서 이벤트를 처리하거나 특정 메서드를 정의하여 기능을 구현할 때도 같은 프로세스 안에서 실행된다.</li></ul><ul id="790dc7e9-d4e8-4f1c-bb74-a54d7dd9c3cf" class="block-color-red bulleted-list"><li>같은 프로세스 안에서 일련의 기능이 순서대로 실행될 때 대부분은 큰 문제가 없지만, 대기 시간이 길어지는 네트워크 요청 등의 기능을 수행할 때는 화면에 보이는 UI도 멈춤 상태로 있게 되는 문제가 생길 수 있다. </li></ul><p id="316a161f-7b40-4c88-8475-e75d2446c47e" class="">
+</p><h3 id="64ebc606-65af-4e60-b16e-f12ddad5002f" class="">대기 시간이 길어지는 네트워크 요청 등의 기능을 수행할 때 프로세스 해결 방법</h3><ul id="117b1423-81a6-4f51-ab9f-c18b6fc5d104" class="bulleted-list"><li>하나의 프로세스 안에서 여러 개의 작업이 동시에 수행되는 멀티 스레드 방식을 사용하게 된다.</li></ul><ul id="71663138-854a-4fce-b99f-abb3ddd9ea9e" class="bulleted-list"><li>스레드(Thread)는 동시 수행이 가능한 작업 단위이며, 현재 수행 중인 작업 이외의 기능을 동시에 처리할 때 새로운 스레드를 만들어 처리한다.</li></ul><ul id="90fd0256-a8a7-4b51-bd7f-4ea3d85b5fba" class="bulleted-list"><li>이런 멀티 스레드 방식은 같은 프로세스 안에 들어 있으면서 메모리 리소스를 공유하므로 효율적인 처리가 가능하다.</li></ul><ul id="491a58d0-65e4-48b5-b25d-0e0398bef588" class="bulleted-list"><li>하지만 동시에 리소스에 접근할 때 데드락(DeadLock)이 발생하여 시스템이 비정상적으로 동작할 수도 있다.</li></ul><ul id="3033471a-ffd0-4b9b-b74b-024fa880306c" class="block-color-red bulleted-list"><li>여러 개의 스레드가 동시에 공통 메모리 리소스에 접근할 때 데드락이 발생한다.</li></ul><p id="c27a5fe6-3538-4712-94af-e380040f0ba5" class="">
+</p><h3 id="8888b330-e77d-4f84-8d44-c93873e1dbf3" class="">데드락이란?</h3><ul id="6d1d81d4-8adb-4caf-8f7f-5fc76a5e1efb" class="bulleted-list"><li>동시에 두 곳 이상에서 요청이 생겼을 때 어떤 것을 먼저 처리할지 판단할 수 없어 발생하는 시스템 상의 문제이다.</li></ul><ul id="d4d9722e-1ff5-4af7-9c17-329f7ad604b1" class="bulleted-list"><li>이런 경우에는 런타임 시의 예외 상황이므로 디버깅하기 쉽지 않은 경우가 많다.</li></ul><p id="9ff2b76c-a031-43d3-b26d-5b822005dd6f" class="">
+</p><figure id="b6096b94-cce7-4c7b-bc94-f15e25f13ebb" class="image"><a href="1/Untitled.png"><img style="width:672px" src="1/Untitled.png"/></a></figure><ul id="474b9a59-8348-4076-a911-a76b75b41c6f" class="block-color-red bulleted-list"><li>지연 시간이 길어질 수 있는 앱이라면 오랜 시간 작업을 수행하는 코드를 별도로 분리한 다음 UI에 응답을 보내는 방법을 사용 한다. </li></ul><ul id="3218384c-1a61-4cbf-a454-c11eaf0ea1cd" class="bulleted-list"><li>이를 위해 안드로이드가 제공하는 두 가지 시나리오를 정리하면 다음과 같다.</li></ul><ol id="3b91e2e1-4a20-4763-a62e-5bdccd4d3588" class="numbered-list" start="1"><li>서비스 사용하기<ol id="53df9bbb-8d78-4aa3-82cb-2a90ccc10a8a" class="numbered-list" start="1"><li>백그라운드 작업은 서비스로 실행하고 사용자에게는 알림 서비스로 알려준다.</li></ol><ol id="09a0800b-b935-433c-8520-030e8db3f956" class="numbered-list" start="2"><li>만약 메인 액티비티로 결과 값을 전달하고 이를 이용해서 다른 작업을 수행하고자 한다면 브로드캐스팅으로 결과 값을 전달 할 수 있다.</li></ol></li></ol><ol id="29a956b8-47a3-482c-a52a-33843ec2e20d" class="numbered-list" start="2"><li>스레드 사용하기<ol id="36d65b5a-e043-401e-9264-5758d4c430e1" class="numbered-list" start="1"><li>스레드는 같은 프로세스 안에 있기 때문에 작업 수행의 결과를 바로 철리할 수 있다.</li></ol><ol id="175fa262-632f-478f-901d-c3fb62f94dbf" class="numbered-list" start="2"><li>그러나 UI 객체는 직접 접근할 수 없으므로 핸들러(Handler) 객체를 사용한다.</li></ol><p id="c13319df-5ff0-4757-8d67-228544660946" class="">
+</p></li></ol><ul id="7a6c3478-743e-4bae-a937-76b3cd87217e" class="bulleted-list"><li>안드로이드에서 UI 처리할 때 사용되는 기본 스레드를 &#x27;메인 스레드&#x27; 라고 부른다.</li></ul><ul id="c44f9c46-1606-47a5-b015-d0d3ef302984" class="bulleted-list"><li>메인 스레드에서 이미 UI에 접근하고 있으므로 새로 생성한 다른 스레드에서는 핸들러(Handler) 객체를 사용해서 메시지를 전달함으로써 메인 스레드에서 처리하도록 만들 수 있다.</li></ul><p id="16caf21d-0c28-46a7-934f-fdc2e4390115" class="">
+</p><h3 id="fa2a4e44-deb1-42bd-b4d9-c6f5e79b2a61" class="">순서대로 처리할 수 있도록 도와주는 핸들러?</h3><ul id="36dd03d8-965e-44b6-b15d-a471c6936de1" class="bulleted-list"><li>동시 접근으로 발생하는 데드락 문제를 해결하는 가장 간단한 방법은 작업을 순서대로 처리하는 것이다.</li></ul><ul id="81f2ff7f-8b5a-441a-9c5c-b11f722c6ce9" class="bulleted-list"><li>이 역활은 각 스레드 안에서 동작하는 핸들러가 담당한다.</li></ul><p id="31430b6f-7b10-461c-9a62-bc6491d796af" class="">
+</p><p id="f692ecec-8dc1-42e4-af66-445ba05121aa" class="">
+</p><p id="8f9542b3-480b-4003-aeca-6375f4be8198" class="">
+</p><p id="62ab0b93-022b-4381-a0b2-f72f08f43321" class="">
+</p><h3 id="e2ff9d10-31c6-4384-b2e6-baf1b571b11b" class="">스레드 사용하기</h3><ul id="5e64bbf6-c752-4e60-85db-2c3b0f03fab4" class="bulleted-list"><li>안드로이드에서는 표준 자바의 스레드를 그대로 사용할 수 있다.</li></ul><ul id="daef86a7-e68e-434a-ae19-5ce592dac774" class="bulleted-list"><li>따라서 표준 자바처럼 스레드를 사용하는 가장 단순한 방법은 다음과 같다.</li></ul><ul id="9471d5c1-a838-4d59-a4a8-8f147afa8592" class="bulleted-list"><li>스레드는 new 연산자로 객체를 생성한 후 start() 메서드를 호출하면 시작할 수 있다.</li></ul><ul id="1f093fce-b707-4753-ac81-73347a7d9682" class="bulleted-list"><li>Thread 클래스에 정의된 생성자는 크게 파라미터가 없는 경우와 Runnable 객체를 파라미터로 갖는 두 가지로 구분할 수 있다.</li></ul><ul id="98efe487-efe6-437a-9e10-4b4531860c16" class="block-color-red bulleted-list"><li>일반적으로 Thread 클래스를 상속한 새로운 클래스를 정의한 후 객체를 만들어 시작하는 방법을 사용한다. </li></ul><p id="c87f7cc4-bcf4-42b3-91ca-215c077753bd" class="">
+</p><pre id="2498491f-70d2-4c26-a5e5-9f0a7af4486f" class="code"><code>public class MainActivity extends AppCompatActivity {
+
+    int value = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackgroundThread thread = new BackgroundThread();   // 스레드 객체 생성하고 시작시키기
+                thread.start();
+            }
+        });
+    }
+
+    class BackgroundThread extends Thread {
+        public void run() {
+            for (int i = 0; i &lt; 100; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch(Exception e) {}
+
+                value += 1;
+                Log.d(&quot;Thread&quot;, &quot;value :&quot; + value);
+            }
+        }
+    }
+}</code></pre><ul id="f8b21a8f-f2c7-41c3-9eaf-5d8cb65743cc" class="bulleted-list"><li>버튼을 누르면 스레드가 동작하고 value 변수의 값은 스레드에 의해 1초마다 1씩 증가한다.</li></ul><ul id="7e717a13-67b5-4186-beba-d2e750a4c96c" class="bulleted-list"><li>이러한 기능을 수행하는 스레드를 BackgroundThread 라는 이름으로 정의했으며, </li></ul><ul id="0aa197e1-2a5c-48fe-92a0-6231472bd274" class="bulleted-list"><li>이 스레드는 Thread 클래스를 상속받고 있다.</li></ul><ul id="e3a094c9-24cb-43e8-a2fc-70ed48fc3894" class="bulleted-list"><li>스레드 클래스를 정의했다면 그 클래스로부터 스레드 객체를 만들 수 있으며, start() 메서드를 호출하면 스레드가 시작된다.</li></ul><ul id="5b7c080e-04e9-421f-8c2d-1e436bf84c9f" class="bulleted-list"><li>스레드를 시작시키면 그 안에 run() 메서드가 실행된다.</li></ul><ul id="789ed57c-002c-4c4f-8bbb-874f6261dd8f" class="bulleted-list"><li>run() 메서드 안에서는 반복문을 돌면서 1초마다 value 값을 증가시킨다.</li></ul><ul id="1c7a8d94-9b0d-4083-a4fd-d020fc080373" class="bulleted-list"><li>표준 자바의 스레드를 사용하는 것을 볼 수 있겠다.</li></ul><p id="1ff03b0c-153e-4c9e-b6bb-d173d24a71f3" class="">
+</p><h3 id="5df664f9-3e5d-4d3a-afcf-6c1e2011a127" class="">직접 만든 BackgroundThread 객체에서 UI 객체를 직접 접근했다는 것 → 결국 메인 스레드에서 관리하는 UI 객체는 우리가 직접 만든 스레드 객체에서는 접근 할 수 없다는 의미이다</h3><figure id="d63ba804-bec5-448c-a931-6bb73a661411" class="image"><a href="1/Untitled%201.png"><img style="width:849px" src="1/Untitled%201.png"/></a></figure><p id="27076e70-e895-4a39-9cf4-483870216b11" class="">→ 결국 핸들러를 객체를 사용해야된다.</p><p id="6b2ba561-f55b-4b86-829d-c9c2689239eb" class="">
+</p><p id="141b41d4-f19f-449a-9cd3-e75a9a89c097" class="">
+</p><h3 id="b6e75f44-c74b-4247-a933-ec4cb67ee6f5" class="">핸들러로 메시지 전송하기</h3><p id="1275269c-0b80-42c3-b32f-c23e0081ebe1" class="">
+</p><ul id="44688e75-0625-40a9-8e84-9759d09336b8" class="bulleted-list"><li>앱을 실행할 때 프로세스가 만들어지면 그 안에 메인 스레드가 함께 만들어진다.</li></ul><ul id="8c471d6f-ca23-444a-96e3-c3a946318311" class="bulleted-list"><li>그리고 최상위에서 관리되는 앱 구성 요소인 액티비티, 브로드캐스트 수신자 등과 새로 만들어지는 윈도우를 관리하기 위한 메시지 큐(Message Queue)를 실행 한다.</li></ul><ul id="fdb84136-6ecb-4a2f-b67b-8adedb34c22d" class="block-color-red bulleted-list"><li>메시지 큐를 사용하면 순차적으로 코드를 수행할 수 있는데, 이렇게 메시지 큐로 메인 스레드에서 처리할 메시지를 전달하는 역활을 핸들러 클래스가 담당한다. </li></ul><ul id="3fcf06c0-2431-40ed-aa87-7e3eb9b10733" class="bulleted-list"><li>결국 핸들러는 실행하려는 특정 기능이 있을 때 핸들러가 포함되어 있는 스레드에서 순차적으로 실행시킬 때 사용하게 된다.</li></ul><ul id="64c4514f-09c4-4e5f-bb07-95fc01f231ac" class="bulleted-list"><li>핸들러를 이용하면 특정 메시지가 미래의 어떰 시점에 실행되도록 스케줄링 할 수도 있다.</li></ul><p id="4546a697-8ce6-49ac-8735-26cce36d08a8" class="">
+</p><h3 id="7826d4dd-2c18-4edc-912a-6872f7b5cdad" class="">핸들러 메시지 처리 방법</h3><figure id="03cdbd9d-a38f-43b6-b5d5-8a92ba504680" class="image"><a href="1/Untitled%202.png"><img style="width:576px" src="1/Untitled%202.png"/></a></figure><ul id="43ab4a25-71b6-46c8-942b-02e367f7b5d5" class="bulleted-list"><li>메인 스레드에 접근하기 위해 핸들러를 사용할 때 필요한 세 가지 단계를 보여준다.</li></ul><ol id="7ff1e787-72d6-42ec-8850-60a3ef87727f" class="numbered-list" start="1"><li>새로 만든 스레드(스레드 #1)가 수행하려는 정보를 메인 스레드로 전달한다.</li></ol><ol id="823edfe3-d06a-497c-92c3-55f8025b69aa" class="numbered-list" start="2"><li>먼저 핸들러가 관리하는 메시지 큐에서 처리할 수 있는 메시지 객체 하나를 참조해야 한다.<ol id="735bc38c-2eb8-4497-90a8-7c09416b45c4" class="numbered-list" start="1"><li>이 첫 번째 과정에서는 obtainMessage() 메서드를 이용할 수 있으며 호출의 결과로 메시지 객체를 반환받게 된다</li></ol></li></ol><ol id="fe4ba2a4-bea9-4345-97cb-b66d900a89fc" class="numbered-list" start="3"><li>이 메시지 객체에 필요한 정보를 넣은 후 sendMessage() 메서드를 이용해 메시지 큐에 넣을 수 있다.</li></ol><ol id="d700f000-aa02-43b8-80e5-67ec786bdcd8" class="numbered-list" start="4"><li>메시지 큐에 들어간 메시지는 순서대로 핸들러가 처리하게 되며 이 때 handlerMessage() 메서드의 정의된 기능이 수행된다.</li></ol><ol id="1a6ba8ac-d670-4b29-979f-66f414a5a771" class="numbered-list" start="5"><li>이때 handlerMessage()에 들어 있는 코드가 수행되는 위치는 새로 만든 스레드가 아닌 메인 스레드가 된다</li></ol><p id="2fcc3153-7a31-4acf-a468-c2a4a5cca641" class="">
+</p><p id="dd136463-86a8-45af-b5f4-8034781a72f4" class="">
+</p><h3 id="47d3c1a9-aeb6-420e-b2ce-a3b9db4ae92b" class="">MainActivity.java</h3><pre id="66c135ed-aada-4efe-8903-81dc05b4fbbc" class="code"><code>public class MainActivity extends AppCompatActivity {
+
+
+    TextView textView;
+
+    MainHandler handler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackgroundThread thread = new BackgroundThread();   
+// 스레드 객체 생성하고 시작시키기
+                thread.start();
+            }
+        });
+
+        handler = new MainHandler();
+    }
+
+    class BackgroundThread extends Thread {
+        int value = 0;
+
+        public void run() {
+            for (int i = 0; i &lt; 100; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch(Exception e) {}
+
+                value += 1;
+                Log.d(&quot;Thread&quot;, &quot;value :&quot; + value);
+
+                Message message = handler.obtainMessage();
+                Bundle bundle = new Bundle();
+                bundle.putInt(&quot;value&quot;, value);
+                message.setData(bundle);
+
+                handler.sendMessage(message);   // 핸들러로 메시지 객체 보내기
+            }
+        }
+    }
+
+// 핸들러 안에서 전달받은 메시지 객체 처리하기
+    class MainHandler extends Handler {
+
+        @Override
+        public void handleMessage(@NonNull Message msg) {   
+            super.handleMessage(msg);
+
+            Bundle bundle = msg.getData();
+            int value = bundle.getInt(&quot;value&quot;);
+            textView.setText(&quot;value 값 : &quot;+ value);
+        }
+    }
+}</code></pre><p id="a602e4ed-c2e0-48ee-9e9b-f674eaa8d700" class="">
+</p><ul id="676ab3a6-8862-422c-84e6-442da61d2eea" class="bulleted-list"><li>Handler 클래스를 상속한 MainHandler 클래스가 새로 정의되었다.</li></ul><ul id="21ccad47-2580-4377-9033-8ae187125185" class="bulleted-list"><li>Handler, Message는 android.os 패키지에 들어 있는 클래스를 사용한다.</li></ul><ul id="f166d867-b99e-41e7-9362-a137f550748e" class="bulleted-list"><li>Handler 클래스에는 handlerMessage() 메서드가 들어 있어 이 메서드를 다시 정의하면 메시지가 메인 스레드에서 수행될 때 필요한 기능을 넣어 둘 수 있다.</li></ul><ul id="c14c9aa2-d021-4c88-9d2a-62572cc1b4a8" class="bulleted-list"><li>이렇게 정의한 핸들러는 onCreate() 메서드에서 액티비티가 초기화될 때 new 연산자를 이용해 객체로 만들어진다.</li></ul><ul id="7a492721-412a-4c69-bba4-afbb57214ec6" class="bulleted-list"><li>새로 만든 스레드 객체에서 수행한 작업의 결과가 나왔을 때는 핸들러 객체의 obtainMessage()로 메시지 객체 하나를 참조한 후 sendMessage() 메서드를 이용해 메시지 큐에 넣게 된다.</li></ul><h3 id="2a119d90-81f1-47f0-af83-4147c5c82e13" class="">그런데 데이터를 전달하고자 할 때는 어떻게 할까?</h3><ul id="089081af-a42f-43b0-86d3-6b1336041756" class="bulleted-list"><li>텍스트 뷰 객체의 setText() 메서드를 호출하는 코드가 핸들러 클래스의 handlerMessage() 메서드 안으로 이동해야 하므로 이 handleMessage() 메서드로 value 값을 전달해야 하는 문제가 생긴다.</li></ul><ul id="0e7babc7-1d58-47c4-bea8-f34217a91a52" class="bulleted-list"><li>따라서 이 value 값을 Message 객체에 넣어서 보내는 것이 필요하다.</li></ul><ul id="82f6e605-e05b-4743-a3c2-d2f85023d8a1" class="bulleted-list"><li>Message 객체에는 Bundle 객체가 들어 있어 put___() 메서드로 데이터를 넣었다가 get___() 메서드로 데이터를 가져올 수 있게 되어 있다.(여기서 ___은 자료형에 따라 달라질 수 있다.)</li></ul><p id="a837deff-1663-4fc5-b662-06d0254e3021" class="">
+</p><p id="2c5587b8-8130-47d9-aa1b-5f0e9bb48e1c" class="">
+</p><h2 id="34de94a3-9203-4335-8bc9-14e711a44b97" class="">Runnable 객체 실행하기</h2><h3 id="000ff92f-2e1b-4501-b653-b995c5001c8a" class="">지금까지 핸들러를 사용해서 메시지를 전송하고 순서대로 이를 실행하는 방법을 살펴보았다.</h3><p id="a11dfddf-df40-42db-aa22-50fdc87dd01c" class="">
+</p><ul id="f690ecf7-27c6-4a75-916a-3a2edcb6d70e" class="bulleted-list"><li>앞에서 사용했던 방법은 가장 일반적이지만 개발자 입장 에서는 코드가 복잡하게 보이는 단점이 있다.</li></ul><ul id="2fe68e7e-1d8f-4622-b14a-9f0de1362144" class="block-color-red bulleted-list"><li>좀 더 간단한 방법으로 메인 스레드에서 실행시킬 수 있으면 좋겠죠? </li></ul><ul id="cb3dabb0-9f59-4dec-b88e-33c4a75d6b6d" class="bulleted-list"><li>핸들러 클래스는 메시지 전송 방법 이외에 Runnable 객체를 실행시킬 수 있는 방법을 제공한다.</li></ul><ul id="5a341b00-4571-44c9-a49a-1c698ab4866c" class="bulleted-list"><li>즉, 새로 만든 Runnable 객체를 핸들러의 post() 메서드로 전달해주면 이 객체에 정의된 run() 메서드 안의 코드들은 메인 스레드에서 실행된다.</li></ul><p id="0fb626e5-a4bc-4f48-bb90-2b14fe77aa0d" class="">
+</p><h3 id="ccd92967-d23e-4760-b590-dc9ce1fc7853" class="">Runnable 객체 실행 방식으로 변경</h3><pre id="4b25cf5a-2683-4e14-bfef-ee2dbc569918" class="code"><code>public class MainActivity extends AppCompatActivity {
+    TextView textView;
+
+		// API 기본 핸들러 객체 생성하기
+    Handler handler = new Handler();    
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.textView);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackgroundThread thread = new BackgroundThread();
+                thread.start();
+            }
+        });
+    }
+
+    class BackgroundThread extends Thread {
+        int value = 0;
+
+        public void run() {
+            for (int i = 0; i &lt; 100; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch(Exception e) {}
+
+                value += 1;
+                Log.d(&quot;Thread&quot;, &quot;value :&quot; + value);
+
+                // 핸들러의 post() 메서드 호출하기
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText(&quot;Value 값 :&quot; + value);
+                    }
+                });
+            }
+        }
+    }
+}</code></pre><ul id="df6c2005-69d9-4be8-a1f9-94764dfba137" class="bulleted-list"><li>코드가 전반적으로 변경되었다.</li></ul><ul id="385cd95c-897f-47c4-a6d6-6d723c2595d9" class="bulleted-list"><li>메시지 처리를 위해 새로 정의했던 ProgressHandler 클래스는 이제 더이상 필요가 없다.</li></ul><ul id="8a46b1ee-736a-43c0-9cc5-4276fe7d4078" class="bulleted-list"><li>일반적으로 사용하는 Handler 클래스로 객체를 생성한다.</li></ul><ul id="d9f1572a-861c-4802-8f7e-b47d78dea4b9" class="block-color-red bulleted-list"><li>Handler 객체를 만들어 변수에 할당해두면 이 객체의 post() 메서드로 호출할 수 있다. </li></ul><ul id="c93f60f8-2910-4ba8-89bc-62e7b102d053" class="block-color-red bulleted-list"><li>스레드 안에서 결과를 텍스트뷰에 표시하려면 post() 메서드를 호출하면서 Runnable 객체를 만들어준다. </li></ul><ul id="a55d35de-9a39-4918-80eb-353564dc19f0" class="bulleted-list"><li>그리고 그 안에 텍스트뷰를 접근하는 코드를 넣어준다.</li></ul><ul id="d217e736-f8c0-42f0-8b4c-1ea5da264bb4" class="bulleted-list"><li>이렇게 하면 결과를 텍스트뷰에 보여주는 코드가 스레드 안에 있을 수  있으므로 좀 더 코드를 이해하기 쉬어진다.</li></ul><ul id="b5c2df9c-6027-48b5-90ea-44fe65d61bee" class="block-color-red bulleted-list"><li>이 코드에서 보는 것처럼 post() 메서드로 전달되는 Runnable 객체는 스레드의 작업 결과물로 만들어지는 데이터를 처리해야 한다. </li></ul><ul id="2b1a7549-2a11-4df2-a1f1-de3449a5aea7" class="bulleted-list"><li>따라서 결과물을 화면에 보여주어야 하는 부분이 있을 경우 new 연산자로 Runnable 인터페이스를 구현하는 새로운 객체를 만들어 사용하는 것이 일반적이다.</li></ul><p id="e88a9a0a-82e3-414f-9221-3f4c5a2a5d42" class="">
+</p><h3 id="85b401d0-3b0d-491e-9e28-416a617326d9" class="">메세지(Message) 클래스의 주요 멤버 변수</h3><ul id="22676e5b-03a9-45df-b6d3-80eeb5fc029e" class="bulleted-list"><li>what<ul id="5dd42d57-c50c-464c-9ce3-a2be72a0fb0a" class="bulleted-list"><li>메시지를 수신하는 핸들러가 식별할 수 있는 사용자 정의 메시지 ID, 핸들러는 이 멤버 변수를 참조하여 어떠한 처리를 요청하는 메시지인지 구별할 수 있다.</li></ul></li></ul><ul id="614e759d-d743-4e88-a21b-8ba96127b875" class="bulleted-list"><li>arg1, arg2<ul id="079fcd13-dbce-4b06-acc8-9adad0e48c5a" class="bulleted-list"><li>간단한 정수값을 저장할 수 있는 멤버 변수.</li></ul><ul id="8043dc59-e109-4c75-9b8c-3822a8d39d70" class="bulleted-list"><li>메시지 클래스는 두 개의 정수를 저장할 수 있는 arg1, arg2 를 포함한다.</li></ul></li></ul><ul id="267955f9-5077-4352-96a8-a7ce1d0c5e60" class="bulleted-list"><li>obj<ul id="1656521f-5433-4999-9687-b2524a79367f" class="bulleted-list"><li>메시지를 수신하는 목적지 핸들러에 보낼 임의의 객체</li></ul></li></ul><ul id="71acf63c-efdf-40f3-94c1-ba2acc85bb73" class="bulleted-list"><li>target<ul id="1a8abf60-bd8e-4ace-8290-43cfc44e963d" class="bulleted-list"><li>메시지가 전달될 목적지 핸들러</li></ul></li></ul><ul id="b28b31b9-8cd9-4a1c-adde-9f6e0a9bba53" class="bulleted-list"><li>callback<ul id="24f7a3a6-3fbe-43aa-b1b0-217c6edec226" class="bulleted-list"><li>핸들러에 의해 처리될 때 실행되어야 할 Runnable 객체</li></ul></li></ul></div></article></body></html>

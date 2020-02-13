@@ -1,0 +1,569 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>JAVA Application Context</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d51b3631-279b-4844-88cb-3fff6ba1726f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">JAVA Application Context</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 15, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span><span class="selected-value">Basic</span><span class="selected-value">JAVA</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h2 id="2be0394b-88b1-4a07-8723-8e3bc3a08518" class="">추상화 = 모델링</h2><ul id="b270f767-9c60-4e44-adc6-40fe1738dcef" class="bulleted-list"><li>추상화란 구체적인 것을 분해해서 관찰자가 관심 있는 특성만 가지고 재조합하는 것이라고 정리할 수 있다.<ul id="64aef3c6-2a1f-4e30-885e-ef4c0daafaa9" class="bulleted-list"><li>Object(명사)<ul id="9c1682c5-d42b-406b-a308-18660a75e8b4" class="bulleted-list"><li>물건, 물체</li></ul></li></ul><ul id="1867bbec-ad9a-4ea0-8dcc-f2d4b74be59c" class="bulleted-list"><li>개체(명사)<ul id="4ad82afd-7d2e-49b6-af09-5ec6b1b4b855" class="bulleted-list"><li>전체나 집단에 상대하여 하나하나의 낱개를 이르는 말</li></ul></li></ul><ul id="1bd88e8b-c74f-44ec-a56c-7035908aec66" class="bulleted-list"><li>객체<ul id="fed921e2-01c7-4027-99bc-c0638206b248" class="bulleted-list"><li>세상에 존재하는 유일무이한 사물</li></ul></li></ul><ul id="e4a67cd5-5c09-4488-b9fe-21e5e9a12327" class="bulleted-list"><li>클래스<ul id="cfd459d5-cbea-4354-bb29-e42b11c37d7d" class="bulleted-list"><li>분류, 집합, 같은 속성과 기능을 가진 객체를 총칭하는 개념</li></ul></li></ul><p id="edc92260-aa05-4e85-bb89-e8b4e8a3f4e7" class="">
+</p></li></ul><ul id="c180ffe5-73f1-41c4-a666-b951cfcf4602" class="bulleted-list"><li>세상에 존재하는 유일무이한 객체를 특성(속성 + 기능)에 따라 분류해 보니 객체를 통칭할 수 있는 집합적 개념, 즉 클래스(분류) 가 나오게 된다.</li></ul><ul id="aa11b0ec-d81d-46fc-9ad2-a40b78d4a2bf" class="bulleted-list"><li>객체는 유일무이한 사물이다.</li></ul><ul id="ad173062-bbd4-45d0-9f07-0c7b1342fae3" class="bulleted-list"><li>클래스는 같은 특성을 지닌 여러 객체를 총칭하는 집합의 개념이다.</li></ul><p id="4c69ccd2-8660-462e-9a42-979143015748" class="">
+</p><h3 id="21a300a4-157d-4aab-99c2-d78d3aa04efd" class="">클래스 의미는 분류이다. 따라서 객체들의 특성에 따라 분류했다는 의미가 된다.</h3><ul id="67d9abbb-f171-457c-8e11-b6912542ceb5" class="bulleted-list"><li>사람 홍길동 = new 사람();</li></ul><ul id="abceaecf-b0bf-40ac-9691-7148375b05cb" class="bulleted-list"><li>사람 줄리엣 = new 사람();</li></ul><ul id="392700bc-f8cb-4fa7-9564-448bf8fad634" class="bulleted-list"><li>사람이라는 클래스(분류)를 이용하여 유일무이하고 새로운 하나의 사람(객체)을 만들어 홍길동( 객체 참조 변수)이라는 이름을 지어준 것이다.</li></ul><ul id="4e25355d-17d7-46aa-851b-5da690ad4877" class="bulleted-list"><li>클래스를 이용해 object를 만들었다는 것을 강조할 때는 ojbject라는 표현보다는 클래스의 인스턴스라는 표현을 쓴다.</li></ul><ul id="c533e265-ba62-4325-a41d-56227eeb20f4" class="bulleted-list"><li>보통 객체를 먼저 인식하고 클래스를 인식하지만 창조자는 먼저 클래스를 인식하고 객체를 만들게 된다.</li></ul><ul id="9408c465-85fb-4144-8308-e7e70f90283a" class="bulleted-list"><li>아담과 하와를 만들기 전에 사람이라는 개념을 먼저 가지고 있었을 것이다.</li></ul><ul id="0f46d7d9-b0bf-4c42-879f-39aeaa95c9a6" class="bulleted-list"><li>프로그램을 만드는 과정에서 개발자는 바로 해당 애플리케이션의 창조자가 된다.</li></ul><ul id="b85bf042-b0f8-41f9-85f1-938eb8a979f5" class="bulleted-list"><li>그래서 우리도 객체 지향 프로그래밍을 할 때 클래스를 먼저 설계하게 된다.</li></ul><p id="36814895-8777-4ac3-ba6d-a37f9ad662cb" class="">
+</p><h3 id="1a2ad718-522e-424b-b7f3-1dff61231f03" class="">애플리케이션 컨텍스트(Context) 또는 경계</h3><ul id="96d9c182-b06b-4afd-9992-120fa77ee2a5" class="bulleted-list"><li>사람이라는 클래스를 설계한다고 했을때 사람 객체들을 관찰해서 사람 객체들이 가진 공통된 특성을 찾게 된다.</li></ul><ul id="70b5415b-1582-4919-be6a-da3b3186a7d2" class="bulleted-list"><li>시력, 몸무게, 혈액형, 키, 나이, 직업, 취미 등등 명사로 표현되는 특성을 속성이라고 속성값을 가질 수 있다.</li></ul><ul id="e0e7cd72-2aba-4981-9b52-18cd24d307d2" class="bulleted-list"><li>먹다, 자다, 일하다, 운전하다, 울다 동사로 표현되는 특성을 기능/행위 하고 한다. 이러한 기능/행위는 수행 절차 또는 로직이라고 하는 것을 갖게 된다. 기능/행위를 개체지향에서는 메서드라고 한다.</li></ul><ul id="1f556ce9-cd03-4819-849e-88684700cacf" class="bulleted-list"><li>사람의 모든 특성을 나열하고 싶지만 그렇게 하면 너무 광범위 하게 만들어야 한다.</li></ul><ul id="75512533-76c3-4d0c-a151-b019cdc15b3c" class="bulleted-list"><li>그래서 애플리케이션 경계가 필요한 것이다.</li></ul><ul id="5ba162f2-0227-4308-8ef5-c453589f8683" class="bulleted-list"><li>내가 만들고자 하는 애플리케이션에 맞게 클래스를 정의하는 것이다.</li></ul><ul id="79e6434f-313d-4991-baf9-764d7eb201d2" class="bulleted-list"><li>만약 병원 애플리케이션을 만들고 있다면 사람은 환자를 의미하는 좀 더 구체적인 이름으로 바꿀 수 있을 것이고 은행 애플리케이션을 만들고 있다면 사람은 고객이라는 구체적인 이름으로 바꿀 수 있을 것이다.</li></ul><ul id="10814d65-55c0-4038-a7cf-a776679609d8" class="bulleted-list"><li>결국 애플리케이션 경계에 따라 사람클래스의 설계가 달라져야 할 것이다.</li></ul><p id="c250adaf-ab22-4354-b139-6446f61a070d" class="">
+</p><h3 id="1a5fe265-ff98-4e6e-b83d-8a30cead4e8d" class="">추상화</h3><ul id="6c08f194-9fd4-4d9e-a320-58c62237284e" class="bulleted-list"><li>병원 애플리케이션이라고 생각하니 사람 클래스에서 필요 없는 특성들이 보이기 시작하고 역시 애플리케이션을 은행이라고 생각하니 필요 없는 특성들이 보이기 시작한다.</li></ul><ul id="01b1938e-10c4-47e0-a924-025bee1c31c3" class="block-color-red bulleted-list"><li>추상화란 구체적인 것을 분해해서 관심 영역에 대한 특성만을 가지고 재조합하는 것 = 모델링 </li></ul><ul id="94713f41-4ba7-460c-a763-11b15e1edecd" class="bulleted-list"><li>모델은 실제 사물을 정확히 복제하는 게 아니라 목적에 맞게 관심 있는 특성만을 추출해서 표현하는 것이다.</li></ul><ul id="2fac8fc9-8e54-4f65-b71b-bb7b6b53276e" class="bulleted-list"><li>바로 추상화를 통해 실제 사물을 단순하게 묘사하는 것이다.</li></ul><ul id="28a1fc83-a581-4775-8eab-c458dbb773b7" class="bulleted-list"><li>OOP의 추상화 모델링</li></ul><ul id="76d128ea-78a0-4a1b-b294-a1fd25e80dba" class="bulleted-list"><li>클래스 : 객체 = 펭귄 : 뽀로로</li></ul><ul id="ffac4a89-bea7-4b8b-b668-dcc644dc1634" class="bulleted-list"><li>클래스 설계에서 추상화가 사용된다.</li></ul><ul id="0a077ae7-6d85-46ed-80d8-308f5a4252f0" class="bulleted-list"><li>클래스 설계를 위해서는 애플리케이션 경계부터 정해야 한다.</li></ul><ul id="d35462be-840d-4c34-a481-43df390b57db" class="bulleted-list"><li>객체 지향에서 추상화의 결과는 클래스이다.</li></ul><ul id="84de3c9f-921e-4d54-9288-5c5411c4772b" class="bulleted-list"><li>자바는 객체 지향의 추상화를 바로 class 키워드를 통해 지원하고 있다.<ul id="107e6f7d-8df5-45d7-a664-a70db5db2439" class="bulleted-list"><li>추상화 = 모델링 = 자바의 class 키워드</li></ul></li></ul></div></article></body></html>

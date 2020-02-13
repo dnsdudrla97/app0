@@ -1,0 +1,773 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>레이아웃 정의하고 카드뷰 넣기</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="23a2b5ca-28b0-4567-8d90-d755cf1931c3" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">레이아웃 정의하고 카드뷰 넣기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Jan 27, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="db4b0be2-105a-459b-8fcd-c13b6a6773ce" class="">레이아웃 정의하고 카드뷰 넣기</h1><h3 id="c7c473e3-c21a-4f07-95a2-5d31597a039e" class="">버튼을 상속해서 새로운 버튼을 만들어 봄, 뷰들을 담아주는 레이아웃을 상속해서 새로운 레이아웃을 만들어 봐야지 거기다 카드뷰 집어 넣으면 🤩</h3><p id="d2bed1ce-759f-432d-a231-0b87732ea186" class="">
+</p><h3 id="4f5febc8-b899-45d4-9df6-dd61255959e9" class="">카드뷰(CardView)</h3><ul id="9d4a5801-76d2-4daa-a413-afe3d701cd7e" class="bulleted-list"><li>카드뷰는 프로필과 같은 간단 정보를 넣기 위해 각 영역을 구분하는 역활을 한다.</li></ul><ul id="300e9d71-3f4e-47bc-80fb-85274ad6062d" class="bulleted-list"><li>예를 들어, 쇼핑몰 앱에서 하나의 상품 정보를 상품 이미지와 가격 그리고 평점으로 표시하고자 한다면 이것들을 카드뷰 안에 넣어서 표시할 수 있다.</li></ul><ul id="6b735b74-a43e-4607-82c7-0c3c62a87028" class="bulleted-list"><li>이렇게 하면 카드뷰가 둥글게 보여주거나 다른 배경에 비해 약간 도출된 것처럼 표현할 수 있다.</li></ul><ul id="f296b582-b703-404d-8139-4cc15d2baf6f" class="bulleted-list"><li>배경 색깔도 물론</li></ul><p id="c1a62ec8-1144-47b7-a3f2-b5273cbad4e3" class="">
+</p><h3 id="1a6e0d37-e75c-4927-a7ea-7d2cc64ba32b" class="">레이아웃은 뷰들을 그 안에 배치하고 보여주어야 하므로 하나의 XML 레이아웃 파일과 하나의 소스파일로 구성된다.</h3><h3 id="31f4a955-c990-4c9d-ac15-37b62387ca78" class="">즉, 액티비티가 그렇듯이 레이아웃으로 만들어지는 부분 화면도 두 개의 파일로 구성된다.!!</h3><p id="0f48ee8d-bf8a-4f87-9786-89ff2739b728" class="">
+</p><p id="940f9e81-ffbb-476b-8af8-86cf038a44c9" class="">
+</p><h3 id="a1ff8fd1-149a-4a47-ba32-b65a6d7ce936" class="">layout1.xml 작성</h3><pre id="85bf67e2-64d1-4c5f-89dd-b610f94ef565" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:orientation=&quot;horizontal&quot; android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;&gt;
+
+    &lt;ImageView
+        android:layout_width=&quot;80dp&quot;
+        android:layout_height=&quot;80dp&quot;
+        app:srcCompat=&quot;@mipmap/ic_launcher&quot; /&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_margin=&quot;5dp&quot;
+        android:orientation=&quot;vertical&quot;&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/textView&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:textSize=&quot;30sp&quot;
+            android:text=&quot;이름&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/textView2&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:textSize=&quot;25sp&quot;
+            android:textColor=&quot;#FF0000FF&quot;
+            android:text=&quot;전화번호&quot; /&gt;
+    &lt;/LinearLayout&gt;
+
+
+&lt;/LinearLayout&gt;</code></pre><p id="686abcc5-3420-495c-8da1-ce21fa2a69a7" class="">
+</p><h3 id="92b9292f-c07c-4a0d-a38c-bd728bc6e46a" class="">Layout1.java</h3><pre id="f9ca992a-8bec-4423-a886-513ffa2dca54" class="code"><code>public class Layout1 extends LinearLayout {
+    public Layout1(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public Layout1(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+
+    }
+
+    private void init(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.layout1, this, true)
+    }
+}</code></pre><ul id="0e0c8d04-47e8-4339-bdab-d0416d5f8dec" class="bulleted-list"><li>두 개의 생성자가 추가되면 객체가 생성될 때 호출될 수 있도록 init() 메서드를 추가한다.</li></ul><ul id="20a9c450-e4d5-4ecd-859e-cafa64c4b7c3" class="bulleted-list"><li>init() 메서에는 Conteext 객체가 전달되며 그 안에서 XML 레이아웃 파일을 인플레이션하여 이 소스 파일과 매칭 될 수 있도록 한다.</li></ul><ul id="09c22c4e-2b13-4a35-8eab-2dd6800645ee" class="bulleted-list"><li>init() 메서드 안에서는 LayoutInflater 객체를 참조하였다.</li></ul><ul id="91ffe8bd-9303-457a-8d22-80eb4989c826" class="bulleted-list"><li>이 객체는 시스템 서비스로 제공되므로 getSystemService() 메서드를 호출하면서 파라미터로 Context.LAYOUT_INFLATER_SERVICE 상수를 전달하면 객체가 반환된다.</li></ul><ul id="0b248cb8-a07e-4c15-bf37-f37aec5ab4b2" class="bulleted-list"><li>이 객체의 inflate() 메서드를 호출하면서 XML 레이아웃 파일을 파라미터로 전달하면 인플레이션이 진행되면서 이 소스 파일에 설정된다.</li></ul><ul id="309bd54b-5564-4aa9-8d5e-ad55319dc6bf" class="bulleted-list"><li>인플레이션 과정이 끝나면 XML 레이아웃 파일 안에 넣어둔 이미지뷰나 텍스트뷰를 찾아서 참조할 수 있다.</li></ul><ul id="14bbf383-9464-4875-a88f-78d555ec9a88" class="bulleted-list"><li>액티비티에서 사용했던 findViewById() 메서드를 동일하게 호출할 수 있으므로 inflate() 메서드를 호출한 코드 아래에 findViewById를 이용해 이미지뷰와 텍스트뷰를 찾아내는 코드를 추가한다.</li></ul><p id="3b1e6fce-eeef-4739-9513-48edf48a8530" class="">
+</p><p id="bb2157b6-aea6-4822-a254-a480281c994a" class="">
+</p><h3 id="a7bb9076-cfce-477e-89ff-5fd3910e1572" class="">이미지뷰, 텍스트뷰 추가 코드</h3><pre id="5ca4d2c6-316a-4699-9920-19e8173f791c" class="code"><code>public class Layout1 extends LinearLayout {
+    ImageView imageView;
+    TextView textView;
+    TextView textView2;
+
+    public Layout1(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public Layout1(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+
+    }
+
+    private void init(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.layout1, this, true);
+
+        imageView = findViewById(R.id.imageView);
+        textView = findViewById(R.id.textView);
+        textView2 = findViewById(R.id.textView2);
+    }
+
+    public void setImage(int resId) {
+        imageView.setImageResource(resId);
+    }
+
+    public void setName(String name) {
+        textView.setText(name);
+    }
+
+    public void setMobile(String mobile) {
+        textView2.setText(mobile);
+    }
+}</code></pre><ul id="ff36340c-7570-41ab-a4c1-cd9f71faaff3" class="bulleted-list"><li>findViewById() 메서드로 찾아낸 뷰들은 이 클래스 안의 어느 코드에서건 접근할 수 있도록 클래스 상단에 변수를 선언한 후 그 변수에 할당한다.</li></ul><ul id="74b1f65e-1f24-40db-91ab-1ec0bf30c306" class="bulleted-list"><li>그리고 새로 정의한 Layout1이라는 이름의 뷰는 메인 레이아웃에 추가되어 사용할 것이므로 소스 코드에서 이미지뷰의 이미지나 텍스트뷰의 글자를 바꿀수 있도록 setImage, setName, setMobile 이라는 이름의 메서드를 정의한다.</li></ul><ul id="d1ad5522-39ac-4021-9209-401dd0674952" class="bulleted-list"><li>setImage() 메서드는 정수를 전달받아 이미지뷰의 이미지를 변경할 수 있도록한다.</li></ul><ul id="92c01304-e372-403e-bdd3-502afd06de26" class="bulleted-list"><li>이미지뷰에 보이는 이미지를 바꿀 수 있는 메서드 중의 하나가 setImageResource() 메서드인데 이 메서드는 /app/res/drawable 폴더 안에 들어 있는 이미지 파일을 참조하는 정수 값을 파라미터로 전달받는다.</li></ul><ul id="c271bb37-caca-47ba-99fe-b33af06af538" class="bulleted-list"><li>예를 들어 /app/res/drawable 폴더 안에 house.png 라는 이름의 이미지 파일이 들어있다면 이 이미지 파일은 @drawable/house 라는 리소스 id로 참조할 수 있는데 이 id 값은 내부적을 정수 값으로 표현된다.</li></ul><ul id="89b41697-7876-4c5a-bb1b-a5878b4a7747" class="bulleted-list"><li>따라서 이런 이미지 리소스 id 가 전달되도록 만든다.</li></ul><p id="c3a8980d-3ebe-4913-9001-e142062d3ba7" class="">
+</p><p id="300fd0d3-c0c4-4915-9c55-8b4d5f2915a7" class="">
+</p><pre id="fcb271b4-1837-467d-9210-ede520f613c3" class="code"><code>&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:orientation=&quot;vertical&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+    
+    &lt;Button
+        android:id=&quot;@+id/button&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;BUTTON&quot;/&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/button2&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;BUTTON&quot;/&gt;
+
+    &lt;com.younsle.samplelayout.Layout1
+        android:id=&quot;@+id/layout1&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+
+
+&lt;/LinearLayout&gt;</code></pre><ul id="94adb7bb-7158-4b1a-82ad-ecbca06c5463" class="bulleted-list"><li>project → 추가 id :layout1 지정</li></ul><ul id="5c6b7440-ddde-43d7-b601-72782ff7b578" class="bulleted-list"><li>레이아웃을 상속한 새로운 뷰를 하나 만든 것이다.</li></ul><ul id="78e18c75-98a4-47ea-996b-93660f9f9287" class="bulleted-list"><li>이제 이 뷰를 메인 액티비티에 추가해 보겠다. 팔레트 → project</li></ul><p id="d3df4e9e-5378-44d2-935e-9f36c028d6f4" class="">
+</p><p id="7c30e67c-490b-438c-9f82-aed7a2a8b738" class="">
+</p><p id="dc482b6f-a996-40d1-a826-a4938a8416f0" class="">
+</p><h3 id="e97f29f1-985b-4f4d-be18-e6434d56fcde" class=""><a href="http://mainactivity.java">MainActivity.java</a> → project id 추가</h3><pre id="1847195a-a4eb-4084-ac25-da1c90ab4bf4" class="code"><code>public class MainActivity extends AppCompatActivity {
+    Layout1 layout1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        layout1 = findViewById(R.id.layout1);
+        layout1.setImage(R.drawable.namin1);
+        layout1.setName(&quot;나민&quot;);
+        layout1.setMobile(&quot;010-4004-4040&quot;);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                layout1.setImage(R.drawable.namin1);
+            }
+        });
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                layout1.setImage(R.drawable.namin2);
+            }
+        });
+    }
+}</code></pre><ul id="8a8dae9a-b013-4fc5-8d04-2d46e863ef1c" class="bulleted-list"><li>setImage, setName, setMobile 이 새개의 메서드를 호출하여 layout1 뷰에 이미지와 글자를 설정할 수 있다. </li></ul><ul id="e5c3c980-d179-4004-92ca-d538106e690c" class="bulleted-list"><li>findViewById() 메서드로 찾은 Layout1 객테는 클래스 안의 어디서든 참조할 수 있도록 클래스 안에 변수를 선언한 후 그 변수에 할당했다.</li></ul><ul id="1cf3389e-0319-459d-9f4d-29bfbb8c63a9" class="bulleted-list"><li>버튼을 눌렀을 때 이미지뷰가 변경</li></ul><ul id="4616aa25-6f4d-4aab-a821-73836b9cf4aa" class="bulleted-list"><li>레이이아웃을 상속하여 새로운 뷰를 정의하는 방법을 알게 되었다.</li></ul><ul id="f0d0efba-123a-4ef3-a1f6-0f5b4d0f6de1" class="bulleted-list"><li>그리고 새로운 뷰 안에 들어있는 이미지나 텍스트뷰의 속성을 바꾸기 위해 메서드를 정의하고 뷰 바깥에서 그 메서드를 호출하면 이미지나 글자를 바꿀 수 있다는 것을 알 수 있다.</li></ul><p id="82333660-d704-4fcc-837e-bcc081c2e841" class="">
+</p><p id="5d939026-545b-4cb2-ab26-f0fcf58f9288" class="">
+</p><h3 id="20e4a29c-6d27-4219-b5a3-027e16b2a30c" class="">카드뷰 추가하기</h3><pre id="ceb7674d-ac70-444e-b590-6cb991266c17" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:orientation=&quot;vertical&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;&gt;
+
+    &lt;androidx.cardview.widget.CardView
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    app:cardBackgroundColor=&quot;#FFFFFFFF&quot;
+    app:cardCornerRadius=&quot;10dp&quot;
+    app:cardElevation=&quot;5dp&quot;
+    app:cardUseCompatPadding=&quot;true&quot;&gt;
+
+        &lt;LinearLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:orientation=&quot;horizontal&quot;&gt;
+
+            &lt;ImageView
+                android:id=&quot;@+id/imageView&quot;
+                android:layout_width=&quot;80dp&quot;
+                android:layout_height=&quot;80dp&quot;
+                app:srcCompat=&quot;@mipmap/ic_launcher&quot; /&gt;
+
+            &lt;LinearLayout
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;match_parent&quot;
+                android:layout_margin=&quot;5dp&quot;
+                android:orientation=&quot;vertical&quot;&gt;
+
+                &lt;TextView
+                    android:id=&quot;@+id/textView&quot;
+                    android:layout_width=&quot;match_parent&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:text=&quot;이름&quot;
+                    android:textSize=&quot;30sp&quot; /&gt;
+
+                &lt;TextView
+                    android:id=&quot;@+id/textView2&quot;
+                    android:layout_width=&quot;match_parent&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:text=&quot;전화번호&quot;
+                    android:textColor=&quot;#FF0000FF&quot;
+                    android:textSize=&quot;25sp&quot; /&gt;
+            &lt;/LinearLayout&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/androidx.cardview.widget.CardView&gt;
+
+
+&lt;/LinearLayout&gt;</code></pre><ul id="f0689e48-5803-48e1-8afe-1f6896dc0bbb" class="bulleted-list"><li>app:cardBackgroundColor=&quot;#FFFFFFFF&quot;<ul id="1fc9b29d-11a8-4944-a5f2-16e7d612d722" class="bulleted-list"><li>배경색 지정</li></ul></li></ul><ul id="3a6d7289-04f6-488a-a8e2-69d7c25df2f8" class="bulleted-list"><li>app:cardCornerRadius=&quot;10dp&quot;<ul id="70b45f14-0380-4eab-aabc-231f36b07efc" class="bulleted-list"><li>모서리 둥글게</li></ul></li></ul><ul id="9dea548b-7954-40c1-9072-4e35ba055dc6" class="bulleted-list"><li>app:cardElevation=&quot;5dp&quot;<ul id="e5cceb2d-4f87-4dc7-89d0-b80564befbde" class="bulleted-list"><li>뷰가 올라온 느낌이 들도록 하게 </li></ul></li></ul><ul id="68b0f27e-fe7d-43e4-9061-f9ba09c185a2" class="bulleted-list"><li>app:cardUseCompatPadding=&quot;true&quot;&gt;<ul id="377c0ea7-fc04-4405-9698-4be3c1dc8bb0" class="bulleted-list"><li>기본 패딩을 적용</li></ul></li></ul></div></article></body></html>
