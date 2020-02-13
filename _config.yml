@@ -2,7 +2,10 @@
 theme: jekyll-theme-cayman
 #remote_theme           : "mmistakes/minimal-mistakes"
 
-baseurl: "/Android%20Develope%20Project%20by%20YOUNLSE.html" # the subpath of your site, e.g. "/blog"
-# 사이트의 baseurl을 설정해 줍니다.
+title                    : "Android Studio App 개발기🤣"
+name                     : "김영운"
+description              : "java,"
+url                      : "https://dnsdudrla97.github.io"
+baseurl                  : "https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE.html"
 
-repository               : "dnsdudrla97/app0" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+
