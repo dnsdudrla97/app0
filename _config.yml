@@ -5,8 +5,12 @@ theme: jekyll-theme-cayman
 title                    : "Android Studio App 개발기🤣"
 name                     : "김영운"
 description              : "java,"
-url                      : "https://dnsdudrla97.github.io"
+url                      : "https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE.html"
 baseurl                  : "https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE.html"
+
+teaser                   : "/assets/images/bio-photo-keyboard.jpg"
+logo                     : # 최상단 메뉴 바에 사이트 로고 넣기
+
 
 comments:
   provider               : # 블로그 댓글 기능 false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
