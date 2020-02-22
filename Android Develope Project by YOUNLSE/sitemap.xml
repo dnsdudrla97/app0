@@ -1,29 +1,552 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% for post in site.posts %}
-    <url>
-      <loc>{{ site.url }}{{ post.url }}</loc>
-      {% if post.lastmod == null %}
-        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-      {% else %}
-        <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
-      {% endif %}
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-      {% if post.sitemap.changefreq == null %}
-        <changefreq>weekly</changefreq>
-      {% else %}
-        <changefreq>{{ post.sitemap.changefreq }}</changefreq>
-      {% endif %}
 
-      {% if post.sitemap.priority == null %}
-          <priority>0.5</priority>
-      {% else %}
-        <priority>{{ post.sitemap.priority }}</priority>
-      {% endif %}
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Essay%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Week%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Final%20Exam.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Mainfest%20xml.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/JAVA%20Application%20Context.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Android%20Context.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%20actionbar%203.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/ViewPager.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/CoordinatorLayout.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Service%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/BroadCast%20Recevier%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%202.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%203.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%204.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%205.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%206.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%207.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%208.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Tweened%20Animation.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%209.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2010.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2011.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/1.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/2.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/3.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/4.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/5.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Content%20Provider.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/6.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/1%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/2%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/3%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/4%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/5%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Picasso.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/6%20M19.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2015.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2016.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2017.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Lesson.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Exam.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Assignment.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2018.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%201/Untitled%20Database/Untitled.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%201/Untitled%20Database/Untitled%201.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%201/Untitled%20Database/Untitled%202.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onAttach%20Activity.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onCreate%20Bundle.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onCreateView%20LayoutInflatorViewGroup%20Bundle.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onActivityCreate%20Bundle.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onStart.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled/onResume.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/onPause.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/onStop.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/onDestroyView.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/onDestroy.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/onDetach.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/Untitled%201/Untitled.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%202/phishing_IP.txt</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database/Running.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database/Paused.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database/Stopped.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onCreate.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onStart.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onResume.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onRestart.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onPause.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onStop.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Inflate/Untitled%20Database%201/onDestory.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203/Untitled%20Database/ifRoom.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203/Untitled%20Database/withText.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203/Untitled%20Database/never.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203/Untitled%20Database/always.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Fragment%203/Untitled%20Database/collapseActionView.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2010/webViewClient_class_function.pdf</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/number.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/numberSigned.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/numberDecimal.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/text.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/textPassword.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/textEmailAddress.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/phone.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/time.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2012/inputType/date.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/2%201/MainActivity%20java.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/4%201/MOVIEAPI%20JSON.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/text%20varchar.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/smallint%20integer.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/real%20float%20double.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/boolean.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/data%20time%20timestamp.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2013/Untitled/blob%20binary.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014/Untitled/1.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014/Untitled/2.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014/Untitled/3.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014/Untitled/4.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE/Untitled%2014/Untitled/Untitled.html</loc>
+  <lastmod>2020-02-22T05:07:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
 
-    </url>
-  {% endfor %}
+
 </urlset>
