@@ -1,0 +1,30 @@
+# 테마 설정에 대한 부분입니다. 기본 설정을 유지하였습니다.
+theme: jekyll-theme-cayman
+#remote_theme           : "mmistakes/minimal-mistakes"
+
+title                    : "Android Studio App 개발기🤣"
+name                     : "김영운"
+description              : "java,"
+url                      : "https://dnsdudrla97.github.io"
+baseurl                  : "https://dnsdudrla97.github.io/app0/Android%20Develope%20Project%20by%20YOUNLSE.html"
+
+teaser                   : "/assets/images/bio-photo-keyboard.jpg"
+logo                     : # 최상단 메뉴 바에 사이트 로고 넣기
+
+
+comments:
+  provider               : # 블로그 댓글 기능 false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
+  disqus:
+    shortname            : # 블로그 댓글 기능 https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+  discourse:
+    server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
+  facebook:
+    # https://developers.facebook.com/docs/plugins/comments
+    appid                :
+    num_posts            : # 5 (default)
+    colorscheme          : # "light" (default), "dark"
+  utterances:
+    theme                : # "github-light" (default), "github-dark"
+    issue_term           : # "pathname" (default)
+
+
