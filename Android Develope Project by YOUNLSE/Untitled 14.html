@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Untitled</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>헬퍼 클래스로 업그레이드 지원하기</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -562,4 +562,295 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="14f9cbee-ea4f-463c-8e3b-76b7e3c75f70" class="page sans"><header><h1 class="page-title"></h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td></td></tr><tr class="property-row property-row-select"><th>Type</th><td></td></tr></tbody></table></header><div class="page-body"></div></article></body></html>
+</style></head><body><article id="9f0771f6-ff5a-4df8-99e6-c51705a71d80" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">헬퍼 클래스로 업그레이드 지원하기</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 19, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="fb1ceb99-1233-4af3-a7cf-3bf770ac6b26" class="">Helper(헬퍼)</h3><ul id="8a9c1136-db6f-4ea4-80f3-ab8174a21b7b" class="bulleted-list"><li>데이터베이스를 만드는 것 외에도 테이블의 정의가 바뀌어서 스키마를 업그레이드할 필요가 있을 때에는 API에서 제공하는 헬퍼 클래스를 사용하는 것도 좋은 방법이다.</li></ul><p id="bdb0778f-20fd-413a-92c6-2a8a4bddea29" class="">
+</p><h3 id="bda4d34b-e8ef-416b-b6ee-2be183ee2e5a" class="">스키마</h3><ul id="2d927ad7-06e4-447c-9a30-18f7bfe89fee" class="bulleted-list"><li>스키마는 테이블의 구조를 정의한 것이라고 이해하면 쉬운데, 이 테이블의 구조는 필요에 따라 바뀔 수 있다.</li></ul><ul id="e5f1d303-fb9c-4b59-b8bf-7261fd75ea3f" class="bulleted-list"><li>하지만 이 테이블 안에 사용자가 저장한 데이터가 있을 때는 그 데이터가 삭제되거나 수정되어야 할 수도 있어서 아주 민감한 문제가 된다.</li></ul><ul id="ede22cf4-ef97-4679-989b-175595e8cb83" class="bulleted-list"><li>따라서 스키마를 수정할 때는 테이블이 처음 만들어지는 것인지 아니면 사용자가 이미 사용하고 있는 상태인지를 구별한 다음 처리할 수 있도록 한다.</li></ul><p id="3f95d2e8-4077-4e18-b5a5-519d3c163a81" class="">
+</p><h3 id="4c0bd87d-9b5b-4878-8e50-29c994ab18f2" class="">헬퍼 클래스 사용</h3><ul id="fe78a9c8-5ce1-4af2-b677-44878dccecc1" class="bulleted-list"><li>헬퍼 클래스를 사용하려면 SQLiteOpenHelper 클래스를 사용해야 한다.</li></ul><ul id="a8892911-d0b4-485c-a3e4-f03bdef65e86" class="bulleted-list"><li>SQLiteOpenHelper 클래스는 데이터베이스를 만들거나 열기 위해 필요한 작업들을 도와주는 역활을 한다.</li></ul><ul id="339e1236-a920-4249-a618-5fcc87b41f1d" class="bulleted-list"><li>SQLiteOepnHelper 객체는 new 연산자로 만들며 생성자에 들어가는 파라미터는 다음과 같다.</li></ul><pre id="706f3986-0fec-49f6-a791-7f23ad02e71e" class="code"><code>//[API]
+public SQLiteOepnHelper (Context ccontext, String name, SQLiteDatabase.CursorFactory factory, int version)</code></pre><p id="3a15290c-b4b1-4dd5-ab02-9381ba66bd6a" class="">파라미터</p><ol id="2ef69d8f-71a2-4edc-a198-6ebc021317d7" class="numbered-list" start="1"><li>Context context<ol id="1da09367-8c50-4e00-a7d4-258067288e28" class="numbered-list" start="1"><li>Context 객체이므로 액티비티 안에서 만들 경우에는 this로 지정할 수 있다.</li></ol></li></ol><ol id="71464dc8-acb9-40db-835f-d5a9cbb9cd26" class="numbered-list" start="2"><li>String name<ol id="da5b2f60-e6aa-4a01-8df1-7d1e197446f6" class="numbered-list" start="1"><li>데이터베이스 이름</li></ol></li></ol><ol id="e90b2ce7-eaa6-479f-979d-aba06fb85622" class="numbered-list" start="3"><li>SQLiteDatabase.CursorFactory factory<ol id="1ceafd32-70f7-4e64-b214-5108add3fc26" class="numbered-list" start="1"><li>데이터 조회 시에 반환하는 커서를 만들어 낼 CursorFactory 객체이다.</li></ol></li></ol><ol id="bad98285-e0f4-450d-8787-0a6e3c8e471a" class="numbered-list" start="4"><li>int version<ol id="2aa5dc0e-7a57-40b6-9e68-9fcd23d03a78" class="numbered-list" start="1"><li>정수 타입의 버전 정보는 데이터베이스 업그레이드를 위해 사용하며 기존에 생성되어 있는 데이터베이스의 버전 정보와 다르게 지정하여 데이터베이스의 스키마나 데이터를 바꿀 수 있다.</li></ol><p id="f8205ac5-6be0-4dd1-a7de-187c48fcfc7b" class="">
+</p></li></ol><p id="8ad57ae7-9ac4-437c-96e0-44d2abd9112e" class="">
+</p><h3 id="46885138-b95b-4583-9199-f76d8c56f2c8" class="">SQLiteOpenHelper 객체</h3><ul id="bba99196-2f81-4c9d-bcd8-c0ab556ad20d" class="bulleted-list"><li>SQLiteOpenHelper 객체는 데이터베이스를 만들거나 열기 위해 필요한 작업을 도와주는 역활을 한다.</li></ul><ul id="1ffe825f-350d-4836-9381-ca0c5df41104" class="bulleted-list"><li>그래서 SQLiteOpenHelper 객체를 만든다고 데이터베이스 파일이 바로 만들어지는 것은 아니다.</li></ul><ul id="d94620f1-f4a2-4359-b235-ed9424a8cdb0" class="bulleted-list"><li>데이터베이스 파일이 만들어지도록 하려면 getReadableDatabse() 또는 getWritableDatabase() 메서드를 호출해야 한다.</li></ul><ul id="641ab12a-a8e2-46e4-b98a-e0943dfc4bbe" class="bulleted-list"><li>이 클래스를 이용할 때의 장점은 데이터베이스가 만들거나 업드레이드할 때 콜백 메서드가 호출된다는 점이다.</li></ul><ul id="e16e6cea-0c74-40a1-8603-07ee2c67a4c1" class="bulleted-list"><li>따라서 데이터베이스 생성, 업그레이드 등 여러 가지 상태에 따라 콜백 메서드를 다시 정의하면 각각의 상태에 맞게 처리할 수 있다.</li></ul><p id="8a8777fb-3d39-47b6-89f5-0839e4f51fe4" class="">
+</p><pre id="e40cea2e-1907-4017-aab5-57967a793af7" class="code"><code>// [API]
+public abstract void onCreate (SQLiteDatabase db)
+public abstract void onOpen (SQLiteDatabase db)
+public abstract void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion)</code></pre><ul id="e363033d-067e-4a41-b641-5c78d3e30ac1" class="bulleted-list"><li>현재의 데이터베이스 버전이 이미 사용하고 있는 SQLiteDatabase 파일의 버전과 다를 경우에 자동으로 호출되는 onUpgrade() 메서드에는 SQLiteDatabase 객체와 함께 기존 버전 정보를 담고 있는 oldVersion, 현재 버전 정보를 담고 있는 newVersion 파라미터가 전달된다.</li></ul><p id="018bc6a3-8e88-4a06-994f-1df0e4af2d95" class="">
+</p><h3 id="eddd5e80-fc6e-44d9-92e5-c15b59986ebc" class="">헬퍼 클래스를 이용해 데이터베이스를 구성하는 전형적인 구조</h3><figure id="af82345c-5644-464c-9bc1-e06fbe7117d4" class="image"><a href="Untitled%2014/HelperClassStructue.png"><img style="width:480px" src="Untitled%2014/HelperClassStructue.png"/></a></figure><ul id="e3caeb50-2f63-4d83-bfc3-c88d7cf95f38" class="bulleted-list"><li>헬퍼 클래스로 새로운 데이터베이스를 구성할 때 사용하는 전형적인 구조는 위 그림과 같다.</li></ul><ul id="575a1102-baa2-42b1-b1df-8b7d2619a6a9" class="bulleted-list"><li>만약 고객정보를 관리하는 데이터베이스를 만든다면 CustomerDatabase라는 클래스를 새로 정의할 수 있다.</li></ul><ul id="016b43c3-fe78-4bf1-9de7-a8fb72e064ca" class="bulleted-list"><li>이 클래스는 헬퍼 클래스를 상속해 만든 내부 클래스가 포함된다.</li></ul><ul id="6dcde4fa-d852-4eca-bc27-942fbee4d478" class="bulleted-list"><li>DatabaseHelper라는 이름으로 정의한 이 헬퍼 클래스 안에서는 onCreated(), onOpen() 그리고 onUpgrade() 메서드를 다시 정의한 후 필요한 SQL을 실행하도록 만든다.</li></ul><p id="e64d425f-2b3e-49be-a478-9eb21680e273" class="">
+</p><h3 id="a701f04f-087f-4f65-be96-f89e3fe8c462" class="">DatabaseHelper</h3><pre id="90552628-d28b-43be-83a8-cbdd10bc31e2" class="code"><code>package com.younsle.sampledatabase2;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import androidx.annotation.Nullable;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+    public static String NAME = &quot;employee.db&quot;;
+    public static int VERSION = 1;
+    // SQLiteOpenHelper 클래스를 상속한 DatabaseHelper 클래스는 
+
+	  // 생성자에서 데이터베이스 이름과 버전 정보를 상위 클래스의 생성자를 호출한다.
+    public DatabaseHelper(Context context) {
+        super(context, NAME, null, VERSION);
+        // super() 메서드를 이용해 호출한 생성자에 전달된 CursorFactory 객체는 null 값으로 지정됨
+
+    }
+
+    // 데이터 베이스가 생성될 때 호출되는 onCreate()
+    // 테이블을 만들어 이렇게 만들어진 헬퍼 클래스는 
+    // 메인 액티비티에서 데이터베이스를 사용할 경우 코드가 더 간단해진다는 장점이 있다.
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        println(&quot;onCreaet 호출됨&quot;);
+
+        String sql = &quot;create table if not exists emp(&quot;
+                + &quot; _id integer PRIMARY KEY autoincrement,&quot;
+                + &quot; name text, &quot;
+                + &quot; age integer, &quot;
+                + &quot; mobile text)&quot;;
+
+        db.execSQL(sql);    // onCreaet() 메서드 안에서 SQL문 실행하기
+    }
+
+    // 데이터베이스를 열 때 호출되느 onOpen()
+    public void onOpen(SQLiteDatabase db) {
+        println(&quot;onOpen 호출됨&quot;);
+    }
+
+    // 데이터베이스를 업그레이드할 때 호출되는 onUpgrade() 구현
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        println(&quot;onUpgrade 호출됨 : &quot; + oldVersion + &quot; -&gt; &quot; + newVersion);
+
+        if (newVersion &gt; 1) {
+            db.execSQL(&quot;DROP TABLE IF EXISTS emp&quot;);
+        }
+    }
+
+    public void println(String data) {
+        Log.d(&quot;DatabaseHelper&quot;, data);
+    }
+ }</code></pre><p id="cd1c0216-06af-4b88-a673-7054936b9218" class="">
+</p><h3 id="c3207b3a-c158-4e69-a7af-fc60e3319d1f" class="">MainActivity.java</h3><pre id="6c3e796c-1f32-41e0-892a-6fc569472d28" class="code"><code>private void createDatabase(String name) {
+        println(&quot;createDatabase 호출됨&quot;);
+
+        dbHelper = new DatabaseHelper(this); // DatabaseHelper 객체 생성
+        database = dbHelper.getWritableDatabase(); // SQLiteDatabase 객체 참조
+
+//        database = openOrCreateDatabase(name, MODE_PRIVATE, null);  // 데이터베이스를 만들기 위한 메서드를 실행하기
+
+        println(&quot;데이터베이스 생성함&quot; + name);
+    }
+ </code></pre><ul id="1dd79175-f9b0-4c55-bd96-f671763da9cd" class="bulleted-list"><li>바뀌었지만 SQLiteDatabase 객체를 그대로 사용할 수 있으며 데이터베이스 버전이 변경되었을 때도 필요한 작업을 수행할 수 있는 구조가 만들어졌다.</li></ul><ul id="d2c24cec-9950-4a7d-aa09-414b1c665166" class="bulleted-list"><li>이 상태에서 앱을 실행해도 11-2 에서 만든 기능이 그대로 동작할 것이다.</li></ul><ul id="c61ddd0d-3d56-4e4d-8648-42bd931c369c" class="bulleted-list"><li>단, 동일한 데이터베이스 이름을 입력하지 않도록 주의
+</li></ul><p id="5eaa6dd8-546e-4765-af69-f722b10e9d21" class="">
+</p><h3 id="8c485ece-b68d-43b0-8630-522e3058c1c9" class="">데이터 조회</h3><pre id="405c2f06-bafa-4ba9-84f8-f44a7987fe7e" class="code"><code>import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+
+public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    EditText editText2;
+    TextView textView;
+
+    //Helper
+    DatabaseHelper dbHelper;
+
+    SQLiteDatabase database;
+    String tableName;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        editText2 = findViewById(R.id.editText2);
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String databaseName = editText.getText().toString();
+                createDatabase(databaseName);
+            }
+        });
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableName = editText2.getText().toString();
+                createTable(tableName);
+
+                insertRecord();
+            }
+        });
+				// button3 추가 -- executeQuery() 클래스 호출
+        Button button3 = findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executeQuery();
+            }
+        });
+    }
+
+    // executeQuery()
+    public void executeQuery() {
+        println(&quot;executeQuery 호출됨&quot;);
+
+        Cursor cursor = database.rawQuery(&quot;select _id, name, age, mobile from emp&quot;, null);  // SQL 실행하고 Cursor 객체 반환
+       
+        int recordCount = cursor.getCount();
+        println(&quot;레코드 개수 : &quot; + recordCount);
+
+        
+        for ( int i =0; i &lt; recordCount; i++) {
+            cursor.moveToNext();    // 다음 결과 레코드로 넘어가기
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            int age = cursor.getInt(2);
+            String mobile = cursor.getString(3);
+
+            println(&quot;레코드#&quot; + i + &quot; : &quot; + id + &quot;, &quot; + name + &quot;, &quot; + age + &quot;, &quot; + mobile);
+        }
+        cursor.close();
+        
+    }
+
+
+    private void createDatabase(String name) {
+        println(&quot;createDatabase 호출됨&quot;);
+
+        dbHelper = new DatabaseHelper(this); // DatabaseHelper 객체 생성
+        database = dbHelper.getWritableDatabase(); // SQLiteDatabase 객체 참조
+
+//        database = openOrCreateDatabase(name, MODE_PRIVATE, null);  // 데이터베이스를 만들기 위한 메서드를 실행하기
+
+        println(&quot;데이터베이스 생성함&quot; + name);
+    }
+   
+
+    private void createTable(String name) {
+        println(&quot;createTable 호출됨&quot;);
+
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;create table if not exists &quot; + name + &quot;(&quot;
+                + &quot; _id integer PRIMARY KEY autoincrement, &quot;
+                + &quot; name text, &quot;
+                + &quot; age integer, &quot;
+                + &quot; mobile text)&quot;);
+
+        println(&quot;테이블 생성함: &quot; + name);
+        // 테이블을 만들기 위한 SQL문 실행하기
+    }
+
+
+    private void insertRecord() {
+        println(&quot;insertRecord 호출됨&quot;);
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        if (tableName == null) {
+            println(&quot;테이블을 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;insert into &quot; + tableName
+                + &quot;(name, age, mobile) &quot;
+                + &quot; values &quot;
+                + &quot;( &#x27;John &#x27;, 20, &#x27;010-1000-1000 &#x27; )&quot;);
+
+        println(&quot;레코드 추가함.&quot;);
+    }
+
+    public void println(String data) {
+        textView.append(data + &quot;\n&quot;);
+    }
+}</code></pre><p id="8f5603b3-246f-465d-bb82-e7c8e6743bc4" class="">
+</p><h3 id="0a6ed8ef-401b-4cb2-884e-dcebeed71bf7" class="">executeQuery()</h3><pre id="81d5fc30-f9d1-4d97-81bf-8e445ffbcb29" class="code"><code> public void executeQuery() {
+        println(&quot;executeQuery 호출됨&quot;);
+
+        Cursor cursor = database.rawQuery(&quot;select _id, name, age, mobile from emp&quot;, null);  // SQL 실행하고 Cursor 객체 반환
+        // 데이터를 조회하기 위해 사용되는 표준 SQL은 &quot;select ...&quot; 구문을 사용하게 되는데 
+        // 이 구문을 통해 반환되는 Cursor 객체를 받기 위해 rawQuery() 메서드를 실행
+        // 즉, executeSQL()은 결과 값이 없는 SQL 실행 방법이며, 
+			  // rawQuery()는 결과 값을 Cursor 객체로 받을 수 있는 SQL 실행 방법이다.
+      
+	      
+        int recordCount = cursor.getCount();
+        println(&quot;레코드 개수 : &quot; + recordCount);
+
+        /*
+	      * SQL 문을 이용해 쿼리를 실행한 후 결과 값으로 반환받는 Cursor 객체는 
+			  * 결과 테이블에 들어있는 각각의 레코드를 순서대로 접근할 수 있는 방법을 제공한다.
+        * Cursor 객체는 처음에는 아무런 레코드를 가리키지 않으며, 
+			  * moveToNext() 메서드를 이용해 그다음 레코드를 가리키도록 해야 레코드 값을 가져올 수 있다.
+        * 따라서 while 구문을 이용하여 moveToNext() 가 false값을 반환할 때 까지 레코드 값을 가져오는 방법을 일반적으로 사용한다.
+        * for 구문을 사용하고 싶을 때에는 getCount()를 이용해 전체 레코드 개수를 알아낸 다음 그 내부에서 moveToNext()를 통해 각 레코드를 참조할 수 있다.*/
+        for ( int i =0; i &lt; recordCount; i++) {
+            cursor.moveToNext();    // 다음 결과 레코드로 넘어가기
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            int age = cursor.getInt(2);
+            String mobile = cursor.getString(3);
+
+            println(&quot;레코드#&quot; + i + &quot; : &quot; + id + &quot;, &quot; + name + &quot;, &quot; + age + &quot;, &quot; + mobile);
+        }
+        cursor.close();
+        /*
+        * 커서는 데이터베이스와 마찬가지로 사용한 후에 close() 메서드를 이용해 닫아야 한다.
+        * 데이터베이스 테이블이 없는 경우에는 emp 테이블을 새로 만들고 레코드를 추가한 후 쿼리를 실행하는 것을 볼 수 있다.
+        * 만약 만들어진 데이터베이스가 있으면 데이터베이스를 열기만 하고 기존에 만들어진 테이블의 내용을 조회한다.
+        * */
+    }</code></pre><p id="4b8cabc4-8b8d-4cb8-ab3a-e1be1ce4ce86" class="">
+</p><pre id="1d0d210c-cda8-4e3d-b7b5-30a0aef36caf" class="code"><code>// [API]
+public Cursor rawQuery (String sql, Stirng[] selectionArgs)
+</code></pre><p id="3e11321e-7af9-4870-a97b-59850f3a515f" class="">
+</p><pre id="26d38703-307c-491a-9d30-04755e1bb126" class="code"><code>// [API]
+
+public abstract int getColumnCount ()
+public abstract int getColumnIndex (String columnName)
+public abstract String getColumnName (int columnIndex)
+public abstract String[] getColumnNames()
+
+public abstract int getCount()
+public abstract boolean moveToNext ()
+public abstract boolean moveToPrevious ()
+public abstract boolean moveToFirst ()
+public abstract boolean moveToLast ()
+public abstract boolean move (int offset)
+
+public abstract String getString (int columnIndex)
+public abstract short getShort (int columnIndex)
+public abstract int getInt (int columnIndex)
+public abstract long getLong (int columnIndex)
+public abstract float getFloat (int columIndex)
+public abstract double getDouble (int columnIndex)
+public abstract byte[] getBlob (int columIndex)</code></pre><ul id="36d14689-3285-4ea5-8fcc-2909d63e4f05" class="bulleted-list"><li>커서에 정의된 메서드들을 살펴보면, 크게 칼럼에 대한 정보를 알아보기 위한 메서드, 레코드를 찾기 위한 메서드 그리고 레코드에 들어 있는 각각의 값을 알아내기 위한 메서드로 구분할 수 있다.</li></ul><ul id="c7600284-e6e1-4932-bf13-28f6dacbd7e9" class="bulleted-list"><li>칼럼에 대한 정보를 알아보는 방법으로 getColumnCount() 메서드를 이용해 칼럼의 전체 개수를 알아낸 후 각각의 칼럼 인덱스를 칼럼 이름으로 알아낼 수 있다.</li></ul><ul id="dc35c494-492d-4259-a6df-663ade9d1bbc" class="bulleted-list"><li>그리고 getColumnNames() 메서드를 이용해 모든 칼럼의 이름을 확인한 후 각각의 칼럼이 어떤 인덱스 값으로 확인할 수 있는지를 getColumnIndex() 메소드를 이용해 알아낼 수도 있다.</li></ul><p id="479fc74b-0f34-4000-b6ab-2188961be2dd" class="">
+</p><p id="86033b71-5aad-410c-86d3-0f90bbb35640" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f9c96a73-ff27-4eaf-9563-b55b1d40ce6f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">칼럼 정보를 알아내야 하는 경우가 얼마나 있을까?</div></figure><ul id="13428fa2-6a97-4d34-9a36-b352445d0d95" class="bulleted-list"><li>만약 SELECTE SQL 문을 실행하고 반환된 커서를 이용해 값을 확인하는 경우라면, 굳이 칼럼 정보를 확인할 필요가 없는 경우도 많다.</li></ul><ul id="b1b98f7d-4e6d-4bdd-abc8-4c526553dc70" class="bulleted-list"><li>왜냐하면 이미 사용한 SQL문 안에 어떤 칼럼을 조회할 것인지 순서대로 지정해 두었기 때문에 이 순서를 칼럼 인덱스로 하여 값을 조회하면 되기 때문이다.</li></ul><ul id="38ac5b5a-c4e4-445b-b2fe-bd5833f79e60" class="block-color-red bulleted-list"><li>&quot;SELECT * FROM ...&quot; 과 같은 SQL 문을 사용하거나 내용 제공자를 이용하는 경우에는 칼럼 정보를 확인하는 것이 필요할 수 있다.</li></ul><p id="370ce4ec-9d5f-4ee1-800a-c25ea8a597b5" class="">
+</p><ul id="70c15391-f82b-4f50-ac54-c7b4876aa788" class="bulleted-list"><li>SQL문에서는 알고 싶은 필드의 인덱스 값을 모르는 경우에는 getColumnIndex() 메서드를 이용하여 칼럼의 인덱스 값을 확인할 수 있다.</li></ul><pre id="d5a4c3fd-74cd-4889-9568-0d081089f8a2" class="code"><code>// [API]
+SELECT [* | DISTINCT] column_name [,columnname2]
+FROM tablename1 [,tablename2]
+WHERE [condition and|or condition...]
+[GROUP BY column-list]
+[HAVING conditions]
+[ORDER BY &quot;column-list&quot; [ASC | DESC] ]</code></pre><p id="6e7acb44-79e4-4b57-ab7d-c693f1f1fb59" class="">
+</p><p id="85273113-bffc-48ce-8363-c0cfc08e4875" class="">
+</p><hr id="c9c8afd4-459d-44d7-b06c-6a25601fdb49"/><div id="cb39b3ed-634d-4cc2-b03f-3e61564b9761" class="collection-content"><h4 class="collection-title">데이터베이스를 사용할 때 꼭 기억해야 할 내용 정리</h4><table class="collection-content"><thead><tr><th>순서</th><th>내용</th><th>사용 메서드</th></tr></thead><tbody><tr id="c9ca2ccb-9db5-4afe-9ef7-da939016216a"><td class="cell-title"><a href="Untitled%2014/Untitled/1.html">1) 데이터베이스 만들기</a></td><td class="cell-J|h:">데이터베이스를 만들면 SQLiteDatabase 객체가 반환된다.</td><td class="cell-6Jt$">openOrCreateDatabase()</td></tr><tr id="1d7f544b-1fb5-4811-ac3e-828c697fd08e"><td class="cell-title"><a href="Untitled%2014/Untitled/2.html">2) 테이블 만들기</a></td><td class="cell-J|h:">&#x27;CREATE TABLE ...&#x27; SQL을 정의한 후 실행한다.</td><td class="cell-6Jt$">execSQL()</td></tr><tr id="ac6b3233-a0b2-446d-bd16-35287f1531d4"><td class="cell-title"><a href="Untitled%2014/Untitled/3.html">3) 레코드 추가하기</a></td><td class="cell-J|h:">&#x27;INSERT INTO ... &#x27;SQL을 정의한 후 실행한다.</td><td class="cell-6Jt$">execSQL()</td></tr><tr id="4c5f1727-2d34-46bc-940f-5bf102e1db0a"><td class="cell-title"><a href="Untitled%2014/Untitled/4.html">4) 데이터 조회하기</a></td><td class="cell-J|h:">&#x27;SELECT FROM ... &#x27;SQL을 정의한 후 실행함 Cusor 객체가 반환되며 Cursor를 통해 확인한 레코드를 리스트뷰 등에 표시</td><td class="cell-6Jt$">rawQuery()</td></tr><tr id="68acfc38-0924-41e0-be3f-864578780763"><td class="cell-title"><a href="Untitled%2014/Untitled/Untitled.html">Untitled</a></td><td class="cell-J|h:"></td><td class="cell-6Jt$"></td></tr></tbody></table></div><p id="9cf7f623-e1f9-4b6f-9d9a-75a901629349" class="">
+</p></div></article></body></html>

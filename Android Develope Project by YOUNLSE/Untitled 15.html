@@ -1,0 +1,819 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>내용 제공자 이해하기 </title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3537c8fd-374c-4c30-a1ac-78866178dabb" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">내용 제공자 이해하기 </h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 19, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h1 id="ae4f9c76-f499-4f8a-8d7d-f7aa301ed8b7" class="">Context Provider(내용 제공자)</h1><p id="2026ec3d-607f-414f-aa67-25c9a5033ed2" class="">
+</p><h3 id="1fe8c119-86e8-4c7a-b909-0b22a28faf88" class="">Content Provider 뭘까?</h3><ul id="66d75672-4ea6-491a-b416-64b3ebb03bb0" class="bulleted-list"><li>한 앱에서 관리하는 데이터를 다른 앱에서도 접근할 수 있도록 해준다.</li></ul><ul id="259c138c-6e44-48aa-b932-0a9f2ff14a04" class="bulleted-list"><li>내용 제공자도 앱 구성요소이기 떄문에 시스템에서 관리하며 매니페스트 파일에 등록해야 사용할 수 있다.</li></ul><ul id="25210988-2317-472b-90ca-7558595251bc" class="block-color-red bulleted-list"><li>내용 제공자가 필요한 이유는 앱의 보안 때문이다. </li></ul><ul id="3c9faf42-2887-4d11-ab2a-2b3bb7356871" class="bulleted-list"><li>다른 사람이 만든 앱이 나의 앱의 데이터를 마음대로 바꾸면 안 되겠죠</li></ul><ul id="32573852-0966-42f3-8a9f-5f60fc9b90cc" class="bulleted-list"><li>그래서 각 앱은 자신의 프로세스와 권한 안에서만 데이터에 접근할 수 있도록 되어 있다.</li></ul><ul id="aa20ac1c-8e57-4a72-a7d1-2dd737531f58" class="bulleted-list"><li>즉, A라는 앱과 B하는 앱은 각각 독립된 프로세스를 가지고 있으며 A는 A의 데이터를, B는 B의 데이터만 사용해야 한다.</li></ul><ul id="8161f81e-9297-4e5c-bcc0-dd7069af9f3e" class="bulleted-list"><li>하지만 가끔은 서로 다른 앱의 데이터 접근해야 하는 경우도 있다.</li></ul><ul id="72838b37-0ee8-4ec5-a813-c2cac8a24dfc" class="bulleted-list"><li>바로 그때 내용 제공자를 사용하면 된다.</li></ul><ul id="af7b7507-7515-418e-a897-4835899ac975" class="bulleted-list"><li>내용 제공자를 사용하면 다른 앱에게 이 데이터 접근 통로를 열어줄 수 있다.</li></ul><ul id="b56b458d-2fab-4004-aae8-f066da5fe435" class="bulleted-list"><li><mark class="highlight-red">주의할 점은 반드시 허용된 통로로만 접근해야 한다는 것이다.</mark></li></ul><ul id="37c32f4d-49c9-4980-93ec-1a73faf057a5" class="bulleted-list"><li><mark class="highlight-red">그래서 이 통로를 어떻게 만드는지를 이해해야 내용 제공자를 구성할 수 있다.</mark></li></ul><p id="d21d2d7d-f2be-4df6-b18c-b077688c9398" class="">
+</p><h3 id="12f07035-c5b0-4c8f-b042-3e5dfd9a74b4" class="">내용 제공자가 공유할 수 있는 데이터</h3><ol id="14366bb8-abcc-45cb-9758-ffff48a2619e" class="numbered-list" start="1"><li><mark class="highlight-red">데이터베이스</mark></li></ol><ol id="8b92135f-1a3d-478e-acc1-8f83a6ce00fb" class="numbered-list" start="2"><li>파일</li></ol><ol id="e6b49a5e-27ca-4f05-9df6-ed8ea1ab3622" class="numbered-list" start="3"><li>SharedPrefereces</li></ol><p id="83b9377d-cf65-4e31-8e1c-4d79b016e364" class="">
+</p><ul id="6d9e4cbd-0ebf-429a-b463-c9f9a9dafc19" class="bulleted-list"><li>이 중에서 데이터베이스에 접근하는 것이 가장 일반적이다.</li></ul><ul id="816d798c-2217-406b-9956-433ca69a65b0" class="bulleted-list"><li>왜냐하면 내용 제공자는 CRUD 동작을 기준으로 하고 있기 때문이다.</li></ul><p id="7d533120-6bfe-444f-a9fd-9f6e9ea2a826" class="">
+</p><h3 id="ddcb01a9-122f-44e0-946d-6ec08971352a" class="">CRUD ?</h3><ul id="c2d32756-bb68-45ac-83c7-7e97ec139058" class="bulleted-list"><li>데이터를 생성(CREATE)</li></ul><ul id="e0ce2d73-4a80-4265-a45a-b9f6424e120b" class="bulleted-list"><li>조회(Read)</li></ul><ul id="c25dfb5d-28f0-4c8d-8856-92006201e0be" class="bulleted-list"><li>수정(Update)</li></ul><ul id="fe30ca0e-1345-4eec-9654-04092296bc13" class="bulleted-list"><li>삭제(Delete)</li></ul><ul id="8d649884-efa7-4104-842d-ba5fd9afc81b" class="bulleted-list"><li>과정을 말하며 내용제공자는 CRUD에 대응하는 insert(), query(), update(), delete() 메서드를 지원한다.</li></ul><p id="26e2235d-10b0-4457-b8f0-c35f79b3b20d" class="">
+</p><h3 id="ea989bdd-75be-4596-b754-b6f46904f9b6" class="">SampleProvider 앱의 화면 레이아웃</h3><figure id="2de16a7f-7b7f-40a4-b34b-1bd9cf648597" class="image"><a href="Untitled%2015/SampleProvider.png"><img style="width:480px" src="Untitled%2015/SampleProvider.png"/></a></figure><ul id="4d75b8d1-85d9-4ae1-932a-bc25f2c5164b" class="bulleted-list"><li>내용 제공자에서 허용한 통로로 접근하려면 콘텐트 리졸버(ContentResolver) 객체가 필요하다.</li></ul><ul id="4bb0dde9-7952-489f-b6fd-097afb5794fe" class="bulleted-list"><li>여기에서는 내용 제공자를 포함하는 앱을 하나 만들고 콘텐츠 리졸버를 포함하는 또 다른 앱을 만들 것이다.</li></ul><p id="467b3a00-4dc0-446b-b137-83d788e6da5a" class="">
+</p><p id="97d35180-85b6-49a3-9a16-21469cc34341" class="">
+</p><h3 id="33c9fe25-7dbe-49fe-bdbb-c38f5c6ad1db" class=""> 내용 제공자 만들기 - 고유한 값을 가진 content URI를 만들자</h3><pre id="06f1e1a5-884d-41ca-9641-71855ab0e891" class="code"><code>public class PersonProvider extends ContentProvider {
+
+    private static final String AUTHORITY = &quot;com.younsle.sampleprovider&quot;;
+    private static final String BASE_PATH = &quot;person&quot;;
+    public static final Uri CONTENT_URI = Uri.parse(&quot;content://&quot; +AUTHORITY+ &quot;/&quot; +BASE_PATH);</code></pre><ul id="fc9cf834-a79d-4ee4-8012-b5ed68a9c9f1" class="bulleted-list"><li>내용 제공자를 만들기 위해서는 고유한 값을 가진 content URI를 만들어야 한다.</li></ul><ul id="0fc19126-3ccc-4d7f-aad3-d830f8f5d9be" class="bulleted-list"><li>여기에서는 앱의 패키지 이름과 person 테이블의 이름을 합쳐 content URI를 정의했다.</li></ul><p id="6c5c98c5-0089-4ebd-b2fe-a4ecb441bc5f" class="">
+</p><h3 id="af5d1ba3-7c80-47ee-8384-4a8ad66218f5" class="">content URI를 정의하는 형식</h3><ul id="2d0f4cf9-33c1-44b2-a633-0e881f792729" class="bulleted-list"><li>content://com.younsle.sampleprovider/person/1<ul id="eb6e26e3-5e58-4c48-b162-25fa7183ef31" class="bulleted-list"><li>content://<ul id="22348d64-8be1-4bd4-8130-6a2895715a87" class="bulleted-list"><li>내용제공자에 의해 제어되는 데이터라는 의미로 항상 content:// 로 시작한다.</li></ul></li></ul><ul id="a85408b3-1910-49e7-86a0-0d5552676713" class="bulleted-list"><li>Authority<ul id="5bf39dc5-8886-41ca-bb43-dbc2b1e905ad" class="bulleted-list"><li>com.younsle.sampleprovider 부분을 가리키며 특정 내용 제공자를 구분하는 고유한 값</li></ul></li></ul><ul id="27db1892-940f-4968-9b90-180e8d8b1083" class="bulleted-list"><li>Base Path<ul id="5d768a3b-ff7c-41f3-a14a-ddedfeb5dacd" class="bulleted-list"><li>person 부분을 가리키며 요청할 데이터의 자료형을 결정한다. (여기에서는 테이블 이름)</li></ul></li></ul><ul id="75bef162-5a29-4273-8876-afcf5f1dbe0d" class="bulleted-list"><li>ID<ul id="984fb5e0-cd93-4626-a6fe-e7999a5103e5" class="bulleted-list"><li>맨 뒤의 1과 같은 숫자를 가리키며 요청할 데이터 레코드를 지정한다.</li></ul></li></ul></li></ul><p id="b31d5dee-9ed8-4f7c-95c1-fd58cc4b0dc7" class="">
+</p><h3 id="5e4e6a20-1e27-4422-a40a-07e76c70adbd" class="">URIMatcher</h3><pre id="f838854f-7cda-46ad-8df6-258c07c00f2d" class="code"><code>private static final int PERSONS = 1;
+private static final int PERSONS_ID = 2;
+
+    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    static {
+        uriMatcher.addURI(AUTHORITY, BASE_PATH, PERSONS);
+        uriMatcher.addURI(AUTHORITY, BASE_PATH + &quot;/#&quot;, PERSONS_ID);
+    }</code></pre><ul id="f64a75d5-c56a-42e4-a0e1-e321eab4bacf" class="bulleted-list"><li>UriMatcher 객체는 URI를 매칭하는 데 사용한다.</li></ul><h3 id="11119e21-b754-43bf-8cbe-0516c1c1d719" class=""></h3><p id="1d0f2406-16a6-47a0-b893-bf0ebb26ec15" class="">
+</p><h3 id="99bfe006-69bd-47db-b500-90a7c696a968" class="">onCreat() → DatabaseHelper 객체 참조</h3><pre id="a6d99b0d-7e6e-4ea6-a710-d6329507ab88" class="code"><code>private SQLiteDatabase database;
+
+    @Override
+    public boolean onCreate() {
+        DatabaseHelper helper = new DatabaseHelper(getContext());
+        database = helper.getWritableDatabase();
+
+        return true;
+    }</code></pre><p id="72516e15-3c4b-4277-be12-a65d94454576" class="">
+</p><p id="de1c082f-bf55-4fe6-99a4-b98eccab4272" class="">
+</p><p id="24820a97-0f1a-4b44-8160-c076648c776e" class="">
+</p><p id="9429fc21-b875-46e0-979f-279ad1eeb226" class="">
+</p><h2 id="6918d851-ba8c-4066-9af1-6f425757ad43" class=""> /<em>PersonProvider 클래스에는 insert(), query(), update(), delete() 메서드가 정의되어 있다.</em>/</h2><h3 id="74030445-75b7-4daf-8aab-12fcf68bea62" class="">이 객채에는 insert(), query(), update(), delete() 등의 메서드가 정의되어 있어 내용 제공자의 URI를 파라미터로 전달하면서 데이터를 조회, 추가, 수정, 삭제하는 일이 가능한다.</h3><ul id="70cbdf72-f256-420b-ba3b-081bab91b39e" class="bulleted-list"><li>.match() 메서드를 호출하면 UriMatcher에 addURI() 메서드를 이용해 추가된 URI 중에서 실행 가능한 것이 있는지 확인해 준다.</li></ul><ul id="da27a252-4956-4f08-bba1-3693d61c88c0" class="bulleted-list"><li>그리고 이 안에서는 내용 제공자에 접근하기 위햐여 ContentResolver 객체도 사용한다.</li></ul><ul id="bfc890c5-4292-45a2-b7a6-25bc5be60014" class="bulleted-list"><li>액티비티에서 getContentResolver() 메서드를 호출하면 ContentResolver 객체를 반환한다.</li></ul><ul id="0d064bd8-321f-4abe-8369-8433c7eacf33" class="bulleted-list"><li>notifyChange() 메서드는 레코드가 추가, 수정, 삭제되었을 때 변경이 있어났음을 알려주는 역화을 한다.</li></ul><h3 id="6a84f991-9162-4580-9bb7-3202e6428585" class="">Query() - 내용 제공자를 이용해 값을 조회하고 싶다</h3><pre id="72993c05-a4b9-4936-8937-722ceda72bc0" class="code"><code>@Nullable
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
+        Cursor cursor;
+        switch (uriMatcher.match(uri)) {
+            case PERSONS:
+                cursor = database.query(DatabaseHelper.TABLE_NAME,
+                        DatabaseHelper.ALL_COLUMNS,
+                        s, null, null, null, DatabaseHelper.PERSON_NAME + &quot; ASC&quot;);
+                break;
+            default:
+                throw new IllegalArgumentException(&quot;알 수 없는 URI &quot; + uri);
+        }
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+        return cursor;
+    }</code></pre><h3 id="048f1eeb-8991-415b-bfc0-1397f0df59ea" class="">query()</h3><pre id="677b0e71-5020-414e-b80c-10b2d3a5f191" class="code"><code>Cursor query(
+							@NonNull Uri uri, 
+							@Nullable String[] projection, 
+							@Nullable String selection, 
+							@Nullable String[] selectionArgs, 
+							@Nullable String sortOrder
+						) </code></pre><p id="2eba8e89-b2dc-4dec-966a-16fb9c390962" class="">파라미터<div class="indented"><ol id="0cc23c08-5211-49f8-a331-2747cd8ee306" class="numbered-list" start="1"><li>URI</li></ol><ol id="065e029a-d4ba-4cd9-a18a-d823429a97e7" class="numbered-list" start="2"><li>어떤 칼럼들을 조회할 것인지를 지정한다.<ol id="161abdcd-abf0-46b5-af8a-61434b1e2d49" class="numbered-list" start="1"><li>만약, null 값을 전달하면 모든 칼럼을 조회한다.</li></ol></li></ol><ol id="6a18c9f1-f01c-4622-ae23-63e85fb2a70c" class="numbered-list" start="3"><li>SQL에서 where절에 들어갈 조건을 지정한다.<ol id="0e7258ca-6dee-47dd-88b8-bd4fcc001481" class="numbered-list" start="1"><li>만약 null 값을 지정하면 where 절이 없다고 생각할 수 있다.</li></ol></li></ol><ol id="e12d3cd2-f222-4f49-a4aa-0da86efb8cc0" class="numbered-list" start="4"><li>세 번째 파라미터에 값이 있을 경우 그 안에 들어갈 조건 값을 대체하기 위해 사용된다.</li></ol><ol id="4da2e46d-d282-4dd9-9def-d35741aba30d" class="numbered-list" start="5"><li>정렬 칼럼을 지정하며 null값이면 정렬이 적용되지 않는다.</li></ol></div></p><p id="0eb1af43-7f8b-4c6d-88d4-632225eee355" class="">
+</p><h3 id="22312b9d-5d05-4477-9418-2d4955816743" class="">getType() 메서드 - MIME 타입이 무엇인지 알때 쓴다</h3><pre id="8c3806ee-7805-4816-a644-a9a47df49bbd" class="code"><code>@Nullable
+    @Override
+    public String getType(@NonNull Uri uri) {
+        switch (uriMatcher.match(uri)) {
+            case PERSONS:
+                return &quot;vnd.android.cursor.dir/persons&quot;;
+            default:
+                throw new IllegalArgumentException(&quot;알 수 없는 URI &quot; + uri);
+        }
+    }</code></pre><ul id="5adef03d-4acb-466e-a186-526e34ba3e01" class="bulleted-list"><li>Uri 객체가 파라미터로 전달되며 결과 값으로 MIME 타입이 반환된다. </li></ul><ul id="ee4f70d3-e13a-4775-95c5-b7c49dd007a1" class="bulleted-list"><li>만약 MIME 타입을 알 수 없는 경우에는 null 값이 반환된다.</li></ul><ul id="29135abb-6598-4a69-8672-f1e06acff251" class="bulleted-list"><li></li></ul><h3 id="83d5e6bd-e313-475c-8aac-8c2d5f7b8315" class="">Insert - 내용 제공자를 이용해 값을 추가하고 싶다</h3><pre id="f9294f03-3f7b-4e73-991c-7168b3900859" class="code"><code>@Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
+        long id = database.insert(DatabaseHelper.TABLE_NAME, null, contentValues);
+
+        if (id &gt; 0) {
+            Uri _uri = ContentUris.withAppendedId(CONTENT_URI, id);
+            getContext().getContentResolver().notifyChange(_uri, null);
+            return null;
+        }
+
+        throw new SQLException(&quot;추가 실패 -&gt; URI : &quot; + uri);
+    }</code></pre><p id="9f1de542-1ad2-4212-9682-0a6cd8a60c96" class="">
+</p><h3 id="32d99a38-0ef6-4247-97b1-70941c4d43d2" class="">insert()</h3><pre id="1c5d1e96-7b0b-49fc-b8d7-1a3c4440ab36" class="code"><code>Uri insert (
+							Uri uri,
+							ContentValues values
+					)</code></pre><p id="8483d035-7276-4505-b089-f94bafe79e8f" class="">파라미터</p><ol id="548a1925-62d4-4093-b97e-93ac8cbc48a7" class="numbered-list" start="1"><li>URI</li></ol><ol id="1c05cdf4-7038-4b36-8b1d-b808ae6046b8" class="numbered-list" start="2"><li>저장할 칼럼명과 값들이 들어간 ContentValues 객체이다.<ol id="7830f85f-7e61-49ca-859d-9f1c3bb60790" class="numbered-list" start="1"><li>결과 값으로는 새로 추가된 값의 Uri 정보가 반환된다.</li></ol></li></ol><p id="ab5fb313-9bb9-4488-99ee-c0761e5837f5" class="">
+</p><h3 id="86634296-393e-4805-b080-acf0b338ae3b" class="">Delete - 내용 제공자를 이용해 값을 삭제하고 싶다</h3><pre id="d363c6c6-b45e-4c8e-9fe5-1c409ddbcf5c" class="code"><code>@Override
+    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
+        int count = 0;
+        switch (uriMatcher.match(uri)) {
+            case PERSONS:
+                count = database.delete(DatabaseHelper.TABLE_NAME, s, strings);
+                break;
+            default:
+                throw new IllegalArgumentException(&quot;알 수 없는 URI : &quot; + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
+    }</code></pre><p id="031b17b7-3a55-43c8-8569-c58eeaa0b17e" class="">
+</p><h3 id="b3216554-f93c-4924-bed0-75838f6245b9" class="">delete()</h3><pre id="274e382f-2d0f-444e-93b4-5dbd7f6edcfd" class="code"><code>int delete (
+							Uri uri,
+							String selection,
+							String[] selectionArgs
+						)</code></pre><p id="6765eef2-74a4-4a92-bc4c-a7eeea6067db" class="">파라미터</p><ol id="67abe674-13ab-4f2a-bcd2-628169f8652f" class="numbered-list" start="1"><li>URI</li></ol><ol id="6c4ed6dd-de9c-4130-a336-c9a4095e35f1" class="numbered-list" start="2"><li>SQL에서 where절에 들어갈 조건을 지정한다.<ol id="13086465-b886-4bf5-b218-4c2654da37ee" class="numbered-list" start="1"><li>만약 null 값을 지정하면 where 절이 없다고 생각할 수 있다.</li></ol></li></ol><ol id="7886360d-ae8d-4125-b822-dca90532142c" class="numbered-list" start="3"><li>두 번째 파라미터에 값이 있을 경우 그 안에 들어갈 조건 값을 대체하기 위해 사용된다.<ol id="b5bb0f62-35e7-494c-9bf4-27cf8f8e2d67" class="numbered-list" start="1"><li>결과 값으로는 영향을 받은 레코드의 개수가 반환된다.</li></ol></li></ol><p id="3ddedf48-287c-433a-8345-45a139662c98" class="">
+</p><h3 id="7b217499-0daa-4104-8ae6-4abe0aed7058" class="">Update - 내용 제공자를 이용해 값을 수정하고 싶다</h3><pre id="2bfae62f-d868-41f8-a843-6fde45a6f9d7" class="code"><code>@Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
+        int count = 0;
+        switch (uriMatcher.match(uri)) {
+            case PERSONS:
+                count = database.update(DatabaseHelper.TABLE_NAME, contentValues, s, strings);
+                break;
+            default:
+                throw new IllegalArgumentException(&quot;알 수 없는 URI : &quot; + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
+    }
+}</code></pre><p id="0bc63b6a-e653-443c-99b4-d057d622cdc4" class="">
+</p><h3 id="280bab07-9cd4-4bba-9e27-cdf8ca5db81d" class="">update()</h3><pre id="a1516843-1d76-4a35-a5bb-114234e53970" class="code"><code>int update (
+							Uri uri,
+							ContentValue values,
+							String selection,
+							String[] selectionArgs
+					)</code></pre><p id="ae45a555-e49d-4492-ad76-3b2aa2beed2f" class="">파라미터</p><ol id="3e1699f5-1248-47ba-b48c-76475f4e733d" class="numbered-list" start="1"><li>URI</li></ol><ol id="08f24a23-785d-48e1-a7b6-4278cb91496a" class="numbered-list" start="2"><li>저장할 칼럼명들과 값들이 들어간 ContentValues 객체이다.<ol id="e9c9b9ae-5b45-433f-9ba5-9becc0fd32ac" class="numbered-list" start="1"><li>null 이 되면 안 된다는 점에 주의해야 한다.</li></ol></li></ol><ol id="205746ed-2f12-420c-bded-3e2210fd5c68" class="numbered-list" start="3"><li>SQL에서 where 절에 들어갈 조건을 지정한다.<ol id="dd2b3c1b-1d89-42e1-a078-59adfa4efc82" class="numbered-list" start="1"><li>만약 null 값을 지정하면 where 절이 없다고 생각할 수 있다.</li></ol></li></ol><ol id="02426019-3f89-4965-bc9c-439ae9d085ea" class="numbered-list" start="4"><li>세 번째 파라미터에 값이 있을 경우 그 안에 들어갈 조건 값을 대체하기 위해 사용된다.<ol id="c06c8f60-e2fd-4471-a063-7650f1b0b6d0" class="numbered-list" start="1"><li>결과 값으로는 영향을 받은 레코드의 개수가 반환된다.</li></ol></li></ol><p id="a09e70f2-224b-4e8c-8f16-586ed1e02678" class="">
+</p><p id="e15713a4-e814-45b5-9e7d-a09712db2a7b" class="">
+</p><h3 id="87848df5-deb0-4317-9498-4709410d3083" class="">앞의 메서드들은 실행될 때는 Uri 값이 먼저 매칭되므로 Uri 값이 유효한 경우에는 해당 기능이 실행되고 그렇지 않은 경우에는 예외가 발생한다.</h3><p id="f329f9ce-3eff-488b-ad22-5b431bf5e7fe" class="">
+</p><p id="c582dc9a-5f29-4c67-ac54-1950aa0a556c" class="">
+</p><hr id="90f4f161-72c1-4d68-a383-ab9f9dac2165"/><p id="716283df-72cd-4b80-8724-3d7edfb50097" class="">
+</p><blockquote id="9c2c0e44-b73f-4406-93ba-e416d3421fcc" class="">이제 메인 화면에 추가했던 각각의 버튼을 눌렀을 때 insert(), query(), update(), delete() 메서드를 호출하도록 하고 그 결과를 화면에 표시해야 한다.</blockquote><p id="1bf95e10-fcd8-4377-95f2-98a93a345a26" class="">
+</p><h3 id="2be2e78d-ec14-4d56-a728-f041c4ef6abf" class="">MainActivity.java</h3><p id="7546e2ac-b47b-4040-b10e-4d5a4156a9fd" class="">
+</p><h3 id="ce31d69b-0aca-4b2f-911f-38a99b5b7245" class="">insertPerson()</h3><pre id="5bbfc55d-6ec9-402b-a773-a698371ee699" class="code"><code>public void insertPerson() {
+        println(&quot;insertPerson 호출됨&quot;);
+
+        String uriString = &quot;content://com.younsle.sampleprovider/person&quot;;
+        Uri uri = new Uri.Builder().build().parse(uriString);   
+        // 문자열에서 Uri 객체를 만들 때는 new 연산자를 이용해 
+		   // Uri.Builder 객체를 먼저 만든 후 build(), parse() 메서드를 호출하면서 
+       // 문자열을 파라미터로 전달하면 된다.
+
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        // ContentResolver 객체는 getContentResolver() 메서드를 호출하면 참조할 수 있으며 
+			  // query() 메서드를 호출하면 그 결과 값으로 Cursor 객체가 반환된다.
+       
+				String[] columns = cursor.getColumnNames();
+        // Cursor 객체를 이용해 결과 값을 조회할 수 있는데 
+        // 결과 레코드에 들어가 있는 칼럼의 이름을 조회하고 싶다면 
+        // getColumnNames() 메서드를 사용할 수 있다.
+
+        println(&quot;column count -&gt; &quot; + columns.length);
+
+        for (int i = 0; i &lt; columns.length; i++) {
+            println(&quot;#&quot; + i + &quot; : &quot; + columns[i]);
+        }
+
+        ContentValues values = new ContentValues();
+        // 레코드를 추가할 때는 ContentValues 객체가 사용되는데 
+	      // getColumnNames() 메서드를 이용해 알아낸 칼럼 이름을 사용할 수도 있고 
+        // 직접 칼럼 이름을 지정할 수도 있다.
+        // 우리는 이미 칼럼 이름을 알고 있으므로 여기에서는 칼럼 이름을 직접 지정하고 
+        // getColumnNames() 메서드를 이용해 알아낸 칼럼 이름은 화면에 출력하여 확인용으로만 사용한다.
+        values.put(&quot;name&quot;, &quot;john&quot;);
+        values.put(&quot;age&quot;, 20);
+        values.put(&quot;mobile&quot;, &quot;010-1000-1000&quot;);
+
+        uri = getContentResolver().insert(uri, values);
+        // ContentResolver의 insert 메서드를 호출하여 레코드를 추가할 때는 Uri 객체와 함께 ContentValues 객체를 파라미터로 전달한다.
+        println(&quot;insert 결과 -&gt; &quot; + uri.toString());
+
+    }</code></pre><p id="f2e8e18b-1015-478d-b920-d4634a3c7b58" class="">
+</p><p id="ab97b6bd-ec47-4af3-b81b-bf6d6afe746a" class="">
+</p><p id="ba5eb81b-d34c-49f0-aee1-ed79124e9d10" class="">
+</p><h3 id="5b4482d5-bb71-431c-b2ad-504202f2b807" class="">queryPerson()</h3><pre id="b33ecadc-f971-4411-a9c6-58b97cf6d0fa" class="code"><code>public void queryPerson() {
+        try {
+            String uriString = &quot;content://com.younsle.sampleprovider/person&quot;;
+            Uri uri = new Uri.Builder().build().parse(uriString);
+
+            String[] columns = new String[] {&quot;name&quot;, &quot;age&quot;, &quot;mobile&quot;};
+            Cursor cursor = getContentResolver().query(uri, columns, null, null, &quot;name ASC&quot;);
+            // query() 메서드를 호출할 때 Uri 객체 외에 columns 도 전달하고 있는데 
+						// 여기에는 조회할 칼럼의 이름이 문자열의 배열 형태로 들어가 있다.
+            // 이렇게 하면 지정한 칼럼만 조회된다.
+
+            // Cursor 객체가 반환되면 각 칼럼 이름에 해당하는 칼럼 인덱스 값을 확인한 후 칼럼 값을 조회합니다.
+
+            println(&quot;query 결과 : &quot; + cursor.getCount());
+
+            int index = 0;
+            // Cursor 객체는 moveToNext() 메서드를 호출하면서 결과 레코드를 넘길 수 있으므로 
+						// while 문 안에서 moveToNext를 호출하면서 각 레코드의 값을 출력하도록 한다.
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndex(columns[0]));
+                int age = cursor.getInt(cursor.getColumnIndex(columns[1]));
+                String mobile = cursor.getString(cursor.getColumnIndex(columns[2]));
+
+                println(&quot;#&quot; + index + &quot; -&gt; &quot; + name + &quot;, &quot; + age + &quot;, &quot; + mobile);
+                index += 1;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+</code></pre><ul id="a67dffab-3102-427d-90a3-263598543f84" class="bulleted-list"><li>첫 번째 버튼을 눌러 레코드를 추가할 때와 코드가 상당히 유사하다.</li></ul><ul id="f31ee278-19b5-4277-bf64-f36401ca8ebe" class="bulleted-list"><li>먼저 Uri 객체를 만들고 ContentResolver 객체의 query() 메서드를 호출하면서 Uri 객체를 전달하면 Cursor 객체가 반환된다.</li></ul><p id="8eff7f8c-c6fe-4d30-a087-dc81fa7ac3fb" class="">
+</p><h2 id="17fc7da8-800f-43d5-8d5e-c8bc6ee0ed23" class="">updatePerson()</h2><pre id="2005fec7-f664-473e-a5fa-dacb9601acfb" class="code"><code>// updatePerson()
+    public void updatePerson() {
+        String uriString = &quot;content://com.younsle.sampleprovider/person&quot;;
+        Uri uri = new Uri.Builder().build().parse(uriString);
+
+        String selection = &quot;mobile = ?&quot;;
+        // where  조건의 문자열에 &#x27;mobile = ?&#x27;를 넣었으므로 그 안에 ? 기호가 하나 들어 있다. 
+				// 이 기호는 selectionArgs 배열 변수의 첫 번째 원소로 대체된다. 
+		    // 따라서 where 조건은 &#x27;mobile = 010-1000-1000 이된다.&#x27;
+
+        String[] selectionArgs = new String[] {&quot;010-1000-1000&quot;};
+        ContentValues updateValue = new ContentValues();
+
+        updateValue.put(&quot;mobile&quot;, &quot;010-2000-2000&quot;); // mobile 칼럼의 값이 010-1000-1000인 레코드 만 010-2000-2000으로 수정하도록 한다.
+        // 수정할 때는 ContentResolver의 updatede() 메서드를 호출하면서 Uri 객체, ContentValues 객체, where 조건, where 조건의 ? 기호를 대체할 값을 차례대로 넣어둔다.
+        int count = getContentResolver().update(uri, updateValue, selection, selectionArgs);
+        println(&quot;update 결과: &quot; + count);
+    }</code></pre><p id="4198ddb4-3d2d-4a00-bf50-fbb9ca625eff" class="">
+</p><h3 id="8947ce6f-38c8-4eaa-8c5f-aae5322a2b33" class="">deletePerson()</h3><pre id="9923181e-e257-46dd-a3cd-d0748e3de979" class="code"><code>// deletePerson()
+    public void deletePerson() {
+        String uriString = &quot;content://com.younsle.sampleprovider/person&quot;;
+        Uri uri = new Uri.Builder().build().parse(uriString);
+
+        String selection = &quot;name = ?&quot;;
+        String[] selectionArgs = new String[] {&quot;john&quot;};
+
+        int count = getContentResolver().delete(uri, selection, selectionArgs);
+        println(&quot;delete 결과: &quot; + count);
+        // ContentResolver의 delete() 메서드를 호출하면서 
+				// Uri 객체, where 조건, where 조건의 ? 기호를 대체할 값을 차례대로 넣어준다.
+        // where 조건의 문자열에 &#x27;name = ?&#x27;를 넣었으므로 그 안에 ? 기호가 하나 들어있다.
+        // 이 기호는 slectionArgs 배열 변수의 첫 번째 원소로 대체된다.
+        // 따라서 where 조건은 &#x27;name = john&#x27; 이 된다.
+    }</code></pre><hr id="b52fe3f6-6865-4111-aeeb-5ced5f71aabf"/><p id="bf1cef71-4a69-450a-ba7c-4b7ed10f8367" class="">
+</p><h3 id="b5fdc8c7-f9d4-4389-be50-741cb26fbc3e" class="">AndroidManifest.xml</h3><pre id="b228825b-5838-4e00-a7ad-6d42bba972c1" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    package=&quot;com.younsle.sampleprovider&quot;&gt;
+
+    &lt;permission android:name=&quot;com.younsle.sampleprovider.READ_DATABASE&quot; android:protectionLevel=&quot;normal&quot;/&gt;
+    &lt;permission android:name=&quot;com.younsle.sampleprovider.WRITE_DATABASE&quot; android:protectionLevel=&quot;normal&quot;/&gt;
+
+  &lt;!--  생략   --&gt;
+        
+        &lt;provider
+            android:authorities=&quot;com.younsle.sampleprovider&quot;
+            android:name=&quot;.PersonProvider&quot;
+            android:exported=&quot;true&quot;
+            android:readPermission=&quot;com.younsle.sampleprovider.READ_DATABASE&quot;
+            android:writePermission=&quot;com.younsle.sampleprovider.WRITE_DATABASE&quot;/&gt;
+
+       &lt;!--  생략   --&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+
+&lt;/manifest</code></pre><ul id="266db36c-e045-450d-ac4b-3ffb4cdbf577" class="bulleted-list"><li>&lt;permission&gt; 태그<ul id="a3d19df9-6d0b-4ef4-ba00-f0b10ac65a93" class="bulleted-list"><li>권한을 새로 정의할 때 사용되는 태그로 여기에서는 두 개의 권한이 새로 정의되었다.</li></ul></li></ul><p id="8d559b0c-2915-4c00-834a-f99ed8b0c2df" class="">
+</p><p id="2c512cd1-9202-4044-b133-fc0933237d8c" class="">&lt;permission&gt; 태그<div class="indented"><ul id="26178f46-5859-4842-b644-9c543008af4c" class="bulleted-list"><li>name 속성 값 <ul id="79fbeb67-01d1-41e0-b0fd-3363f31d1eb6" class="bulleted-list"><li>name=&quot;com.younsle.sampleprovider.READ_DATABASE&quot;</li></ul><ul id="140bd991-5c06-4af5-9c80-fc9c5acc8bf0" class="bulleted-list"><li>name=&quot;com.younsle.sampleprovider.WRITE_DATABASE&quot;</li></ul></li></ul><ul id="d422b46a-280a-4a64-87ba-2ef939a1a9c8" class="bulleted-list"><li>protectionLevel<ul id="79328841-d3b7-4e1c-877a-494509ca773c" class="bulleted-list"><li>android:protectionLevel=&quot;normal&quot;</li></ul></li></ul></div></p><p id="0336b188-4ebe-4411-abfb-bb8290a2195f" class="">
+</p><ul id="0d75df64-323c-4933-be92-7c2ad68470c6" class="bulleted-list"><li>&lt;application&gt; 태그 안에는 &lt;provider&gt; 태그를 추가하고 authorities, name, readPermission, writePermission 등의 속성을 추가한다.</li></ul><ul id="1b867712-5039-4e8d-a677-31cfdf67b304" class="bulleted-list"><li>authorities<ul id="d85379de-e813-42bb-b20a-c4b129823bd3" class="bulleted-list"><li>내용 제공자를 정의할 때 설정한 authorities 값과 동일하게 넣어준다,</li></ul></li></ul><ul id="5bf351bb-5619-463d-84ab-0b214946958b" class="bulleted-list"><li>name<ul id="d481c6ba-660f-451f-9e82-0162ce2d80ab" class="bulleted-list"><li>내용 제공자 클래스인 PersonProvider 클래스를 설정한다.</li></ul></li></ul><ul id="7e8fce6e-19ca-4518-91d1-3f2890faa589" class="bulleted-list"><li>readPermission<ul id="e416ebd4-925a-4d2f-a1fc-7486e1ee1d80" class="bulleted-list"><li>위에서 정의한 com.younsle.sampleprovider.READ_DATABASE&quot; 권한을 지정한가.</li></ul></li></ul><ul id="2bf310f7-af0f-4744-8dfc-1111d5220ba0" class="bulleted-list"><li>writePermission<ul id="92a40d5f-9d0b-4d8e-b7cc-4eba6d2b987b" class="bulleted-list"><li>위에서 정의한 com.younsle.sampleprovider.WRITE_DATABASE&quot; 권한을 지정한가.</li></ul></li></ul></div></article></body></html>

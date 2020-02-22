@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Untitled</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>데이터베이스, 테이블 적용</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -562,4 +562,198 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="208e411b-b823-43c2-b4f5-c295f450176a" class="page sans"><header><h1 class="page-title"></h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td></td></tr><tr class="property-row property-row-select"><th>Type</th><td></td></tr></tbody></table></header><div class="page-body"></div></article></body></html>
+</style></head><body><article id="208e411b-b823-43c2-b4f5-c295f450176a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✏️</span></div><h1 class="page-title">데이터베이스, 테이블 적용</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th>Dates</th><td><time>@Feb 18, 2020</time></td></tr><tr class="property-row property-row-multi_select"><th>Topic</th><td><span class="selected-value">Android</span></td></tr><tr class="property-row property-row-select"><th>Type</th><td><span class="selected-value">📕study</span></td></tr></tbody></table></header><div class="page-body"><h3 id="18e05f10-adf7-4019-b703-aa9b945a2fb9" class="">모바일 데이터베이스</h3><ul id="638da504-1386-4970-abf1-e2aed0c5a5e8" class="bulleted-list"><li>앱을 만들면서 데이터를 간단하게 저장하고 싶을 때는 SharedPreferences를 사용할 수 있다.</li></ul><ul id="f94505d1-9224-4335-822b-9bdbe28af66a" class="bulleted-list"><li>그리고 필요하다면 파일을 직접 쓰거나 읽을 수도 있다.</li></ul><ul id="f3fc27fc-0e77-497f-a132-20e0a7fd0a7a" class="bulleted-list"><li>하지만, 많은 양의 데이터를 체계적으로 관리하려면 역시 데이터베이스를 사용해야 한다.</li></ul><ul id="b72eb317-8914-422f-b7f7-ea9760a57523" class="bulleted-list"><li>특히 표준 SQL 문으로 데이터를 조회하는 관계형 데이터베이스를 휴대 단말에서 사용할 수 있다면 적은 양의 데이터라도 접근이 가능하기 떄문에 더 효율적이다.</li></ul><p id="10dd990f-3be0-4315-93ce-12f936f25d71" class="">
+</p><p id="98a0d462-f5ed-418a-9b4e-f6259a5e551f" class="">
+</p><ul id="cb8aaaac-0eff-4b74-b9d7-2bccd1ada088" class="bulleted-list"><li>안드로이드는 임베디드 데이터베이스로 개발된 경량급(Light-weight)관계형 데이터베이스인 SQLite를 가지고 있다.</li></ul><ul id="d9d75f19-1735-45f7-9ed4-1a9d9098a1b5" class="bulleted-list"><li>SQLite 데이터베이스는 파일로 만들어진 하위 수준의 구조를 가지면서도 데이터베이스의 기능까지 그대로 사요할 수 있도록 만드는 것이다.</li></ul><ul id="9da9f148-9d13-4878-a432-cc5e611190e0" class="bulleted-list"><li>그리고 저장될 때는 파일로 저장되므로 데이터베이스의 복사, 이동, 삭제가 매우 쉽다.</li></ul><h3 id="3076c443-b4ce-4f88-99f0-23fc23742926" class="">SQLtie</h3><ul id="6454a765-ba83-49b9-9afd-23bd952933e3" class="bulleted-list"><li>가장 큰 특징은, 데이터 조회 속도가 빠르다는 것과 표준 SQL을 지원한다는 점이다.</li></ul><ul id="13b35a26-a201-42a6-88ea-5045ca364122" class="bulleted-list"><li>표준 SQL을 그대로 사용할 수 있다는 것은 기존에 웹이나 PC에서 사용하던 업무용 앱의 데이터 관리 기능을 그대로 사용할 수 있다는 것이다.</li></ul><ul id="d704f52c-750c-47f7-afa9-ad0972414b2e" class="bulleted-list"><li>더불어 원격 데이터베이스를 접근하는 SQL 문을 로컬에서도 똑같이 쓸 수 있다.</li></ul><ul id="fab87f83-1dfb-4110-a758-e8d9d283314b" class="bulleted-list"><li>결국 앱의 개발 생산성이 높아지고 향후 기능을 변경할 때도 간단한 SQL 수정만으로 데이터 처리 방식을 바꿀수 있다는 장점이 있다.</li></ul><p id="3dd89e4b-ce61-42a9-ad37-d7984ce94f1b" class="">
+</p><h3 id="2e6cdc36-086d-4a7c-9ac5-9373bc25db8e" class="">데이터베이스 활용</h3><ol id="a48b424d-bffb-4c6a-9c30-c008fa9d418e" class="numbered-list" start="1"><li>데이터베이스 만들기</li></ol><ol id="b34dc223-adf0-4f8d-a88c-d1842656d952" class="numbered-list" start="2"><li>테이블 만들기</li></ol><ol id="1fb1be1f-2413-4452-a247-b4cf4ff34b68" class="numbered-list" start="3"><li>레코드 추가하기</li></ol><ol id="014ae1e1-5e38-44e2-91ba-cb452c45cf4c" class="numbered-list" start="4"><li>데이터 조회하기</li></ol><p id="1f0d2358-b2c0-4059-b780-86b6cbc7a102" class="">
+</p><ul id="4427c6f5-5f83-4cc1-8287-41cfce94f03f" class="bulleted-list"><li>이와 같은 과정을 거치는 SQL 기반의 데이터베이스르 사용하려면 데이터베이스를 만들고 SQL로 테이블의 정의하는 방법부터 먼저 알아야 한다.</li></ul><ul id="8539e455-dfdd-4583-b3f6-df2c81c2a402" class="bulleted-list"><li>데이터베이스는 여러 개의 테이블을 담는 그릇이라고 볼 수 있다.</li></ul><ul id="8fdf6d73-b912-468b-8bfb-0169b1410107" class="bulleted-list"><li>따라서 데이터베이스를 사용하려면 우선 그릇을 만들거나 이미 만들어 놓은 그릇을 열고 닫을 수 있어야 한다.</li></ul><p id="c1e631e0-b27d-43bc-a266-b260ecd8110d" class="">
+</p><h3 id="6839e1b9-e8f8-4c35-add4-4ca477418c48" class="">데이터베이스 만드는 가장 간단한 방법</h3><ul id="c2cdd930-bae2-4725-9cab-ad522af2a6bd" class="bulleted-list"><li>Context 클래스에 정의된 openOrCreateDatabase() 메서드를 사용하는 것이다.</li></ul><ul id="017604bf-3d2a-46a8-abbd-ac41725f5821" class="bulleted-list"><li>즉, 앱에서 기본적으로 사용하는 Activity 클래스가 Context를 상속한 것이므로 결국 액티비티를 만들 때 그 안에서 openOrCreateDatabase() 메서드로 데이터베이스를 만들거나 열 수 있다.</li></ul><ul id="6e4e3292-89f2-4c5c-a8e3-abc323880d38" class="bulleted-list"><li>Context 클래스에는 이렇게 만든 데이터베이스를 삭제할 수 있는 deleteDatabase() 메서드도 정의되어 있다.</li></ul><pre id="0bb78c69-91d6-4811-9284-c038670579bb" class="code"><code>// [API]
+
+public abstract SQLiteDatabase openOrCreateDatabase (String name, int mode,
+																					SQLiteDatabase.CursorFactory factory)
+
+public abstract boolean deleteDatabase (String name)</code></pre><ul id="4f541ce4-b91b-42c7-aed3-0015a6c9294c" class="bulleted-list"><li>openOrCreateDatabase()<ul id="e37a6cc5-5a2e-48ea-9ce5-91ef975a1f6b" class="bulleted-list"><li>첫 번째 파라미터 : &#x27;데이터베이스의 이름&#x27;<ul id="92ce0945-8ca1-4cbc-a0a0-e299213485de" class="bulleted-list"><li>이름을 이용해서 데이터베이스를 구분하며, 이 이름은 데이터베이스 파일의 이름으로도 사용된다.</li></ul></li></ul><ul id="491b091c-ec2f-4b3e-b552-951f2ea53216" class="bulleted-list"><li>두 번째 파라미터 : &#x27;사용 모드&#x27;<ul id="be9ca1c6-7f5b-47b1-b5b2-6461c5250b23" class="bulleted-list"><li>여기에는 MODE_PRIVATE 상수를 넣어준다.</li></ul></li></ul><ul id="01089542-c4ca-432b-99fa-8a555e4d216c" class="bulleted-list"><li>세 번째 파라미터 : &#x27;널(Null)이 아닌 객체를 지정할 경우 쿼리의 결과 값으로 반환되는 데이터를 참조하는 커서를 만들어 낼 수 있는 객체가 전달된다.</li></ul></li></ul><ul id="37851e09-298c-49c0-9305-8d229786d59c" class="bulleted-list"><li>openOrCreateDatabase() 메서드를 호출했을 때 반환되는 SQLiteDatabase 객체는 name 변수로 지정한 데이터베이스에 접근할 수 있는 메서드로 정의하고 있다.</li></ul><ul id="447d97c5-191a-441a-952a-1d3e319240ca" class="bulleted-list"><li>그래서 이 메서드로 데이터베이스를 열거나 만든 후에 SQLiteDatabase 객체를 참조해야 한다.</li></ul><p id="7189cde5-6ac6-426c-b295-9f1ac2f9b833" class="">
+</p><h3 id="a88ab0c0-db5b-4d0c-a493-6baa6cfc8481" class="">SQLiteDatabase 객체에서 가장 중요한 메서드 중 </h3><ul id="09418d7b-632c-4a4a-a61b-0c011a45452c" class="bulleted-list"><li>execSQL()<ul id="634f4b84-cb21-4caf-9cc3-e740e4505546" class="bulleted-list"><li>이 메서드는 데이터베이스를 만들고 난 다음 SQL문을 실행할 때 사용된다.</li></ul><ul id="204f79ce-e799-47ba-9f3f-3f6170fb1323" class="bulleted-list"><li>따라서 이 메서드를 이용하면 테이블을 만드는 것뿐만 아니라 레코드 추가처럼 표준 SQL을 사용하는 여러 가지 데이터 처리가 가능하다.</li></ul></li></ul><pre id="b24e1940-c098-461f-8dd6-a6ed799dd6ce" class="code"><code>//[API]
+public void execSQL(String sql) throws SQLExeption</code></pre><p id="596db7eb-416d-46d2-84c2-e5de84a51768" class="">
+</p><p id="bae506cf-d815-48a3-881b-6c11811931c4" class="">
+</p><h3 id="9c4eeb9d-e8d2-4829-9ce0-cec2911aead2" class="">MainActivity.java</h3><pre id="1195a0ef-ecb8-494d-a01e-da01628e8e2b" class="code"><code>package com.younsle.sampledatabase;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Element;
+
+public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    EditText editText2;
+    TextView textView;
+
+    SQLiteDatabase database;
+
+    String tableName;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        editText2 = findViewById(R.id.editText2);
+        textView = findViewById(R.id.textView);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String databaseName = editText.getText().toString();
+                createDatabase(databaseName);
+            }
+        });
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableName = editText2.getText().toString();
+                createTable(tableName);
+
+                insertRecord();
+            }
+        });
+    }
+
+    private void createDatabase(String name) {
+        println(&quot;createDatabase 호출됨&quot;);
+
+        database = openOrCreateDatabase(name, MODE_PRIVATE, null);  // 데이터베이스를 만들기 위한 메서드를 실행하기
+
+        println(&quot;데이터베이스 생성함&quot; + name);
+    }
+    /*
+    * [데이터베이스 만들기] 버튼을 눌렀을 때 호출되는 createDatabase() 메서드는 데이터베이스 이름(name)을 전달 받아 openOrCreateDatabase() 메서드를 호출한다.
+    * */
+
+    private void createTable(String name) {
+        println(&quot;createTable 호출됨&quot;);
+
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;create table if not exists &quot; + name + &quot;(&quot;
+        + &quot; _id integer PRIMARY KEY autoincrement, &quot;
+        + &quot; name text, &quot;
+        + &quot; age integer, &quot;
+        + &quot; mobile text)&quot;);
+
+        println(&quot;테이블 생성함: &quot; + name);
+        // 테이블을 만들기 위한 SQL문 실행하기
+    }
+    /* [테이블 만들기] 버튼을 누르면 createTable() 메서드를 먼저 호출해 테이블을 만들고 insertRecord() 메서드를 호출하여 임의의 레코드를 삽입한다.
+    * createTable() 메서드에서 호출하는 execSQL() 메서드는 SQL문을 파라미터로 전달받기 떄문에 원하는 기능의 SQL을 먼저 정의해야 한다.
+    * 여기서는 직원 테이블을 만들기 위해 칼럼을 직원 id, 이름, 나이, 휴대폰 번호로 정의하였다.
+    * id의 경우에는 안드로이드에서 앞에 &#x27;_&#x27;를 붙여 &#x27;_id&#x27;로 만드는 방법을 권장하므로 같은 이름을 사용하였으며, 자동으로 1씩 증가하는 킷값(PRIMARY KEY autoincrement)으로 정의하였다.
+    * 이름, 나이, 휴대폰 번호는 각각 name, age, mobile 칼럼으로 정의하되 그 데이터 타입은 text, integer, text가 되도록 하였다.
+
+    * */
+
+
+    private void insertRecord() {
+        println(&quot;insertRecord 호출됨&quot;);
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        if (tableName == null) {
+            println(&quot;테이블을 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;insert into &quot; + tableName
+        + &quot;(name, age, mobile) &quot;
+        + &quot; values &quot;
+        + &quot;( &#x27;John &#x27;, 20, &#x27;010-1000-1000 &#x27; )&quot;);
+
+        println(&quot;레코드 추가함.&quot;);
+    }
+
+    public void println(String data) {
+        textView.append(data + &quot;\n&quot;);
+    }
+}
+/** insertRecord() 메서드에서는 execSQL() 메서드로 임의의 데이터 John, 20, 010-1000-1000을 삽입한다.
+ * 새로 정의하는 */
+
+
+// p.542 나머지 정리</code></pre><p id="34b35daf-85ed-42c1-b2ff-240fe0b87fda" class="">
+</p><h3 id="905f5da9-9e4e-461a-a8a9-72c320be1378" class="">openOrCreateDatabase()</h3><pre id="3af961f5-419b-4959-9a27-e232058e2317" class="code"><code> private void createDatabase(String name) {
+        println(&quot;createDatabase 호출됨&quot;);
+
+        database = openOrCreateDatabase(name, MODE_PRIVATE, null);  // 데이터베이스를 만들기 위한 메서드를 실행하기
+
+        println(&quot;데이터베이스 생성함&quot; + name);
+    }
+    /*
+    * 
+    * */
+</code></pre><ul id="a4746a60-401c-4aa2-a954-c5752e64c7ff" class="bulleted-list"><li>[데이터베이스 만들기] 버튼을 눌렀을 때 호출되는 createDatabase() 메서드는 데이터베이스 이름(name)을 전달 받아 openOrCreateDatabase() 메서드를 호출한다.</li></ul><p id="62c9233f-02be-45c3-8a8d-cb1960ed87c9" class="">
+</p><h3 id="64693f42-324f-4464-a116-580e4aed4455" class="">table 생성</h3><pre id="53c7ea28-919f-426e-a90f-70e38027d23a" class="code"><code> private void createTable(String name) {
+        println(&quot;createTable 호출됨&quot;);
+
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;create table if not exists &quot; + name + &quot;(&quot;
+        + &quot; _id integer PRIMARY KEY autoincrement, &quot;
+        + &quot; name text, &quot;
+        + &quot; age integer, &quot;
+        + &quot; mobile text)&quot;);
+
+        println(&quot;테이블 생성함: &quot; + name);
+        // 테이블을 만들기 위한 SQL문 실행하기
+    }
+    </code></pre><ul id="b9fc43b9-9e71-4a14-b04a-99b0325c3483" class="bulleted-list"><li>[테이블 만들기] 버튼을 누르면 createTable() 메서드를 먼저 호출해 테이블을 만들고 </li></ul><ul id="f83ceef3-581d-4816-a1f3-bc60f18b81d1" class="bulleted-list"><li>insertRecord() 메서드를 호출하여 임의의 레코드를 삽입한다.</li></ul><ul id="f5b76ce3-6226-4c14-8a73-c45f31c1458e" class="bulleted-list"><li>createTable() 메서드에서 호출하는 execSQL() 메서드는 SQL문을 파라미터로 전달받기 떄문에 원하는 기능의 SQL을 먼저 정의해야 한다.</li></ul><ul id="08c696a6-7df4-4a5e-87a1-259bab45547a" class="bulleted-list"><li>여기서는 직원 테이블을 만들기 위해 칼럼을 직원 id, 이름, 나이, 휴대폰 번호로 정의하였다.</li></ul><ul id="6589bd0a-4d4a-49d3-886b-b80d4361d00f" class="bulleted-list"><li>id의 경우에는 안드로이드에서 앞에 &#x27;_&#x27;를 붙여 &#x27;_id&#x27;로 만드는 방법을 권장하므로 같은 이름을 사용하였으며, </li></ul><ul id="98d27199-d095-4333-a09c-b20469022561" class="bulleted-list"><li>자동으로 1씩 증가하는 킷값(PRIMARY KEY autoincrement)으로 정의하였다.</li></ul><ul id="a22eadc6-edc3-4a65-8d3c-ca08c9014140" class="bulleted-list"><li>이름, 나이, 휴대폰 번호는 각각 name, age, mobile 칼럼으로 정의하되 그 데이터 타입은 text, integer, text가 되도록 하였다.</li></ul><p id="eea9f44f-1582-48ba-99cf-f1b85a132fae" class="">
+</p><p id="ce3238f0-f3f6-452f-b620-246490344c35" class="">
+</p><h3 id="43843479-ca1a-4872-acd4-526b62de7785" class="">insertRecord 생성된 쿼리문에 데이터 삽입 클래스</h3><pre id="b29dc589-c7cb-4125-8fd6-e39847c9d544" class="code"><code> private void insertRecord() {
+        println(&quot;insertRecord 호출됨&quot;);
+        if (database == null) {
+            println(&quot;데이터베이스를 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        if (tableName == null) {
+            println(&quot;테이블을 먼저 생성하세요.&quot;);
+            return;
+        }
+
+        database.execSQL(&quot;insert into &quot; + tableName
+        + &quot;(name, age, mobile) &quot;
+        + &quot; values &quot;
+        + &quot;( &#x27;John &#x27;, 20, &#x27;010-1000-1000 &#x27; )&quot;);
+
+        println(&quot;레코드 추가함.&quot;);
+    }
+
+    public void println(String data) {
+        textView.append(data + &quot;\n&quot;);
+    }
+}
+
+</code></pre><ul id="707967bb-c330-4df4-89a5-80ed0b7bd50d" class="bulleted-list"><li>insertRecord() 메서드에서는 execSQL() 메서드로 임의의 데이터 John, 20, 010-1000-1000을 삽입한다.</li></ul><p id="8bb96f9a-e610-4614-b2d9-f1ee518dd668" class="">
+</p><p id="902a321b-c3b8-40f3-8707-a852b9be461e" class="">
+</p><ul id="13a52226-60b6-4479-b145-7c3a5723b134" class="bulleted-list"><li>새로 정의하는 칼럼의 데이터 타입이 칼럼의 데이터 값에 일괄적으로 적용되는 다른 데이터베이스와는 달리 SQLite는 각각의 레코드별로 입력된는 데이터의 타입을 다르게 넣을 수 있다.</li></ul><ul id="322eda57-dac0-4be2-a153-570dcc37c114" class="bulleted-list"><li>따라서 칼럼의 데이터 타입은 참조용으로만 사용되며, 레코드를 입력할 때 어떤 타입의 데이터를 넣어도 오류가 발생하지 않는다.</li></ul><p id="11fbdf59-f60e-40ad-85aa-271773fa9c1c" class="">
+</p><h3 id="c8736ebc-9aa1-412a-b85b-ec803c3435f0" class="">칼럼에 참조용으로 정의할 수 있는 데이터 타입</h3><div id="5ddf3827-e59e-4702-8588-97c1496cdda9" class="collection-content"><h4 class="collection-title">칼럼</h4><table class="collection-content"><thead><tr><th>칼럼 타입명</th><th>설 명</th></tr></thead><tbody><tr id="22221dd2-ac72-4dff-836b-8c59420570a3"><td class="cell-title"><a href="Untitled%2013/Untitled/text%20varchar.html">text, varchar</a></td><td class="cell-?kET">문자열</td></tr><tr id="23aed583-6927-4b4e-9a5f-a9e92e0d4fe8"><td class="cell-title"><a href="Untitled%2013/Untitled/smallint%20integer.html">smallint, integer</a></td><td class="cell-?kET">정수 (2바이트 또는 4바이트)</td></tr><tr id="7e93ee57-0dc0-4660-99fd-a63a51fc0232"><td class="cell-title"><a href="Untitled%2013/Untitled/real%20float%20double.html">real, float, double</a></td><td class="cell-?kET">부동소수 (4바이트 또는 8바이트)</td></tr><tr id="b8534e77-1bd5-4b94-a253-f0ef2bf55a8d"><td class="cell-title"><a href="Untitled%2013/Untitled/boolean.html">boolean</a></td><td class="cell-?kET">true 또는 false</td></tr><tr id="837ebb32-98a6-488c-9cb5-48c6ac91d878"><td class="cell-title"><a href="Untitled%2013/Untitled/data%20time%20timestamp.html">data, time, timestamp</a></td><td class="cell-?kET">시간 (날짜, 시간, 날짜 + 시간)</td></tr><tr id="6038ee0b-2f76-4f0d-bcd1-a7d7038e8b5f"><td class="cell-title"><a href="Untitled%2013/Untitled/blob%20binary.html">blob, binary</a></td><td class="cell-?kET">바이너리</td></tr></tbody></table></div><ul id="ce2cc665-1552-4198-b72e-725c7eb0e963" class="bulleted-list"><li>CreateTable() 메서드에서 테이블을 만들기 위한 SQL문은 &quot;create tabldee ...&quot; 이었다.</li></ul><ul id="440f6188-041f-4169-9a60-18b59ef8816b" class="bulleted-list"><li>여기에서 정의한 SQL문을 execSQL() 메서드로 실행하면 테이블이 만들어진다.</li></ul><ul id="d14f5803-acb2-4f33-88f0-c20e6a8b9499" class="bulleted-list"><li>insertRecord() 메서드에서는 하나의 레코드를 추가하였다.</li></ul><pre id="405544ee-02ec-435d-ae63-40637b3ce5cd" class="code"><code>// [API]
+CREATE TABLE [IF NOT EXISTS] table_name(col_name column_definition, ...)
+			[table_option] ...
+
+INSERT INTO table_name&lt;(column list)&gt; VALURES (value, ...)</code></pre></div></article></body></html>
